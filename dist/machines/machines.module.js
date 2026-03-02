@@ -14,6 +14,7 @@ const machines_controller_1 = require("./machines.controller");
 const machines_service_1 = require("./machines.service");
 const orders_module_1 = require("../orders/orders.module");
 const jobs_module_1 = require("../jobs/jobs.module");
+const businesses_module_1 = require("../businesses/businesses.module");
 let MachinesModule = class MachinesModule {
 };
 exports.MachinesModule = MachinesModule;
@@ -22,7 +23,8 @@ exports.MachinesModule = MachinesModule = __decorate([
         imports: [
             typeorm_1.TypeOrmModule.forFeature([machine_entity_1.Machine]),
             orders_module_1.OrdersModule,
-            jobs_module_1.JobsModule
+            jobs_module_1.JobsModule,
+            businesses_module_1.BusinessesModule
         ],
         controllers: [machines_controller_1.MachinesController],
         providers: [machines_service_1.MachinesService],
