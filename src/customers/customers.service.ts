@@ -16,13 +16,23 @@ export class CustomersService {
         return this.customerRepository.save(customer);
     }
 
-    async findAll(page: number = 1, limit: number = 10) {
+    async findAll(businessId: string, q?: string, page: number = 1, limit: number = 10) {
         const skip = (page - 1) * limit;
-        const [items, total] = await this.customerRepository.findAndCount({
-            skip,
-            take: limit,
-            order: { createdAt: 'DESC' },
-        });
+        const queryBuilder = this.customerRepository.createQueryBuilder('customer');
+
+        queryBuilder
+            .leftJoinAndSelect('customer.orders', 'orders')
+            .where('customer.businessId = :businessId', { businessId });
+
+        if (q) {
+            queryBuilder.andWhere('customer.name ILIKE :q', { q: `%${q}%` });
+        }
+
+        const [items, total] = await queryBuilder
+            .skip(skip)
+            .take(limit)
+            .orderBy('customer.createdAt', 'DESC')
+            .getManyAndCount();
 
         return {
             items,
@@ -44,5 +54,11 @@ export class CustomersService {
         await this.findOne(id);
         await this.customerRepository.update(id, updateCustomerDto);
         return this.findOne(id);
+    }
+
+    async remove(id: string) {
+        const customer = await this.findOne(id);
+        await this.customerRepository.remove(customer);
+        return { success: true };
     }
 }

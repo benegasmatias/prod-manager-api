@@ -21,6 +21,9 @@ export class Business {
     @Column({ default: 'GENERICO' })
     category: string; // Rubro (IMPRESION_3D, METALURGICA, etc)
 
+    @Column({ default: 'ARS' })
+    currency: string; // ARS, USD, etc
+
     @OneToMany('BusinessMembership', (membership: any) => membership.business)
     memberships: BusinessMembership[];
 

@@ -92,10 +92,11 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "notes", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true, nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "code", void 0);
 exports.Order = Order = __decorate([
-    (0, typeorm_1.Entity)('orders')
+    (0, typeorm_1.Entity)('orders'),
+    (0, typeorm_1.Unique)(['code', 'businessId'])
 ], Order);
 //# sourceMappingURL=order.entity.js.map

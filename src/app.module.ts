@@ -23,7 +23,7 @@ import { BusinessesModule } from './businesses/businesses.module';
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
-        synchronize: false, // Set to false to use migrations
+        synchronize: true, // Auto-update schema in dev
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
           max: 20,

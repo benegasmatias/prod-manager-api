@@ -6,7 +6,8 @@ import { JobProgress } from './entities/job-progress.entity';
 import { JobStatusHistory } from '../history/entities/job-status-history.entity';
 import { OrdersService } from '../orders/orders.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
-import { JobStatus, OrderStatus } from '../common/enums';
+import { JobStatus, OrderStatus, PrinterStatus } from '../common/enums';
+import { Printer } from '../printers/entities/printer.entity';
 
 @Injectable()
 export class JobsService {
@@ -17,6 +18,8 @@ export class JobsService {
         private readonly progressRepository: Repository<JobProgress>,
         @InjectRepository(JobStatusHistory)
         private readonly statusHistoryRepository: Repository<JobStatusHistory>,
+        @InjectRepository(Printer)
+        private readonly printerRepository: Repository<Printer>,
         private readonly ordersService: OrdersService,
     ) { }
 
@@ -90,6 +93,10 @@ export class JobsService {
         await this.statusHistoryRepository.save(history);
 
         if (status === JobStatus.DONE) {
+            // Si el trabajo tenía una impresora asignada, la liberamos
+            if (job.printerId) {
+                await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
+            }
             // await this.ordersService.checkAndSetReadyStatus(job.orderId);
         }
 

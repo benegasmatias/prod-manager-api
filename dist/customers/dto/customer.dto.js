@@ -20,6 +20,11 @@ __decorate([
     __metadata("design:type", String)
 ], CreateCustomerDto.prototype, "name", void 0);
 __decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateCustomerDto.prototype, "businessId", void 0);
+__decorate([
     (0, class_validator_1.IsEmail)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
@@ -33,7 +38,7 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], CreateCustomerDto.prototype, "address", void 0);
+], CreateCustomerDto.prototype, "notes", void 0);
 class UpdateCustomerDto {
 }
 exports.UpdateCustomerDto = UpdateCustomerDto;
@@ -56,5 +61,5 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UpdateCustomerDto.prototype, "address", void 0);
+], UpdateCustomerDto.prototype, "notes", void 0);
 //# sourceMappingURL=customer.dto.js.map

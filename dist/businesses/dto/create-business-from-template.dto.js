@@ -19,4 +19,9 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateBusinessFromTemplateDto.prototype, "templateKey", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], CreateBusinessFromTemplateDto.prototype, "name", void 0);
 //# sourceMappingURL=create-business-from-template.dto.js.map

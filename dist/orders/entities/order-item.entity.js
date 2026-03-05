@@ -87,6 +87,10 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], OrderItem.prototype, "notes", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true }),
+    __metadata("design:type", Number)
+], OrderItem.prototype, "deposit", void 0);
 exports.OrderItem = OrderItem = __decorate([
     (0, typeorm_1.Entity)('order_items')
 ], OrderItem);

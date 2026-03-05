@@ -21,11 +21,13 @@ const job_progress_entity_1 = require("./entities/job-progress.entity");
 const job_status_history_entity_1 = require("../history/entities/job-status-history.entity");
 const orders_service_1 = require("../orders/orders.service");
 const enums_1 = require("../common/enums");
+const printer_entity_1 = require("../printers/entities/printer.entity");
 let JobsService = class JobsService {
-    constructor(jobRepository, progressRepository, statusHistoryRepository, ordersService) {
+    constructor(jobRepository, progressRepository, statusHistoryRepository, printerRepository, ordersService) {
         this.jobRepository = jobRepository;
         this.progressRepository = progressRepository;
         this.statusHistoryRepository = statusHistoryRepository;
+        this.printerRepository = printerRepository;
         this.ordersService = ordersService;
     }
     async create(createJobDto) {
@@ -87,6 +89,9 @@ let JobsService = class JobsService {
         });
         await this.statusHistoryRepository.save(history);
         if (status === enums_1.JobStatus.DONE) {
+            if (job.printerId) {
+                await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+            }
         }
         return this.findOne(id);
     }
@@ -124,7 +129,9 @@ exports.JobsService = JobsService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
     __param(1, (0, typeorm_1.InjectRepository)(job_progress_entity_1.JobProgress)),
     __param(2, (0, typeorm_1.InjectRepository)(job_status_history_entity_1.JobStatusHistory)),
+    __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         orders_service_1.OrdersService])

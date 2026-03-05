@@ -7,6 +7,8 @@ const user_entity_1 = require("../users/entities/user.entity");
 const enums_1 = require("../common/enums");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const business_membership_entity_1 = require("../businesses/entities/business-membership.entity");
+const printer_entity_1 = require("../printers/entities/printer.entity");
+const enums_2 = require("../common/enums");
 async function seed() {
     try {
         await data_source_1.AppDataSource.initialize();
@@ -50,10 +52,11 @@ async function seed() {
         const dueSoon = new Date();
         dueSoon.setDate(dueSoon.getDate() + 1);
         const order1 = orderRepo.create({
+            businessId: biz1.id,
             clientName: 'Cliente Urgente (Matias)',
             dueDate: dueSoon,
             priority: 10,
-            status: enums_1.OrderStatus.PENDING,
+            status: enums_1.OrderStatus.IN_PROGRESS,
         });
         const savedOrder1 = await orderRepo.save(order1);
         await itemRepo.save([
@@ -66,7 +69,7 @@ async function seed() {
                 weightGrams: 240,
                 price: 15.5,
                 qty: 2,
-                doneQty: 0,
+                doneQty: 1,
             }),
             itemRepo.create({
                 orderId: savedOrder1.id,
@@ -84,6 +87,7 @@ async function seed() {
         const dueFar = new Date();
         dueFar.setDate(dueFar.getDate() + 10);
         const order2 = orderRepo.create({
+            businessId: biz1.id,
             clientName: 'Juan Gomez (Pedidazo)',
             dueDate: dueFar,
             priority: 5,
@@ -126,6 +130,19 @@ async function seed() {
             }),
         ]);
         console.log('✅ Pedido 2 creado con 3 items.');
+        const printerRepo = data_source_1.AppDataSource.getRepository(printer_entity_1.Printer);
+        const basePrinters = [
+            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: enums_2.PrinterStatus.IDLE, businessId: biz1.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: enums_2.PrinterStatus.PRINTING, businessId: biz1.id },
+            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: enums_2.PrinterStatus.IDLE, businessId: biz1.id },
+        ];
+        for (const p of basePrinters) {
+            const exists = await printerRepo.findOne({ where: { name: p.name, businessId: p.businessId } });
+            if (!exists) {
+                await printerRepo.save(printerRepo.create(p));
+                console.log(`✅ Impresora creada: ${p.name}`);
+            }
+        }
         console.log('🚀 Seeding completed successfully!');
         process.exit(0);
     }

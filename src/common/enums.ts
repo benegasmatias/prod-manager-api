@@ -18,6 +18,13 @@ export enum JobStatus {
     CANCELLED = 'CANCELLED',
 }
 
+export enum PrinterStatus {
+    IDLE = 'IDLE',
+    PRINTING = 'PRINTING',
+    MAINTENANCE = 'MAINTENANCE',
+    DOWN = 'DOWN',
+}
+
 export enum Priority {
     LOW = 'LOW',
     NORMAL = 'NORMAL',

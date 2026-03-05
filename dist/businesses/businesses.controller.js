@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const businesses_service_1 = require("./businesses.service");
 const supabase_auth_guard_1 = require("../users/guards/supabase-auth.guard");
 const create_business_from_template_dto_1 = require("./dto/create-business-from-template.dto");
+const update_business_dto_1 = require("./dto/update-business.dto");
 let BusinessesController = class BusinessesController {
     constructor(businessesService) {
         this.businessesService = businessesService;
@@ -24,8 +25,17 @@ let BusinessesController = class BusinessesController {
     async findAll(req) {
         return this.businessesService.findUserBusinesses(req.user.id);
     }
+    async findOne(req, id) {
+        return this.businessesService.findOne(req.user.id, id);
+    }
+    async getSummary(req, id) {
+        return this.businessesService.getDashboardSummary(req.user.id, id);
+    }
     async create(req, createDto) {
-        return this.businessesService.createFromTemplate(req.user.id, createDto.templateKey);
+        return this.businessesService.createFromTemplate(req.user.id, createDto);
+    }
+    async update(req, id, updateDto) {
+        return this.businessesService.update(req.user.id, id, updateDto);
     }
 };
 exports.BusinessesController = BusinessesController;
@@ -37,6 +47,22 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BusinessesController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], BusinessesController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)(':id/dashboard-summary'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], BusinessesController.prototype, "getSummary", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Request)()),
     __param(1, (0, common_1.Body)()),
@@ -44,6 +70,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, create_business_from_template_dto_1.CreateBusinessFromTemplateDto]),
     __metadata("design:returntype", Promise)
 ], BusinessesController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)('/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, update_business_dto_1.UpdateBusinessDto]),
+    __metadata("design:returntype", Promise)
+], BusinessesController.prototype, "update", null);
 exports.BusinessesController = BusinessesController = __decorate([
     (0, common_1.Controller)('businesses'),
     (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard),

@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateOrderStatusDto = exports.UpdateProgressDto = exports.CreateOrderDto = exports.CreateOrderItemDto = void 0;
+exports.FindOrdersDto = exports.UpdateOrderStatusDto = exports.UpdateProgressDto = exports.CreateOrderDto = exports.CreateOrderItemDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const enums_1 = require("../../common/enums");
@@ -51,9 +51,25 @@ __decorate([
     (0, class_validator_1.Min)(1),
     __metadata("design:type", Number)
 ], CreateOrderItemDto.prototype, "qty", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateOrderItemDto.prototype, "deposit", void 0);
 class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "businessId", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "customerId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
@@ -75,6 +91,11 @@ __decorate([
     (0, class_transformer_1.Type)(() => CreateOrderItemDto),
     __metadata("design:type", Array)
 ], CreateOrderDto.prototype, "items", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "notes", void 0);
 class UpdateProgressDto {
 }
 exports.UpdateProgressDto = UpdateProgressDto;
@@ -95,4 +116,17 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderStatusDto.prototype, "notes", void 0);
+class FindOrdersDto {
+}
+exports.FindOrdersDto = FindOrdersDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], FindOrdersDto.prototype, "businessId", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(enums_1.OrderStatus),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], FindOrdersDto.prototype, "status", void 0);
 //# sourceMappingURL=order.dto.js.map

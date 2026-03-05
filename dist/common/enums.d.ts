@@ -16,6 +16,12 @@ export declare enum JobStatus {
     DONE = "DONE",
     CANCELLED = "CANCELLED"
 }
+export declare enum PrinterStatus {
+    IDLE = "IDLE",
+    PRINTING = "PRINTING",
+    MAINTENANCE = "MAINTENANCE",
+    DOWN = "DOWN"
+}
 export declare enum Priority {
     LOW = "LOW",
     NORMAL = "NORMAL",

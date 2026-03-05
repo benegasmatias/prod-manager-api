@@ -19,4 +19,5 @@ export declare class OrderItem {
     unitPrice: number;
     subtotal: number;
     notes: string;
+    deposit: number;
 }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus } from '../../common/enums';
@@ -8,6 +8,7 @@ import { Payment } from '../../payments/entities/payment.entity';
 import { Business } from '../../businesses/entities/business.entity';
 
 @Entity('orders')
+@Unique(['code', 'businessId'])
 export class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -65,6 +66,6 @@ export class Order {
     @Column({ type: 'text', nullable: true })
     notes: string;
 
-    @Column({ unique: true, nullable: true })
+    @Column({ nullable: true })
     code: string;
 }

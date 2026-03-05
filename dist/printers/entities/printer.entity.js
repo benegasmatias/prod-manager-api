@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Printer = void 0;
 const typeorm_1 = require("typeorm");
 const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
+const enums_1 = require("../../common/enums");
 let Printer = class Printer {
 };
 exports.Printer = Printer;
@@ -19,6 +20,10 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Printer.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'business_id', nullable: true }),
+    __metadata("design:type", String)
+], Printer.prototype, "businessId", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
@@ -32,6 +37,10 @@ __decorate([
     __metadata("design:type", String)
 ], Printer.prototype, "nozzle", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'enum', enum: enums_1.PrinterStatus, default: enums_1.PrinterStatus.IDLE }),
+    __metadata("design:type", String)
+], Printer.prototype, "status", void 0);
+__decorate([
     (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
 ], Printer.prototype, "active", void 0);
@@ -39,6 +48,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => production_job_entity_1.ProductionJob, (job) => job.printer),
     __metadata("design:type", Array)
 ], Printer.prototype, "productionJobs", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    __metadata("design:type", Date)
+], Printer.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    __metadata("design:type", Date)
+], Printer.prototype, "updatedAt", void 0);
 exports.Printer = Printer = __decorate([
     (0, typeorm_1.Entity)('printers')
 ], Printer);

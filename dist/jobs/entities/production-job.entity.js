@@ -101,6 +101,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => job_status_history_entity_1.JobStatusHistory, (history) => history.productionJob),
     __metadata("design:type", Array)
 ], ProductionJob.prototype, "statusHistory", void 0);
+__decorate([
+    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    __metadata("design:type", Date)
+], ProductionJob.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    __metadata("design:type", Date)
+], ProductionJob.prototype, "updatedAt", void 0);
 exports.ProductionJob = ProductionJob = __decorate([
     (0, typeorm_1.Entity)('production_jobs')
 ], ProductionJob);

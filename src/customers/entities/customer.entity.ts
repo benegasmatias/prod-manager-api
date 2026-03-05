@@ -1,18 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToOne, JoinColumn, Unique } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
+import { Business } from '../../businesses/entities/business.entity';
 
 @Entity('customers')
+@Unique(['email', 'businessId'])
 export class Customer {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({ name: 'full_name' })
-    fullName: string;
+    name: string;
+
+    @Column({ name: 'business_id', type: 'uuid' })
+    businessId: string;
+
+    @ManyToOne(() => Business)
+    @JoinColumn({ name: 'business_id' })
+    business: Business;
 
     @Column({ nullable: true })
     phone: string;
 
-    @Column({ unique: true, nullable: true })
+    @Column({ nullable: true })
     email: string;
 
     @Column({ type: 'text', nullable: true })

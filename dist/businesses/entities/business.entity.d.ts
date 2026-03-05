@@ -6,6 +6,7 @@ export declare class Business {
     address: string;
     phone: string;
     category: string;
+    currency: string;
     memberships: BusinessMembership[];
     createdAt: Date;
     updatedAt: Date;

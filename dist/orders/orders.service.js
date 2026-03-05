@@ -19,13 +19,24 @@ const typeorm_2 = require("typeorm");
 const order_entity_1 = require("./entities/order.entity");
 const order_item_entity_1 = require("./entities/order-item.entity");
 const enums_1 = require("../common/enums");
+const production_job_entity_1 = require("../jobs/entities/production-job.entity");
+const printer_entity_1 = require("../printers/entities/printer.entity");
 let OrdersService = class OrdersService {
-    constructor(orderRepository, orderItemRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
+        this.jobRepository = jobRepository;
+        this.printerRepository = printerRepository;
     }
-    async findAll() {
+    async findAll(query) {
+        const { businessId, status } = query;
+        const where = {};
+        if (businessId)
+            where.businessId = businessId;
+        if (status)
+            where.status = status;
         return this.orderRepository.find({
+            where,
             relations: ['items'],
             order: {
                 dueDate: 'ASC',
@@ -45,9 +56,13 @@ let OrdersService = class OrdersService {
     }
     async create(createOrderDto) {
         const { items, ...orderData } = createOrderDto;
+        const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
+        const totalPrice = items?.reduce((acc, item) => acc + (Number(item.price) * (item.qty || 1)), 0) || 0;
         return await this.orderRepository.manager.transaction(async (manager) => {
             const order = manager.create(order_entity_1.Order, {
                 ...orderData,
+                code,
+                totalPrice,
                 status: enums_1.OrderStatus.PENDING,
             });
             const savedOrder = await manager.save(order_entity_1.Order, order);
@@ -59,7 +74,13 @@ let OrdersService = class OrdersService {
                 }));
                 await manager.save(order_item_entity_1.OrderItem, orderItems);
             }
-            return this.findOne(savedOrder.id);
+            const result = await manager.findOne(order_entity_1.Order, {
+                where: { id: savedOrder.id },
+                relations: ['items']
+            });
+            if (!result)
+                throw new common_1.NotFoundException('Error al recuperar el pedido recién creado');
+            return result;
         });
     }
     async updateProgress(orderId, itemId, updateProgressDto) {
@@ -79,16 +100,46 @@ let OrdersService = class OrdersService {
         const isOrderComplete = allItems.every((i) => i.doneQty === i.qty);
         if (isOrderComplete) {
             await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.DONE });
+            await this.syncJobsOnCompletion(undefined, orderId);
         }
         else if (doneQty > 0) {
             await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.IN_PROGRESS });
+            if (doneQty === item.qty) {
+                await this.syncJobsOnCompletion(itemId);
+            }
         }
         return this.findOne(orderId);
     }
     async updateStatus(id, updateStatusDto) {
-        const { status } = updateStatusDto;
-        await this.orderRepository.update(id, { status });
+        const { status, notes } = updateStatusDto;
+        const updateData = { status };
+        if (notes !== undefined) {
+            updateData.notes = notes;
+        }
+        await this.orderRepository.update(id, updateData);
+        if (status === enums_1.OrderStatus.DONE) {
+            await this.syncJobsOnCompletion(undefined, id);
+        }
         return this.findOne(id);
+    }
+    async syncJobsOnCompletion(orderItemId, orderId) {
+        const where = {};
+        if (orderItemId)
+            where.orderItemId = orderItemId;
+        if (orderId)
+            where.orderId = orderId;
+        const activeJobs = await this.jobRepository.find({
+            where: {
+                ...where,
+                status: (0, typeorm_2.In)([enums_1.JobStatus.QUEUED, enums_1.JobStatus.PRINTING, enums_1.JobStatus.PAUSED])
+            }
+        });
+        for (const job of activeJobs) {
+            await this.jobRepository.update(job.id, { status: enums_1.JobStatus.DONE });
+            if (job.printerId) {
+                await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+            }
+        }
     }
 };
 exports.OrdersService = OrdersService;
@@ -96,7 +147,11 @@ exports.OrdersService = OrdersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
+    __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
+    __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], OrdersService);
 //# sourceMappingURL=orders.service.js.map

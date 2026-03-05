@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaterialType = exports.ProductFileRole = exports.PaymentMethod = exports.FileType = exports.Priority = exports.JobStatus = exports.OrderStatus = void 0;
+exports.MaterialType = exports.ProductFileRole = exports.PaymentMethod = exports.FileType = exports.Priority = exports.PrinterStatus = exports.JobStatus = exports.OrderStatus = void 0;
 var OrderStatus;
 (function (OrderStatus) {
     OrderStatus["PENDING"] = "PENDING";
@@ -21,6 +21,13 @@ var JobStatus;
     JobStatus["DONE"] = "DONE";
     JobStatus["CANCELLED"] = "CANCELLED";
 })(JobStatus || (exports.JobStatus = JobStatus = {}));
+var PrinterStatus;
+(function (PrinterStatus) {
+    PrinterStatus["IDLE"] = "IDLE";
+    PrinterStatus["PRINTING"] = "PRINTING";
+    PrinterStatus["MAINTENANCE"] = "MAINTENANCE";
+    PrinterStatus["DOWN"] = "DOWN";
+})(PrinterStatus || (exports.PrinterStatus = PrinterStatus = {}));
 var Priority;
 (function (Priority) {
     Priority["LOW"] = "LOW";

@@ -5,7 +5,7 @@ export declare class CustomersService {
     private readonly customerRepository;
     constructor(customerRepository: Repository<Customer>);
     create(createCustomerDto: CreateCustomerDto): Promise<Customer>;
-    findAll(page?: number, limit?: number): Promise<{
+    findAll(businessId: string, q?: string, page?: number, limit?: number): Promise<{
         items: Customer[];
         total: number;
         page: number;
@@ -13,4 +13,7 @@ export declare class CustomersService {
     }>;
     findOne(id: string): Promise<Customer>;
     update(id: string, updateCustomerDto: UpdateCustomerDto): Promise<Customer>;
+    remove(id: string): Promise<{
+        success: boolean;
+    }>;
 }

@@ -21,12 +21,17 @@ const business_membership_entity_1 = require("./entities/business-membership.ent
 const user_entity_1 = require("../users/entities/user.entity");
 const business_template_entity_1 = require("./entities/business-template.entity");
 const typeorm_3 = require("typeorm");
+const order_entity_1 = require("../orders/entities/order.entity");
+const customer_entity_1 = require("../customers/entities/customer.entity");
+const enums_1 = require("../common/enums");
 let BusinessesService = class BusinessesService {
-    constructor(businessRepository, membershipRepository, userRepository, templateRepository, dataSource) {
+    constructor(businessRepository, membershipRepository, userRepository, templateRepository, orderRepository, customerRepository, dataSource) {
         this.businessRepository = businessRepository;
         this.membershipRepository = membershipRepository;
         this.userRepository = userRepository;
         this.templateRepository = templateRepository;
+        this.orderRepository = orderRepository;
+        this.customerRepository = customerRepository;
         this.dataSource = dataSource;
     }
     async getTemplates() {
@@ -38,9 +43,10 @@ let BusinessesService = class BusinessesService {
             imageKey: t.imageKey,
         }));
     }
-    async createFromTemplate(userId, templateKey) {
+    async createFromTemplate(userId, createDto) {
+        const { templateKey, name } = createDto;
         const template = await this.templateRepository.findOneBy({ key: templateKey });
-        if (!template) {
+        if (!template && templateKey !== 'GENERICO') {
             throw new common_1.NotFoundException(`Template with key ${templateKey} not found`);
         }
         return await this.dataSource.transaction(async (manager) => {
@@ -51,29 +57,26 @@ let BusinessesService = class BusinessesService {
                 },
                 relations: ['business']
             });
-            let businessToUse = existingMembership?.business;
-            if (!businessToUse) {
-                console.log(`[Onboarding] Creating new business for user ${userId} [Category: ${templateKey}]`);
-                const business = manager.create(business_entity_1.Business, {
-                    name: `${template.name} - Mi Espacio`,
-                    category: template.key
-                });
-                businessToUse = await manager.save(business_entity_1.Business, business);
-                const membership = manager.create(business_membership_entity_1.BusinessMembership, {
-                    userId,
-                    businessId: businessToUse.id,
-                    role: business_membership_entity_1.UserRole.OWNER
-                });
-                await manager.save(business_membership_entity_1.BusinessMembership, membership);
+            if (existingMembership) {
+                throw new common_1.BadRequestException(`Ya tienes un negocio registrado en el rubro ${templateKey}. No se permiten duplicados por rubro.`);
             }
-            else {
-                console.log(`[Onboarding] Reusing existing business ${businessToUse.id} for user ${userId} [Category: ${templateKey}]`);
-            }
+            console.log(`[Onboarding] Creating new business for user ${userId} [Category: ${templateKey}]`);
+            const business = manager.create(business_entity_1.Business, {
+                name: name || (template ? `${template.name} - Mi Espacio` : 'Mi Negocio'),
+                category: templateKey
+            });
+            const businessToUse = await manager.save(business_entity_1.Business, business);
+            const membership = manager.create(business_membership_entity_1.BusinessMembership, {
+                userId,
+                businessId: businessToUse.id,
+                role: business_membership_entity_1.UserRole.OWNER
+            });
+            await manager.save(business_membership_entity_1.BusinessMembership, membership);
             const user = await manager.findOneBy(user_entity_1.User, { id: userId });
-            if (user) {
+            if (user && !user.defaultBusinessId) {
                 user.defaultBusinessId = businessToUse.id;
                 await manager.save(user_entity_1.User, user);
-                console.log(`✅ [Onboarding] defaultBusinessId actualizado -> ${businessToUse.id}`);
+                console.log(`✅ [Onboarding] defaultBusinessId seteado (primera vez) -> ${businessToUse.id}`);
             }
             return {
                 business: {
@@ -98,6 +101,88 @@ let BusinessesService = class BusinessesService {
         });
         return memberships.map(m => m.business);
     }
+    async getDashboardSummary(userId, businessId) {
+        const hasAccess = await this.checkAccess(userId, businessId);
+        if (!hasAccess) {
+            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
+        }
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const salesResult = await this.orderRepository
+            .createQueryBuilder('order')
+            .select('SUM(order.totalPrice)', 'total')
+            .where('order.businessId = :businessId', { businessId })
+            .andWhere('order.status IN (:...statuses)', { statuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.DONE] })
+            .getRawOne();
+        const activeOrdersCount = await this.orderRepository.count({
+            where: {
+                businessId,
+                status: enums_1.OrderStatus.PENDING,
+            }
+        });
+        const newCustomersCount = await this.customerRepository.count({
+            where: {
+                createdAt: (0, typeorm_3.MoreThanOrEqual)(thirtyDaysAgo)
+            }
+        });
+        const recentOrders = await this.orderRepository.find({
+            where: { businessId },
+            order: { createdAt: 'DESC' },
+            take: 5
+        });
+        const now = new Date();
+        const overdueOrders = await this.orderRepository.find({
+            where: {
+                businessId,
+                status: enums_1.OrderStatus.PENDING,
+                dueDate: (0, typeorm_3.MoreThanOrEqual)(now)
+            }
+        });
+        const realOverdue = await this.orderRepository
+            .createQueryBuilder('order')
+            .where('order.businessId = :businessId', { businessId })
+            .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.CANCELLED] })
+            .andWhere('order.dueDate < :now', { now: new Date() })
+            .getMany();
+        return {
+            totalSales: Number(salesResult?.total) || 0,
+            profit: null,
+            activeOrders: activeOrdersCount,
+            newCustomers: newCustomersCount,
+            recentOrders: recentOrders.map(o => ({
+                id: o.id,
+                clientName: o.clientName || 'Sin Nombre',
+                total: Number(o.totalPrice),
+                status: o.status,
+                dueDate: o.dueDate
+            })),
+            alerts: realOverdue.map(o => ({
+                type: 'vencido',
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+            trends: null
+        };
+    }
+    async findOne(userId, id) {
+        const hasAccess = await this.checkAccess(userId, id);
+        if (!hasAccess) {
+            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
+        }
+        const business = await this.businessRepository.findOneBy({ id });
+        if (!business) {
+            throw new common_1.NotFoundException('Negocio no encontrado');
+        }
+        return business;
+    }
+    async update(userId, id, updateDto) {
+        const hasAccess = await this.checkAccess(userId, id);
+        if (!hasAccess) {
+            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
+        }
+        await this.businessRepository.update(id, updateDto);
+        return this.findOne(userId, id);
+    }
 };
 exports.BusinessesService = BusinessesService;
 exports.BusinessesService = BusinessesService = __decorate([
@@ -106,7 +191,11 @@ exports.BusinessesService = BusinessesService = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(business_membership_entity_1.BusinessMembership)),
     __param(2, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
     __param(3, (0, typeorm_1.InjectRepository)(business_template_entity_1.BusinessTemplate)),
+    __param(4, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
+    __param(5, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

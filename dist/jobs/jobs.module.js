@@ -15,17 +15,19 @@ const orders_module_1 = require("../orders/orders.module");
 const production_job_entity_1 = require("./entities/production-job.entity");
 const job_progress_entity_1 = require("./entities/job-progress.entity");
 const job_status_history_entity_1 = require("../history/entities/job-status-history.entity");
+const printer_entity_1 = require("../printers/entities/printer.entity");
 let JobsModule = class JobsModule {
 };
 exports.JobsModule = JobsModule;
 exports.JobsModule = JobsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([production_job_entity_1.ProductionJob, job_progress_entity_1.JobProgress, job_status_history_entity_1.JobStatusHistory]),
+            typeorm_1.TypeOrmModule.forFeature([production_job_entity_1.ProductionJob, job_progress_entity_1.JobProgress, job_status_history_entity_1.JobStatusHistory, printer_entity_1.Printer]),
             orders_module_1.OrdersModule,
         ],
         controllers: [jobs_controller_1.JobsController],
         providers: [jobs_service_1.JobsService],
+        exports: [jobs_service_1.JobsService],
     })
 ], JobsModule);
 //# sourceMappingURL=jobs.module.js.map

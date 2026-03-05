@@ -6,9 +6,11 @@ import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { Product } from '../products/entities/product.entity';
+import { ProductionJob } from '../jobs/entities/production-job.entity';
+import { Printer } from '../printers/entities/printer.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Order, OrderItem, OrderStatusHistory, Product])],
+    imports: [TypeOrmModule.forFeature([Order, OrderItem, OrderStatusHistory, Product, ProductionJob, Printer])],
 
     controllers: [OrdersController],
     providers: [OrdersService],

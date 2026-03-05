@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Customer = void 0;
 const typeorm_1 = require("typeorm");
 const order_entity_1 = require("../../orders/entities/order.entity");
+const business_entity_1 = require("../../businesses/entities/business.entity");
 let Customer = class Customer {
 };
 exports.Customer = Customer;
@@ -22,13 +23,22 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ name: 'full_name' }),
     __metadata("design:type", String)
-], Customer.prototype, "fullName", void 0);
+], Customer.prototype, "name", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'business_id', type: 'uuid' }),
+    __metadata("design:type", String)
+], Customer.prototype, "businessId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => business_entity_1.Business),
+    (0, typeorm_1.JoinColumn)({ name: 'business_id' }),
+    __metadata("design:type", business_entity_1.Business)
+], Customer.prototype, "business", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Customer.prototype, "phone", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true, nullable: true }),
+    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Customer.prototype, "email", void 0);
 __decorate([
@@ -44,6 +54,7 @@ __decorate([
     __metadata("design:type", Array)
 ], Customer.prototype, "orders", void 0);
 exports.Customer = Customer = __decorate([
-    (0, typeorm_1.Entity)('customers')
+    (0, typeorm_1.Entity)('customers'),
+    (0, typeorm_1.Unique)(['email', 'businessId'])
 ], Customer);
 //# sourceMappingURL=customer.entity.js.map

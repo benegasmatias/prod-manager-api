@@ -25,4 +25,6 @@ export declare class ProductionJob {
     sortRank: number;
     progress: JobProgress[];
     statusHistory: JobStatusHistory[];
+    createdAt: Date;
+    updatedAt: Date;
 }

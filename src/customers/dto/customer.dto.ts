@@ -5,6 +5,10 @@ export class CreateCustomerDto {
     @IsNotEmpty()
     name: string;
 
+    @IsString()
+    @IsNotEmpty()
+    businessId: string;
+
     @IsEmail()
     @IsOptional()
     email?: string;
@@ -15,7 +19,7 @@ export class CreateCustomerDto {
 
     @IsString()
     @IsOptional()
-    address?: string;
+    notes?: string;
 }
 
 export class UpdateCustomerDto {
@@ -33,5 +37,5 @@ export class UpdateCustomerDto {
 
     @IsString()
     @IsOptional()
-    address?: string;
+    notes?: string;
 }

@@ -21,14 +21,17 @@ let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
     }
-    async findAll() {
-        return this.ordersService.findAll();
+    async findAll(query) {
+        return this.ordersService.findAll(query);
     }
     async findOne(id) {
         return this.ordersService.findOne(id);
     }
     async create(createOrderDto) {
         return this.ordersService.create(createOrderDto);
+    }
+    async updateStatus(id, updateStatusDto) {
+        return this.ordersService.updateStatus(id, updateStatusDto);
     }
     async updateProgress(orderId, itemId, updateProgressDto) {
         return this.ordersService.updateProgress(orderId, itemId, updateProgressDto);
@@ -37,8 +40,9 @@ let OrdersController = class OrdersController {
 exports.OrdersController = OrdersController;
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [order_dto_1.FindOrdersDto]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "findAll", null);
 __decorate([
@@ -55,6 +59,14 @@ __decorate([
     __metadata("design:paramtypes", [order_dto_1.CreateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)(':id/status'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, order_dto_1.UpdateOrderStatusDto]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "updateStatus", null);
 __decorate([
     (0, common_1.Patch)(':orderId/items/:itemId/progress'),
     __param(0, (0, common_1.Param)('orderId', common_1.ParseUUIDPipe)),

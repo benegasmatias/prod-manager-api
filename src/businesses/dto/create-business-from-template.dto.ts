@@ -1,7 +1,11 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
 
 export class CreateBusinessFromTemplateDto {
     @IsNotEmpty()
     @IsString()
     templateKey: string;
+
+    @IsOptional()
+    @IsString()
+    name?: string;
 }

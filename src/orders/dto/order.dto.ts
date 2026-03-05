@@ -30,9 +30,22 @@ export class CreateOrderItemDto {
     @IsInt()
     @Min(1)
     qty: number;
+
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    deposit?: number;
 }
 
 export class CreateOrderDto {
+    @IsString()
+    @IsNotEmpty()
+    businessId: string;
+
+    @IsString()
+    @IsOptional()
+    customerId?: string;
+
     @IsString()
     @IsNotEmpty()
     clientName: string;
@@ -49,6 +62,10 @@ export class CreateOrderDto {
     @ValidateNested({ each: true })
     @Type(() => CreateOrderItemDto)
     items: CreateOrderItemDto[];
+
+    @IsString()
+    @IsOptional()
+    notes?: string;
 }
 
 export class UpdateProgressDto {
@@ -64,4 +81,14 @@ export class UpdateOrderStatusDto {
     @IsString()
     @IsOptional()
     notes?: string;
+}
+
+export class FindOrdersDto {
+    @IsString()
+    @IsOptional()
+    businessId?: string;
+
+    @IsEnum(OrderStatus)
+    @IsOptional()
+    status?: OrderStatus;
 }

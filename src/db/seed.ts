@@ -5,6 +5,8 @@ import { User } from '../users/entities/user.entity';
 import { OrderStatus } from '../common/enums';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessMembership, UserRole } from '../businesses/entities/business-membership.entity';
+import { Printer } from '../printers/entities/printer.entity';
+import { PrinterStatus } from '../common/enums';
 
 async function seed() {
     try {
@@ -59,10 +61,11 @@ async function seed() {
         dueSoon.setDate(dueSoon.getDate() + 1);
 
         const order1 = orderRepo.create({
+            businessId: biz1.id, // Asignar al primer negocio
             clientName: 'Cliente Urgente (Matias)',
             dueDate: dueSoon,
             priority: 10,
-            status: OrderStatus.PENDING,
+            status: OrderStatus.IN_PROGRESS, // En producción para que aparezca en el dashboard/producción
         });
         const savedOrder1 = await orderRepo.save(order1);
 
@@ -76,7 +79,7 @@ async function seed() {
                 weightGrams: 240,
                 price: 15.5,
                 qty: 2,
-                doneQty: 0,
+                doneQty: 1, // 1 de 2 terminado
             }),
             itemRepo.create({
                 orderId: savedOrder1.id,
@@ -97,6 +100,7 @@ async function seed() {
         dueFar.setDate(dueFar.getDate() + 10);
 
         const order2 = orderRepo.create({
+            businessId: biz1.id, // También al primer negocio
             clientName: 'Juan Gomez (Pedidazo)',
             dueDate: dueFar,
             priority: 5,
@@ -140,6 +144,22 @@ async function seed() {
             }),
         ]);
         console.log('✅ Pedido 2 creado con 3 items.');
+
+        // 3. Impresoras (Máquinas)
+        const printerRepo = AppDataSource.getRepository(Printer);
+        const basePrinters = [
+            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: PrinterStatus.IDLE, businessId: biz1.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: PrinterStatus.PRINTING, businessId: biz1.id },
+            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: PrinterStatus.IDLE, businessId: biz1.id },
+        ];
+
+        for (const p of basePrinters) {
+            const exists = await printerRepo.findOne({ where: { name: p.name, businessId: p.businessId } });
+            if (!exists) {
+                await printerRepo.save(printerRepo.create(p));
+                console.log(`✅ Impresora creada: ${p.name}`);
+            }
+        }
 
         console.log('🚀 Seeding completed successfully!');
         process.exit(0);
