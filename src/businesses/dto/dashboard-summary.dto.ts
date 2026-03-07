@@ -1,13 +1,14 @@
 export class DashboardSummaryDto {
     totalSales: number;
-    profit: number | null;
+    pendingBalance: number;
     activeOrders: number;
+    productionOrders: number;
+    activePrinters: number;
     newCustomers: number;
     recentOrders: RecentOrderDto[];
     alerts: DashboardAlertDto[];
     trends: {
         sales: number | null;
-        profit: number | null;
         orders: number | null;
         customers: number | null;
     } | null;
@@ -22,7 +23,7 @@ export class RecentOrderDto {
 }
 
 export class DashboardAlertDto {
-    type: 'vencido' | 'proximo' | 'otro';
+    type: 'vencido' | 'proximo' | 'otro' | 'stock_bajo';
     message: string;
     metadata?: any;
 }

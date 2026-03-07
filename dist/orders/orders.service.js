@@ -21,12 +21,14 @@ const order_item_entity_1 = require("./entities/order-item.entity");
 const enums_1 = require("../common/enums");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const printer_entity_1 = require("../printers/entities/printer.entity");
+const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
 let OrdersService = class OrdersService {
-    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository, statusHistoryRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jobRepository = jobRepository;
         this.printerRepository = printerRepository;
+        this.statusHistoryRepository = statusHistoryRepository;
     }
     async findAll(query) {
         const { businessId, status } = query;
@@ -37,9 +39,10 @@ let OrdersService = class OrdersService {
             where.status = status;
         return this.orderRepository.find({
             where,
-            relations: ['items'],
+            relations: ['items', 'customer', 'responsableGeneral'],
             order: {
                 dueDate: 'ASC',
+                createdAt: 'DESC',
                 priority: 'DESC',
             },
         });
@@ -47,7 +50,7 @@ let OrdersService = class OrdersService {
     async findOne(id) {
         const order = await this.orderRepository.findOne({
             where: { id },
-            relations: ['items'],
+            relations: ['items', 'customer', 'responsableGeneral', 'jobs', 'jobs.responsable', 'business'],
         });
         if (!order) {
             throw new common_1.NotFoundException(`Pedido con ID ${id} no encontrado`);
@@ -59,6 +62,7 @@ let OrdersService = class OrdersService {
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
         const totalPrice = items?.reduce((acc, item) => acc + (Number(item.price) * (item.qty || 1)), 0) || 0;
         return await this.orderRepository.manager.transaction(async (manager) => {
+            const business = await manager.findOne('Business', { where: { id: orderData.businessId } });
             const order = manager.create(order_entity_1.Order, {
                 ...orderData,
                 code,
@@ -67,23 +71,59 @@ let OrdersService = class OrdersService {
             });
             const savedOrder = await manager.save(order_entity_1.Order, order);
             if (items && items.length > 0) {
-                const orderItems = items.map((item) => manager.create(order_item_entity_1.OrderItem, {
-                    ...item,
-                    orderId: savedOrder.id,
-                    doneQty: 0,
-                }));
-                await manager.save(order_item_entity_1.OrderItem, orderItems);
+                for (const itemData of items) {
+                    const orderItem = manager.create(order_item_entity_1.OrderItem, {
+                        ...itemData,
+                        orderId: savedOrder.id,
+                        doneQty: 0,
+                    });
+                    const savedItem = await manager.save(order_item_entity_1.OrderItem, orderItem);
+                    if (business?.category === 'METALURGICA' || business?.category === 'CARPINTERIA') {
+                        const stages = [
+                            { title: 'Diseño / Preparación', rank: 10 },
+                            { title: 'Corte / Dimensionado', rank: 20 },
+                            { title: 'Soldadura / Unión', rank: 30 },
+                            { title: 'Armado / Ensamble', rank: 40 },
+                            { title: 'Pintura / Acabado', rank: 50 }
+                        ];
+                        const jobs = stages.map(s => manager.create(production_job_entity_1.ProductionJob, {
+                            orderId: savedOrder.id,
+                            orderItemId: savedItem.id,
+                            title: s.title,
+                            totalUnits: savedItem.qty || 1,
+                            status: enums_1.JobStatus.QUEUED,
+                            sortRank: s.rank,
+                            responsableId: savedOrder.responsableGeneralId
+                        }));
+                        await manager.save(production_job_entity_1.ProductionJob, jobs);
+                    }
+                }
             }
             const result = await manager.findOne(order_entity_1.Order, {
                 where: { id: savedOrder.id },
-                relations: ['items']
+                relations: ['items', 'responsableGeneral', 'jobs', 'business']
             });
             if (!result)
                 throw new common_1.NotFoundException('Error al recuperar el pedido recién creado');
             return result;
         });
     }
-    async updateProgress(orderId, itemId, updateProgressDto) {
+    async syncOrderItemProgress(orderItemId) {
+        const jobs = await this.jobRepository.find({
+            where: { orderItemId },
+            relations: ['progress']
+        });
+        const totalDone = jobs.reduce((sum, job) => {
+            const jobDone = job.progress?.reduce((innerSum, p) => innerSum + p.unitsDone, 0) || 0;
+            return sum + jobDone;
+        }, 0);
+        await this.orderItemRepository.update(orderItemId, { doneQty: totalDone });
+        const item = await this.orderItemRepository.findOne({ where: { id: orderItemId } });
+        if (item) {
+            await this.checkAndSetReadyStatus(item.orderId);
+        }
+    }
+    async updateProgress(orderId, itemId, updateProgressDto, userId) {
         const { doneQty } = updateProgressDto;
         const item = await this.orderItemRepository.findOne({
             where: { id: itemId, orderId: orderId },
@@ -100,23 +140,69 @@ let OrdersService = class OrdersService {
         const isOrderComplete = allItems.every((i) => i.doneQty === i.qty);
         if (isOrderComplete) {
             await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.DONE });
+            const history = this.statusHistoryRepository.create({
+                orderId,
+                fromStatus: enums_1.OrderStatus.IN_PROGRESS,
+                toStatus: enums_1.OrderStatus.DONE,
+                note: 'Completado automático por carga de progreso',
+                performedById: userId
+            });
+            await this.statusHistoryRepository.save(history);
             await this.syncJobsOnCompletion(undefined, orderId);
         }
         else if (doneQty > 0) {
-            await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.IN_PROGRESS });
+            const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
+            if (oldOrder && oldOrder.status !== enums_1.OrderStatus.IN_PROGRESS) {
+                await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.IN_PROGRESS });
+                const history = this.statusHistoryRepository.create({
+                    orderId,
+                    fromStatus: oldOrder.status,
+                    toStatus: enums_1.OrderStatus.IN_PROGRESS,
+                    note: 'Iniciado automático por carga de progreso',
+                    performedById: userId
+                });
+                await this.statusHistoryRepository.save(history);
+            }
             if (doneQty === item.qty) {
                 await this.syncJobsOnCompletion(itemId);
             }
         }
         return this.findOne(orderId);
     }
-    async updateStatus(id, updateStatusDto) {
-        const { status, notes } = updateStatusDto;
-        const updateData = { status };
-        if (notes !== undefined) {
-            updateData.notes = notes;
+    async checkAndSetReadyStatus(orderId) {
+        const jobs = await this.jobRepository.find({
+            where: { orderId }
+        });
+        if (jobs.length === 0)
+            return;
+        const allJobsDone = jobs.every(j => j.status === enums_1.JobStatus.DONE);
+        if (allJobsDone) {
+            await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.DONE });
+            console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
         }
-        await this.orderRepository.update(id, updateData);
+    }
+    async updateStatus(id, updateStatusDto, userId) {
+        const { status, notes, responsableGeneralId } = updateStatusDto;
+        const order = await this.findOne(id);
+        const oldStatus = order.status;
+        const updateData = {};
+        if (status !== undefined)
+            updateData.status = status;
+        if (responsableGeneralId !== undefined)
+            updateData.responsableGeneralId = responsableGeneralId;
+        if (Object.keys(updateData).length > 0) {
+            await this.orderRepository.update(id, updateData);
+        }
+        if ((status && status !== oldStatus) || notes) {
+            const history = this.statusHistoryRepository.create({
+                orderId: id,
+                fromStatus: oldStatus,
+                toStatus: status || oldStatus,
+                note: notes,
+                performedById: userId
+            });
+            await this.statusHistoryRepository.save(history);
+        }
         if (status === enums_1.OrderStatus.DONE) {
             await this.syncJobsOnCompletion(undefined, id);
         }
@@ -149,7 +235,9 @@ exports.OrdersService = OrdersService = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
     __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
     __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
+    __param(4, (0, typeorm_1.InjectRepository)(order_status_history_entity_1.OrderStatusHistory)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])

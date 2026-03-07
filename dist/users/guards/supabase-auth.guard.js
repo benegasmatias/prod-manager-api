@@ -32,7 +32,8 @@ let SupabaseAuthGuard = class SupabaseAuthGuard {
         if (error || !user) {
             throw new common_1.UnauthorizedException('Invalid or expired token');
         }
-        const profile = await this.usersService.findOrCreate(user.id, user.email);
+        const fullName = user.user_metadata?.full_name;
+        const profile = await this.usersService.findOrCreate(user.id, user.email, fullName);
         request.user = profile;
         return true;
     }

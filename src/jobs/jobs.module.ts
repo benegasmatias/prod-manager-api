@@ -8,9 +8,11 @@ import { JobProgress } from './entities/job-progress.entity';
 import { JobStatusHistory } from '../history/entities/job-status-history.entity';
 import { Printer } from '../printers/entities/printer.entity';
 
+import { Material } from '../materials/entities/material.entity';
+
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ProductionJob, JobProgress, JobStatusHistory, Printer]),
+        TypeOrmModule.forFeature([ProductionJob, JobProgress, JobStatusHistory, Printer, Material]),
         OrdersModule,
     ],
     controllers: [JobsController],

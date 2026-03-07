@@ -16,6 +16,7 @@ import { User } from '../users/entities/user.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessMembership } from '../businesses/entities/business-membership.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
+import { Employee } from '../employees/entities/employee.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -43,6 +44,7 @@ export const AppDataSource = new DataSource({
         Business,
         BusinessMembership,
         BusinessTemplate,
+        Employee,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

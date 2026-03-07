@@ -8,6 +8,7 @@ export declare class CreateJobDto {
     priority?: Priority;
     sortRank?: number;
     title?: string;
+    responsableId?: string;
 }
 export declare class UpdateJobDto {
     status?: JobStatus;
@@ -15,7 +16,8 @@ export declare class UpdateJobDto {
     sortRank?: number;
     printerId?: string;
     materialId?: string;
-    note?: string;
+    notes?: string;
+    responsableId?: string;
 }
 export declare class CreateProgressDto {
     unitsDone: number;

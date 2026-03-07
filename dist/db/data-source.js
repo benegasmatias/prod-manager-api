@@ -19,6 +19,7 @@ const user_entity_1 = require("../users/entities/user.entity");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const business_membership_entity_1 = require("../businesses/entities/business-membership.entity");
 const business_template_entity_1 = require("../businesses/entities/business-template.entity");
+const employee_entity_1 = require("../employees/entities/employee.entity");
 const dotenv = require("dotenv");
 dotenv.config();
 exports.AppDataSource = new typeorm_1.DataSource({
@@ -44,6 +45,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
         business_entity_1.Business,
         business_membership_entity_1.BusinessMembership,
         business_template_entity_1.BusinessTemplate,
+        employee_entity_1.Employee,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

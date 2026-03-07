@@ -7,6 +7,14 @@ export enum OrderStatus {
     READY = 'READY',
     DELIVERED = 'DELIVERED',
     CANCELLED = 'CANCELLED',
+    // Granular stages for multi-industry
+    DESIGN = 'DESIGN',
+    CUTTING = 'CUTTING',
+    WELDING = 'WELDING',
+    ASSEMBLY = 'ASSEMBLY',
+    PAINTING = 'PAINTING',
+    BARNIZADO = 'BARNIZADO',
+    POST_PROCESS = 'POST_PROCESS'
 }
 
 export enum JobStatus {
@@ -54,9 +62,28 @@ export enum ProductFileRole {
 }
 
 export enum MaterialType {
+    // 3D Printing
     PLA = 'PLA',
     PETG = 'PETG',
     ABS = 'ABS',
     TPU = 'TPU',
     RESIN = 'RESIN',
+    LIMPIEZA = 'LIMPIEZA',
+
+    // Metalwork / Construction
+    PERFIL = 'PERFIL',
+    CHAPA = 'CHAPA',
+    MACHO = 'MACHO', // Machimbre / Revestimientos
+    HIERRO = 'HIERRO',
+    ACERO = 'ACERO',
+
+    // Carpentry
+    PLACA = 'PLACA',
+    MADERA = 'MADERA',
+
+    // Common / General
+    HERRAJE = 'HERRAJE',
+    INSUMO = 'INSUMO',
+    PRODUCTO = 'PRODUCTO',
+    OTRO = 'OTRO'
 }

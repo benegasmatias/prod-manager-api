@@ -18,6 +18,7 @@ const production_job_entity_1 = require("../../jobs/entities/production-job.enti
 const order_status_history_entity_1 = require("../../history/entities/order-status-history.entity");
 const payment_entity_1 = require("../../payments/entities/payment.entity");
 const business_entity_1 = require("../../businesses/entities/business.entity");
+const employee_entity_1 = require("../../employees/entities/employee.entity");
 let Order = class Order {
 };
 exports.Order = Order;
@@ -95,6 +96,15 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "code", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'responsable_general_id', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "responsableGeneralId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => employee_entity_1.Employee, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'responsable_general_id' }),
+    __metadata("design:type", employee_entity_1.Employee)
+], Order.prototype, "responsableGeneral", void 0);
 exports.Order = Order = __decorate([
     (0, typeorm_1.Entity)('orders'),
     (0, typeorm_1.Unique)(['code', 'businessId'])

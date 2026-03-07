@@ -7,6 +7,7 @@ import { OrderStatus, JobStatus, PrinterStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Printer } from '../printers/entities/printer.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto } from './dto/order.dto';
+import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 
 @Injectable()
 export class OrdersService {
@@ -19,6 +20,8 @@ export class OrdersService {
         private readonly jobRepository: Repository<ProductionJob>,
         @InjectRepository(Printer)
         private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(OrderStatusHistory)
+        private readonly statusHistoryRepository: Repository<OrderStatusHistory>,
     ) { }
 
     /**
@@ -32,9 +35,10 @@ export class OrdersService {
 
         return this.orderRepository.find({
             where,
-            relations: ['items'],
+            relations: ['items', 'customer', 'responsableGeneral'],
             order: {
                 dueDate: 'ASC',
+                createdAt: 'DESC',
                 priority: 'DESC',
             },
         });
@@ -46,7 +50,7 @@ export class OrdersService {
     async findOne(id: string): Promise<Order> {
         const order = await this.orderRepository.findOne({
             where: { id },
-            relations: ['items'],
+            relations: ['items', 'customer', 'responsableGeneral', 'jobs', 'jobs.responsable', 'business'],
         });
 
         if (!order) {
@@ -69,6 +73,9 @@ export class OrdersService {
 
         // Usar transacción para asegurar atomicidad
         return await this.orderRepository.manager.transaction(async (manager) => {
+            // Obtener el rubro del negocio para automatizar workflow
+            const business = await manager.findOne('Business', { where: { id: orderData.businessId } }) as any;
+
             const order = manager.create(Order, {
                 ...orderData,
                 code,
@@ -79,20 +86,42 @@ export class OrdersService {
             const savedOrder = await manager.save(Order, order);
 
             if (items && items.length > 0) {
-                const orderItems = items.map((item) =>
-                    manager.create(OrderItem, {
-                        ...item,
+                for (const itemData of items) {
+                    const orderItem = manager.create(OrderItem, {
+                        ...itemData,
                         orderId: savedOrder.id,
                         doneQty: 0,
-                    }),
-                );
-                await manager.save(OrderItem, orderItems);
+                    });
+                    const savedItem = await manager.save(OrderItem, orderItem);
+
+                    // Automatizar Workflow según rubro
+                    if (business?.category === 'METALURGICA' || business?.category === 'CARPINTERIA') {
+                        const stages = [
+                            { title: 'Diseño / Preparación', rank: 10 },
+                            { title: 'Corte / Dimensionado', rank: 20 },
+                            { title: 'Soldadura / Unión', rank: 30 },
+                            { title: 'Armado / Ensamble', rank: 40 },
+                            { title: 'Pintura / Acabado', rank: 50 }
+                        ];
+
+                        const jobs = stages.map(s => manager.create(ProductionJob, {
+                            orderId: savedOrder.id,
+                            orderItemId: savedItem.id,
+                            title: s.title,
+                            totalUnits: savedItem.qty || 1,
+                            status: JobStatus.QUEUED,
+                            sortRank: s.rank,
+                            responsableId: savedOrder.responsableGeneralId
+                        }));
+                        await manager.save(ProductionJob, jobs);
+                    }
+                }
             }
 
-            // Usar el manager para encontrar el pedido dentro de la misma transacción
+            // Usar el manager para encontrar el pedido recién creado con todas sus relaciones
             const result = await manager.findOne(Order, {
                 where: { id: savedOrder.id },
-                relations: ['items']
+                relations: ['items', 'responsableGeneral', 'jobs', 'business']
             });
 
             if (!result) throw new NotFoundException('Error al recuperar el pedido recién creado');
@@ -101,9 +130,31 @@ export class OrdersService {
     }
 
     /**
+     * Sincroniza la cantidad producida (done_qty) de un ítem basándose en sus trabajos de producción.
+     */
+    async syncOrderItemProgress(orderItemId: string) {
+        const jobs = await this.jobRepository.find({
+            where: { orderItemId },
+            relations: ['progress']
+        });
+
+        const totalDone = jobs.reduce((sum, job) => {
+            const jobDone = job.progress?.reduce((innerSum, p) => innerSum + p.unitsDone, 0) || 0;
+            return sum + jobDone;
+        }, 0);
+
+        await this.orderItemRepository.update(orderItemId, { doneQty: totalDone });
+
+        const item = await this.orderItemRepository.findOne({ where: { id: orderItemId } });
+        if (item) {
+            await this.checkAndSetReadyStatus(item.orderId);
+        }
+    }
+
+    /**
      * Actualizar progreso (doneQty) de un ítem
      */
-    async updateProgress(orderId: string, itemId: string, updateProgressDto: UpdateProgressDto): Promise<Order> {
+    async updateProgress(orderId: string, itemId: string, updateProgressDto: UpdateProgressDto, userId?: string): Promise<Order> {
         const { doneQty } = updateProgressDto;
 
         const item = await this.orderItemRepository.findOne({
@@ -127,10 +178,31 @@ export class OrdersService {
 
         if (isOrderComplete) {
             await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
+            // Registrar cambio automático en el historial
+            const history = this.statusHistoryRepository.create({
+                orderId,
+                fromStatus: OrderStatus.IN_PROGRESS,
+                toStatus: OrderStatus.DONE,
+                note: 'Completado automático por carga de progreso',
+                performedById: userId
+            });
+            await this.statusHistoryRepository.save(history);
+
             // También finalizamos todos los trabajos de este pedido
             await this.syncJobsOnCompletion(undefined, orderId);
         } else if (doneQty > 0) {
-            await this.orderRepository.update(orderId, { status: OrderStatus.IN_PROGRESS });
+            const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
+            if (oldOrder && oldOrder.status !== OrderStatus.IN_PROGRESS) {
+                await this.orderRepository.update(orderId, { status: OrderStatus.IN_PROGRESS });
+                const history = this.statusHistoryRepository.create({
+                    orderId,
+                    fromStatus: oldOrder.status,
+                    toStatus: OrderStatus.IN_PROGRESS,
+                    note: 'Iniciado automático por carga de progreso',
+                    performedById: userId
+                });
+                await this.statusHistoryRepository.save(history);
+            }
             if (doneQty === item.qty) {
                 // Si este ítem específico se terminó, finalizamos sus trabajos
                 await this.syncJobsOnCompletion(itemId);
@@ -141,17 +213,53 @@ export class OrdersService {
     }
 
     /**
+     * Verifica si se han terminado todos los trabajos de un pedido y lo marca como terminado.
+     */
+    async checkAndSetReadyStatus(orderId: string) {
+        const jobs = await this.jobRepository.find({
+            where: { orderId }
+        });
+
+        // Si no hay trabajos, no hacemos nada automatico (podria ser un pedido manual)
+        if (jobs.length === 0) return;
+
+        const allJobsDone = jobs.every(j => j.status === JobStatus.DONE);
+
+        if (allJobsDone) {
+            await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
+            console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
+        }
+    }
+
+    /**
      * Actualizar estado manual del pedido (para compatibilidad o extras)
      */
-    async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto): Promise<Order> {
-        const { status, notes } = updateStatusDto;
+    async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
+        const { status, notes, responsableGeneralId } = updateStatusDto;
 
-        const updateData: any = { status };
-        if (notes !== undefined) {
-            updateData.notes = notes;
+        const order = await this.findOne(id);
+        const oldStatus = order.status;
+
+        const updateData: any = {};
+        if (status !== undefined) updateData.status = status;
+        if (responsableGeneralId !== undefined) updateData.responsableGeneralId = responsableGeneralId;
+
+        // Perform update on the order
+        if (Object.keys(updateData).length > 0) {
+            await this.orderRepository.update(id, updateData);
         }
 
-        await this.orderRepository.update(id, updateData);
+        // Record history always if there's a status change OR if notes were provided for this event
+        if ((status && status !== oldStatus) || notes) {
+            const history = this.statusHistoryRepository.create({
+                orderId: id,
+                fromStatus: oldStatus,
+                toStatus: status || oldStatus,
+                note: notes,
+                performedById: userId
+            });
+            await this.statusHistoryRepository.save(history);
+        }
 
         if (status === OrderStatus.DONE) {
             await this.syncJobsOnCompletion(undefined, id);

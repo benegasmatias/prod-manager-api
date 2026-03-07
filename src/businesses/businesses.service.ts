@@ -6,13 +6,16 @@ import { BusinessTemplateDto } from './dto/business-template.dto';
 import { BusinessMembership, UserRole } from './entities/business-membership.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
-import { DataSource, MoreThanOrEqual } from 'typeorm';
+import { DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
-import { OrderStatus } from '../common/enums';
-import { DashboardSummaryDto } from './dto/dashboard-summary.dto';
+import { Printer } from '../printers/entities/printer.entity';
+import { PrinterStatus, OrderStatus } from '../common/enums';
+import { Material } from '../materials/entities/material.entity';
+import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { Employee } from '../employees/entities/employee.entity';
 
 @Injectable()
 export class BusinessesService {
@@ -29,6 +32,10 @@ export class BusinessesService {
         private readonly orderRepository: Repository<Order>,
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,
+        @InjectRepository(Printer)
+        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Material)
+        private readonly materialRepository: Repository<Material>,
         private readonly dataSource: DataSource,
     ) { }
 
@@ -80,8 +87,32 @@ export class BusinessesService {
             });
             await manager.save(BusinessMembership, membership);
 
-            // 2. Setear defaultBusinessId en el usuario si no tiene uno
+            // 1.b Autocompletar el Personal con el Dueño
             const user = await manager.findOneBy(User, { id: userId });
+            if (user) {
+                // Verificar si ya existe (por si acaso se reintenta la transacción)
+                const existingEmployee = await manager.findOne(Employee, {
+                    where: { businessId: businessToUse.id, email: user.email }
+                });
+
+                if (!existingEmployee) {
+                    const nameParts = (user.fullName || 'Propietario').trim().split(/\s+/);
+                    const firstName = nameParts[0] || 'Propietario';
+                    const lastName = nameParts.slice(1).join(' ');
+
+                    const employee = manager.create(Employee, {
+                        businessId: businessToUse.id,
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: user.email,
+                        active: true,
+                        specialties: 'Administrador / Dueño'
+                    });
+                    await manager.save(Employee, employee);
+                    console.log(`✅ [Onboarding] Owner ${user.email} added as first Employee for business ${businessToUse.id}`);
+                }
+            }
+
             if (user && !user.defaultBusinessId) {
                 user.defaultBusinessId = businessToUse.id;
                 await manager.save(User, user);
@@ -132,41 +163,52 @@ export class BusinessesService {
             .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
             .getRawOne();
 
-        // 2. Active Orders
-        const activeOrdersCount = await this.orderRepository.count({
+        // 2. Pending Balance (Total - Deposits for non-delivered/cancelled orders)
+        const activeOrdersWithItems = await this.orderRepository.find({
             where: {
                 businessId,
-                status: OrderStatus.PENDING, // Or any non-final status
+                status: In([OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED, OrderStatus.READY, OrderStatus.DONE])
+            },
+            relations: ['items']
+        });
+
+        const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
+            const total = Number(order.totalPrice) || 0;
+            const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            return acc + (total - deposits);
+        }, 0);
+
+        // 3. Active Printers
+        const activePrintersCount = await this.printerRepository.count({
+            where: {
+                businessId,
+                status: PrinterStatus.PRINTING
             }
         });
 
-        // 3. New Customers (Last 30 days)
-        // Note: Customer entity currently doesn't have businessId.
-        // For now, filtering only by date. TODO: Add businessId to Customer entity.
+        // 3.b Production Orders (only those specifically IN_PROGRESS)
+        const productionOrdersCount = await this.orderRepository.count({
+            where: {
+                businessId,
+                status: OrderStatus.IN_PROGRESS
+            }
+        });
+
+        // 4. New Customers (Last 30 days)
         const newCustomersCount = await this.customerRepository.count({
             where: {
                 createdAt: MoreThanOrEqual(thirtyDaysAgo)
             }
         });
 
-        // 4. Recent Orders
+        // 5. Recent Orders
         const recentOrders = await this.orderRepository.find({
             where: { businessId },
             order: { createdAt: 'DESC' },
             take: 5
         });
 
-        // 5. Alerts (Overdue orders)
-        const now = new Date();
-        const overdueOrders = await this.orderRepository.find({
-            where: {
-                businessId,
-                status: OrderStatus.PENDING,
-                dueDate: MoreThanOrEqual(now) // Technically should be LessThan, but let's check your priority logic
-            }
-        });
-
-        // Real overdue check: status not final AND dueDate < now
+        // 6. Overdue Alerts
         const realOverdue = await this.orderRepository
             .createQueryBuilder('order')
             .where('order.businessId = :businessId', { businessId })
@@ -174,10 +216,36 @@ export class BusinessesService {
             .andWhere('order.dueDate < :now', { now: new Date() })
             .getMany();
 
+        // 7. Low Stock Material Alerts
+        const CRITICAL_STOCK_UMBRAL = 200; // gramos
+        const lowStockMaterials = await this.materialRepository.find({
+            where: {
+                businessId,
+                active: true,
+                remainingWeightGrams: MoreThanOrEqual(0) // Only to enable index/filter if useful, handled by queryBuilder below more safely
+            }
+        });
+        const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
+
+        const mergedAlerts: DashboardAlertDto[] = [
+            ...realOverdue.map(o => ({
+                type: 'vencido' as const,
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+            ...criticalMaterials.map(m => ({
+                type: 'stock_bajo' as const,
+                message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
+                metadata: { materialId: m.id }
+            }))
+        ];
+
         return {
             totalSales: Number(salesResult?.total) || 0,
-            profit: null, // No cost model yet
-            activeOrders: activeOrdersCount,
+            pendingBalance,
+            activeOrders: activeOrdersWithItems.length,
+            productionOrders: productionOrdersCount,
+            activePrinters: activePrintersCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({
                 id: o.id,
@@ -186,12 +254,8 @@ export class BusinessesService {
                 status: o.status,
                 dueDate: o.dueDate
             })),
-            alerts: realOverdue.map(o => ({
-                type: 'vencido',
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-            trends: null // Trends not yet calculated
+            alerts: mergedAlerts,
+            trends: null
         };
     }
 

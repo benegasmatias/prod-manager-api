@@ -35,6 +35,9 @@ export class CreateOrderItemDto {
     @IsOptional()
     @Min(0)
     deposit?: number;
+
+    @IsOptional()
+    metadata?: any;
 }
 
 export class CreateOrderDto {
@@ -66,6 +69,10 @@ export class CreateOrderDto {
     @IsString()
     @IsOptional()
     notes?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableGeneralId?: string;
 }
 
 export class UpdateProgressDto {
@@ -81,6 +88,10 @@ export class UpdateOrderStatusDto {
     @IsString()
     @IsOptional()
     notes?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableGeneralId?: string;
 }
 
 export class FindOrdersDto {

@@ -21,12 +21,15 @@ export class CustomersService {
         const queryBuilder = this.customerRepository.createQueryBuilder('customer');
 
         queryBuilder
-            .leftJoinAndSelect('customer.orders', 'orders')
             .where('customer.businessId = :businessId', { businessId });
 
         if (q) {
             queryBuilder.andWhere('customer.name ILIKE :q', { q: `%${q}%` });
         }
+
+        // CARGA ÚNICAMENTE EL CONTEO DE PEDIDOS, SIN TRAER TODOS LOS OBJETOS DE LA BASE
+        // Esto optimiza drásticamente la transferencia de datos y RAM del servidor
+        queryBuilder.loadRelationCountAndMap('customer.totalOrders', 'customer.orders');
 
         const [items, total] = await queryBuilder
             .skip(skip)
@@ -34,8 +37,19 @@ export class CustomersService {
             .orderBy('customer.createdAt', 'DESC')
             .getManyAndCount();
 
+        // MAPEAMOS ESTRICTAMENTE AL DTO PARA ENVIAR SOLO LO NECESARIO
+        const mappedItems = items.map(customer => ({
+            id: customer.id,
+            name: customer.name,
+            phone: customer.phone,
+            email: customer.email,
+            notes: customer.notes,
+            createdAt: customer.createdAt,
+            totalOrders: (customer as any).totalOrders || 0
+        }));
+
         return {
-            items,
+            items: mappedItems,
             total,
             page,
             limit,

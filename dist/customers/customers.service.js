@@ -29,18 +29,27 @@ let CustomersService = class CustomersService {
         const skip = (page - 1) * limit;
         const queryBuilder = this.customerRepository.createQueryBuilder('customer');
         queryBuilder
-            .leftJoinAndSelect('customer.orders', 'orders')
             .where('customer.businessId = :businessId', { businessId });
         if (q) {
             queryBuilder.andWhere('customer.name ILIKE :q', { q: `%${q}%` });
         }
+        queryBuilder.loadRelationCountAndMap('customer.totalOrders', 'customer.orders');
         const [items, total] = await queryBuilder
             .skip(skip)
             .take(limit)
             .orderBy('customer.createdAt', 'DESC')
             .getManyAndCount();
+        const mappedItems = items.map(customer => ({
+            id: customer.id,
+            name: customer.name,
+            phone: customer.phone,
+            email: customer.email,
+            notes: customer.notes,
+            createdAt: customer.createdAt,
+            totalOrders: customer.totalOrders || 0
+        }));
         return {
-            items,
+            items: mappedItems,
             total,
             page,
             limit,

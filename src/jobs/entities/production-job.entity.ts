@@ -3,6 +3,7 @@ import { Order } from '../../orders/entities/order.entity';
 import { OrderItem } from '../../orders/entities/order-item.entity';
 import { Printer } from '../../printers/entities/printer.entity';
 import { Material } from '../../materials/entities/material.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 import { JobStatus } from '../../common/enums';
 import { JobProgress } from './job-progress.entity';
 import { JobStatusHistory } from '../../history/entities/job-status-history.entity';
@@ -63,6 +64,16 @@ export class ProductionJob {
 
     @Column({ name: 'sort_rank', default: 0 })
     sortRank: number;
+
+    @Column({ name: 'responsable_id', nullable: true })
+    responsableId: string;
+
+    @ManyToOne(() => Employee, { nullable: true })
+    @JoinColumn({ name: 'responsable_id' })
+    responsable: Employee;
+
+    @Column({ type: 'text', nullable: true, name: 'notes' })
+    notes: string;
 
     @OneToMany(() => JobProgress, (progress) => progress.productionJob)
     progress: JobProgress[];

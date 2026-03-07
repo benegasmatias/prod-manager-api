@@ -33,6 +33,10 @@ export class CreateJobDto {
     @IsString()
     @IsOptional()
     title?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableId?: string;
 }
 
 export class UpdateJobDto {
@@ -58,7 +62,11 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    note?: string; // Changed from notes to note to match entity if needed, but entity has notes in many places. The service complained about 'note'.
+    notes?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableId?: string;
 }
 
 export class CreateProgressDto {

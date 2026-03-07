@@ -21,10 +21,14 @@ export class UsersService {
         return user;
     }
 
-    async findOrCreate(id: string, email: string): Promise<User> {
+    async findOrCreate(id: string, email: string, fullName?: string): Promise<User> {
         let user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            user = this.userRepository.create({ id, email });
+            user = this.userRepository.create({ id, email, fullName });
+            await this.userRepository.save(user);
+        } else if (fullName && !user.fullName) {
+            // Si el usuario existe pero no tiene nombre (por registros viejos), lo actualizamos
+            user.fullName = fullName;
             await this.userRepository.save(user);
         }
         return user;

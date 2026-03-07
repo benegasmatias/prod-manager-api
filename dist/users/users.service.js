@@ -30,10 +30,14 @@ let UsersService = class UsersService {
         }
         return user;
     }
-    async findOrCreate(id, email) {
+    async findOrCreate(id, email, fullName) {
         let user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            user = this.userRepository.create({ id, email });
+            user = this.userRepository.create({ id, email, fullName });
+            await this.userRepository.save(user);
+        }
+        else if (fullName && !user.fullName) {
+            user.fullName = fullName;
             await this.userRepository.save(user);
         }
         return user;

@@ -6,6 +6,6 @@ export declare class OrdersController {
     findAll(query: FindOrdersDto): Promise<import("./entities/order.entity").Order[]>;
     findOne(id: string): Promise<import("./entities/order.entity").Order>;
     create(createOrderDto: CreateOrderDto): Promise<import("./entities/order.entity").Order>;
-    updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto): Promise<import("./entities/order.entity").Order>;
-    updateProgress(orderId: string, itemId: string, updateProgressDto: UpdateProgressDto): Promise<import("./entities/order.entity").Order>;
+    updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, req: any): Promise<import("./entities/order.entity").Order>;
+    updateProgress(orderId: string, itemId: string, updateProgressDto: UpdateProgressDto, req: any): Promise<import("./entities/order.entity").Order>;
 }

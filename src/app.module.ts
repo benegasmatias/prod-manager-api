@@ -10,6 +10,8 @@ import { PrintersModule } from './printers/printers.module';
 import { MaterialsModule } from './materials/materials.module';
 import { UsersModule } from './users/users.module';
 import { BusinessesModule } from './businesses/businesses.module';
+import { ReportsModule } from './reports/reports.module';
+import { EmployeesModule } from './employees/employees.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { BusinessesModule } from './businesses/businesses.module';
     MaterialsModule,
     UsersModule,
     BusinessesModule,
+    ReportsModule,
+    EmployeesModule,
   ],
 })
 export class AppModule { }

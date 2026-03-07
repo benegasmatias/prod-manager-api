@@ -62,4 +62,7 @@ export class OrderItem {
 
     @Column({ type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true })
     deposit: number;
+
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
 }

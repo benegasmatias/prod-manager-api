@@ -29,7 +29,8 @@ export class SupabaseAuthGuard implements CanActivate {
         }
 
         // Asegurarse de que el perfil de usuario exista en nuestra base de datos
-        const profile = await this.usersService.findOrCreate(user.id, user.email);
+        const fullName = user.user_metadata?.full_name;
+        const profile = await this.usersService.findOrCreate(user.id, user.email, fullName);
 
         // Adjuntar el usuario al objeto request
         request.user = profile;

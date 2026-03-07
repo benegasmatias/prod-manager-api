@@ -30,11 +30,11 @@ let OrdersController = class OrdersController {
     async create(createOrderDto) {
         return this.ordersService.create(createOrderDto);
     }
-    async updateStatus(id, updateStatusDto) {
-        return this.ordersService.updateStatus(id, updateStatusDto);
+    async updateStatus(id, updateStatusDto, req) {
+        return this.ordersService.updateStatus(id, updateStatusDto, req.user.id);
     }
-    async updateProgress(orderId, itemId, updateProgressDto) {
-        return this.ordersService.updateProgress(orderId, itemId, updateProgressDto);
+    async updateProgress(orderId, itemId, updateProgressDto, req) {
+        return this.ordersService.updateProgress(orderId, itemId, updateProgressDto, req.user.id);
     }
 };
 exports.OrdersController = OrdersController;
@@ -63,8 +63,9 @@ __decorate([
     (0, common_1.Patch)(':id/status'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, order_dto_1.UpdateOrderStatusDto]),
+    __metadata("design:paramtypes", [String, order_dto_1.UpdateOrderStatusDto, Object]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "updateStatus", null);
 __decorate([
@@ -72,8 +73,9 @@ __decorate([
     __param(0, (0, common_1.Param)('orderId', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Param)('itemId', common_1.ParseUUIDPipe)),
     __param(2, (0, common_1.Body)()),
+    __param(3, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, order_dto_1.UpdateProgressDto]),
+    __metadata("design:paramtypes", [String, String, order_dto_1.UpdateProgressDto, Object]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "updateProgress", null);
 exports.OrdersController = OrdersController = __decorate([

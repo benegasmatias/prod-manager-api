@@ -8,6 +8,7 @@ import { OrdersService } from '../orders/orders.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
 import { JobStatus, OrderStatus, PrinterStatus } from '../common/enums';
 import { Printer } from '../printers/entities/printer.entity';
+import { Material } from '../materials/entities/material.entity';
 
 @Injectable()
 export class JobsService {
@@ -20,10 +21,12 @@ export class JobsService {
         private readonly statusHistoryRepository: Repository<JobStatusHistory>,
         @InjectRepository(Printer)
         private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Material)
+        private readonly materialRepository: Repository<Material>,
         private readonly ordersService: OrdersService,
     ) { }
 
-    async create(createJobDto: CreateJobDto) {
+    async create(createJobDto: CreateJobDto, userId?: string) {
         const job = this.jobRepository.create({
             ...createJobDto,
             status: JobStatus.QUEUED,
@@ -35,6 +38,7 @@ export class JobsService {
             productionJobId: savedJob.id,
             toStatus: JobStatus.QUEUED,
             note: 'Initial queuing',
+            performedById: userId
         });
         await this.statusHistoryRepository.save(history);
 
@@ -43,18 +47,24 @@ export class JobsService {
 
         // Automatically transition order to IN_PROGRESS if it was CONFIRMED or DRAFT
         if (order.status === OrderStatus.DRAFT || order.status === OrderStatus.CONFIRMED) {
-            await this.ordersService.updateStatus(order.id, { status: OrderStatus.IN_PROGRESS, notes: 'Production jobs started.' });
+            await this.ordersService.updateStatus(order.id, { status: OrderStatus.IN_PROGRESS, notes: 'Production jobs started.' }, userId);
         }
 
         return fullJob;
     }
 
-    async getQueue() {
+    async getQueue(businessId?: string) {
+        const where: any = {
+            status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED]),
+        };
+
+        if (businessId) {
+            where.order = { businessId };
+        }
+
         return this.jobRepository.find({
-            where: {
-                status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED]),
-            },
-            relations: ['order', 'orderItem', 'orderItem.product', 'printer', 'material'],
+            where,
+            relations: ['order', 'orderItem', 'orderItem.product', 'printer', 'material', 'progress'],
             order: {
                 order: { priority: 'DESC' },
                 dueDate: 'ASC',
@@ -72,13 +82,14 @@ export class JobsService {
                 'orderItem.product',
                 'progress',
                 'statusHistory',
+                'material',
             ],
         });
         if (!job) throw new NotFoundException('Job not found');
         return job;
     }
 
-    async updateStatus(id: string, status: JobStatus, note?: string) {
+    async updateStatus(id: string, status: JobStatus, note?: string, userId?: string) {
         const job = await this.findOne(id);
         const oldStatus = job.status;
 
@@ -89,6 +100,7 @@ export class JobsService {
             fromStatus: oldStatus,
             toStatus: status,
             note,
+            performedById: userId
         });
         await this.statusHistoryRepository.save(history);
 
@@ -97,27 +109,37 @@ export class JobsService {
             if (job.printerId) {
                 await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
             }
-            // await this.ordersService.checkAndSetReadyStatus(job.orderId);
+
+            // --- Control de Filamento / Material ---
+            // Solo descontamos lo que falte por reportar como avance
+            const unitsReported = job.progress?.reduce((sum, p) => sum + p.unitsDone, 0) || 0;
+            const unitsPending = Math.max(0, job.totalUnits - unitsReported);
+
+            if (unitsPending > 0) {
+                await this.deductMaterialWeight(job, unitsPending);
+            }
+
+            await this.ordersService.checkAndSetReadyStatus(job.orderId);
         }
 
         return this.findOne(id);
     }
 
-    async update(id: string, updateJobDto: UpdateJobDto) {
-        const { status, note, ...data } = updateJobDto;
+    async update(id: string, updateJobDto: UpdateJobDto, userId?: string) {
+        const { status, notes, ...data } = updateJobDto;
 
         if (status) {
-            return this.updateStatus(id, status, note);
+            return this.updateStatus(id, status, notes, userId);
         }
 
-        if (Object.keys(data).length > 0) {
-            await this.jobRepository.update(id, data);
+        if (Object.keys(data).length > 0 || notes) {
+            await this.jobRepository.update(id, { ...data, notes });
         }
 
         return this.findOne(id);
     }
 
-    async addProgress(id: string, createProgressDto: CreateProgressDto) {
+    async addProgress(id: string, createProgressDto: CreateProgressDto, userId?: string) {
         const job = await this.findOne(id);
 
         // Total units done so far
@@ -129,16 +151,49 @@ export class JobsService {
 
         const progress = this.progressRepository.create({
             productionJobId: id,
-            ...createProgressDto
+            ...createProgressDto,
+            performedById: userId
         });
         await this.progressRepository.save(progress);
 
+        // Descontar material por el avance reportado
+        await this.deductMaterialWeight(job, createProgressDto.unitsDone);
+
         const updatedUnitsDone = currentUnitsDone + createProgressDto.unitsDone;
+
+        if (job.orderItemId) {
+            await this.ordersService.syncOrderItemProgress(job.orderItemId);
+        }
 
         if (updatedUnitsDone === job.totalUnits) {
             await this.updateStatus(id, JobStatus.DONE, 'Completion reported via progress update.');
         }
 
         return this.findOne(id);
+    }
+    /**
+     * Helper para descontar material del stock basado en las unidades producidas.
+     */
+    private async deductMaterialWeight(job: ProductionJob, units: number) {
+        if (!job.materialId || units <= 0) return;
+
+        // Peso estimado por unidad
+        let weightPerUnit = 0;
+        if (job.estimatedWeightGTotal) {
+            weightPerUnit = job.estimatedWeightGTotal / job.totalUnits;
+        } else if (job.orderItem?.weightGrams) {
+            weightPerUnit = job.orderItem.weightGrams;
+        }
+
+        const weightToDeduct = weightPerUnit * units;
+
+        if (weightToDeduct > 0) {
+            const material = await this.materialRepository.findOneBy({ id: job.materialId });
+            if (material) {
+                const newRemaining = Math.max(0, material.remainingWeightGrams - weightToDeduct);
+                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                console.log(`[Filamento] Descontados ${weightToDeduct.toFixed(2)}g del material ${material.name}. Restante: ${newRemaining.toFixed(2)}g`);
+            }
+        }
     }
 }

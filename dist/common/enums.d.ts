@@ -6,7 +6,14 @@ export declare enum OrderStatus {
     CONFIRMED = "CONFIRMED",
     READY = "READY",
     DELIVERED = "DELIVERED",
-    CANCELLED = "CANCELLED"
+    CANCELLED = "CANCELLED",
+    DESIGN = "DESIGN",
+    CUTTING = "CUTTING",
+    WELDING = "WELDING",
+    ASSEMBLY = "ASSEMBLY",
+    PAINTING = "PAINTING",
+    BARNIZADO = "BARNIZADO",
+    POST_PROCESS = "POST_PROCESS"
 }
 export declare enum JobStatus {
     QUEUED = "QUEUED",
@@ -51,5 +58,17 @@ export declare enum MaterialType {
     PETG = "PETG",
     ABS = "ABS",
     TPU = "TPU",
-    RESIN = "RESIN"
+    RESIN = "RESIN",
+    LIMPIEZA = "LIMPIEZA",
+    PERFIL = "PERFIL",
+    CHAPA = "CHAPA",
+    MACHO = "MACHO",
+    HIERRO = "HIERRO",
+    ACERO = "ACERO",
+    PLACA = "PLACA",
+    MADERA = "MADERA",
+    HERRAJE = "HERRAJE",
+    INSUMO = "INSUMO",
+    PRODUCTO = "PRODUCTO",
+    OTRO = "OTRO"
 }

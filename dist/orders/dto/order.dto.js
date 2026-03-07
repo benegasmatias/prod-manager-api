@@ -57,6 +57,10 @@ __decorate([
     (0, class_validator_1.Min)(0),
     __metadata("design:type", Number)
 ], CreateOrderItemDto.prototype, "deposit", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], CreateOrderItemDto.prototype, "metadata", void 0);
 class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
@@ -96,6 +100,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "notes", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "responsableGeneralId", void 0);
 class UpdateProgressDto {
 }
 exports.UpdateProgressDto = UpdateProgressDto;
@@ -116,6 +125,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderStatusDto.prototype, "notes", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateOrderStatusDto.prototype, "responsableGeneralId", void 0);
 class FindOrdersDto {
 }
 exports.FindOrdersDto = FindOrdersDto;

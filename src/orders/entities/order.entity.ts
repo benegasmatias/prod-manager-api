@@ -6,6 +6,8 @@ import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { OrderStatusHistory } from '../../history/entities/order-status-history.entity';
 import { Payment } from '../../payments/entities/payment.entity';
 import { Business } from '../../businesses/entities/business.entity';
+import { BusinessTemplate } from '../../businesses/entities/business-template.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 
 @Entity('orders')
 @Unique(['code', 'businessId'])
@@ -68,4 +70,11 @@ export class Order {
 
     @Column({ nullable: true })
     code: string;
+
+    @Column({ name: 'responsable_general_id', nullable: true })
+    responsableGeneralId: string;
+
+    @ManyToOne(() => Employee, { nullable: true })
+    @JoinColumn({ name: 'responsable_general_id' })
+    responsableGeneral: Employee;
 }

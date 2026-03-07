@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, ParseUUIDPipe, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, ParseUUIDPipe, UseGuards, Query, Request } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderStatusDto, UpdateProgressDto, FindOrdersDto } from './dto/order.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -27,8 +27,9 @@ export class OrdersController {
     async updateStatus(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateStatusDto: UpdateOrderStatusDto,
+        @Request() req: any,
     ) {
-        return this.ordersService.updateStatus(id, updateStatusDto);
+        return this.ordersService.updateStatus(id, updateStatusDto, req.user.id);
     }
 
     @Patch(':orderId/items/:itemId/progress')
@@ -36,7 +37,8 @@ export class OrdersController {
         @Param('orderId', ParseUUIDPipe) orderId: string,
         @Param('itemId', ParseUUIDPipe) itemId: string,
         @Body() updateProgressDto: UpdateProgressDto,
+        @Request() req: any,
     ) {
-        return this.ordersService.updateProgress(orderId, itemId, updateProgressDto);
+        return this.ordersService.updateProgress(orderId, itemId, updateProgressDto, req.user.id);
     }
 }

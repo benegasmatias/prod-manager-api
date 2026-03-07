@@ -55,6 +55,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateJobDto.prototype, "title", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateJobDto.prototype, "responsableId", void 0);
 class UpdateJobDto {
 }
 exports.UpdateJobDto = UpdateJobDto;
@@ -87,7 +92,12 @@ __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
-], UpdateJobDto.prototype, "note", void 0);
+], UpdateJobDto.prototype, "notes", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateJobDto.prototype, "responsableId", void 0);
 class CreateProgressDto {
 }
 exports.CreateProgressDto = CreateProgressDto;

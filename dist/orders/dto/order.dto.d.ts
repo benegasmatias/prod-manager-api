@@ -8,6 +8,7 @@ export declare class CreateOrderItemDto {
     price: number;
     qty: number;
     deposit?: number;
+    metadata?: any;
 }
 export declare class CreateOrderDto {
     businessId: string;
@@ -17,6 +18,7 @@ export declare class CreateOrderDto {
     priority: number;
     items: CreateOrderItemDto[];
     notes?: string;
+    responsableGeneralId?: string;
 }
 export declare class UpdateProgressDto {
     doneQty: number;
@@ -24,6 +26,7 @@ export declare class UpdateProgressDto {
 export declare class UpdateOrderStatusDto {
     status: OrderStatus;
     notes?: string;
+    responsableGeneralId?: string;
 }
 export declare class FindOrdersDto {
     businessId?: string;
