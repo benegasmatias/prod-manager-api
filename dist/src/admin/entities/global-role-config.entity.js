@@ -9,44 +9,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.GlobalRoleConfig = void 0;
 const typeorm_1 = require("typeorm");
-let User = class User {
+let GlobalRoleConfig = class GlobalRoleConfig {
 };
-exports.User = User;
+exports.GlobalRoleConfig = GlobalRoleConfig;
 __decorate([
-    (0, typeorm_1.PrimaryColumn)('uuid'),
+    (0, typeorm_1.PrimaryColumn)(),
     __metadata("design:type", String)
-], User.prototype, "id", void 0);
+], GlobalRoleConfig.prototype, "role", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], GlobalRoleConfig.prototype, "description", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'full_name', nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "fullName", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'default_business_id', nullable: true, type: 'uuid' }),
-    __metadata("design:type", String)
-], User.prototype, "defaultBusinessId", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'global_role', default: 'USER' }),
-    __metadata("design:type", String)
-], User.prototype, "globalRole", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: true }),
-    __metadata("design:type", Boolean)
-], User.prototype, "active", void 0);
+    (0, typeorm_1.Column)({ type: 'jsonb', default: {} }),
+    __metadata("design:type", Object)
+], GlobalRoleConfig.prototype, "capabilities", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
-], User.prototype, "createdAt", void 0);
+], GlobalRoleConfig.prototype, "createdAt", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
     __metadata("design:type", Date)
-], User.prototype, "updatedAt", void 0);
-exports.User = User = __decorate([
-    (0, typeorm_1.Entity)('users')
-], User);
-//# sourceMappingURL=user.entity.js.map
+], GlobalRoleConfig.prototype, "updatedAt", void 0);
+exports.GlobalRoleConfig = GlobalRoleConfig = __decorate([
+    (0, typeorm_1.Entity)('global_role_configs')
+], GlobalRoleConfig);
+//# sourceMappingURL=global-role-config.entity.js.map

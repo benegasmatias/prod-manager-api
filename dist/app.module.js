@@ -21,6 +21,7 @@ const users_module_1 = require("./users/users.module");
 const businesses_module_1 = require("./businesses/businesses.module");
 const reports_module_1 = require("./reports/reports.module");
 const employees_module_1 = require("./employees/employees.module");
+const admin_module_1 = require("./admin/admin.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -57,6 +58,7 @@ exports.AppModule = AppModule = __decorate([
             businesses_module_1.BusinessesModule,
             reports_module_1.ReportsModule,
             employees_module_1.EmployeesModule,
+            admin_module_1.AdminModule,
         ],
     })
 ], AppModule);
