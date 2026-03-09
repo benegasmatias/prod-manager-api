@@ -45,6 +45,7 @@ let OrdersService = class OrdersService {
             where,
             relations: ['items', 'customer', 'responsableGeneral', 'jobs'],
             order: {
+                updatedAt: 'DESC',
                 dueDate: 'ASC',
                 createdAt: 'DESC',
                 priority: 'DESC',
@@ -163,7 +164,7 @@ let OrdersService = class OrdersService {
                 performedById: userId
             });
             await this.statusHistoryRepository.save(history);
-            await this.syncJobsOnCompletion(undefined, orderId);
+            await this.releasePrintersForOrder(orderId, enums_1.JobStatus.DONE);
         }
         else if (doneQty > 0) {
             const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
@@ -179,7 +180,7 @@ let OrdersService = class OrdersService {
                 await this.statusHistoryRepository.save(history);
             }
             if (doneQty === item.qty) {
-                await this.syncJobsOnCompletion(itemId);
+                await this.releasePrintersForOrder(orderId, enums_1.JobStatus.DONE, itemId);
             }
         }
         return this.findOne(orderId);
@@ -201,7 +202,7 @@ let OrdersService = class OrdersService {
         if (!order) {
             throw new common_1.NotFoundException(`Pedido ${id} no encontrado`);
         }
-        const { reason, wastedGrams, materialId, moveToReprint } = reportFailureDto;
+        const { reason, wastedGrams, materialId, moveToReprint, metadata } = reportFailureDto;
         const failure = this.orderFailureRepository.create({
             orderId: id,
             reason,
@@ -209,7 +210,20 @@ let OrdersService = class OrdersService {
             materialId,
         });
         await this.orderFailureRepository.save(failure);
-        if (materialId && wastedGrams > 0) {
+        if (metadata?.materials && Array.isArray(metadata.materials)) {
+            for (const matSpec of metadata.materials) {
+                const { materialId: matId, wastedGrams: wasted } = matSpec;
+                if (!matId || !wasted)
+                    continue;
+                const material = await this.materialRepository.findOneBy({ id: matId });
+                if (material) {
+                    const newRemaining = Math.max(0, material.remainingWeightGrams - wasted);
+                    await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                    console.log(`[Auditoría Fallo Multi] Descontados ${wasted}g de ${material.name}.`);
+                }
+            }
+        }
+        else if (materialId && wastedGrams > 0) {
             const material = await this.materialRepository.findOneBy({ id: materialId });
             if (material) {
                 const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
@@ -218,11 +232,15 @@ let OrdersService = class OrdersService {
             }
         }
         const targetStatus = moveToReprint ? enums_1.OrderStatus.REPRINT_PENDING : enums_1.OrderStatus.FAILED;
+        let totalWasted = wastedGrams;
+        if (metadata?.materials && Array.isArray(metadata.materials)) {
+            totalWasted = metadata.materials.reduce((sum, m) => sum + (m.wastedGrams || 0), 0);
+        }
         const history = this.statusHistoryRepository.create({
             orderId: id,
             fromStatus: order.status,
             toStatus: targetStatus,
-            note: `Fallo reportado: ${reason} (${wastedGrams}g desperdiciados)`,
+            note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
             performedById: userId
         });
         await this.statusHistoryRepository.save(history);
@@ -252,17 +270,16 @@ let OrdersService = class OrdersService {
             });
             await this.statusHistoryRepository.save(history);
         }
-        if (status === enums_1.OrderStatus.DONE) {
-            await this.syncJobsOnCompletion(undefined, id);
+        if (status && status !== enums_1.OrderStatus.IN_PROGRESS) {
+            const targetJobStatus = status === enums_1.OrderStatus.DONE ? enums_1.JobStatus.DONE : enums_1.JobStatus.CANCELLED;
+            await this.releasePrintersForOrder(id, targetJobStatus);
         }
         return this.findOne(id);
     }
-    async syncJobsOnCompletion(orderItemId, orderId) {
-        const where = {};
+    async releasePrintersForOrder(orderId, targetJobStatus = enums_1.JobStatus.DONE, orderItemId) {
+        const where = { orderId };
         if (orderItemId)
             where.orderItemId = orderItemId;
-        if (orderId)
-            where.orderId = orderId;
         const activeJobs = await this.jobRepository.find({
             where: {
                 ...where,
@@ -270,9 +287,10 @@ let OrdersService = class OrdersService {
             }
         });
         for (const job of activeJobs) {
-            await this.jobRepository.update(job.id, { status: enums_1.JobStatus.DONE });
+            await this.jobRepository.update(job.id, { status: targetJobStatus });
             if (job.printerId) {
                 await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+                console.log(`[Auditoría] Impresora ${job.printerId} liberada al cambiar estado de pedido ${orderId}`);
             }
         }
     }

@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { JobStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Printer } from '../printers/entities/printer.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto } from './dto/order.dto';
@@ -24,5 +25,5 @@ export declare class OrdersService {
     checkAndSetReadyStatus(orderId: string): Promise<void>;
     reportFailure(id: string, reportFailureDto: ReportFailureDto, userId: string): Promise<Order>;
     updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order>;
-    private syncJobsOnCompletion;
+    releasePrintersForOrder(orderId: string, targetJobStatus?: JobStatus, orderItemId?: string): Promise<void>;
 }

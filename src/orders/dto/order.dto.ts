@@ -119,4 +119,7 @@ export class ReportFailureDto {
 
     @IsBoolean()
     moveToReprint: boolean;
+
+    @IsOptional()
+    metadata?: any;
 }

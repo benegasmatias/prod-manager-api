@@ -165,4 +165,8 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], ReportFailureDto.prototype, "moveToReprint", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Object)
+], ReportFailureDto.prototype, "metadata", void 0);
 //# sourceMappingURL=order.dto.js.map

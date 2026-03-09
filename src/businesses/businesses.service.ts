@@ -204,7 +204,7 @@ export class BusinessesService {
         // 5. Recent Orders
         const recentOrders = await this.orderRepository.find({
             where: { businessId },
-            order: { createdAt: 'DESC' },
+            order: { updatedAt: 'DESC' },
             take: 5
         });
 

@@ -43,6 +43,7 @@ export class OrdersService {
             where,
             relations: ['items', 'customer', 'responsableGeneral', 'jobs'],
             order: {
+                updatedAt: 'DESC',
                 dueDate: 'ASC',
                 createdAt: 'DESC',
                 priority: 'DESC',
@@ -207,7 +208,7 @@ export class OrdersService {
             await this.statusHistoryRepository.save(history);
 
             // También finalizamos todos los trabajos de este pedido
-            await this.syncJobsOnCompletion(undefined, orderId);
+            await this.releasePrintersForOrder(orderId, JobStatus.DONE);
         } else if (doneQty > 0) {
             const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
             if (oldOrder && oldOrder.status !== OrderStatus.IN_PROGRESS) {
@@ -223,7 +224,7 @@ export class OrdersService {
             }
             if (doneQty === item.qty) {
                 // Si este ítem específico se terminó, finalizamos sus trabajos
-                await this.syncJobsOnCompletion(itemId);
+                await this.releasePrintersForOrder(orderId, JobStatus.DONE, itemId);
             }
         }
 
@@ -258,7 +259,7 @@ export class OrdersService {
             throw new NotFoundException(`Pedido ${id} no encontrado`);
         }
 
-        const { reason, wastedGrams, materialId, moveToReprint } = reportFailureDto;
+        const { reason, wastedGrams, materialId, moveToReprint, metadata } = reportFailureDto;
 
         // Registrar la entidad de fallo
         const failure = this.orderFailureRepository.create({
@@ -269,8 +270,21 @@ export class OrdersService {
         });
         await this.orderFailureRepository.save(failure);
 
-        // Descontar material si se especificó
-        if (materialId && wastedGrams > 0) {
+        // Descontar material si se especificó (Multi-filamento prioridad)
+        if (metadata?.materials && Array.isArray(metadata.materials)) {
+            for (const matSpec of metadata.materials) {
+                const { materialId: matId, wastedGrams: wasted } = matSpec;
+                if (!matId || !wasted) continue;
+
+                const material = await this.materialRepository.findOneBy({ id: matId });
+                if (material) {
+                    const newRemaining = Math.max(0, material.remainingWeightGrams - wasted);
+                    await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                    console.log(`[Auditoría Fallo Multi] Descontados ${wasted}g de ${material.name}.`);
+                }
+            }
+        } else if (materialId && wastedGrams > 0) {
+            // Fallback para material único
             const material = await this.materialRepository.findOneBy({ id: materialId });
             if (material) {
                 const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
@@ -282,12 +296,18 @@ export class OrdersService {
         // Actualizar el estado del pedido
         const targetStatus = moveToReprint ? OrderStatus.REPRINT_PENDING : OrderStatus.FAILED;
 
+        // Calcular total desperdiciado para la nota
+        let totalWasted = wastedGrams;
+        if (metadata?.materials && Array.isArray(metadata.materials)) {
+            totalWasted = metadata.materials.reduce((sum: number, m: any) => sum + (m.wastedGrams || 0), 0);
+        }
+
         // Agregar nota histórica
         const history = this.statusHistoryRepository.create({
             orderId: id,
             fromStatus: order.status,
             toStatus: targetStatus,
-            note: `Fallo reportado: ${reason} (${wastedGrams}g desperdiciados)`,
+            note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
             performedById: userId
         });
         await this.statusHistoryRepository.save(history);
@@ -328,20 +348,21 @@ export class OrdersService {
             await this.statusHistoryRepository.save(history);
         }
 
-        if (status === OrderStatus.DONE) {
-            await this.syncJobsOnCompletion(undefined, id);
+        // Si el estado ya no es "EN PROCESO", liberamos las impresoras asociadas
+        if (status && status !== OrderStatus.IN_PROGRESS) {
+            const targetJobStatus = status === OrderStatus.DONE ? JobStatus.DONE : JobStatus.CANCELLED;
+            await this.releasePrintersForOrder(id, targetJobStatus);
         }
 
         return this.findOne(id);
     }
 
     /**
-     * Sincroniza y finaliza trabajos de producción cuando se completa un ítem o pedido
+     * Libera impresoras asociadas a un pedido y marca sus trabajos activos como terminados/cancelados
      */
-    private async syncJobsOnCompletion(orderItemId?: string, orderId?: string) {
-        const where: any = {};
+    async releasePrintersForOrder(orderId: string, targetJobStatus: JobStatus = JobStatus.DONE, orderItemId?: string) {
+        const where: any = { orderId };
         if (orderItemId) where.orderItemId = orderItemId;
-        if (orderId) where.orderId = orderId;
 
         const activeJobs = await this.jobRepository.find({
             where: {
@@ -351,12 +372,13 @@ export class OrdersService {
         });
 
         for (const job of activeJobs) {
-            // Marcar trabajo como terminado
-            await this.jobRepository.update(job.id, { status: JobStatus.DONE });
+            // Marcar trabajo con el estado objetivo
+            await this.jobRepository.update(job.id, { status: targetJobStatus });
 
             // Si tenía impresora, liberarla
             if (job.printerId) {
                 await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
+                console.log(`[Auditoría] Impresora ${job.printerId} liberada al cambiar estado de pedido ${orderId}`);
             }
         }
     }

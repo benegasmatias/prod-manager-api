@@ -32,6 +32,19 @@ let PrintersService = class PrintersService {
         if (!order.items || order.items.length === 0) {
             throw new common_1.NotFoundException('El pedido no tiene ítems para producir');
         }
+        if (order.jobs && order.jobs.length > 0) {
+            const activeJobs = order.jobs.filter(j => j.printerId &&
+                [enums_1.JobStatus.QUEUED, enums_1.JobStatus.PRINTING, enums_1.JobStatus.PAUSED].includes(j.status));
+            for (const job of activeJobs) {
+                if (job.printerId !== printerId) {
+                    await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+                    await this.jobsService.updateStatus(job.id, enums_1.JobStatus.CANCELLED, 'Pedido movido a otra impresora');
+                }
+                else {
+                    await this.jobsService.updateStatus(job.id, enums_1.JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                }
+            }
+        }
         await this.printerRepository.update(printerId, { status: enums_1.PrinterStatus.PRINTING });
         if (order.status !== enums_1.OrderStatus.IN_PROGRESS) {
             await this.ordersService.updateStatus(orderId, { status: enums_1.OrderStatus.IN_PROGRESS });

@@ -60,6 +60,10 @@ __decorate([
     __metadata("design:type", Date)
 ], Order.prototype, "createdAt", void 0);
 __decorate([
+    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    __metadata("design:type", Date)
+], Order.prototype, "updatedAt", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => order_item_entity_1.OrderItem, (item) => item.order, { cascade: true }),
     __metadata("design:type", Array)
 ], Order.prototype, "items", void 0);

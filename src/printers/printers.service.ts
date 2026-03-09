@@ -25,6 +25,26 @@ export class PrintersService {
             throw new NotFoundException('El pedido no tiene ítems para producir');
         }
 
+        // Si el pedido ya estaba en otra impresora, liberarla
+        if (order.jobs && order.jobs.length > 0) {
+            const activeJobs = order.jobs.filter(j =>
+                j.printerId &&
+                [JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED].includes(j.status)
+            );
+
+            for (const job of activeJobs) {
+                if (job.printerId !== printerId) {
+                    // Liberar la otra impresora
+                    await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
+                    // Cancelar el trabajo anterior
+                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Pedido movido a otra impresora');
+                } else {
+                    // Si es la misma impresora, cancelamos el anterior para que el nuevo tome el control con metadatos frescos
+                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                }
+            }
+        }
+
         // 1. Marcar impresora como ocupada
         await this.printerRepository.update(printerId, { status: PrinterStatus.PRINTING });
 

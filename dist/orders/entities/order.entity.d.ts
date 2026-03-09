@@ -15,6 +15,7 @@ export declare class Order {
     priority: number;
     status: OrderStatus;
     createdAt: Date;
+    updatedAt: Date;
     items: OrderItem[];
     customerId: string;
     customer: Customer;

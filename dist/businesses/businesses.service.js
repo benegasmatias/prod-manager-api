@@ -170,7 +170,7 @@ let BusinessesService = class BusinessesService {
         });
         const recentOrders = await this.orderRepository.find({
             where: { businessId },
-            order: { createdAt: 'DESC' },
+            order: { updatedAt: 'DESC' },
             take: 5
         });
         const realOverdue = await this.orderRepository

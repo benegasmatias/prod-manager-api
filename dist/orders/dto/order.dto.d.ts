@@ -37,4 +37,5 @@ export declare class ReportFailureDto {
     wastedGrams: number;
     materialId?: string;
     moveToReprint: boolean;
+    metadata?: any;
 }
