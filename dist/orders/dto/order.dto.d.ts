@@ -32,3 +32,9 @@ export declare class FindOrdersDto {
     businessId?: string;
     status?: OrderStatus;
 }
+export declare class ReportFailureDto {
+    reason: string;
+    wastedGrams: number;
+    materialId?: string;
+    moveToReprint: boolean;
+}

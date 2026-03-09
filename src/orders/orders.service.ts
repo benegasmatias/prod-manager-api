@@ -6,8 +6,10 @@ import { OrderItem } from './entities/order-item.entity';
 import { OrderStatus, JobStatus, PrinterStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Printer } from '../printers/entities/printer.entity';
-import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto } from './dto/order.dto';
+import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto } from './dto/order.dto';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
+import { OrderFailure } from './entities/order-failure.entity';
+import { Material } from '../materials/entities/material.entity';
 
 @Injectable()
 export class OrdersService {
@@ -22,6 +24,10 @@ export class OrdersService {
         private readonly printerRepository: Repository<Printer>,
         @InjectRepository(OrderStatusHistory)
         private readonly statusHistoryRepository: Repository<OrderStatusHistory>,
+        @InjectRepository(OrderFailure)
+        private readonly orderFailureRepository: Repository<OrderFailure>,
+        @InjectRepository(Material)
+        private readonly materialRepository: Repository<Material>,
     ) { }
 
     /**
@@ -35,7 +41,7 @@ export class OrdersService {
 
         return this.orderRepository.find({
             where,
-            relations: ['items', 'customer', 'responsableGeneral'],
+            relations: ['items', 'customer', 'responsableGeneral', 'jobs'],
             order: {
                 dueDate: 'ASC',
                 createdAt: 'DESC',
@@ -68,19 +74,31 @@ export class OrdersService {
         // Generar un código único simple si no viene uno
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
 
-        // Calcular el precio total sumando los items
-        const totalPrice = items?.reduce((acc, item) => acc + (Number(item.price) * (item.qty || 1)), 0) || 0;
+        // Calcular el precio total sumando los items (incluyendo costo de diseño si existe en metadata)
+        const totalPrice = items?.reduce((acc, item) => {
+            const basePrice = Number(item.price) * (item.qty || 1);
+            const designPrice = Number(item.metadata?.precioDiseno) || 0;
+            return acc + basePrice + (designPrice * (item.qty || 1));
+        }, 0) || 0;
 
         // Usar transacción para asegurar atomicidad
         return await this.orderRepository.manager.transaction(async (manager) => {
             // Obtener el rubro del negocio para automatizar workflow
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } }) as any;
 
+            let initialStatus = OrderStatus.PENDING;
+            if (business?.category === 'IMPRESION_3D') {
+                const needsDesign = items?.some(item => item.metadata?.seDiseñaSTL === true || item.metadata?.seDiseñaSTL === 'true');
+                if (needsDesign) {
+                    initialStatus = OrderStatus.DESIGN;
+                }
+            }
+
             const order = manager.create(Order, {
                 ...orderData,
                 code,
                 totalPrice,
-                status: OrderStatus.PENDING,
+                status: initialStatus,
             });
 
             const savedOrder = await manager.save(Order, order);
@@ -229,6 +247,55 @@ export class OrdersService {
             await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
             console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
         }
+    }
+
+    /**
+     * Reportar un fallo en un pedido (específicamente Impresión 3D)
+     */
+    async reportFailure(id: string, reportFailureDto: ReportFailureDto, userId: string): Promise<Order> {
+        const order = await this.orderRepository.findOne({ where: { id } });
+        if (!order) {
+            throw new NotFoundException(`Pedido ${id} no encontrado`);
+        }
+
+        const { reason, wastedGrams, materialId, moveToReprint } = reportFailureDto;
+
+        // Registrar la entidad de fallo
+        const failure = this.orderFailureRepository.create({
+            orderId: id,
+            reason,
+            wastedGrams,
+            materialId,
+        });
+        await this.orderFailureRepository.save(failure);
+
+        // Descontar material si se especificó
+        if (materialId && wastedGrams > 0) {
+            const material = await this.materialRepository.findOneBy({ id: materialId });
+            if (material) {
+                const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
+                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                console.log(`[Auditoría Fallo] Descontados ${wastedGrams}g de ${material.name} por fallo en pedido ${id}.`);
+            }
+        }
+
+        // Actualizar el estado del pedido
+        const targetStatus = moveToReprint ? OrderStatus.REPRINT_PENDING : OrderStatus.FAILED;
+
+        // Agregar nota histórica
+        const history = this.statusHistoryRepository.create({
+            orderId: id,
+            fromStatus: order.status,
+            toStatus: targetStatus,
+            note: `Fallo reportado: ${reason} (${wastedGrams}g desperdiciados)`,
+            performedById: userId
+        });
+        await this.statusHistoryRepository.save(history);
+
+        order.status = targetStatus;
+        await this.orderRepository.save(order);
+
+        return this.findOne(id);
     }
 
     /**

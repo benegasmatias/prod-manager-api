@@ -75,6 +75,9 @@ export class ProductionJob {
     @Column({ type: 'text', nullable: true, name: 'notes' })
     notes: string;
 
+    @Column({ type: 'json', nullable: true })
+    metadata: any;
+
     @OneToMany(() => JobProgress, (progress) => progress.productionJob)
     progress: JobProgress[];
 

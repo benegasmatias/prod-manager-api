@@ -1,4 +1,5 @@
-import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException, Post } from '@nestjs/common';
+
 import { AdminService } from './admin.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 
@@ -36,6 +37,13 @@ export class AdminController {
         this.checkGlobalAdmin(req);
         return this.adminService.updateRoleConfig(role, body);
     }
+
+    @Post('notifications')
+    async sendNotification(@Request() req, @Body() body: any) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.sendNotification(body);
+    }
+
 
 
     // Negocios

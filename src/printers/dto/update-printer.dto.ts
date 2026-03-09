@@ -16,4 +16,7 @@ export class UpdatePrinterDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    @IsOptional()
+    maxFilaments?: number;
 }

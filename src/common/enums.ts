@@ -14,7 +14,9 @@ export enum OrderStatus {
     ASSEMBLY = 'ASSEMBLY',
     PAINTING = 'PAINTING',
     BARNIZADO = 'BARNIZADO',
-    POST_PROCESS = 'POST_PROCESS'
+    POST_PROCESS = 'POST_PROCESS',
+    FAILED = 'FAILED',
+    REPRINT_PENDING = 'REPRINT_PENDING'
 }
 
 export enum JobStatus {

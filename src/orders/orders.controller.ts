@@ -23,6 +23,15 @@ export class OrdersController {
         return this.ordersService.create(createOrderDto);
     }
 
+    @Post(':id/fail')
+    async reportFailure(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() reportFailureDto: import('./dto/order.dto').ReportFailureDto,
+        @Request() req: any,
+    ) {
+        return this.ordersService.reportFailure(id, reportFailureDto, req.user.id);
+    }
+
     @Patch(':id/status')
     async updateStatus(
         @Param('id', ParseUUIDPipe) id: string,

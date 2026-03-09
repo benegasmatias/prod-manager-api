@@ -6,27 +6,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminModule = void 0;
+exports.NotificationsModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const admin_service_1 = require("./admin.service");
-const admin_controller_1 = require("./admin.controller");
-const business_entity_1 = require("../businesses/entities/business.entity");
-const user_entity_1 = require("../users/entities/user.entity");
-const global_role_config_entity_1 = require("./entities/global-role-config.entity");
+const notifications_service_1 = require("./notifications.service");
+const notifications_controller_1 = require("./notifications.controller");
+const notification_entity_1 = require("./entities/notification.entity");
 const users_module_1 = require("../users/users.module");
-let AdminModule = class AdminModule {
+let NotificationsModule = class NotificationsModule {
 };
-exports.AdminModule = AdminModule;
-exports.AdminModule = AdminModule = __decorate([
+exports.NotificationsModule = NotificationsModule;
+exports.NotificationsModule = NotificationsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([business_entity_1.Business, user_entity_1.User, global_role_config_entity_1.GlobalRoleConfig]),
+            typeorm_1.TypeOrmModule.forFeature([notification_entity_1.Notification]),
             users_module_1.UsersModule,
         ],
-        providers: [admin_service_1.AdminService],
-        controllers: [admin_controller_1.AdminController],
-        exports: [admin_service_1.AdminService],
+        providers: [notifications_service_1.NotificationsService],
+        controllers: [notifications_controller_1.NotificationsController],
+        exports: [notifications_service_1.NotificationsService],
     })
-], AdminModule);
-//# sourceMappingURL=admin.module.js.map
+], NotificationsModule);
+//# sourceMappingURL=notifications.module.js.map

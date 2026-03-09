@@ -22,13 +22,17 @@ const enums_1 = require("../common/enums");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const printer_entity_1 = require("../printers/entities/printer.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
+const order_failure_entity_1 = require("./entities/order-failure.entity");
+const material_entity_1 = require("../materials/entities/material.entity");
 let OrdersService = class OrdersService {
-    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository, statusHistoryRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository, statusHistoryRepository, orderFailureRepository, materialRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jobRepository = jobRepository;
         this.printerRepository = printerRepository;
         this.statusHistoryRepository = statusHistoryRepository;
+        this.orderFailureRepository = orderFailureRepository;
+        this.materialRepository = materialRepository;
     }
     async findAll(query) {
         const { businessId, status } = query;
@@ -39,7 +43,7 @@ let OrdersService = class OrdersService {
             where.status = status;
         return this.orderRepository.find({
             where,
-            relations: ['items', 'customer', 'responsableGeneral'],
+            relations: ['items', 'customer', 'responsableGeneral', 'jobs'],
             order: {
                 dueDate: 'ASC',
                 createdAt: 'DESC',
@@ -60,14 +64,25 @@ let OrdersService = class OrdersService {
     async create(createOrderDto) {
         const { items, ...orderData } = createOrderDto;
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
-        const totalPrice = items?.reduce((acc, item) => acc + (Number(item.price) * (item.qty || 1)), 0) || 0;
+        const totalPrice = items?.reduce((acc, item) => {
+            const basePrice = Number(item.price) * (item.qty || 1);
+            const designPrice = Number(item.metadata?.precioDiseno) || 0;
+            return acc + basePrice + (designPrice * (item.qty || 1));
+        }, 0) || 0;
         return await this.orderRepository.manager.transaction(async (manager) => {
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } });
+            let initialStatus = enums_1.OrderStatus.PENDING;
+            if (business?.category === 'IMPRESION_3D') {
+                const needsDesign = items?.some(item => item.metadata?.seDiseñaSTL === true || item.metadata?.seDiseñaSTL === 'true');
+                if (needsDesign) {
+                    initialStatus = enums_1.OrderStatus.DESIGN;
+                }
+            }
             const order = manager.create(order_entity_1.Order, {
                 ...orderData,
                 code,
                 totalPrice,
-                status: enums_1.OrderStatus.PENDING,
+                status: initialStatus,
             });
             const savedOrder = await manager.save(order_entity_1.Order, order);
             if (items && items.length > 0) {
@@ -181,6 +196,40 @@ let OrdersService = class OrdersService {
             console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
         }
     }
+    async reportFailure(id, reportFailureDto, userId) {
+        const order = await this.orderRepository.findOne({ where: { id } });
+        if (!order) {
+            throw new common_1.NotFoundException(`Pedido ${id} no encontrado`);
+        }
+        const { reason, wastedGrams, materialId, moveToReprint } = reportFailureDto;
+        const failure = this.orderFailureRepository.create({
+            orderId: id,
+            reason,
+            wastedGrams,
+            materialId,
+        });
+        await this.orderFailureRepository.save(failure);
+        if (materialId && wastedGrams > 0) {
+            const material = await this.materialRepository.findOneBy({ id: materialId });
+            if (material) {
+                const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
+                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                console.log(`[Auditoría Fallo] Descontados ${wastedGrams}g de ${material.name} por fallo en pedido ${id}.`);
+            }
+        }
+        const targetStatus = moveToReprint ? enums_1.OrderStatus.REPRINT_PENDING : enums_1.OrderStatus.FAILED;
+        const history = this.statusHistoryRepository.create({
+            orderId: id,
+            fromStatus: order.status,
+            toStatus: targetStatus,
+            note: `Fallo reportado: ${reason} (${wastedGrams}g desperdiciados)`,
+            performedById: userId
+        });
+        await this.statusHistoryRepository.save(history);
+        order.status = targetStatus;
+        await this.orderRepository.save(order);
+        return this.findOne(id);
+    }
     async updateStatus(id, updateStatusDto, userId) {
         const { status, notes, responsableGeneralId } = updateStatusDto;
         const order = await this.findOne(id);
@@ -236,7 +285,11 @@ exports.OrdersService = OrdersService = __decorate([
     __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
     __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
     __param(4, (0, typeorm_1.InjectRepository)(order_status_history_entity_1.OrderStatusHistory)),
+    __param(5, (0, typeorm_1.InjectRepository)(order_failure_entity_1.OrderFailure)),
+    __param(6, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

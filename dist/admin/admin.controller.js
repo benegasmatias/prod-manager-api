@@ -29,6 +29,18 @@ let AdminController = class AdminController {
             throw new common_1.ForbiddenException('No tienes permisos administrativos globales.');
         }
     }
+    async getRoleConfigs(req) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.findAllRoleConfigs();
+    }
+    async updateRoleConfig(req, role, body) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.updateRoleConfig(role, body);
+    }
+    async sendNotification(req, body) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.sendNotification(body);
+    }
     async getAllBusinesses(req) {
         this.checkGlobalAdmin(req);
         return this.adminService.findAllBusinesses();
@@ -70,6 +82,30 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "initAdmin", null);
+__decorate([
+    (0, common_1.Get)('roles'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getRoleConfigs", null);
+__decorate([
+    (0, common_1.Patch)('roles/:role'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('role')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, Object]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "updateRoleConfig", null);
+__decorate([
+    (0, common_1.Post)('notifications'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "sendNotification", null);
 __decorate([
     (0, common_1.Get)('businesses'),
     __param(0, (0, common_1.Request)()),

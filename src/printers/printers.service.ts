@@ -17,7 +17,7 @@ export class PrintersService {
         private readonly jobsService: JobsService,
     ) { }
 
-    async assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string): Promise<Printer> {
+    async assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Printer> {
         const printer = await this.findOne(printerId, businessId);
         const order = await this.ordersService.findOne(orderId);
 
@@ -41,6 +41,7 @@ export class PrintersService {
             orderItemId: firstItem.id,
             printerId: printerId,
             materialId: materialId,
+            metadata: metadata,
             totalUnits: firstItem.qty,
             title: `Prod: ${order.code || 'S/N'} - ${firstItem.name}`
         });

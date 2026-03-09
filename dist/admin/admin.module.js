@@ -13,17 +13,21 @@ const admin_service_1 = require("./admin.service");
 const admin_controller_1 = require("./admin.controller");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const user_entity_1 = require("../users/entities/user.entity");
+const global_role_config_entity_1 = require("./entities/global-role-config.entity");
 const users_module_1 = require("../users/users.module");
+const notifications_module_1 = require("../notifications/notifications.module");
+const subscription_reminder_service_1 = require("./tasks/subscription-reminder.service");
 let AdminModule = class AdminModule {
 };
 exports.AdminModule = AdminModule;
 exports.AdminModule = AdminModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([business_entity_1.Business, user_entity_1.User]),
+            typeorm_1.TypeOrmModule.forFeature([business_entity_1.Business, user_entity_1.User, global_role_config_entity_1.GlobalRoleConfig]),
             users_module_1.UsersModule,
+            notifications_module_1.NotificationsModule,
         ],
-        providers: [admin_service_1.AdminService],
+        providers: [admin_service_1.AdminService, subscription_reminder_service_1.SubscriptionReminderService],
         controllers: [admin_controller_1.AdminController],
         exports: [admin_service_1.AdminService],
     })

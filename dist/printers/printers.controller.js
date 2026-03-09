@@ -39,8 +39,8 @@ let PrintersController = class PrintersController {
     async updateStatus(id, status, businessId) {
         return this.printersService.updateStatus(id, status, businessId);
     }
-    async assignOrder(id, orderId, materialId, businessId) {
-        return this.printersService.assignOrder(id, orderId, materialId, businessId);
+    async assignOrder(id, orderId, materialId, metadata, businessId) {
+        return this.printersService.assignOrder(id, orderId, materialId, businessId, metadata);
     }
     async release(id, businessId) {
         return this.printersService.release(id, businessId);
@@ -96,9 +96,10 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Body)('orderId', common_1.ParseUUIDPipe)),
     __param(2, (0, common_1.Body)('materialId')),
-    __param(3, (0, common_1.Query)('businessId')),
+    __param(3, (0, common_1.Body)('metadata')),
+    __param(4, (0, common_1.Query)('businessId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, Object, String]),
     __metadata("design:returntype", Promise)
 ], PrintersController.prototype, "assignOrder", null);
 __decorate([

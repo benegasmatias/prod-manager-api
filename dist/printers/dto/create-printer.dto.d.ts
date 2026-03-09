@@ -4,4 +4,5 @@ export declare class CreatePrinterDto {
     model?: string;
     nozzle?: string;
     active?: boolean;
+    maxFilaments?: number;
 }

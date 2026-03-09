@@ -22,6 +22,9 @@ export class Printer {
     @Column({ type: 'enum', enum: PrinterStatus, default: PrinterStatus.IDLE })
     status: PrinterStatus;
 
+    @Column({ name: 'max_filaments', type: 'int', default: 1 })
+    maxFilaments: number;
+
     @Column({ default: true })
     active: boolean;
 

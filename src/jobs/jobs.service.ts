@@ -175,7 +175,28 @@ export class JobsService {
      * Helper para descontar material del stock basado en las unidades producidas.
      */
     private async deductMaterialWeight(job: ProductionJob, units: number) {
-        if (!job.materialId || units <= 0) return;
+        if (units <= 0) return;
+
+        // Soporte para múltiples materiales (ej: Bambu A1 Combo)
+        if (job.metadata?.materials && Array.isArray(job.metadata.materials)) {
+            for (const matSpec of job.metadata.materials) {
+                const { materialId, gramsPerUnit } = matSpec;
+                if (!materialId || !gramsPerUnit) continue;
+
+                const weightToDeduct = gramsPerUnit * units;
+                if (weightToDeduct > 0) {
+                    const material = await this.materialRepository.findOneBy({ id: materialId });
+                    if (material) {
+                        const newRemaining = Math.max(0, material.remainingWeightGrams - weightToDeduct);
+                        await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
+                        console.log(`[Filamento Multi] Descontados ${weightToDeduct.toFixed(2)}g de ${material.name}. Restante: ${newRemaining.toFixed(2)}g`);
+                    }
+                }
+            }
+            return; // Evitar doble descuento si hay un material primario seteado
+        }
+
+        if (!job.materialId) return;
 
         // Peso estimado por unidad
         let weightPerUnit = 0;

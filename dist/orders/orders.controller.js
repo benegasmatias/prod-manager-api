@@ -30,6 +30,9 @@ let OrdersController = class OrdersController {
     async create(createOrderDto) {
         return this.ordersService.create(createOrderDto);
     }
+    async reportFailure(id, reportFailureDto, req) {
+        return this.ordersService.reportFailure(id, reportFailureDto, req.user.id);
+    }
     async updateStatus(id, updateStatusDto, req) {
         return this.ordersService.updateStatus(id, updateStatusDto, req.user.id);
     }
@@ -59,6 +62,15 @@ __decorate([
     __metadata("design:paramtypes", [order_dto_1.CreateOrderDto]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "create", null);
+__decorate([
+    (0, common_1.Post)(':id/fail'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
+    __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "reportFailure", null);
 __decorate([
     (0, common_1.Patch)(':id/status'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),

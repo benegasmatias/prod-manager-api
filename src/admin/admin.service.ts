@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
+
 import { GlobalRoleConfig } from './entities/global-role-config.entity';
+import { NotificationsService } from '../notifications/notifications.service';
+import { Notification } from '../notifications/entities/notification.entity';
 
 @Injectable()
 export class AdminService {
@@ -14,7 +17,9 @@ export class AdminService {
         private readonly userRepository: Repository<User>,
         @InjectRepository(GlobalRoleConfig)
         private readonly roleConfigRepository: Repository<GlobalRoleConfig>,
+        private readonly notificationsService: NotificationsService,
     ) { }
+
 
     // Roles and Permissions
     async findAllRoleConfigs(): Promise<GlobalRoleConfig[]> {
@@ -25,6 +30,11 @@ export class AdminService {
         await this.roleConfigRepository.update(role, data);
         return this.roleConfigRepository.findOneBy({ role }) as Promise<GlobalRoleConfig>;
     }
+
+    async sendNotification(data: Partial<Notification>): Promise<Notification> {
+        return this.notificationsService.create(data);
+    }
+
 
 
     // Negocios

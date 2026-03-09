@@ -37,6 +37,9 @@ export class CreateJobDto {
     @IsString()
     @IsOptional()
     responsableId?: string;
+
+    @IsOptional()
+    metadata?: any;
 }
 
 export class UpdateJobDto {
@@ -67,6 +70,9 @@ export class UpdateJobDto {
     @IsString()
     @IsOptional()
     responsableId?: string;
+
+    @IsOptional()
+    metadata?: any;
 }
 
 export class CreateProgressDto {

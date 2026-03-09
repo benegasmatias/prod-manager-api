@@ -10,7 +10,7 @@ export declare class PrintersService {
     private readonly ordersService;
     private readonly jobsService;
     constructor(printerRepository: Repository<Printer>, ordersService: OrdersService, jobsService: JobsService);
-    assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string): Promise<Printer>;
+    assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Printer>;
     release(printerId: string, businessId?: string): Promise<Printer>;
     create(createDto: CreatePrinterDto): Promise<Printer>;
     findAll(businessId?: string, onlyActive?: boolean): Promise<Printer[]>;

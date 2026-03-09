@@ -26,7 +26,7 @@ let PrintersService = class PrintersService {
         this.ordersService = ordersService;
         this.jobsService = jobsService;
     }
-    async assignOrder(printerId, orderId, materialId, businessId) {
+    async assignOrder(printerId, orderId, materialId, businessId, metadata) {
         const printer = await this.findOne(printerId, businessId);
         const order = await this.ordersService.findOne(orderId);
         if (!order.items || order.items.length === 0) {
@@ -42,6 +42,7 @@ let PrintersService = class PrintersService {
             orderItemId: firstItem.id,
             printerId: printerId,
             materialId: materialId,
+            metadata: metadata,
             totalUnits: firstItem.qty,
             title: `Prod: ${order.code || 'S/N'} - ${firstItem.name}`
         });

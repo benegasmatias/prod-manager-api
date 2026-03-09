@@ -27,6 +27,7 @@ export declare class ProductionJob {
     responsableId: string;
     responsable: Employee;
     notes: string;
+    metadata: any;
     progress: JobProgress[];
     statusHistory: JobStatusHistory[];
     createdAt: Date;

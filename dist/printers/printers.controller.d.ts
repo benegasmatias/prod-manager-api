@@ -10,7 +10,7 @@ export declare class PrintersController {
     findOne(id: string, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     update(id: string, updateDto: UpdatePrinterDto, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     updateStatus(id: string, status: PrinterStatus, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
-    assignOrder(id: string, orderId: string, materialId?: string, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
+    assignOrder(id: string, orderId: string, materialId?: string, metadata?: any, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     release(id: string, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     remove(id: string, businessId?: string): Promise<void>;
 }

@@ -4,6 +4,9 @@ export declare class AdminController {
     constructor(adminService: AdminService);
     initAdmin(req: any): Promise<import("../users/entities/user.entity").User>;
     private checkGlobalAdmin;
+    getRoleConfigs(req: any): Promise<import("./entities/global-role-config.entity").GlobalRoleConfig[]>;
+    updateRoleConfig(req: any, role: string, body: any): Promise<import("./entities/global-role-config.entity").GlobalRoleConfig>;
+    sendNotification(req: any, body: any): Promise<import("../notifications/entities/notification.entity").Notification>;
     getAllBusinesses(req: any): Promise<import("../businesses/entities/business.entity").Business[]>;
     getBusiness(req: any, id: string): Promise<import("../businesses/entities/business.entity").Business>;
     updateBusinessStatus(req: any, id: string, body: {

@@ -9,6 +9,7 @@ const business_entity_1 = require("../businesses/entities/business.entity");
 const business_membership_entity_1 = require("../businesses/entities/business-membership.entity");
 const printer_entity_1 = require("../printers/entities/printer.entity");
 const enums_2 = require("../common/enums");
+const global_role_config_entity_1 = require("../admin/entities/global-role-config.entity");
 async function seed() {
     try {
         await data_source_1.AppDataSource.initialize();
@@ -18,6 +19,31 @@ async function seed() {
         const userRepo = data_source_1.AppDataSource.getRepository(user_entity_1.User);
         const businessRepo = data_source_1.AppDataSource.getRepository(business_entity_1.Business);
         const membershipRepo = data_source_1.AppDataSource.getRepository(business_membership_entity_1.BusinessMembership);
+        const roleConfigRepo = data_source_1.AppDataSource.getRepository(global_role_config_entity_1.GlobalRoleConfig);
+        const baseRoles = [
+            {
+                role: 'SUPER_ADMIN',
+                description: 'Acceso total al ecosistema',
+                capabilities: { 'all_access': true }
+            },
+            {
+                role: 'ADMIN',
+                description: 'Administrador operativo del panel general',
+                capabilities: { 'manage_businesses': true, 'manage_users': true, 'view_audit': true }
+            },
+            {
+                role: 'SUPPORT',
+                description: 'Soporte técnico y atención al cliente',
+                capabilities: { 'view_businesses': true, 'view_users': true, 'manage_tickets': true }
+            }
+        ];
+        for (const r of baseRoles) {
+            const exists = await roleConfigRepo.findOneBy({ role: r.role });
+            if (!exists) {
+                await roleConfigRepo.save(roleConfigRepo.create(r));
+                console.log(`✅ Rol configurado: ${r.role}`);
+            }
+        }
         const baseBusinesses = [
             { name: 'Taller Impresión 3D Alfa', category: 'IMPRESIONES_3D' },
             { name: 'Impresiones 3D Express', category: 'IMPRESIONES_3D' },

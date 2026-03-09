@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FindOrdersDto = exports.UpdateOrderStatusDto = exports.UpdateProgressDto = exports.CreateOrderDto = exports.CreateOrderItemDto = void 0;
+exports.ReportFailureDto = exports.FindOrdersDto = exports.UpdateOrderStatusDto = exports.UpdateProgressDto = exports.CreateOrderDto = exports.CreateOrderItemDto = void 0;
 const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 const enums_1 = require("../../common/enums");
@@ -143,4 +143,26 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], FindOrdersDto.prototype, "status", void 0);
+class ReportFailureDto {
+}
+exports.ReportFailureDto = ReportFailureDto;
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], ReportFailureDto.prototype, "reason", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], ReportFailureDto.prototype, "wastedGrams", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], ReportFailureDto.prototype, "materialId", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], ReportFailureDto.prototype, "moveToReprint", void 0);
 //# sourceMappingURL=order.dto.js.map

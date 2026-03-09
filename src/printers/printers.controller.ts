@@ -55,9 +55,10 @@ export class PrintersController {
         @Param('id', ParseUUIDPipe) id: string,
         @Body('orderId', ParseUUIDPipe) orderId: string,
         @Body('materialId') materialId?: string,
+        @Body('metadata') metadata?: any,
         @Query('businessId') businessId?: string,
     ) {
-        return this.printersService.assignOrder(id, orderId, materialId, businessId);
+        return this.printersService.assignOrder(id, orderId, materialId, businessId, metadata);
     }
 
     @Post(':id/release')

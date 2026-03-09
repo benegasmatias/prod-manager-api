@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
 import { OrderStatus } from '../../common/enums';
 
 export class CreateOrderItemDto {
@@ -102,4 +102,21 @@ export class FindOrdersDto {
     @IsEnum(OrderStatus)
     @IsOptional()
     status?: OrderStatus;
+}
+
+export class ReportFailureDto {
+    @IsString()
+    @IsNotEmpty()
+    reason: string;
+
+    @IsNumber()
+    @Min(0)
+    wastedGrams: number;
+
+    @IsString()
+    @IsOptional()
+    materialId?: string;
+
+    @IsBoolean()
+    moveToReprint: boolean;
 }

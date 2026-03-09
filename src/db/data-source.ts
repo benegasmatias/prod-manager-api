@@ -3,6 +3,7 @@ import { Customer } from '../customers/entities/customer.entity';
 import { Product } from '../products/entities/product.entity';
 import { Order } from '../orders/entities/order.entity';
 import { OrderItem } from '../orders/entities/order-item.entity';
+import { OrderFailure } from '../orders/entities/order-failure.entity';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Payment } from '../payments/entities/payment.entity';
@@ -17,6 +18,8 @@ import { Business } from '../businesses/entities/business.entity';
 import { BusinessMembership } from '../businesses/entities/business-membership.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 import { Employee } from '../employees/entities/employee.entity';
+import { GlobalRoleConfig } from '../admin/entities/global-role-config.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -31,6 +34,7 @@ export const AppDataSource = new DataSource({
         Product,
         Order,
         OrderItem,
+        OrderFailure,
         OrderStatusHistory,
         ProductionJob,
         Payment,
@@ -45,6 +49,8 @@ export const AppDataSource = new DataSource({
         BusinessMembership,
         BusinessTemplate,
         Employee,
+        GlobalRoleConfig,
+        Notification,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

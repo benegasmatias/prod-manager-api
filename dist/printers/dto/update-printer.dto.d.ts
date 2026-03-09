@@ -3,4 +3,5 @@ export declare class UpdatePrinterDto {
     model?: string;
     nozzle?: string;
     active?: boolean;
+    maxFilaments?: number;
 }

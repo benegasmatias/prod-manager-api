@@ -18,10 +18,24 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const user_entity_1 = require("../users/entities/user.entity");
+const global_role_config_entity_1 = require("./entities/global-role-config.entity");
+const notifications_service_1 = require("../notifications/notifications.service");
 let AdminService = class AdminService {
-    constructor(businessRepository, userRepository) {
+    constructor(businessRepository, userRepository, roleConfigRepository, notificationsService) {
         this.businessRepository = businessRepository;
         this.userRepository = userRepository;
+        this.roleConfigRepository = roleConfigRepository;
+        this.notificationsService = notificationsService;
+    }
+    async findAllRoleConfigs() {
+        return this.roleConfigRepository.find();
+    }
+    async updateRoleConfig(role, data) {
+        await this.roleConfigRepository.update(role, data);
+        return this.roleConfigRepository.findOneBy({ role });
+    }
+    async sendNotification(data) {
+        return this.notificationsService.create(data);
     }
     async findAllBusinesses() {
         return this.businessRepository.find({
@@ -86,7 +100,10 @@ exports.AdminService = AdminService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(business_entity_1.Business)),
     __param(1, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(2, (0, typeorm_1.InjectRepository)(global_role_config_entity_1.GlobalRoleConfig)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
-        typeorm_2.Repository])
+        typeorm_2.Repository,
+        typeorm_2.Repository,
+        notifications_service_1.NotificationsService])
 ], AdminService);
 //# sourceMappingURL=admin.service.js.map

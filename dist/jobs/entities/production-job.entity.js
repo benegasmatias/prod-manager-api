@@ -108,6 +108,10 @@ __decorate([
     __metadata("design:type", String)
 ], ProductionJob.prototype, "notes", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    __metadata("design:type", Object)
+], ProductionJob.prototype, "metadata", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => job_progress_entity_1.JobProgress, (progress) => progress.productionJob),
     __metadata("design:type", Array)
 ], ProductionJob.prototype, "progress", void 0);

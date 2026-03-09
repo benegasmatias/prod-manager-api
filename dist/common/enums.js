@@ -18,6 +18,8 @@ var OrderStatus;
     OrderStatus["PAINTING"] = "PAINTING";
     OrderStatus["BARNIZADO"] = "BARNIZADO";
     OrderStatus["POST_PROCESS"] = "POST_PROCESS";
+    OrderStatus["FAILED"] = "FAILED";
+    OrderStatus["REPRINT_PENDING"] = "REPRINT_PENDING";
 })(OrderStatus || (exports.OrderStatus = OrderStatus = {}));
 var JobStatus;
 (function (JobStatus) {
