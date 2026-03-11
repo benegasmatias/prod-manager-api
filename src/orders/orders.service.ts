@@ -34,10 +34,11 @@ export class OrdersService {
      * Obtener pedidos ordenados por dueDate asc, luego priority desc (asumiendo que mayor nro es más prioridad)
      */
     async findAll(query: FindOrdersDto): Promise<Order[]> {
-        const { businessId, status } = query;
+        const { businessId, status, type } = query;
         const where: any = {};
         if (businessId) where.businessId = businessId;
         if (status) where.status = status;
+        if (type) where.type = type;
 
         return this.orderRepository.find({
             where,
@@ -57,7 +58,12 @@ export class OrdersService {
     async findOne(id: string): Promise<Order> {
         const order = await this.orderRepository.findOne({
             where: { id },
-            relations: ['items', 'customer', 'responsableGeneral', 'jobs', 'jobs.responsable', 'business'],
+            relations: [
+                'items', 'customer', 'responsableGeneral',
+                'jobs', 'jobs.responsable', 'business',
+                'statusHistory', 'statusHistory.performedBy',
+                'failures', 'failures.material'
+            ],
         });
 
         if (!order) {
@@ -322,13 +328,17 @@ export class OrdersService {
      * Actualizar estado manual del pedido (para compatibilidad o extras)
      */
     async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
-        const { status, notes, responsableGeneralId } = updateStatusDto;
+        const { status, type, clientName, totalPrice, dueDate, notes, responsableGeneralId } = updateStatusDto;
 
         const order = await this.findOne(id);
         const oldStatus = order.status;
 
         const updateData: any = {};
         if (status !== undefined) updateData.status = status;
+        if (type !== undefined) updateData.type = type;
+        if (clientName !== undefined) updateData.clientName = clientName;
+        if (totalPrice !== undefined) updateData.totalPrice = totalPrice;
+        if (dueDate !== undefined) updateData.dueDate = dueDate;
         if (responsableGeneralId !== undefined) updateData.responsableGeneralId = responsableGeneralId;
 
         // Perform update on the order

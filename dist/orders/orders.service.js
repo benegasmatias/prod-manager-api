@@ -35,12 +35,14 @@ let OrdersService = class OrdersService {
         this.materialRepository = materialRepository;
     }
     async findAll(query) {
-        const { businessId, status } = query;
+        const { businessId, status, type } = query;
         const where = {};
         if (businessId)
             where.businessId = businessId;
         if (status)
             where.status = status;
+        if (type)
+            where.type = type;
         return this.orderRepository.find({
             where,
             relations: ['items', 'customer', 'responsableGeneral', 'jobs'],
@@ -55,7 +57,12 @@ let OrdersService = class OrdersService {
     async findOne(id) {
         const order = await this.orderRepository.findOne({
             where: { id },
-            relations: ['items', 'customer', 'responsableGeneral', 'jobs', 'jobs.responsable', 'business'],
+            relations: [
+                'items', 'customer', 'responsableGeneral',
+                'jobs', 'jobs.responsable', 'business',
+                'statusHistory', 'statusHistory.performedBy',
+                'failures', 'failures.material'
+            ],
         });
         if (!order) {
             throw new common_1.NotFoundException(`Pedido con ID ${id} no encontrado`);
@@ -249,12 +256,20 @@ let OrdersService = class OrdersService {
         return this.findOne(id);
     }
     async updateStatus(id, updateStatusDto, userId) {
-        const { status, notes, responsableGeneralId } = updateStatusDto;
+        const { status, type, clientName, totalPrice, dueDate, notes, responsableGeneralId } = updateStatusDto;
         const order = await this.findOne(id);
         const oldStatus = order.status;
         const updateData = {};
         if (status !== undefined)
             updateData.status = status;
+        if (type !== undefined)
+            updateData.type = type;
+        if (clientName !== undefined)
+            updateData.clientName = clientName;
+        if (totalPrice !== undefined)
+            updateData.totalPrice = totalPrice;
+        if (dueDate !== undefined)
+            updateData.dueDate = dueDate;
         if (responsableGeneralId !== undefined)
             updateData.responsableGeneralId = responsableGeneralId;
         if (Object.keys(updateData).length > 0) {

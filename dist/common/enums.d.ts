@@ -1,3 +1,7 @@
+export declare enum OrderType {
+    CUSTOMER = "CUSTOMER",
+    STOCK = "STOCK"
+}
 export declare enum OrderStatus {
     PENDING = "PENDING",
     IN_PROGRESS = "IN_PROGRESS",
@@ -15,7 +19,9 @@ export declare enum OrderStatus {
     BARNIZADO = "BARNIZADO",
     POST_PROCESS = "POST_PROCESS",
     FAILED = "FAILED",
-    REPRINT_PENDING = "REPRINT_PENDING"
+    REPRINT_PENDING = "REPRINT_PENDING",
+    RE_WORK = "RE_WORK",
+    IN_STOCK = "IN_STOCK"
 }
 export declare enum JobStatus {
     QUEUED = "QUEUED",

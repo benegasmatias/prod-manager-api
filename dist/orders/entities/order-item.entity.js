@@ -95,6 +95,14 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'jsonb', nullable: true }),
     __metadata("design:type", Object)
 ], OrderItem.prototype, "metadata", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'estimated_unit_cost', type: 'decimal', precision: 12, scale: 2, default: 0 }),
+    __metadata("design:type", Number)
+], OrderItem.prototype, "estimatedUnitCost", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'estimated_sale_unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 }),
+    __metadata("design:type", Number)
+], OrderItem.prototype, "estimatedSaleUnitPrice", void 0);
 exports.OrderItem = OrderItem = __decorate([
     (0, typeorm_1.Entity)('order_items')
 ], OrderItem);

@@ -1,3 +1,8 @@
+export enum OrderType {
+    CUSTOMER = 'CUSTOMER',
+    STOCK = 'STOCK',
+}
+
 export enum OrderStatus {
     PENDING = 'PENDING',
     IN_PROGRESS = 'IN_PROGRESS',
@@ -16,7 +21,9 @@ export enum OrderStatus {
     BARNIZADO = 'BARNIZADO',
     POST_PROCESS = 'POST_PROCESS',
     FAILED = 'FAILED',
-    REPRINT_PENDING = 'REPRINT_PENDING'
+    REPRINT_PENDING = 'REPRINT_PENDING',
+    RE_WORK = 'RE_WORK',
+    IN_STOCK = 'IN_STOCK'
 }
 
 export enum JobStatus {

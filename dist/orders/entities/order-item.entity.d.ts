@@ -21,4 +21,6 @@ export declare class OrderItem {
     notes: string;
     deposit: number;
     metadata: any;
+    estimatedUnitCost: number;
+    estimatedSaleUnitPrice: number;
 }

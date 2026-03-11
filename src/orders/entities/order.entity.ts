@@ -1,10 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
-import { OrderStatus } from '../../common/enums';
+import { OrderStatus, OrderType } from '../../common/enums';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { OrderStatusHistory } from '../../history/entities/order-status-history.entity';
 import { Payment } from '../../payments/entities/payment.entity';
+import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { BusinessTemplate } from '../../businesses/entities/business-template.entity';
 import { Employee } from '../../employees/entities/employee.entity';
@@ -25,7 +26,7 @@ export class Order {
     @Column({ name: 'client_name', nullable: true })
     clientName: string;
 
-    @Column({ name: 'due_date' })
+    @Column({ name: 'due_date', nullable: true })
     dueDate: Date;
 
     @Column({ type: 'int', default: 1 })
@@ -37,6 +38,13 @@ export class Order {
         default: OrderStatus.PENDING
     })
     status: OrderStatus;
+
+    @Column({
+        type: 'enum',
+        enum: OrderType,
+        default: OrderType.CUSTOMER
+    })
+    type: OrderType;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
@@ -61,6 +69,9 @@ export class Order {
 
     @OneToMany(() => OrderStatusHistory, (history) => history.order)
     statusHistory: OrderStatusHistory[];
+
+    @OneToMany(() => OrderFailure, (failure) => failure.order)
+    failures: OrderFailure[];
 
     @OneToMany(() => Payment, (payment) => payment.order)
     payments: Payment[];

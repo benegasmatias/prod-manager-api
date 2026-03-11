@@ -61,6 +61,18 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)
 ], CreateOrderItemDto.prototype, "metadata", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateOrderItemDto.prototype, "estimatedUnitCost", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateOrderItemDto.prototype, "estimatedSaleUnitPrice", void 0);
 class CreateOrderDto {
 }
 exports.CreateOrderDto = CreateOrderDto;
@@ -76,11 +88,17 @@ __decorate([
 ], CreateOrderDto.prototype, "customerId", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], CreateOrderDto.prototype, "clientName", void 0);
 __decorate([
+    (0, class_validator_1.IsEnum)(enums_1.OrderType),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], CreateOrderDto.prototype, "type", void 0);
+__decorate([
     (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsOptional)(),
     (0, class_transformer_1.Type)(() => Date),
     __metadata("design:type", Date)
 ], CreateOrderDto.prototype, "dueDate", void 0);
@@ -118,8 +136,30 @@ class UpdateOrderStatusDto {
 exports.UpdateOrderStatusDto = UpdateOrderStatusDto;
 __decorate([
     (0, class_validator_1.IsEnum)(enums_1.OrderStatus),
+    (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], UpdateOrderStatusDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(enums_1.OrderType),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateOrderStatusDto.prototype, "type", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], UpdateOrderStatusDto.prototype, "clientName", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateOrderStatusDto.prototype, "totalPrice", void 0);
+__decorate([
+    (0, class_validator_1.IsDate)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_transformer_1.Type)(() => Date),
+    __metadata("design:type", Date)
+], UpdateOrderStatusDto.prototype, "dueDate", void 0);
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
@@ -143,6 +183,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
 ], FindOrdersDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(enums_1.OrderType),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", String)
+], FindOrdersDto.prototype, "type", void 0);
 class ReportFailureDto {
 }
 exports.ReportFailureDto = ReportFailureDto;
@@ -165,6 +210,11 @@ __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)
 ], ReportFailureDto.prototype, "moveToReprint", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsEnum)(enums_1.OrderStatus),
+    __metadata("design:type", String)
+], ReportFailureDto.prototype, "targetStatus", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Object)

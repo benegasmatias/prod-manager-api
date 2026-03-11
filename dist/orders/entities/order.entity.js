@@ -17,6 +17,7 @@ const enums_1 = require("../../common/enums");
 const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
 const order_status_history_entity_1 = require("../../history/entities/order-status-history.entity");
 const payment_entity_1 = require("../../payments/entities/payment.entity");
+const order_failure_entity_1 = require("./order-failure.entity");
 const business_entity_1 = require("../../businesses/entities/business.entity");
 const employee_entity_1 = require("../../employees/entities/employee.entity");
 let Order = class Order {
@@ -40,7 +41,7 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "clientName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'due_date' }),
+    (0, typeorm_1.Column)({ name: 'due_date', nullable: true }),
     __metadata("design:type", Date)
 ], Order.prototype, "dueDate", void 0);
 __decorate([
@@ -55,6 +56,14 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enums_1.OrderType,
+        default: enums_1.OrderType.CUSTOMER
+    }),
+    __metadata("design:type", String)
+], Order.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
@@ -84,6 +93,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => order_status_history_entity_1.OrderStatusHistory, (history) => history.order),
     __metadata("design:type", Array)
 ], Order.prototype, "statusHistory", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => order_failure_entity_1.OrderFailure, (failure) => failure.order),
+    __metadata("design:type", Array)
+], Order.prototype, "failures", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => payment_entity_1.Payment, (payment) => payment.order),
     __metadata("design:type", Array)

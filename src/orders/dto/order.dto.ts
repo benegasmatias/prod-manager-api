@@ -1,6 +1,6 @@
 import { Type } from 'class-transformer';
 import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
-import { OrderStatus } from '../../common/enums';
+import { OrderStatus, OrderType } from '../../common/enums';
 
 export class CreateOrderItemDto {
     @IsString()
@@ -38,6 +38,16 @@ export class CreateOrderItemDto {
 
     @IsOptional()
     metadata?: any;
+
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    estimatedUnitCost?: number;
+
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    estimatedSaleUnitPrice?: number;
 }
 
 export class CreateOrderDto {
@@ -50,12 +60,17 @@ export class CreateOrderDto {
     customerId?: string;
 
     @IsString()
-    @IsNotEmpty()
-    clientName: string;
+    @IsOptional()
+    clientName?: string;
+
+    @IsEnum(OrderType)
+    @IsOptional()
+    type?: OrderType;
 
     @IsDate()
+    @IsOptional()
     @Type(() => Date)
-    dueDate: Date;
+    dueDate?: Date;
 
     @IsInt()
     @Min(1)
@@ -83,7 +98,25 @@ export class UpdateProgressDto {
 
 export class UpdateOrderStatusDto {
     @IsEnum(OrderStatus)
-    status: OrderStatus;
+    @IsOptional()
+    status?: OrderStatus;
+
+    @IsEnum(OrderType)
+    @IsOptional()
+    type?: OrderType;
+
+    @IsString()
+    @IsOptional()
+    clientName?: string;
+
+    @IsNumber()
+    @IsOptional()
+    totalPrice?: number;
+
+    @IsDate()
+    @IsOptional()
+    @Type(() => Date)
+    dueDate?: Date;
 
     @IsString()
     @IsOptional()
@@ -102,6 +135,10 @@ export class FindOrdersDto {
     @IsEnum(OrderStatus)
     @IsOptional()
     status?: OrderStatus;
+
+    @IsEnum(OrderType)
+    @IsOptional()
+    type?: OrderType;
 }
 
 export class ReportFailureDto {
@@ -119,6 +156,10 @@ export class ReportFailureDto {
 
     @IsBoolean()
     moveToReprint: boolean;
+
+    @IsOptional()
+    @IsEnum(OrderStatus)
+    targetStatus?: OrderStatus;
 
     @IsOptional()
     metadata?: any;
