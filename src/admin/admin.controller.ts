@@ -1,7 +1,8 @@
-import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException, Post } from '@nestjs/common';
+import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException, Post, Delete } from '@nestjs/common';
 
 import { AdminService } from './admin.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
+import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 
 /**
  * Super Admin Guard (Inline for simple project for now, 
@@ -24,6 +25,39 @@ export class AdminController {
             throw new ForbiddenException('No tienes permisos administrativos globales.');
         }
     }
+
+    // ──────────────── Plans CRUD ────────────────
+
+    @Get('plans')
+    async getPlans(@Request() req) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.findAllPlans();
+    }
+
+    @Get('plans/:id')
+    async getPlan(@Request() req, @Param('id') id: string) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.findPlanById(id);
+    }
+
+    @Post('plans')
+    async createPlan(@Request() req, @Body() dto: CreatePlanDto) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.createPlan(dto);
+    }
+
+    @Patch('plans/:id')
+    async updatePlan(@Request() req, @Param('id') id: string, @Body() dto: UpdatePlanDto) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.updatePlan(id, dto);
+    }
+
+    @Delete('plans/:id')
+    async deletePlan(@Request() req, @Param('id') id: string) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.deletePlan(id);
+    }
+
 
     // Configuración de Roles
     @Get('roles')
@@ -99,5 +133,18 @@ export class AdminController {
     async updateUserRole(@Request() req, @Param('id') id: string, @Body() body: { role: string }) {
         this.checkGlobalAdmin(req);
         return this.adminService.updateUserGlobalRole(id, body.role);
+    }
+}
+
+/**
+ * Public controller for plans — no auth required (used by landing page)
+ */
+@Controller('plans')
+export class PlansPublicController {
+    constructor(private readonly adminService: AdminService) { }
+
+    @Get()
+    async getActivePlans() {
+        return this.adminService.findActivePlans();
     }
 }

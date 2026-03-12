@@ -12,10 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminController = void 0;
+exports.PlansPublicController = exports.AdminController = void 0;
 const common_1 = require("@nestjs/common");
 const admin_service_1 = require("./admin.service");
 const supabase_auth_guard_1 = require("../users/guards/supabase-auth.guard");
+const plan_dto_1 = require("./dto/plan.dto");
 let AdminController = class AdminController {
     constructor(adminService) {
         this.adminService = adminService;
@@ -28,6 +29,26 @@ let AdminController = class AdminController {
         if (userRole !== 'SUPER_ADMIN' && userRole !== 'ADMIN') {
             throw new common_1.ForbiddenException('No tienes permisos administrativos globales.');
         }
+    }
+    async getPlans(req) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.findAllPlans();
+    }
+    async getPlan(req, id) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.findPlanById(id);
+    }
+    async createPlan(req, dto) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.createPlan(dto);
+    }
+    async updatePlan(req, id, dto) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.updatePlan(id, dto);
+    }
+    async deletePlan(req, id) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.deletePlan(id);
     }
     async getRoleConfigs(req) {
         this.checkGlobalAdmin(req);
@@ -82,6 +103,46 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AdminController.prototype, "initAdmin", null);
+__decorate([
+    (0, common_1.Get)('plans'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getPlans", null);
+__decorate([
+    (0, common_1.Get)('plans/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "getPlan", null);
+__decorate([
+    (0, common_1.Post)('plans'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, plan_dto_1.CreatePlanDto]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "createPlan", null);
+__decorate([
+    (0, common_1.Patch)('plans/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String, plan_dto_1.UpdatePlanDto]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "updatePlan", null);
+__decorate([
+    (0, common_1.Delete)('plans/:id'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], AdminController.prototype, "deletePlan", null);
 __decorate([
     (0, common_1.Get)('roles'),
     __param(0, (0, common_1.Request)()),
@@ -178,4 +239,23 @@ exports.AdminController = AdminController = __decorate([
     (0, common_1.Controller)('admin'),
     __metadata("design:paramtypes", [admin_service_1.AdminService])
 ], AdminController);
+let PlansPublicController = class PlansPublicController {
+    constructor(adminService) {
+        this.adminService = adminService;
+    }
+    async getActivePlans() {
+        return this.adminService.findActivePlans();
+    }
+};
+exports.PlansPublicController = PlansPublicController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], PlansPublicController.prototype, "getActivePlans", null);
+exports.PlansPublicController = PlansPublicController = __decorate([
+    (0, common_1.Controller)('plans'),
+    __metadata("design:paramtypes", [admin_service_1.AdminService])
+], PlansPublicController);
 //# sourceMappingURL=admin.controller.js.map

@@ -5,8 +5,10 @@ import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
 
 import { GlobalRoleConfig } from './entities/global-role-config.entity';
+import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { NotificationsService } from '../notifications/notifications.service';
 import { Notification } from '../notifications/entities/notification.entity';
+import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 
 @Injectable()
 export class AdminService {
@@ -17,8 +19,117 @@ export class AdminService {
         private readonly userRepository: Repository<User>,
         @InjectRepository(GlobalRoleConfig)
         private readonly roleConfigRepository: Repository<GlobalRoleConfig>,
+        @InjectRepository(SubscriptionPlan)
+        private readonly planRepository: Repository<SubscriptionPlan>,
         private readonly notificationsService: NotificationsService,
-    ) { }
+    ) {
+        // Seed default plans on startup if none exist
+        this.seedDefaultPlans();
+    }
+
+    // ──────────────── Plans CRUD ────────────────
+
+    private async seedDefaultPlans() {
+        const count = await this.planRepository.count();
+        if (count > 0) return;
+
+        const defaults: CreatePlanDto[] = [
+            {
+                id: 'free',
+                name: 'Gratis',
+                price: 0,
+                currency: 'ARS',
+                description: 'Perfecto para empezar y conocer el sistema.',
+                features: ['15 pedidos por mes', '1 negocio', '2 máquinas', '1 usuario', 'Dashboard básico', 'Gestión de clientes'],
+                maxUsers: 1,
+                maxOrdersPerMonth: 15,
+                maxBusinesses: 1,
+                maxMachines: 2,
+                isRecommended: false,
+                ctaText: 'Comenzar gratis',
+                ctaLink: '/register',
+                sortOrder: 0,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
+            },
+            {
+                id: 'pro',
+                name: 'Pro',
+                price: 7990,
+                currency: 'ARS',
+                description: 'Para talleres en crecimiento que necesitan más.',
+                features: ['50 pedidos por mes', 'Hasta 3 negocios', '10 máquinas', '5 usuarios', 'Dashboard completo', 'Gestión de clientes', 'Control de materiales', 'Soporte por email'],
+                maxUsers: 5,
+                maxOrdersPerMonth: 50,
+                maxBusinesses: 3,
+                maxMachines: 10,
+                isRecommended: true,
+                ctaText: 'Probar 14 días gratis',
+                ctaLink: '/register',
+                sortOrder: 1,
+                active: true,
+                hasTrial: true,
+                trialDays: 14,
+            },
+            {
+                id: 'business',
+                name: 'Business',
+                price: 19990,
+                currency: 'ARS',
+                description: 'Para talleres grandes con necesidades avanzadas.',
+                features: ['Pedidos ilimitados', 'Negocios ilimitados', 'Máquinas ilimitadas', 'Usuarios ilimitados', 'Dashboard completo', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Integraciones'],
+                maxUsers: 0,
+                maxOrdersPerMonth: 0,
+                maxBusinesses: 0,
+                maxMachines: 0,
+                isRecommended: false,
+                ctaText: 'Contactar ventas',
+                ctaLink: '/register',
+                sortOrder: 2,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
+            },
+        ];
+
+        for (const plan of defaults) {
+            await this.planRepository.save(this.planRepository.create(plan));
+        }
+        console.log('✅ Default subscription plans seeded');
+    }
+
+    async findAllPlans(): Promise<SubscriptionPlan[]> {
+        return this.planRepository.find({ order: { sortOrder: 'ASC' } });
+    }
+
+    async findActivePlans(): Promise<SubscriptionPlan[]> {
+        return this.planRepository.find({
+            where: { active: true },
+            order: { sortOrder: 'ASC' },
+        });
+    }
+
+    async findPlanById(id: string): Promise<SubscriptionPlan> {
+        const plan = await this.planRepository.findOneBy({ id });
+        if (!plan) throw new NotFoundException('Plan no encontrado');
+        return plan;
+    }
+
+    async createPlan(dto: CreatePlanDto): Promise<SubscriptionPlan> {
+        const plan = this.planRepository.create(dto);
+        return this.planRepository.save(plan);
+    }
+
+    async updatePlan(id: string, dto: UpdatePlanDto): Promise<SubscriptionPlan> {
+        await this.planRepository.update(id, dto);
+        return this.findPlanById(id);
+    }
+
+    async deletePlan(id: string): Promise<void> {
+        const plan = await this.findPlanById(id);
+        await this.planRepository.remove(plan);
+    }
 
 
     // Roles and Permissions
@@ -41,7 +152,7 @@ export class AdminService {
     async findAllBusinesses(): Promise<Business[]> {
         return this.businessRepository.find({
             order: { createdAt: 'DESC' },
-            relations: ['memberships'], // O pcional para ver dueños
+            relations: ['memberships'], // Opcional para ver dueños
         });
     }
 
