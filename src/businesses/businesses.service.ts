@@ -11,7 +11,7 @@ import { CreateBusinessFromTemplateDto } from './dto/create-business-from-templa
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
 import { Printer } from '../printers/entities/printer.entity';
-import { PrinterStatus, OrderStatus } from '../common/enums';
+import { PrinterStatus, OrderStatus, OrderType } from '../common/enums';
 import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
@@ -155,22 +155,74 @@ export class BusinessesService {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        // 1. Total Sales (DELIVERED/DONE orders)
-        const salesResult = await this.orderRepository
-            .createQueryBuilder('order')
-            .select('SUM(order.totalPrice)', 'total')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
-            .getRawOne();
+        const ACTIVE_WORKING_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED,
+            OrderStatus.READY, OrderStatus.DONE, OrderStatus.DESIGN,
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK
+        ];
 
-        // 2. Pending Balance (Total - Deposits for non-delivered/cancelled orders)
-        const activeOrdersWithItems = await this.orderRepository.find({
-            where: {
-                businessId,
-                status: In([OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED, OrderStatus.READY, OrderStatus.DONE])
-            },
-            relations: ['items']
-        });
+        const PRODUCTION_STATUSES = [
+            OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, OrderStatus.CUTTING,
+            OrderStatus.WELDING, OrderStatus.ASSEMBLY, OrderStatus.PAINTING,
+            OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS, OrderStatus.RE_WORK
+        ];
+
+        // Ejecutar todas las consultas en paralelo
+        const [
+            salesResult,
+            activeOrdersWithItems,
+            activePrintersCount,
+            productionOrdersCount,
+            newCustomersCount,
+            recentOrders,
+            realOverdue
+        ] = await Promise.all([
+            // 1. Total Sales
+            this.orderRepository.createQueryBuilder('order')
+                .select('SUM(order.totalPrice)', 'total')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
+                .getRawOne(),
+
+            // 2. Pending Balance (necesitamos los items para los saldos)
+            this.orderRepository.find({
+                where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
+                relations: ['items']
+            }),
+
+            // 3. Active Printers
+            this.printerRepository.count({
+                where: { businessId, status: PrinterStatus.PRINTING }
+            }),
+
+            // 3.b Production Orders
+            this.orderRepository.count({
+                where: { businessId, status: In(PRODUCTION_STATUSES) }
+            }),
+
+            // 4. New Customers
+            this.customerRepository.count({
+                where: { businessId, createdAt: MoreThanOrEqual(thirtyDaysAgo) }
+            }),
+
+            // 5. Recent Orders
+            this.orderRepository.find({
+                where: { businessId },
+                order: { updatedAt: 'DESC' },
+                take: 5
+            }),
+
+            // 6. Overdue Alerts
+            this.orderRepository.createQueryBuilder('order')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
+                .andWhere('order.type != :stockType', { stockType: OrderType.STOCK })
+                .andWhere('LOWER(order.clientName) != :stockName', { stockName: 'stock' })
+                .andWhere('order.dueDate < :now', { now: new Date() })
+                .getMany()
+        ]);
 
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
             const total = Number(order.totalPrice) || 0;
@@ -178,43 +230,13 @@ export class BusinessesService {
             return acc + (total - deposits);
         }, 0);
 
-        // 3. Active Printers
-        const activePrintersCount = await this.printerRepository.count({
-            where: {
-                businessId,
-                status: PrinterStatus.PRINTING
-            }
-        });
-
-        // 3.b Production Orders (only those specifically IN_PROGRESS)
-        const productionOrdersCount = await this.orderRepository.count({
-            where: {
-                businessId,
-                status: OrderStatus.IN_PROGRESS
-            }
-        });
-
-        // 4. New Customers (Last 30 days)
-        const newCustomersCount = await this.customerRepository.count({
-            where: {
-                createdAt: MoreThanOrEqual(thirtyDaysAgo)
-            }
-        });
-
-        // 5. Recent Orders
-        const recentOrders = await this.orderRepository.find({
-            where: { businessId },
-            order: { updatedAt: 'DESC' },
-            take: 5
-        });
-
-        // 6. Overdue Alerts
-        const realOverdue = await this.orderRepository
-            .createQueryBuilder('order')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
-            .andWhere('order.dueDate < :now', { now: new Date() })
-            .getMany();
+        const mergedAlerts: DashboardAlertDto[] = [
+            ...realOverdue.map(o => ({
+                type: 'vencido' as const,
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+        ];
 
         // 7. Low Stock Material Alerts
         const CRITICAL_STOCK_UMBRAL = 200; // gramos
@@ -222,23 +244,16 @@ export class BusinessesService {
             where: {
                 businessId,
                 active: true,
-                remainingWeightGrams: MoreThanOrEqual(0) // Only to enable index/filter if useful, handled by queryBuilder below more safely
+                remainingWeightGrams: MoreThanOrEqual(0)
             }
         });
         const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
 
-        const mergedAlerts: DashboardAlertDto[] = [
-            ...realOverdue.map(o => ({
-                type: 'vencido' as const,
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-            ...criticalMaterials.map(m => ({
-                type: 'stock_bajo' as const,
-                message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
-                metadata: { materialId: m.id }
-            }))
-        ];
+        mergedAlerts.push(...criticalMaterials.map(m => ({
+            type: 'stock_bajo' as const,
+            message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
+            metadata: { materialId: m.id }
+        })));
 
         return {
             totalSales: Number(salesResult?.total) || 0,
@@ -252,7 +267,8 @@ export class BusinessesService {
                 clientName: o.clientName || 'Sin Nombre',
                 total: Number(o.totalPrice),
                 status: o.status,
-                dueDate: o.dueDate
+                dueDate: o.dueDate,
+                type: o.type
             })),
             alerts: mergedAlerts,
             trends: null

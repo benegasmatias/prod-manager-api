@@ -133,52 +133,62 @@ let BusinessesService = class BusinessesService {
         }
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        const salesResult = await this.orderRepository
-            .createQueryBuilder('order')
-            .select('SUM(order.totalPrice)', 'total')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status IN (:...statuses)', { statuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.DONE] })
-            .getRawOne();
-        const activeOrdersWithItems = await this.orderRepository.find({
-            where: {
-                businessId,
-                status: (0, typeorm_3.In)([enums_1.OrderStatus.PENDING, enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.CONFIRMED, enums_1.OrderStatus.READY, enums_1.OrderStatus.DONE])
-            },
-            relations: ['items']
-        });
+        const ACTIVE_WORKING_STATUSES = [
+            enums_1.OrderStatus.PENDING, enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.CONFIRMED,
+            enums_1.OrderStatus.READY, enums_1.OrderStatus.DONE, enums_1.OrderStatus.DESIGN,
+            enums_1.OrderStatus.CUTTING, enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY,
+            enums_1.OrderStatus.PAINTING, enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS,
+            enums_1.OrderStatus.REPRINT_PENDING, enums_1.OrderStatus.RE_WORK, enums_1.OrderStatus.IN_STOCK
+        ];
+        const PRODUCTION_STATUSES = [
+            enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.DESIGN, enums_1.OrderStatus.CUTTING,
+            enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY, enums_1.OrderStatus.PAINTING,
+            enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS, enums_1.OrderStatus.RE_WORK
+        ];
+        const [salesResult, activeOrdersWithItems, activePrintersCount, productionOrdersCount, newCustomersCount, recentOrders, realOverdue] = await Promise.all([
+            this.orderRepository.createQueryBuilder('order')
+                .select('SUM(order.totalPrice)', 'total')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.DONE] })
+                .getRawOne(),
+            this.orderRepository.find({
+                where: { businessId, status: (0, typeorm_3.In)(ACTIVE_WORKING_STATUSES) },
+                relations: ['items']
+            }),
+            this.printerRepository.count({
+                where: { businessId, status: enums_1.PrinterStatus.PRINTING }
+            }),
+            this.orderRepository.count({
+                where: { businessId, status: (0, typeorm_3.In)(PRODUCTION_STATUSES) }
+            }),
+            this.customerRepository.count({
+                where: { businessId, createdAt: (0, typeorm_3.MoreThanOrEqual)(thirtyDaysAgo) }
+            }),
+            this.orderRepository.find({
+                where: { businessId },
+                order: { updatedAt: 'DESC' },
+                take: 5
+            }),
+            this.orderRepository.createQueryBuilder('order')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.CANCELLED] })
+                .andWhere('order.type != :stockType', { stockType: enums_1.OrderType.STOCK })
+                .andWhere('LOWER(order.clientName) != :stockName', { stockName: 'stock' })
+                .andWhere('order.dueDate < :now', { now: new Date() })
+                .getMany()
+        ]);
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
             const total = Number(order.totalPrice) || 0;
             const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
             return acc + (total - deposits);
         }, 0);
-        const activePrintersCount = await this.printerRepository.count({
-            where: {
-                businessId,
-                status: enums_1.PrinterStatus.PRINTING
-            }
-        });
-        const productionOrdersCount = await this.orderRepository.count({
-            where: {
-                businessId,
-                status: enums_1.OrderStatus.IN_PROGRESS
-            }
-        });
-        const newCustomersCount = await this.customerRepository.count({
-            where: {
-                createdAt: (0, typeorm_3.MoreThanOrEqual)(thirtyDaysAgo)
-            }
-        });
-        const recentOrders = await this.orderRepository.find({
-            where: { businessId },
-            order: { updatedAt: 'DESC' },
-            take: 5
-        });
-        const realOverdue = await this.orderRepository
-            .createQueryBuilder('order')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.CANCELLED] })
-            .andWhere('order.dueDate < :now', { now: new Date() })
-            .getMany();
+        const mergedAlerts = [
+            ...realOverdue.map(o => ({
+                type: 'vencido',
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+        ];
         const CRITICAL_STOCK_UMBRAL = 200;
         const lowStockMaterials = await this.materialRepository.find({
             where: {
@@ -188,18 +198,11 @@ let BusinessesService = class BusinessesService {
             }
         });
         const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
-        const mergedAlerts = [
-            ...realOverdue.map(o => ({
-                type: 'vencido',
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-            ...criticalMaterials.map(m => ({
-                type: 'stock_bajo',
-                message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
-                metadata: { materialId: m.id }
-            }))
-        ];
+        mergedAlerts.push(...criticalMaterials.map(m => ({
+            type: 'stock_bajo',
+            message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
+            metadata: { materialId: m.id }
+        })));
         return {
             totalSales: Number(salesResult?.total) || 0,
             pendingBalance,
@@ -212,7 +215,8 @@ let BusinessesService = class BusinessesService {
                 clientName: o.clientName || 'Sin Nombre',
                 total: Number(o.totalPrice),
                 status: o.status,
-                dueDate: o.dueDate
+                dueDate: o.dueDate,
+                type: o.type
             })),
             alerts: mergedAlerts,
             trends: null

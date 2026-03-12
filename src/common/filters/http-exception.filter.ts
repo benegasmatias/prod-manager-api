@@ -18,7 +18,18 @@ export class AllExceptionsFilter implements ExceptionFilter {
         const message =
             exception instanceof HttpException
                 ? exception.getResponse()
-                : 'Internal server error';
+                : (exception as Error).message || 'Internal server error';
+
+        const errorLog = `
+--- ERROR ---
+Timestamp: ${new Date().toISOString()}
+Path: ${request.url}
+Status: ${status}
+Message: ${JSON.stringify(message)}
+Stack: ${(exception as Error).stack}
+-------------
+`;
+        require('fs').appendFileSync('error_debug.log', errorLog);
 
         this.logger.error(
             `Http Status: ${status} Error Message: ${JSON.stringify(message)}`,

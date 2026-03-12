@@ -29,9 +29,9 @@ import { AdminModule } from './admin/admin.module';
         synchronize: true, // Auto-update schema in dev
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
-          max: 20,
+          max: 30,
           idleTimeoutMillis: 30000,
-          connectionTimeoutMillis: 2000,
+          connectionTimeoutMillis: 10000,
         }
       }),
     }),

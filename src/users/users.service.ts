@@ -41,13 +41,23 @@ export class UsersService {
     }
 
     async setDefaultBusiness(userId: string, businessId: string): Promise<User> {
-        const hasAccess = await this.businessesService.checkAccess(userId, businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException(`User does not have access to business ${businessId}`);
-        }
+        console.log(`[UsersService] Setting default business ${businessId} for user ${userId}`);
+        try {
+            const hasAccess = await this.businessesService.checkAccess(userId, businessId);
+            if (!hasAccess) {
+                console.warn(`[UsersService] User ${userId} does not have access to business ${businessId}`);
+                throw new ForbiddenException(`User does not have access to business ${businessId}`);
+            }
 
-        const user = await this.findOne(userId);
-        user.defaultBusinessId = businessId;
-        return this.userRepository.save(user);
+            // Usar update parcial para evitar problemas con la instancia completa
+            await this.userRepository.update(userId, { defaultBusinessId: businessId });
+
+            const updatedUser = await this.findOne(userId);
+            console.log(`[UsersService] Successfully updated default business for user ${userId}`);
+            return updatedUser;
+        } catch (error) {
+            console.error(`[UsersService] Error setting default business:`, error.message, error.stack);
+            throw error;
+        }
     }
 }

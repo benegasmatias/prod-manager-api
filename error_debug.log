@@ -1,0 +1,337 @@
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:00:43.551Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:02:08.116Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:02:12.529Z
+Path: /businesses/614ad5b7-c2f0-4afd-b76e-a1adc8979e1f/dashboard-summary
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:04:32.617Z
+Path: /orders?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:04:33.127Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:04:35.823Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:09:43.969Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:09:46.646Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:10:06.619Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:10:56.290Z
+Path: /businesses/614ad5b7-c2f0-4afd-b76e-a1adc8979e1f/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:10:59.047Z
+Path: /businesses/614ad5b7-c2f0-4afd-b76e-a1adc8979e1f/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:14:56.893Z
+Path: /printers?businessId=614ad5b7-c2f0-4afd-b76e-a1adc8979e1f
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:28:10.377Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:28:26.767Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:28:58.230Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:29:01.016Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/dashboard-summary
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:216:27)
+    at listOnTimeout (node:internal/timers:581:17)
+    at process.processTimers (node:internal/timers:519:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:32:11.427Z
+Path: /businesses
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg-pool@3.12.0_pg@8.19.0/node_modules/pg-pool/index.js:268:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/pg@8.19.0/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:339:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T12:35:09.178Z
+Path: /notifications?businessId=614ad5b7-c2f0-4afd-b76e-a1adc8979e1f
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T14:32:08.378Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T14:32:25.615Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T15:38:39.704Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T15:38:43.744Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-12T15:44:32.180Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"No authorization header found","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No authorization header found
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:59)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:37
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/route.js:117:3)
+    at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------

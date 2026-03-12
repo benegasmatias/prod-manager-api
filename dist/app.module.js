@@ -41,9 +41,9 @@ exports.AppModule = AppModule = __decorate([
                     synchronize: true,
                     ssl: configService.get('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
                     extra: {
-                        max: 20,
+                        max: 30,
                         idleTimeoutMillis: 30000,
-                        connectionTimeoutMillis: 2000,
+                        connectionTimeoutMillis: 10000,
                     }
                 }),
             }),
