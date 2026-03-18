@@ -85,7 +85,7 @@ export class JobsService {
                 'material',
             ],
         });
-        if (!job) throw new NotFoundException('Job not found');
+        if (!job) throw new NotFoundException('Trabajo no encontrado');
         return job;
     }
 
@@ -146,7 +146,7 @@ export class JobsService {
         const currentUnitsDone = job.progress.reduce((sum, p) => sum + p.unitsDone, 0);
 
         if (currentUnitsDone + createProgressDto.unitsDone > job.totalUnits) {
-            throw new BadRequestException('Total completed units cannot exceed job requirements');
+            throw new BadRequestException('El total de unidades completadas no puede exceder los requerimientos del trabajo');
         }
 
         const progress = this.progressRepository.create({

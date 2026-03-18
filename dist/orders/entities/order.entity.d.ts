@@ -30,4 +30,9 @@ export declare class Order {
     code: string;
     responsableGeneralId: string;
     responsableGeneral: Employee;
+    direccion_obra: string;
+    fecha_visita: string;
+    hora_visita: string;
+    observaciones_visita: string;
+    metadata: any;
 }

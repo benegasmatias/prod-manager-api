@@ -14,18 +14,18 @@ export class SupabaseAuthGuard implements CanActivate {
         const authHeader = request.headers['authorization'];
 
         if (!authHeader) {
-            throw new UnauthorizedException('No authorization header found');
+            throw new UnauthorizedException('No se encontró el encabezado de autorización');
         }
 
         const token = authHeader.split(' ')[1];
         if (!token) {
-            throw new UnauthorizedException('No token found');
+            throw new UnauthorizedException('No se encontró el token de acceso');
         }
 
         const { data: { user }, error } = await this.supabaseService.getClient().auth.getUser(token);
 
         if (error || !user) {
-            throw new UnauthorizedException('Invalid or expired token');
+            throw new UnauthorizedException('Token inválido o expirado');
         }
 
         // Asegurarse de que el perfil de usuario exista en nuestra base de datos

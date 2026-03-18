@@ -19,12 +19,13 @@ const product_entity_1 = require("../products/entities/product.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const printer_entity_1 = require("../printers/entities/printer.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
+const payment_entity_1 = require("../payments/entities/payment.entity");
 let OrdersModule = class OrdersModule {
 };
 exports.OrdersModule = OrdersModule;
 exports.OrdersModule = OrdersModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, order_item_entity_1.OrderItem, order_failure_entity_1.OrderFailure, order_status_history_entity_1.OrderStatusHistory, product_entity_1.Product, production_job_entity_1.ProductionJob, printer_entity_1.Printer, material_entity_1.Material])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, order_item_entity_1.OrderItem, order_failure_entity_1.OrderFailure, order_status_history_entity_1.OrderStatusHistory, product_entity_1.Product, production_job_entity_1.ProductionJob, printer_entity_1.Printer, material_entity_1.Material, payment_entity_1.Payment])],
         controllers: [orders_controller_1.OrdersController],
         providers: [orders_service_1.OrdersService],
         exports: [orders_service_1.OrdersService, typeorm_1.TypeOrmModule],

@@ -26,7 +26,7 @@ let UsersService = class UsersService {
     async findOne(id) {
         const user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            throw new common_1.NotFoundException(`User with ID ${id} not found`);
+            throw new common_1.NotFoundException(`Usuario con ID ${id} no encontrado`);
         }
         return user;
     }
@@ -53,7 +53,7 @@ let UsersService = class UsersService {
             const hasAccess = await this.businessesService.checkAccess(userId, businessId);
             if (!hasAccess) {
                 console.warn(`[UsersService] User ${userId} does not have access to business ${businessId}`);
-                throw new common_1.ForbiddenException(`User does not have access to business ${businessId}`);
+                throw new common_1.ForbiddenException(`El usuario no tiene acceso al negocio ${businessId}`);
             }
             await this.userRepository.update(userId, { defaultBusinessId: businessId });
             const updatedUser = await this.findOne(userId);

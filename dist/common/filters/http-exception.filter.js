@@ -22,7 +22,7 @@ let AllExceptionsFilter = AllExceptionsFilter_1 = class AllExceptionsFilter {
             : common_1.HttpStatus.INTERNAL_SERVER_ERROR;
         const message = exception instanceof common_1.HttpException
             ? exception.getResponse()
-            : exception.message || 'Internal server error';
+            : exception.message || 'Error interno del servidor';
         const errorLog = `
 --- ERROR ---
 Timestamp: ${new Date().toISOString()}

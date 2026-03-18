@@ -91,4 +91,19 @@ export class Order {
     @ManyToOne(() => Employee, { nullable: true })
     @JoinColumn({ name: 'responsable_general_id' })
     responsableGeneral: Employee;
+
+    @Column({ name: 'direccion_obra', nullable: true })
+    direccion_obra: string;
+
+    @Column({ name: 'fecha_visita', nullable: true })
+    fecha_visita: string;
+
+    @Column({ name: 'hora_visita', nullable: true })
+    hora_visita: string;
+
+    @Column({ name: 'observaciones_visita', type: 'text', nullable: true })
+    observaciones_visita: string;
+
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
 }

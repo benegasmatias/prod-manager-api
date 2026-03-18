@@ -10,9 +10,10 @@ import { Product } from '../products/entities/product.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Printer } from '../printers/entities/printer.entity';
 import { Material } from '../materials/entities/material.entity';
+import { Payment } from '../payments/entities/payment.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Order, OrderItem, OrderFailure, OrderStatusHistory, Product, ProductionJob, Printer, Material])],
+    imports: [TypeOrmModule.forFeature([Order, OrderItem, OrderFailure, OrderStatusHistory, Product, ProductionJob, Printer, Material, Payment])],
 
     controllers: [OrdersController],
     providers: [OrdersService],

@@ -60,7 +60,7 @@ export class CustomersService {
         const customer = await this.customerRepository.findOne({
             where: { id },
         });
-        if (!customer) throw new NotFoundException('Customer not found');
+        if (!customer) throw new NotFoundException('Cliente no encontrado');
         return customer;
     }
 

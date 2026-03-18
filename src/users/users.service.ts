@@ -16,7 +16,7 @@ export class UsersService {
     async findOne(id: string): Promise<User> {
         const user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            throw new NotFoundException(`User with ID ${id} not found`);
+            throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
         }
         return user;
     }
@@ -46,7 +46,7 @@ export class UsersService {
             const hasAccess = await this.businessesService.checkAccess(userId, businessId);
             if (!hasAccess) {
                 console.warn(`[UsersService] User ${userId} does not have access to business ${businessId}`);
-                throw new ForbiddenException(`User does not have access to business ${businessId}`);
+                throw new ForbiddenException(`El usuario no tiene acceso al negocio ${businessId}`);
             }
 
             // Usar update parcial para evitar problemas con la instancia completa

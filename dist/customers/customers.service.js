@@ -60,7 +60,7 @@ let CustomersService = class CustomersService {
             where: { id },
         });
         if (!customer)
-            throw new common_1.NotFoundException('Customer not found');
+            throw new common_1.NotFoundException('Cliente no encontrado');
         return customer;
     }
     async update(id, updateCustomerDto) {

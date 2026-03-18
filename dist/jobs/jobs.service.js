@@ -82,7 +82,7 @@ let JobsService = class JobsService {
             ],
         });
         if (!job)
-            throw new common_1.NotFoundException('Job not found');
+            throw new common_1.NotFoundException('Trabajo no encontrado');
         return job;
     }
     async updateStatus(id, status, note, userId) {
@@ -124,7 +124,7 @@ let JobsService = class JobsService {
         const job = await this.findOne(id);
         const currentUnitsDone = job.progress.reduce((sum, p) => sum + p.unitsDone, 0);
         if (currentUnitsDone + createProgressDto.unitsDone > job.totalUnits) {
-            throw new common_1.BadRequestException('Total completed units cannot exceed job requirements');
+            throw new common_1.BadRequestException('El total de unidades completadas no puede exceder los requerimientos del trabajo');
         }
         const progress = this.progressRepository.create({
             productionJobId: id,

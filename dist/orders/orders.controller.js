@@ -16,10 +16,26 @@ exports.OrdersController = void 0;
 const common_1 = require("@nestjs/common");
 const orders_service_1 = require("./orders.service");
 const order_dto_1 = require("./dto/order.dto");
+const payment_dto_1 = require("../payments/dto/payment.dto");
 const supabase_auth_guard_1 = require("../users/guards/supabase-auth.guard");
 let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
+    }
+    async getSummary(businessId) {
+        return this.ordersService.getSummaryStats(businessId);
+    }
+    async getBudgetSummary(businessId) {
+        return this.ordersService.getBudgetSummaryStats(businessId);
+    }
+    async findListing(query) {
+        return this.ordersService.findListing(query);
+    }
+    async findVisits(query) {
+        return this.ordersService.findVisits(query);
+    }
+    async findQuotations(query) {
+        return this.ordersService.findQuotations(query);
     }
     async findAll(query) {
         return this.ordersService.findAll(query);
@@ -33,6 +49,9 @@ let OrdersController = class OrdersController {
     async reportFailure(id, reportFailureDto, req) {
         return this.ordersService.reportFailure(id, reportFailureDto, req.user.id);
     }
+    async addPayment(id, createPaymentDto) {
+        return this.ordersService.addPayment(id, createPaymentDto);
+    }
     async updateStatus(id, updateStatusDto, req) {
         return this.ordersService.updateStatus(id, updateStatusDto, req.user.id);
     }
@@ -41,6 +60,41 @@ let OrdersController = class OrdersController {
     }
 };
 exports.OrdersController = OrdersController;
+__decorate([
+    (0, common_1.Get)('summary'),
+    __param(0, (0, common_1.Query)('businessId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "getSummary", null);
+__decorate([
+    (0, common_1.Get)('budget-summary'),
+    __param(0, (0, common_1.Query)('businessId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "getBudgetSummary", null);
+__decorate([
+    (0, common_1.Get)('listing'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [order_dto_1.FindOrdersDto]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "findListing", null);
+__decorate([
+    (0, common_1.Get)('visits'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [order_dto_1.FindVisitsDto]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "findVisits", null);
+__decorate([
+    (0, common_1.Get)('quotations'),
+    __param(0, (0, common_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [order_dto_1.FindQuotationsDto]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "findQuotations", null);
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)()),
@@ -71,6 +125,14 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], OrdersController.prototype, "reportFailure", null);
+__decorate([
+    (0, common_1.Post)(':id/payments'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, payment_dto_1.CreatePaymentDto]),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "addPayment", null);
 __decorate([
     (0, common_1.Patch)(':id/status'),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),

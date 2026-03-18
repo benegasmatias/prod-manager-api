@@ -27,6 +27,18 @@ var OrderStatus;
     OrderStatus["REPRINT_PENDING"] = "REPRINT_PENDING";
     OrderStatus["RE_WORK"] = "RE_WORK";
     OrderStatus["IN_STOCK"] = "IN_STOCK";
+    OrderStatus["SITE_VISIT"] = "SITE_VISIT";
+    OrderStatus["SITE_VISIT_DONE"] = "SITE_VISIT_DONE";
+    OrderStatus["VISITA_REPROGRAMADA"] = "VISITA_REPROGRAMADA";
+    OrderStatus["VISITA_CANCELADA"] = "VISITA_CANCELADA";
+    OrderStatus["QUOTATION"] = "QUOTATION";
+    OrderStatus["BUDGET_GENERATED"] = "BUDGET_GENERATED";
+    OrderStatus["BUDGET_REJECTED"] = "BUDGET_REJECTED";
+    OrderStatus["SURVEY_DESIGN"] = "SURVEY_DESIGN";
+    OrderStatus["APPROVED"] = "APPROVED";
+    OrderStatus["OFFICIAL_ORDER"] = "OFFICIAL_ORDER";
+    OrderStatus["INSTALACION_OBRA"] = "INSTALACION_OBRA";
+    OrderStatus["ARMADO"] = "ARMADO";
 })(OrderStatus || (exports.OrderStatus = OrderStatus = {}));
 var JobStatus;
 (function (JobStatus) {
