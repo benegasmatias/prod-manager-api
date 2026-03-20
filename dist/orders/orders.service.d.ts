@@ -3,7 +3,7 @@ import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { JobStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { OrderFailure } from './entities/order-failure.entity';
@@ -14,12 +14,12 @@ export declare class OrdersService {
     private readonly orderRepository;
     private readonly orderItemRepository;
     private readonly jobRepository;
-    private readonly printerRepository;
+    private readonly machineRepository;
     private readonly statusHistoryRepository;
     private readonly orderFailureRepository;
     private readonly materialRepository;
     private readonly paymentRepository;
-    constructor(orderRepository: Repository<Order>, orderItemRepository: Repository<OrderItem>, jobRepository: Repository<ProductionJob>, printerRepository: Repository<Printer>, statusHistoryRepository: Repository<OrderStatusHistory>, orderFailureRepository: Repository<OrderFailure>, materialRepository: Repository<Material>, paymentRepository: Repository<Payment>);
+    constructor(orderRepository: Repository<Order>, orderItemRepository: Repository<OrderItem>, jobRepository: Repository<ProductionJob>, machineRepository: Repository<Machine>, statusHistoryRepository: Repository<OrderStatusHistory>, orderFailureRepository: Repository<OrderFailure>, materialRepository: Repository<Material>, paymentRepository: Repository<Payment>);
     findAll(query: FindOrdersDto): Promise<{
         data: Order[];
         total: number;
@@ -45,6 +45,6 @@ export declare class OrdersService {
     checkAndSetReadyStatus(orderId: string): Promise<void>;
     reportFailure(id: string, reportFailureDto: ReportFailureDto, userId: string): Promise<Order>;
     updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order>;
-    releasePrintersForOrder(orderId: string, targetJobStatus?: JobStatus, orderItemId?: string): Promise<void>;
+    releaseMachinesForOrder(orderId: string, targetJobStatus?: JobStatus, orderItemId?: string): Promise<void>;
     addPayment(id: string, createPaymentDto: CreatePaymentDto): Promise<Order>;
 }

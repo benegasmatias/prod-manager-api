@@ -13,7 +13,10 @@ export declare class PrintersService {
     assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Printer>;
     release(printerId: string, businessId?: string): Promise<Printer>;
     create(createDto: CreatePrinterDto): Promise<Printer>;
-    findAll(businessId?: string, onlyActive?: boolean): Promise<Printer[]>;
+    findAll(businessId?: string, onlyActive?: boolean, page?: number, pageSize?: number): Promise<{
+        data: Printer[];
+        total: number;
+    }>;
     findOne(id: string, businessId?: string): Promise<Printer>;
     update(id: string, updateDto: UpdatePrinterDto, businessId?: string): Promise<Printer>;
     updateStatus(id: string, status: PrinterStatus, businessId?: string): Promise<Printer>;

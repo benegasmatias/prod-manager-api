@@ -20,17 +20,17 @@ const order_entity_1 = require("./entities/order.entity");
 const order_item_entity_1 = require("./entities/order-item.entity");
 const enums_1 = require("../common/enums");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
 const order_failure_entity_1 = require("./entities/order-failure.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 const payment_entity_1 = require("../payments/entities/payment.entity");
 let OrdersService = class OrdersService {
-    constructor(orderRepository, orderItemRepository, jobRepository, printerRepository, statusHistoryRepository, orderFailureRepository, materialRepository, paymentRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, machineRepository, statusHistoryRepository, orderFailureRepository, materialRepository, paymentRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jobRepository = jobRepository;
-        this.printerRepository = printerRepository;
+        this.machineRepository = machineRepository;
         this.statusHistoryRepository = statusHistoryRepository;
         this.orderFailureRepository = orderFailureRepository;
         this.materialRepository = materialRepository;
@@ -196,9 +196,18 @@ let OrdersService = class OrdersService {
     }
     async findVisits(query) {
         const { businessId, status, page = 1, pageSize = 50, search, startDate, endDate, responsableId } = query;
-        const where = {};
-        if (businessId)
-            where.businessId = businessId;
+        const qb = this.orderRepository.createQueryBuilder('order')
+            .leftJoinAndSelect('order.customer', 'customer')
+            .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
+            .leftJoinAndSelect('order.items', 'items')
+            .select([
+            'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
+            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.createdAt',
+            'customer.id', 'customer.name',
+            'responsableGeneral.id', 'responsableGeneral.firstName',
+            'items.id', 'items.name', 'items.metadata'
+        ]);
+        qb.andWhere('order.businessId = :businessId', { businessId });
         const VISIT_STATUSES = [
             enums_1.OrderStatus.SITE_VISIT,
             enums_1.OrderStatus.SITE_VISIT_DONE,
@@ -206,44 +215,47 @@ let OrdersService = class OrdersService {
             enums_1.OrderStatus.VISITA_CANCELADA
         ];
         if (status) {
-            where.status = status;
+            qb.andWhere('order.status = :status', { status });
         }
         else {
-            where.status = (0, typeorm_2.In)(VISIT_STATUSES);
+            qb.andWhere('order.status IN (:...statuses)', { statuses: VISIT_STATUSES });
         }
         if (responsableId) {
-            where.responsableGeneralId = responsableId;
+            qb.andWhere('order.responsableGeneralId = :responsableId', { responsableId });
         }
         if (startDate && endDate) {
-            where.createdAt = (0, typeorm_2.Between)(startDate, endDate);
+            qb.andWhere('order.createdAt BETWEEN :startDate AND :endDate', { startDate, endDate });
         }
         else if (startDate) {
-            where.createdAt = (0, typeorm_2.MoreThanOrEqual)(startDate);
+            qb.andWhere('order.createdAt >= :startDate', { startDate });
         }
         else if (endDate) {
-            where.createdAt = (0, typeorm_2.LessThanOrEqual)(endDate);
+            qb.andWhere('order.createdAt <= :endDate', { endDate });
         }
-        let whereCondition = { ...where };
         if (search) {
-            whereCondition = [
-                { ...where, clientName: (0, typeorm_2.ILike)(`%${search}%`) },
-                { ...where, code: (0, typeorm_2.ILike)(`%${search}%`) }
-            ];
+            qb.andWhere('(order.clientName ILike :search OR order.code ILike :search OR order.direccion_obra ILike :search)', { search: `%${search}%` });
         }
-        const [data, total] = await this.orderRepository.findAndCount({
-            where: whereCondition,
-            relations: ['items', 'customer', 'responsableGeneral', 'payments'],
-            order: { createdAt: 'DESC' },
-            take: pageSize,
-            skip: (page - 1) * pageSize,
-        });
+        const [data, total] = await qb
+            .orderBy('order.createdAt', 'DESC')
+            .take(pageSize)
+            .skip((page - 1) * pageSize)
+            .getManyAndCount();
         return { data, total };
     }
     async findQuotations(query) {
         const { businessId, status, page = 1, pageSize = 50, search, startDate, endDate, responsableId } = query;
-        const where = {};
-        if (businessId)
-            where.businessId = businessId;
+        const qb = this.orderRepository.createQueryBuilder('order')
+            .leftJoinAndSelect('order.customer', 'customer')
+            .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
+            .leftJoinAndSelect('order.items', 'items')
+            .select([
+            'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
+            'order.totalPrice', 'order.createdAt', 'order.updatedAt',
+            'customer.id', 'customer.name',
+            'responsableGeneral.id', 'responsableGeneral.firstName',
+            'items.id', 'items.name', 'items.price', 'items.qty'
+        ]);
+        qb.andWhere('order.businessId = :businessId', { businessId });
         const BUDGET_STATUSES = [
             enums_1.OrderStatus.QUOTATION,
             enums_1.OrderStatus.BUDGET_GENERATED,
@@ -251,37 +263,31 @@ let OrdersService = class OrdersService {
             enums_1.OrderStatus.SURVEY_DESIGN
         ];
         if (status) {
-            where.status = status;
+            qb.andWhere('order.status = :status', { status });
         }
         else {
-            where.status = (0, typeorm_2.In)(BUDGET_STATUSES);
+            qb.andWhere('order.status IN (:...statuses)', { statuses: BUDGET_STATUSES });
         }
         if (responsableId) {
-            where.responsableGeneralId = responsableId;
+            qb.andWhere('order.responsableGeneralId = :responsableId', { responsableId });
         }
         if (startDate && endDate) {
-            where.createdAt = (0, typeorm_2.Between)(startDate, endDate);
+            qb.andWhere('order.createdAt BETWEEN :startDate AND :endDate', { startDate, endDate });
         }
         else if (startDate) {
-            where.createdAt = (0, typeorm_2.MoreThanOrEqual)(startDate);
+            qb.andWhere('order.createdAt >= :startDate', { startDate });
         }
         else if (endDate) {
-            where.createdAt = (0, typeorm_2.LessThanOrEqual)(endDate);
+            qb.andWhere('order.createdAt <= :endDate', { endDate });
         }
-        let whereCondition = { ...where };
         if (search) {
-            whereCondition = [
-                { ...where, clientName: (0, typeorm_2.ILike)(`%${search}%`) },
-                { ...where, code: (0, typeorm_2.ILike)(`%${search}%`) }
-            ];
+            qb.andWhere('(order.clientName ILike :search OR order.code ILike :search)', { search: `%${search}%` });
         }
-        const [data, total] = await this.orderRepository.findAndCount({
-            where: whereCondition,
-            relations: ['items', 'customer', 'responsableGeneral', 'payments'],
-            order: { updatedAt: 'DESC' },
-            take: pageSize,
-            skip: (page - 1) * pageSize,
-        });
+        const [data, total] = await qb
+            .orderBy('order.updatedAt', 'DESC')
+            .take(pageSize)
+            .skip((page - 1) * pageSize)
+            .getManyAndCount();
         return { data, total };
     }
     async findOne(id) {
@@ -403,7 +409,7 @@ let OrdersService = class OrdersService {
                 performedById: userId
             });
             await this.statusHistoryRepository.save(history);
-            await this.releasePrintersForOrder(orderId, enums_1.JobStatus.DONE);
+            await this.releaseMachinesForOrder(orderId, enums_1.JobStatus.DONE);
         }
         else if (doneQty > 0) {
             const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
@@ -419,7 +425,7 @@ let OrdersService = class OrdersService {
                 await this.statusHistoryRepository.save(history);
             }
             if (doneQty === item.qty) {
-                await this.releasePrintersForOrder(orderId, enums_1.JobStatus.DONE, itemId);
+                await this.releaseMachinesForOrder(orderId, enums_1.JobStatus.DONE, itemId);
             }
         }
         return this.findOne(orderId);
@@ -552,7 +558,7 @@ let OrdersService = class OrdersService {
             }
             if (status && status !== enums_1.OrderStatus.IN_PROGRESS) {
                 const targetJobStatus = status === enums_1.OrderStatus.DONE ? enums_1.JobStatus.DONE : enums_1.JobStatus.CANCELLED;
-                await this.releasePrintersForOrder(id, targetJobStatus);
+                await this.releaseMachinesForOrder(id, targetJobStatus);
             }
             return await manager.findOne(order_entity_1.Order, {
                 where: { id },
@@ -565,7 +571,7 @@ let OrdersService = class OrdersService {
             });
         });
     }
-    async releasePrintersForOrder(orderId, targetJobStatus = enums_1.JobStatus.DONE, orderItemId) {
+    async releaseMachinesForOrder(orderId, targetJobStatus = enums_1.JobStatus.DONE, orderItemId) {
         const where = { orderId };
         if (orderItemId)
             where.orderItemId = orderItemId;
@@ -577,9 +583,9 @@ let OrdersService = class OrdersService {
         });
         for (const job of activeJobs) {
             await this.jobRepository.update(job.id, { status: targetJobStatus });
-            if (job.printerId) {
-                await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
-                console.log(`[Auditoría] Impresora ${job.printerId} liberada al cambiar estado de pedido ${orderId}`);
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: enums_1.MachineStatus.IDLE });
+                console.log(`[Auditoría] Impresora ${job.machineId} liberada al cambiar estado de pedido ${orderId}`);
             }
         }
     }
@@ -601,7 +607,7 @@ exports.OrdersService = OrdersService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
     __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
-    __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
+    __param(3, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
     __param(4, (0, typeorm_1.InjectRepository)(order_status_history_entity_1.OrderStatusHistory)),
     __param(5, (0, typeorm_1.InjectRepository)(order_failure_entity_1.OrderFailure)),
     __param(6, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),

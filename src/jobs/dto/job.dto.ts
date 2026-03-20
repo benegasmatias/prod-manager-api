@@ -12,7 +12,7 @@ export class CreateJobDto {
 
     @IsString()
     @IsOptional()
-    printerId?: string;
+    machineId?: string;
 
     @IsString()
     @IsOptional()
@@ -57,7 +57,7 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    printerId?: string;
+    machineId?: string;
 
     @IsString()
     @IsOptional()

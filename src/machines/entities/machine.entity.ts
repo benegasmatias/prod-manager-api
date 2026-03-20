@@ -1,9 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
-import { PrinterStatus } from '../../common/enums';
+import { MachineStatus } from '../../common/enums';
 
-@Entity('printers')
-export class Printer {
+@Entity('machines')
+export class Machine {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -19,8 +19,8 @@ export class Printer {
     @Column({ nullable: true })
     nozzle: string;
 
-    @Column({ type: 'enum', enum: PrinterStatus, default: PrinterStatus.IDLE })
-    status: PrinterStatus;
+    @Column({ type: 'enum', enum: MachineStatus, default: MachineStatus.IDLE })
+    status: MachineStatus;
 
     @Column({ name: 'max_filaments', type: 'int', default: 1 })
     maxFilaments: number;
@@ -28,7 +28,7 @@ export class Printer {
     @Column({ default: true })
     active: boolean;
 
-    @OneToMany(() => ProductionJob, (job) => job.printer)
+    @OneToMany(() => ProductionJob, (job) => job.machine)
     productionJobs: ProductionJob[];
 
     @CreateDateColumn({ name: 'created_at' })

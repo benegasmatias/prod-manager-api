@@ -10,8 +10,8 @@ import { DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
-import { Printer } from '../printers/entities/printer.entity';
-import { PrinterStatus, OrderStatus, OrderType } from '../common/enums';
+import { Machine } from '../machines/entities/machine.entity';
+import { MachineStatus, OrderStatus, OrderType } from '../common/enums';
 import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
@@ -32,8 +32,8 @@ export class BusinessesService {
         private readonly orderRepository: Repository<Order>,
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,
-        @InjectRepository(Printer)
-        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
         private readonly dataSource: DataSource,
@@ -160,20 +160,25 @@ export class BusinessesService {
             OrderStatus.READY, OrderStatus.DONE, OrderStatus.DESIGN,
             OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
             OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
-            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK,
+            OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.VISITA_REPROGRAMADA, 
+            OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN, OrderStatus.APPROVED,
+            OrderStatus.OFFICIAL_ORDER, OrderStatus.INSTALACION_OBRA
         ];
 
         const PRODUCTION_STATUSES = [
             OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, OrderStatus.CUTTING,
             OrderStatus.WELDING, OrderStatus.ASSEMBLY, OrderStatus.PAINTING,
-            OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS, OrderStatus.RE_WORK
+            OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS, OrderStatus.RE_WORK,
+            OrderStatus.OFFICIAL_ORDER // El taller suele considerarse también como producción activa
         ];
+
 
         // Ejecutar todas las consultas en paralelo
         const [
             salesResult,
             activeOrdersWithItems,
-            activePrintersCount,
+            activeMachinesCount,
             productionOrdersCount,
             newCustomersCount,
             recentOrders,
@@ -192,9 +197,9 @@ export class BusinessesService {
                 relations: ['items']
             }),
 
-            // 3. Active Printers
-            this.printerRepository.count({
-                where: { businessId, status: PrinterStatus.PRINTING }
+            // 3. Active Machines
+            this.machineRepository.count({
+                where: { businessId, status: MachineStatus.PRINTING }
             }),
 
             // 3.b Production Orders
@@ -227,8 +232,86 @@ export class BusinessesService {
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
             const total = Number(order.totalPrice) || 0;
             const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
-            return acc + (total - deposits);
+            const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
+            return acc + (total - deposits - payments);
         }, 0);
+
+        // --- NEW: Operational Calculations for Business Pipeline & Dashboard ---
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
+        
+        // Detección heurística por estados de pedidos si no coincide la categoría exacta
+        const hasMetalStatuses = activeOrdersWithItems.some(o => 
+            [OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.OFFICIAL_ORDER, OrderStatus.WELDING, OrderStatus.CUTTING, OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED]
+            .includes(o.status)
+        );
+
+        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
+        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
+
+        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
+
+        let operationalCounters = undefined;
+        let pipelineSummary = undefined;
+        let calendarEvents = undefined;
+
+        if (isMetalurgica || isCarpinteria) {
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(now.getDate() + 7);
+
+            // Operational Counters
+            operationalCounters = {
+                visitsToday: activeOrdersWithItems.filter(o => (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
+                pendingBudgets: activeOrdersWithItems.filter(o => o.status === OrderStatus.QUOTATION || o.status === OrderStatus.SURVEY_DESIGN || o.status === OrderStatus.BUDGET_GENERATED).length,
+                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
+                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== OrderStatus.DONE).length,
+                delayedOrders: realOverdue.length,
+                pendingPayments: activeOrdersWithItems.filter(o => {
+                    const total = Number(o.totalPrice) || 0;
+                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
+                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
+                    return (total - dep - pay) > 0;
+                }).length
+            };
+
+            // Pipeline Summary
+            const pipelineStages = [
+                { stage: 'VISITA', statuses: [OrderStatus.SITE_VISIT, OrderStatus.VISITA_REPROGRAMADA, OrderStatus.SITE_VISIT_DONE] },
+                { stage: 'PRESUPUESTO', statuses: [OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN] },
+                { stage: 'APROBADO', statuses: [OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER] },
+                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
+                { stage: 'LISTO', statuses: [OrderStatus.DONE, OrderStatus.READY] },
+                { stage: 'ENTREGADO', statuses: [OrderStatus.DELIVERED] }
+            ];
+
+            pipelineSummary = pipelineStages.map(s => ({
+                stage: s.stage,
+                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
+            }));
+
+            // Agenda: Visitas hoy/mañana y entregas próximas
+            calendarEvents = activeOrdersWithItems
+                .filter(o => 
+                    ((o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) || 
+                    (o.dueDate && [OrderStatus.DONE, OrderStatus.READY, OrderStatus.INSTALACION_OBRA].includes(o.status))
+                )
+                .sort((a, b) => {
+                    const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
+                    const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
+                    return dateA.localeCompare(dateB);
+                })
+                .slice(0, 10)
+                .map(o => ({
+                    id: o.id,
+                    type: (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
+                    clientName: o.clientName || 'Cliente',
+                    date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
+                    time: o.hora_visita,
+                    status: o.status
+                }));
+        }
 
         const mergedAlerts: DashboardAlertDto[] = [
             ...realOverdue.map(o => ({
@@ -260,7 +343,7 @@ export class BusinessesService {
             pendingBalance,
             activeOrders: activeOrdersWithItems.length,
             productionOrders: productionOrdersCount,
-            activePrinters: activePrintersCount,
+            activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({
                 id: o.id,
@@ -271,7 +354,10 @@ export class BusinessesService {
                 type: o.type
             })),
             alerts: mergedAlerts,
-            trends: null
+            trends: null,
+            operationalCounters,
+            pipelineSummary,
+            calendarEvents
         };
     }
 

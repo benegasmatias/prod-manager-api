@@ -5,7 +5,7 @@ import { Order } from '../orders/entities/order.entity';
 import { OrderItem } from '../orders/entities/order-item.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Material } from '../materials/entities/material.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { OrderStatus, JobStatus } from '../common/enums';
 
 @Injectable()
@@ -19,8 +19,8 @@ export class ReportsService {
         private readonly jobRepository: Repository<ProductionJob>,
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
-        @InjectRepository(Printer)
-        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
     ) { }
 
     async getStats(businessId: string) {
@@ -74,8 +74,8 @@ export class ReportsService {
 
         const productUsage = this.groupProductUsage(orderItems);
 
-        // 4. Printer Performance
-        const printers = await this.printerRepository.find({
+        // 4. Machine Performance
+        const machines = await this.machineRepository.find({
             where: { businessId }
         });
 
@@ -84,11 +84,11 @@ export class ReportsService {
                 order: { businessId },
                 status: JobStatus.DONE
             },
-            relations: ['printer']
+            relations: ['machine']
         });
 
-        const printerStats = printers.map(p => {
-            const jobsCount = finishedJobs.filter(j => j.printerId === p.id).length;
+        const printerStats = machines.map(p => {
+            const jobsCount = finishedJobs.filter(j => j.machineId === p.id).length;
             return {
                 name: p.name,
                 jobsDone: jobsCount,

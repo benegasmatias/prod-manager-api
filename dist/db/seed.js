@@ -7,7 +7,7 @@ const user_entity_1 = require("../users/entities/user.entity");
 const enums_1 = require("../common/enums");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const business_membership_entity_1 = require("../businesses/entities/business-membership.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const enums_2 = require("../common/enums");
 const global_role_config_entity_1 = require("../admin/entities/global-role-config.entity");
 async function seed() {
@@ -156,13 +156,13 @@ async function seed() {
             }),
         ]);
         console.log('✅ Pedido 2 creado con 3 items.');
-        const printerRepo = data_source_1.AppDataSource.getRepository(printer_entity_1.Printer);
-        const basePrinters = [
-            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: enums_2.PrinterStatus.IDLE, businessId: biz1.id },
-            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: enums_2.PrinterStatus.PRINTING, businessId: biz1.id },
-            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: enums_2.PrinterStatus.IDLE, businessId: biz1.id },
+        const printerRepo = data_source_1.AppDataSource.getRepository(machine_entity_1.Machine);
+        const baseMachines = [
+            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: enums_2.MachineStatus.IDLE, businessId: biz1.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: enums_2.MachineStatus.PRINTING, businessId: biz1.id },
+            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: enums_2.MachineStatus.IDLE, businessId: biz1.id },
         ];
-        for (const p of basePrinters) {
+        for (const p of baseMachines) {
             const exists = await printerRepo.findOne({ where: { name: p.name, businessId: p.businessId } });
             if (!exists) {
                 await printerRepo.save(printerRepo.create(p));

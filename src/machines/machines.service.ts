@@ -1,24 +1,24 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Printer } from './entities/printer.entity';
-import { PrinterStatus, JobStatus, OrderStatus } from '../common/enums';
-import { CreatePrinterDto } from './dto/create-printer.dto';
-import { UpdatePrinterDto } from './dto/update-printer.dto';
+import { Machine } from './entities/machine.entity';
+import { MachineStatus, JobStatus, OrderStatus } from '../common/enums';
+import { CreateMachineDto } from './dto/create-machine.dto';
+import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
 import { JobsService } from '../jobs/jobs.service';
 
 @Injectable()
-export class PrintersService {
+export class MachinesService {
     constructor(
-        @InjectRepository(Printer)
-        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
         private readonly ordersService: OrdersService,
         private readonly jobsService: JobsService,
     ) { }
 
-    async assignOrder(printerId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Printer> {
-        const printer = await this.findOne(printerId, businessId);
+    async assignOrder(machineId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
+        const machine = await this.findOne(machineId, businessId);
         const order = await this.ordersService.findOne(orderId);
 
         if (!order.items || order.items.length === 0) {
@@ -28,14 +28,14 @@ export class PrintersService {
         // Si el pedido ya estaba en otra impresora, liberarla
         if (order.jobs && order.jobs.length > 0) {
             const activeJobs = order.jobs.filter(j =>
-                j.printerId &&
+                j.machineId &&
                 [JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED].includes(j.status)
             );
 
             for (const job of activeJobs) {
-                if (job.printerId !== printerId) {
+                if (job.machineId !== machineId) {
                     // Liberar la otra impresora
-                    await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
+                    await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
                     // Cancelar el trabajo anterior
                     await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Pedido movido a otra impresora');
                 } else {
@@ -46,7 +46,7 @@ export class PrintersService {
         }
 
         // 1. Marcar impresora como ocupada
-        await this.printerRepository.update(printerId, { status: PrinterStatus.PRINTING });
+        await this.machineRepository.update(machineId, { status: MachineStatus.PRINTING });
 
         // 2. Marcar pedido como en producción (si no lo estaba)
         if (order.status !== OrderStatus.IN_PROGRESS) {
@@ -59,52 +59,56 @@ export class PrintersService {
         await this.jobsService.create({
             orderId: order.id,
             orderItemId: firstItem.id,
-            printerId: printerId,
+            machineId: machineId,
             materialId: materialId,
             metadata: metadata,
             totalUnits: firstItem.qty,
             title: `Prod: ${order.code || 'S/N'} - ${firstItem.name}`
         });
 
-        return this.findOne(printerId, businessId);
+        return this.findOne(machineId, businessId);
     }
 
-    async release(printerId: string, businessId?: string): Promise<Printer> {
-        await this.findOne(printerId, businessId); // Check ownership
+    async release(machineId: string, businessId?: string): Promise<Machine> {
+        await this.findOne(machineId, businessId); // Check ownership
 
         // Encontrar trabajos activos para esta impresora y marcarlos como terminados
         const jobs = await this.jobsService.getQueue();
-        const printerJobs = jobs.filter(j => j.printerId === printerId);
+        const printerJobs = jobs.filter(j => j.machineId === machineId);
 
         for (const job of printerJobs) {
             await this.jobsService.updateStatus(job.id, JobStatus.DONE, 'Liberado mediante gestión de unidades de producción');
         }
 
-        await this.printerRepository.update(printerId, { status: PrinterStatus.IDLE });
-        return this.findOne(printerId, businessId);
+        await this.machineRepository.update(machineId, { status: MachineStatus.IDLE });
+        return this.findOne(machineId, businessId);
     }
 
-    async create(createDto: CreatePrinterDto): Promise<Printer> {
-        const printer = this.printerRepository.create(createDto);
-        return this.printerRepository.save(printer);
+    async create(createDto: CreateMachineDto): Promise<Machine> {
+        const machine = this.machineRepository.create(createDto);
+        return this.machineRepository.save(machine);
     }
 
-    async findAll(businessId?: string, onlyActive: boolean = true): Promise<Printer[]> {
+    async findAll(businessId?: string, onlyActive: boolean = true, page: number = 1, pageSize: number = 50): Promise<{ data: Machine[], total: number }> {
         const where: any = {};
         if (businessId) where.businessId = businessId;
         if (onlyActive) where.active = true;
 
-        return this.printerRepository.find({
+        const [data, total] = await this.machineRepository.findAndCount({
             where,
             order: { name: 'ASC' },
+            skip: (page - 1) * pageSize,
+            take: pageSize
         });
+        
+        return { data, total };
     }
 
-    async findOne(id: string, businessId?: string): Promise<Printer> {
+    async findOne(id: string, businessId?: string): Promise<Machine> {
         const where: any = { id };
         if (businessId) where.businessId = businessId;
 
-        const printer = await this.printerRepository.findOne({
+        const machine = await this.machineRepository.findOne({
             where,
             relations: ['productionJobs', 'productionJobs.order', 'productionJobs.orderItem', 'productionJobs.orderItem.product'],
             order: {
@@ -113,26 +117,26 @@ export class PrintersService {
                 }
             }
         });
-        if (!printer) {
+        if (!machine) {
             throw new NotFoundException(`Unidad de producción con ID ${id} no encontrada`);
         }
-        return printer;
+        return machine;
     }
 
-    async update(id: string, updateDto: UpdatePrinterDto, businessId?: string): Promise<Printer> {
+    async update(id: string, updateDto: UpdateMachineDto, businessId?: string): Promise<Machine> {
         await this.findOne(id, businessId); // Check ownership
-        await this.printerRepository.update(id, updateDto);
+        await this.machineRepository.update(id, updateDto);
         return this.findOne(id, businessId);
     }
 
-    async updateStatus(id: string, status: PrinterStatus, businessId?: string): Promise<Printer> {
+    async updateStatus(id: string, status: MachineStatus, businessId?: string): Promise<Machine> {
         await this.findOne(id, businessId); // Check ownership
-        await this.printerRepository.update(id, { status });
+        await this.machineRepository.update(id, { status });
         return this.findOne(id, businessId);
     }
 
     async deactivate(id: string, businessId?: string): Promise<void> {
         await this.findOne(id, businessId); // Check ownership
-        await this.printerRepository.update(id, { active: false });
+        await this.machineRepository.update(id, { active: false });
     }
 }

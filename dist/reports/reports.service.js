@@ -20,15 +20,15 @@ const order_entity_1 = require("../orders/entities/order.entity");
 const order_item_entity_1 = require("../orders/entities/order-item.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const enums_1 = require("../common/enums");
 let ReportsService = class ReportsService {
-    constructor(orderRepository, orderItemRepository, jobRepository, materialRepository, printerRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, materialRepository, machineRepository) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jobRepository = jobRepository;
         this.materialRepository = materialRepository;
-        this.printerRepository = printerRepository;
+        this.machineRepository = machineRepository;
     }
     async getStats(businessId) {
         const now = new Date();
@@ -68,7 +68,7 @@ let ReportsService = class ReportsService {
             relations: ['order']
         });
         const productUsage = this.groupProductUsage(orderItems);
-        const printers = await this.printerRepository.find({
+        const machines = await this.machineRepository.find({
             where: { businessId }
         });
         const finishedJobs = await this.jobRepository.find({
@@ -76,10 +76,10 @@ let ReportsService = class ReportsService {
                 order: { businessId },
                 status: enums_1.JobStatus.DONE
             },
-            relations: ['printer']
+            relations: ['machine']
         });
-        const printerStats = printers.map(p => {
-            const jobsCount = finishedJobs.filter(j => j.printerId === p.id).length;
+        const printerStats = machines.map(p => {
+            const jobsCount = finishedJobs.filter(j => j.machineId === p.id).length;
             return {
                 name: p.name,
                 jobsDone: jobsCount,
@@ -135,7 +135,7 @@ exports.ReportsService = ReportsService = __decorate([
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
     __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
     __param(3, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
-    __param(4, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
+    __param(4, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

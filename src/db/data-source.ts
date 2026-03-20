@@ -7,7 +7,7 @@ import { OrderFailure } from '../orders/entities/order-failure.entity';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Payment } from '../payments/entities/payment.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 import { FileAsset } from '../products/entities/file-asset.entity';
 import { ProductFile } from '../products/entities/product-file.entity';
@@ -38,7 +38,7 @@ export const AppDataSource = new DataSource({
         OrderStatusHistory,
         ProductionJob,
         Payment,
-        Printer,
+        Machine,
         Material,
         FileAsset,
         ProductFile,

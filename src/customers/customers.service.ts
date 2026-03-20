@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Customer } from './entities/customer.entity';
@@ -12,8 +12,15 @@ export class CustomersService {
     ) { }
 
     async create(createCustomerDto: CreateCustomerDto) {
-        const customer = this.customerRepository.create(createCustomerDto);
-        return this.customerRepository.save(customer);
+        try {
+            const customer = this.customerRepository.create(createCustomerDto);
+            return await this.customerRepository.save(customer);
+        } catch (error) {
+            if (error.code === '23505') { // Postgres code for unique violation
+                throw new ConflictException('Ya existe un cliente con ese email en este negocio');
+            }
+            throw error;
+        }
     }
 
     async findAll(businessId: string, q?: string, page: number = 1, limit: number = 10) {

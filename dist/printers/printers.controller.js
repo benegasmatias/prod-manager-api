@@ -26,9 +26,9 @@ let PrintersController = class PrintersController {
     async create(createDto) {
         return this.printersService.create(createDto);
     }
-    async findAll(businessId, onlyActive) {
+    async findAll(businessId, onlyActive, page = '1', pageSize = '50') {
         const active = onlyActive === 'false' ? false : true;
-        return this.printersService.findAll(businessId, active);
+        return this.printersService.findAll(businessId, active, Number(page), Number(pageSize));
     }
     async findOne(id, businessId) {
         return this.printersService.findOne(id, businessId);
@@ -61,8 +61,10 @@ __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('businessId')),
     __param(1, (0, common_1.Query)('onlyActive')),
+    __param(2, (0, common_1.Query)('page')),
+    __param(3, (0, common_1.Query)('pageSize')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], PrintersController.prototype, "findAll", null);
 __decorate([
@@ -119,7 +121,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], PrintersController.prototype, "remove", null);
 exports.PrintersController = PrintersController = __decorate([
-    (0, common_1.Controller)('printers'),
+    (0, common_1.Controller)('machines'),
     (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard),
     __metadata("design:paramtypes", [printers_service_1.PrintersService])
 ], PrintersController);

@@ -5,8 +5,8 @@ import { User } from '../users/entities/user.entity';
 import { OrderStatus } from '../common/enums';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessMembership, UserRole } from '../businesses/entities/business-membership.entity';
-import { Printer } from '../printers/entities/printer.entity';
-import { PrinterStatus } from '../common/enums';
+import { Machine } from '../machines/entities/machine.entity';
+import { MachineStatus } from '../common/enums';
 import { GlobalRoleConfig } from '../admin/entities/global-role-config.entity';
 
 async function seed() {
@@ -178,14 +178,14 @@ async function seed() {
         console.log('✅ Pedido 2 creado con 3 items.');
 
         // 3. Impresoras (Máquinas)
-        const printerRepo = AppDataSource.getRepository(Printer);
-        const basePrinters = [
-            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: PrinterStatus.IDLE, businessId: biz1.id },
-            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: PrinterStatus.PRINTING, businessId: biz1.id },
-            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: PrinterStatus.IDLE, businessId: biz1.id },
+        const printerRepo = AppDataSource.getRepository(Machine);
+        const baseMachines = [
+            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz1.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: MachineStatus.PRINTING, businessId: biz1.id },
+            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz1.id },
         ];
 
-        for (const p of basePrinters) {
+        for (const p of baseMachines) {
             const exists = await printerRepo.findOne({ where: { name: p.name, businessId: p.businessId } });
             if (!exists) {
                 await printerRepo.save(printerRepo.create(p));

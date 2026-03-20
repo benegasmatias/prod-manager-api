@@ -1,6 +1,6 @@
 import { IsString, IsOptional, IsBoolean, IsUUID } from 'class-validator';
 
-export class CreatePrinterDto {
+export class CreateMachineDto {
     @IsUUID()
     businessId: string;
 

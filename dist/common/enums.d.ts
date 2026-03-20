@@ -43,7 +43,7 @@ export declare enum JobStatus {
     DONE = "DONE",
     CANCELLED = "CANCELLED"
 }
-export declare enum PrinterStatus {
+export declare enum MachineStatus {
     IDLE = "IDLE",
     PRINTING = "PRINTING",
     MAINTENANCE = "MAINTENANCE",

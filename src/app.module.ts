@@ -6,7 +6,7 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { JobsModule } from './jobs/jobs.module';
 import { PaymentsModule } from './payments/payments.module';
-import { PrintersModule } from './printers/printers.module';
+import { MachinesModule } from './machines/machines.module';
 import { MaterialsModule } from './materials/materials.module';
 import { UsersModule } from './users/users.module';
 import { BusinessesModule } from './businesses/businesses.module';
@@ -40,7 +40,7 @@ import { AdminModule } from './admin/admin.module';
     OrdersModule,
     JobsModule,
     PaymentsModule,
-    PrintersModule,
+    MachinesModule,
     MaterialsModule,
     UsersModule,
     BusinessesModule,

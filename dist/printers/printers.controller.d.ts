@@ -6,7 +6,10 @@ export declare class PrintersController {
     private readonly printersService;
     constructor(printersService: PrintersService);
     create(createDto: CreatePrinterDto): Promise<import("./entities/printer.entity").Printer>;
-    findAll(businessId?: string, onlyActive?: string): Promise<import("./entities/printer.entity").Printer[]>;
+    findAll(businessId?: string, onlyActive?: string, page?: string, pageSize?: string): Promise<{
+        data: import("./entities/printer.entity").Printer[];
+        total: number;
+    }>;
     findOne(id: string, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     update(id: string, updateDto: UpdatePrinterDto, businessId?: string): Promise<import("./entities/printer.entity").Printer>;
     updateStatus(id: string, status: PrinterStatus, businessId?: string): Promise<import("./entities/printer.entity").Printer>;

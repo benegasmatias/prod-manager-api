@@ -21,14 +21,14 @@ const job_progress_entity_1 = require("./entities/job-progress.entity");
 const job_status_history_entity_1 = require("../history/entities/job-status-history.entity");
 const orders_service_1 = require("../orders/orders.service");
 const enums_1 = require("../common/enums");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 let JobsService = class JobsService {
-    constructor(jobRepository, progressRepository, statusHistoryRepository, printerRepository, materialRepository, ordersService) {
+    constructor(jobRepository, progressRepository, statusHistoryRepository, machineRepository, materialRepository, ordersService) {
         this.jobRepository = jobRepository;
         this.progressRepository = progressRepository;
         this.statusHistoryRepository = statusHistoryRepository;
-        this.printerRepository = printerRepository;
+        this.machineRepository = machineRepository;
         this.materialRepository = materialRepository;
         this.ordersService = ordersService;
     }
@@ -61,7 +61,7 @@ let JobsService = class JobsService {
         }
         return this.jobRepository.find({
             where,
-            relations: ['order', 'orderItem', 'orderItem.product', 'printer', 'material', 'progress'],
+            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
             order: {
                 order: { priority: 'DESC' },
                 dueDate: 'ASC',
@@ -98,8 +98,8 @@ let JobsService = class JobsService {
         });
         await this.statusHistoryRepository.save(history);
         if (status === enums_1.JobStatus.DONE) {
-            if (job.printerId) {
-                await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: enums_1.MachineStatus.IDLE });
             }
             const unitsReported = job.progress?.reduce((sum, p) => sum + p.unitsDone, 0) || 0;
             const unitsPending = Math.max(0, job.totalUnits - unitsReported);
@@ -188,7 +188,7 @@ exports.JobsService = JobsService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
     __param(1, (0, typeorm_1.InjectRepository)(job_progress_entity_1.JobProgress)),
     __param(2, (0, typeorm_1.InjectRepository)(job_status_history_entity_1.JobStatusHistory)),
-    __param(3, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
+    __param(3, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
     __param(4, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,

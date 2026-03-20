@@ -10,7 +10,7 @@ const order_failure_entity_1 = require("../orders/entities/order-failure.entity"
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const payment_entity_1 = require("../payments/entities/payment.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 const file_asset_entity_1 = require("../products/entities/file-asset.entity");
 const product_file_entity_1 = require("../products/entities/product-file.entity");
@@ -39,7 +39,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
         order_status_history_entity_1.OrderStatusHistory,
         production_job_entity_1.ProductionJob,
         payment_entity_1.Payment,
-        printer_entity_1.Printer,
+        machine_entity_1.Machine,
         material_entity_1.Material,
         file_asset_entity_1.FileAsset,
         product_file_entity_1.ProductFile,

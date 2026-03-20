@@ -75,16 +75,19 @@ let PrintersService = class PrintersService {
         const printer = this.printerRepository.create(createDto);
         return this.printerRepository.save(printer);
     }
-    async findAll(businessId, onlyActive = true) {
+    async findAll(businessId, onlyActive = true, page = 1, pageSize = 50) {
         const where = {};
         if (businessId)
             where.businessId = businessId;
         if (onlyActive)
             where.active = true;
-        return this.printerRepository.find({
+        const [data, total] = await this.printerRepository.findAndCount({
             where,
             order: { name: 'ASC' },
+            skip: (page - 1) * pageSize,
+            take: pageSize
         });
+        return { data, total };
     }
     async findOne(id, businessId) {
         const where = { id };

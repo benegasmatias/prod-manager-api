@@ -48,7 +48,7 @@ export enum JobStatus {
     CANCELLED = 'CANCELLED',
 }
 
-export enum PrinterStatus {
+export enum MachineStatus {
     IDLE = 'IDLE',
     PRINTING = 'PRINTING',
     MAINTENANCE = 'MAINTENANCE',

@@ -22,8 +22,16 @@ let CustomersService = class CustomersService {
         this.customerRepository = customerRepository;
     }
     async create(createCustomerDto) {
-        const customer = this.customerRepository.create(createCustomerDto);
-        return this.customerRepository.save(customer);
+        try {
+            const customer = this.customerRepository.create(createCustomerDto);
+            return await this.customerRepository.save(customer);
+        }
+        catch (error) {
+            if (error.code === '23505') {
+                throw new common_1.ConflictException('Ya existe un cliente con ese email en este negocio');
+            }
+            throw error;
+        }
     }
     async findAll(businessId, q, page = 1, limit = 10) {
         const skip = (page - 1) * limit;

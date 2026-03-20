@@ -5,16 +5,16 @@ import { JobStatusHistory } from '../history/entities/job-status-history.entity'
 import { OrdersService } from '../orders/orders.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
 import { JobStatus } from '../common/enums';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 export declare class JobsService {
     private readonly jobRepository;
     private readonly progressRepository;
     private readonly statusHistoryRepository;
-    private readonly printerRepository;
+    private readonly machineRepository;
     private readonly materialRepository;
     private readonly ordersService;
-    constructor(jobRepository: Repository<ProductionJob>, progressRepository: Repository<JobProgress>, statusHistoryRepository: Repository<JobStatusHistory>, printerRepository: Repository<Printer>, materialRepository: Repository<Material>, ordersService: OrdersService);
+    constructor(jobRepository: Repository<ProductionJob>, progressRepository: Repository<JobProgress>, statusHistoryRepository: Repository<JobStatusHistory>, machineRepository: Repository<Machine>, materialRepository: Repository<Material>, ordersService: OrdersService);
     create(createJobDto: CreateJobDto, userId?: string): Promise<ProductionJob>;
     getQueue(businessId?: string): Promise<ProductionJob[]>;
     findOne(id: string): Promise<ProductionJob>;

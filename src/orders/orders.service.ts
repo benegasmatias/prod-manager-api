@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, ILike, Not, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
-import { OrderStatus, JobStatus, PrinterStatus } from '../common/enums';
+import { OrderStatus, JobStatus, MachineStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { OrderFailure } from './entities/order-failure.entity';
@@ -22,8 +22,8 @@ export class OrdersService {
         private readonly orderItemRepository: Repository<OrderItem>,
         @InjectRepository(ProductionJob)
         private readonly jobRepository: Repository<ProductionJob>,
-        @InjectRepository(Printer)
-        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
         @InjectRepository(OrderStatusHistory)
         private readonly statusHistoryRepository: Repository<OrderStatusHistory>,
         @InjectRepository(OrderFailure)
@@ -506,7 +506,7 @@ export class OrdersService {
             await this.statusHistoryRepository.save(history);
 
             // También finalizamos todos los trabajos de este pedido
-            await this.releasePrintersForOrder(orderId, JobStatus.DONE);
+            await this.releaseMachinesForOrder(orderId, JobStatus.DONE);
         } else if (doneQty > 0) {
             const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
             if (oldOrder && oldOrder.status !== OrderStatus.IN_PROGRESS) {
@@ -522,7 +522,7 @@ export class OrdersService {
             }
             if (doneQty === item.qty) {
                 // Si este ítem específico se terminó, finalizamos sus trabajos
-                await this.releasePrintersForOrder(orderId, JobStatus.DONE, itemId);
+                await this.releaseMachinesForOrder(orderId, JobStatus.DONE, itemId);
             }
         }
 
@@ -686,9 +686,9 @@ export class OrdersService {
             // Si el estado ya no es "EN PROCESO", liberamos las impresoras asociadas
             if (status && status !== OrderStatus.IN_PROGRESS) {
                 const targetJobStatus = status === OrderStatus.DONE ? JobStatus.DONE : JobStatus.CANCELLED;
-                // Nota: releasePrintersForOrder debería usar el manager si quisiéramos ser 100% atómicos, 
+                // Nota: releaseMachinesForOrder debería usar el manager si quisiéramos ser 100% atómicos, 
                 // pero por ahora lo dejamos así ya que maneja sus propias transacciones o updates.
-                await this.releasePrintersForOrder(id, targetJobStatus);
+                await this.releaseMachinesForOrder(id, targetJobStatus);
             }
 
             return await manager.findOne(Order, {
@@ -706,7 +706,7 @@ export class OrdersService {
     /**
      * Libera impresoras asociadas a un pedido y marca sus trabajos activos como terminados/cancelados
      */
-    async releasePrintersForOrder(orderId: string, targetJobStatus: JobStatus = JobStatus.DONE, orderItemId?: string) {
+    async releaseMachinesForOrder(orderId: string, targetJobStatus: JobStatus = JobStatus.DONE, orderItemId?: string) {
         const where: any = { orderId };
         if (orderItemId) where.orderItemId = orderItemId;
 
@@ -722,9 +722,9 @@ export class OrdersService {
             await this.jobRepository.update(job.id, { status: targetJobStatus });
 
             // Si tenía impresora, liberarla
-            if (job.printerId) {
-                await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
-                console.log(`[Auditoría] Impresora ${job.printerId} liberada al cambiar estado de pedido ${orderId}`);
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
+                console.log(`[Auditoría] Impresora ${job.machineId} liberada al cambiar estado de pedido ${orderId}`);
             }
         }
     }

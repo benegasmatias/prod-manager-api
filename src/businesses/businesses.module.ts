@@ -6,7 +6,7 @@ import { BusinessTemplate } from './entities/business-template.entity';
 import { User } from '../users/entities/user.entity';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { BusinessesService } from './businesses.service';
 import { BusinessesController } from './businesses.controller';
 import { BusinessTemplatesController } from './business-templates.controller';
@@ -14,7 +14,7 @@ import { BusinessTemplatesController } from './business-templates.controller';
 import { Material } from '../materials/entities/material.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Business, BusinessMembership, User, BusinessTemplate, Order, Customer, Printer, Material])],
+    imports: [TypeOrmModule.forFeature([Business, BusinessMembership, User, BusinessTemplate, Order, Customer, Machine, Material])],
     controllers: [BusinessesController, BusinessTemplatesController],
     providers: [BusinessesService],
     exports: [BusinessesService],

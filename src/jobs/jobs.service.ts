@@ -6,8 +6,8 @@ import { JobProgress } from './entities/job-progress.entity';
 import { JobStatusHistory } from '../history/entities/job-status-history.entity';
 import { OrdersService } from '../orders/orders.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
-import { JobStatus, OrderStatus, PrinterStatus } from '../common/enums';
-import { Printer } from '../printers/entities/printer.entity';
+import { JobStatus, OrderStatus, MachineStatus } from '../common/enums';
+import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 
 @Injectable()
@@ -19,8 +19,8 @@ export class JobsService {
         private readonly progressRepository: Repository<JobProgress>,
         @InjectRepository(JobStatusHistory)
         private readonly statusHistoryRepository: Repository<JobStatusHistory>,
-        @InjectRepository(Printer)
-        private readonly printerRepository: Repository<Printer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
         private readonly ordersService: OrdersService,
@@ -64,7 +64,7 @@ export class JobsService {
 
         return this.jobRepository.find({
             where,
-            relations: ['order', 'orderItem', 'orderItem.product', 'printer', 'material', 'progress'],
+            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
             order: {
                 order: { priority: 'DESC' },
                 dueDate: 'ASC',
@@ -106,8 +106,8 @@ export class JobsService {
 
         if (status === JobStatus.DONE) {
             // Si el trabajo tenía una impresora asignada, la liberamos
-            if (job.printerId) {
-                await this.printerRepository.update(job.printerId, { status: PrinterStatus.IDLE });
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
             }
 
             // --- Control de Filamento / Material ---

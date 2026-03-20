@@ -15,14 +15,14 @@ const order_entity_1 = require("../orders/entities/order.entity");
 const order_item_entity_1 = require("../orders/entities/order-item.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 let ReportsModule = class ReportsModule {
 };
 exports.ReportsModule = ReportsModule;
 exports.ReportsModule = ReportsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, order_item_entity_1.OrderItem, production_job_entity_1.ProductionJob, material_entity_1.Material, printer_entity_1.Printer]),
+            typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, order_item_entity_1.OrderItem, production_job_entity_1.ProductionJob, material_entity_1.Material, machine_entity_1.Machine]),
         ],
         controllers: [reports_controller_1.ReportsController],
         providers: [reports_service_1.ReportsService],

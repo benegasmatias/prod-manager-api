@@ -23,19 +23,19 @@ const business_template_entity_1 = require("./entities/business-template.entity"
 const typeorm_3 = require("typeorm");
 const order_entity_1 = require("../orders/entities/order.entity");
 const customer_entity_1 = require("../customers/entities/customer.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const enums_1 = require("../common/enums");
 const material_entity_1 = require("../materials/entities/material.entity");
 const employee_entity_1 = require("../employees/entities/employee.entity");
 let BusinessesService = class BusinessesService {
-    constructor(businessRepository, membershipRepository, userRepository, templateRepository, orderRepository, customerRepository, printerRepository, materialRepository, dataSource) {
+    constructor(businessRepository, membershipRepository, userRepository, templateRepository, orderRepository, customerRepository, machineRepository, materialRepository, dataSource) {
         this.businessRepository = businessRepository;
         this.membershipRepository = membershipRepository;
         this.userRepository = userRepository;
         this.templateRepository = templateRepository;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
-        this.printerRepository = printerRepository;
+        this.machineRepository = machineRepository;
         this.materialRepository = materialRepository;
         this.dataSource = dataSource;
     }
@@ -138,14 +138,18 @@ let BusinessesService = class BusinessesService {
             enums_1.OrderStatus.READY, enums_1.OrderStatus.DONE, enums_1.OrderStatus.DESIGN,
             enums_1.OrderStatus.CUTTING, enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY,
             enums_1.OrderStatus.PAINTING, enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS,
-            enums_1.OrderStatus.REPRINT_PENDING, enums_1.OrderStatus.RE_WORK, enums_1.OrderStatus.IN_STOCK
+            enums_1.OrderStatus.REPRINT_PENDING, enums_1.OrderStatus.RE_WORK, enums_1.OrderStatus.IN_STOCK,
+            enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.SITE_VISIT_DONE, enums_1.OrderStatus.VISITA_REPROGRAMADA,
+            enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED, enums_1.OrderStatus.SURVEY_DESIGN, enums_1.OrderStatus.APPROVED,
+            enums_1.OrderStatus.OFFICIAL_ORDER, enums_1.OrderStatus.INSTALACION_OBRA
         ];
         const PRODUCTION_STATUSES = [
             enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.DESIGN, enums_1.OrderStatus.CUTTING,
             enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY, enums_1.OrderStatus.PAINTING,
-            enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS, enums_1.OrderStatus.RE_WORK
+            enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS, enums_1.OrderStatus.RE_WORK,
+            enums_1.OrderStatus.OFFICIAL_ORDER
         ];
-        const [salesResult, activeOrdersWithItems, activePrintersCount, productionOrdersCount, newCustomersCount, recentOrders, realOverdue] = await Promise.all([
+        const [salesResult, activeOrdersWithItems, activeMachinesCount, productionOrdersCount, newCustomersCount, recentOrders, realOverdue] = await Promise.all([
             this.orderRepository.createQueryBuilder('order')
                 .select('SUM(order.totalPrice)', 'total')
                 .where('order.businessId = :businessId', { businessId })
@@ -155,8 +159,8 @@ let BusinessesService = class BusinessesService {
                 where: { businessId, status: (0, typeorm_3.In)(ACTIVE_WORKING_STATUSES) },
                 relations: ['items']
             }),
-            this.printerRepository.count({
-                where: { businessId, status: enums_1.PrinterStatus.PRINTING }
+            this.machineRepository.count({
+                where: { businessId, status: enums_1.MachineStatus.PRINTING }
             }),
             this.orderRepository.count({
                 where: { businessId, status: (0, typeorm_3.In)(PRODUCTION_STATUSES) }
@@ -180,8 +184,67 @@ let BusinessesService = class BusinessesService {
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
             const total = Number(order.totalPrice) || 0;
             const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
-            return acc + (total - deposits);
+            const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
+            return acc + (total - deposits - payments);
         }, 0);
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
+        const hasMetalStatuses = activeOrdersWithItems.some(o => [enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.SITE_VISIT_DONE, enums_1.OrderStatus.OFFICIAL_ORDER, enums_1.OrderStatus.WELDING, enums_1.OrderStatus.CUTTING, enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED]
+            .includes(o.status));
+        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
+        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
+        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
+        let operationalCounters = undefined;
+        let pipelineSummary = undefined;
+        let calendarEvents = undefined;
+        if (isMetalurgica || isCarpinteria) {
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(now.getDate() + 7);
+            operationalCounters = {
+                visitsToday: activeOrdersWithItems.filter(o => (o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
+                pendingBudgets: activeOrdersWithItems.filter(o => o.status === enums_1.OrderStatus.QUOTATION || o.status === enums_1.OrderStatus.SURVEY_DESIGN || o.status === enums_1.OrderStatus.BUDGET_GENERATED).length,
+                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
+                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== enums_1.OrderStatus.DONE).length,
+                delayedOrders: realOverdue.length,
+                pendingPayments: activeOrdersWithItems.filter(o => {
+                    const total = Number(o.totalPrice) || 0;
+                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
+                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
+                    return (total - dep - pay) > 0;
+                }).length
+            };
+            const pipelineStages = [
+                { stage: 'VISITA', statuses: [enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.VISITA_REPROGRAMADA, enums_1.OrderStatus.SITE_VISIT_DONE] },
+                { stage: 'PRESUPUESTO', statuses: [enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED, enums_1.OrderStatus.SURVEY_DESIGN] },
+                { stage: 'APROBADO', statuses: [enums_1.OrderStatus.APPROVED, enums_1.OrderStatus.OFFICIAL_ORDER] },
+                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
+                { stage: 'LISTO', statuses: [enums_1.OrderStatus.DONE, enums_1.OrderStatus.READY] },
+                { stage: 'ENTREGADO', statuses: [enums_1.OrderStatus.DELIVERED] }
+            ];
+            pipelineSummary = pipelineStages.map(s => ({
+                stage: s.stage,
+                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
+            }));
+            calendarEvents = activeOrdersWithItems
+                .filter(o => ((o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) ||
+                (o.dueDate && [enums_1.OrderStatus.DONE, enums_1.OrderStatus.READY, enums_1.OrderStatus.INSTALACION_OBRA].includes(o.status)))
+                .sort((a, b) => {
+                const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
+                const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
+                return dateA.localeCompare(dateB);
+            })
+                .slice(0, 10)
+                .map(o => ({
+                id: o.id,
+                type: (o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
+                clientName: o.clientName || 'Cliente',
+                date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
+                time: o.hora_visita,
+                status: o.status
+            }));
+        }
         const mergedAlerts = [
             ...realOverdue.map(o => ({
                 type: 'vencido',
@@ -208,7 +271,7 @@ let BusinessesService = class BusinessesService {
             pendingBalance,
             activeOrders: activeOrdersWithItems.length,
             productionOrders: productionOrdersCount,
-            activePrinters: activePrintersCount,
+            activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({
                 id: o.id,
@@ -219,7 +282,10 @@ let BusinessesService = class BusinessesService {
                 type: o.type
             })),
             alerts: mergedAlerts,
-            trends: null
+            trends: null,
+            operationalCounters,
+            pipelineSummary,
+            calendarEvents
         };
     }
     async findOne(userId, id) {
@@ -251,7 +317,7 @@ exports.BusinessesService = BusinessesService = __decorate([
     __param(3, (0, typeorm_1.InjectRepository)(business_template_entity_1.BusinessTemplate)),
     __param(4, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
     __param(5, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
-    __param(6, (0, typeorm_1.InjectRepository)(printer_entity_1.Printer)),
+    __param(6, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
     __param(7, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
