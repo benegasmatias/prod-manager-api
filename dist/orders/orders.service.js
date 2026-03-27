@@ -86,7 +86,7 @@ let OrdersService = class OrdersService {
             'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority',
             'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice',
             'order.code', 'order.responsableGeneralId', 'order.customerId',
-            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita',
+            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias',
             'customer.id', 'customer.name', 'customer.phone',
             'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
             'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
@@ -202,7 +202,7 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.items', 'items')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
-            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.createdAt',
+            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias', 'order.createdAt',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
             'items.id', 'items.name', 'items.metadata'
@@ -250,7 +250,8 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.items', 'items')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
-            'order.totalPrice', 'order.createdAt', 'order.updatedAt',
+            'order.totalPrice', 'order.totalSenias', 'order.createdAt', 'order.updatedAt',
+            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.observaciones_visita',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
             'items.id', 'items.name', 'items.price', 'items.qty'
@@ -494,7 +495,7 @@ let OrdersService = class OrdersService {
         return this.findOne(id);
     }
     async updateStatus(id, updateStatusDto, userId) {
-        const { status, type, clientName, totalPrice, dueDate, notes, responsableGeneralId, items } = updateStatusDto;
+        const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items } = updateStatusDto;
         const order = await this.findOne(id);
         const oldStatus = order.status;
         return await this.orderRepository.manager.transaction(async (manager) => {
@@ -507,6 +508,8 @@ let OrdersService = class OrdersService {
                 updateData.clientName = clientName;
             if (totalPrice !== undefined)
                 updateData.totalPrice = totalPrice;
+            if (totalSenias !== undefined)
+                updateData.totalSenias = totalSenias;
             if (dueDate !== undefined)
                 updateData.dueDate = dueDate;
             if (responsableGeneralId !== undefined)

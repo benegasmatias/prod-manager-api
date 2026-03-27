@@ -17,13 +17,13 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'],
+    origin: '*', // Permitir todos los orígenes en desarrollo para facilitar pruebas móviles
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 
   const port = process.env.PORT || 3030;
-  await app.listen(port);
-  console.log(`🚀 API running on: http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0'); // Escuchar en todas las interfaces para permitir acceso desde la red local/móvil
+  console.log(`🚀 API running on: http://0.0.0.0:${port}`);
 }
 bootstrap();

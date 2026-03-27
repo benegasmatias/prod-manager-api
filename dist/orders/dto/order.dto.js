@@ -205,6 +205,12 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateOrderDto.prototype, "totalPrice", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.Min)(0),
+    __metadata("design:type", Number)
+], CreateOrderDto.prototype, "totalSenias", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", String)
@@ -264,6 +270,11 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Number)
 ], UpdateOrderStatusDto.prototype, "totalPrice", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], UpdateOrderStatusDto.prototype, "totalSenias", void 0);
 __decorate([
     (0, class_validator_1.IsDate)(),
     (0, class_validator_1.IsOptional)(),

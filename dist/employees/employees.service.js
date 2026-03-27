@@ -17,9 +17,15 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const employee_entity_1 = require("./entities/employee.entity");
+const supabase_service_1 = require("../common/supabase/supabase.service");
+const businesses_service_1 = require("../businesses/businesses.service");
+const users_service_1 = require("../users/users.service");
 let EmployeesService = class EmployeesService {
-    constructor(employeeRepository) {
+    constructor(employeeRepository, supabaseService, businessesService, usersService) {
         this.employeeRepository = employeeRepository;
+        this.supabaseService = supabaseService;
+        this.businessesService = businessesService;
+        this.usersService = usersService;
     }
     async findAll(businessId, active) {
         const where = { businessId };
@@ -39,6 +45,36 @@ let EmployeesService = class EmployeesService {
         return employee;
     }
     async create(businessId, data) {
+        const { email, firstName, lastName, role } = data;
+        const supabase = this.supabaseService.getClient();
+        const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
+        if (listError)
+            throw listError;
+        let userFound = users.find(u => u.email === email);
+        let userId;
+        let mustChange = false;
+        if (!userFound) {
+            console.log(`[EmployeesService] Creando nuevo usuario en Supabase para ${email}`);
+            const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
+                email,
+                password: '12345',
+                email_confirm: true,
+                user_metadata: { full_name: `${firstName} ${lastName || ''}`.trim() }
+            });
+            if (createError)
+                throw createError;
+            userId = newUser.user.id;
+            mustChange = true;
+        }
+        else {
+            console.log(`[EmployeesService] Usuario ya existe en Supabase: ${email}`);
+            userId = userFound.id;
+        }
+        const localUser = await this.usersService.findOrCreate(userId, email, `${firstName} ${lastName || ''}`.trim());
+        if (mustChange) {
+            await this.usersService.update(userId, { mustChangePassword: true });
+        }
+        await this.businessesService.addMemberToBusiness(userId, businessId, role || 'MEMBER');
         const employee = this.employeeRepository.create({
             ...data,
             businessId,
@@ -61,6 +97,9 @@ exports.EmployeesService = EmployeesService;
 exports.EmployeesService = EmployeesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(employee_entity_1.Employee)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        supabase_service_1.SupabaseService,
+        businesses_service_1.BusinessesService,
+        users_service_1.UsersService])
 ], EmployeesService);
 //# sourceMappingURL=employees.service.js.map

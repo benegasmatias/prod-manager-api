@@ -106,6 +106,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "totalPrice", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ name: 'total_senias', type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true }),
+    __metadata("design:type", Number)
+], Order.prototype, "totalSenias", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "notes", void 0);

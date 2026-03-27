@@ -154,6 +154,11 @@ export class CreateOrderDto {
     @Min(0)
     totalPrice?: number;
 
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    totalSenias?: number;
+
     @IsString()
     @IsOptional()
     responsableGeneralId?: string;
@@ -200,6 +205,10 @@ export class UpdateOrderStatusDto {
     @IsNumber()
     @IsOptional()
     totalPrice?: number;
+
+    @IsNumber()
+    @IsOptional()
+    totalSenias?: number;
 
     @IsDate()
     @IsOptional()

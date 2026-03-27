@@ -31,6 +31,9 @@ export class Employee {
     @Column({ type: 'text', nullable: true })
     specialties: string; // "Soldador, Pintor, etc"
 
+    @Column({ default: 'MEMBER' })
+    role: string; // OWNER, ADMIN, MEMBER
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

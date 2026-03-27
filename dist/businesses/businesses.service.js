@@ -307,6 +307,22 @@ let BusinessesService = class BusinessesService {
         await this.businessRepository.update(id, updateDto);
         return this.findOne(userId, id);
     }
+    async addMemberToBusiness(userId, businessId, role) {
+        let membership = await this.membershipRepository.findOne({
+            where: { userId, businessId }
+        });
+        if (!membership) {
+            membership = this.membershipRepository.create({
+                userId,
+                businessId,
+                role: role
+            });
+        }
+        else {
+            membership.role = role;
+        }
+        return this.membershipRepository.save(membership);
+    }
 };
 exports.BusinessesService = BusinessesService;
 exports.BusinessesService = BusinessesService = __decorate([

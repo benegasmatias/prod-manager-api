@@ -79,6 +79,9 @@ export class Order {
     @Column({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
     totalPrice: number;
 
+    @Column({ name: 'total_senias', type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true })
+    totalSenias: number;
+
     @Column({ type: 'text', nullable: true })
     notes: string;
 

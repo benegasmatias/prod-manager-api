@@ -30,4 +30,5 @@ export declare class BusinessesService {
     getDashboardSummary(userId: string, businessId: string): Promise<DashboardSummaryDto>;
     findOne(userId: string, id: string): Promise<Business>;
     update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business>;
+    addMemberToBusiness(userId: string, businessId: string, role: string): Promise<BusinessMembership>;
 }

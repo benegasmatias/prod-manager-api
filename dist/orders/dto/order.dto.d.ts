@@ -38,6 +38,7 @@ export declare class CreateOrderDto {
     items: CreateOrderItemDto[];
     notes?: string;
     totalPrice?: number;
+    totalSenias?: number;
     responsableGeneralId?: string;
     direccion_obra?: string;
     fecha_visita?: string;
@@ -53,6 +54,7 @@ export declare class UpdateOrderStatusDto {
     type?: OrderType;
     clientName?: string;
     totalPrice?: number;
+    totalSenias?: number;
     dueDate?: Date;
     notes?: string;
     responsableGeneralId?: string;

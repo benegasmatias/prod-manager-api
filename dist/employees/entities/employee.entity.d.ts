@@ -9,6 +9,7 @@ export declare class Employee {
     phone: string;
     email: string;
     specialties: string;
+    role: string;
     createdAt: Date;
     updatedAt: Date;
 }

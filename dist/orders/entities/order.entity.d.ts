@@ -26,6 +26,7 @@ export declare class Order {
     failures: OrderFailure[];
     payments: Payment[];
     totalPrice: number;
+    totalSenias: number;
     notes: string;
     code: string;
     responsableGeneralId: string;
