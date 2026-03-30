@@ -1742,3 +1742,578 @@ Stack: UnauthorizedException: No se encontró el encabezado de autorización
     at handle (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:435:11)
     at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T16:46:19.671Z
+Path: /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+Status: 404
+Message: {"message":"Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T16:46:19.673Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:36:14.262Z
+Path: /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+Status: 404
+Message: {"message":"Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:36:14.263Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:38:23.287Z
+Path: /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+Status: 404
+Message: {"message":"Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:38:23.293Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:54:03.883Z
+Path: /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+Status: 404
+Message: {"message":"Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T17:54:03.885Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T18:03:04.996Z
+Path: /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+Status: 404
+Message: {"message":"Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/23924b72-b11a-48bd-a4a4-d1b36bba2986/summary
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T18:03:04.998Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-27T18:08:53.018Z
+Path: /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+Status: 404
+Message: {"message":"Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /businesses/23924b72-b11a-48bd-a4a4-d1b36bba2986/employees?activeOnly=true
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:22:51.774Z
+Path: /orders?businessId=614ad5b7-c2f0-4afd-b76e-a1adc8979e1f
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:22:51.776Z
+Path: /customers?businessId=614ad5b7-c2f0-4afd-b76e-a1adc8979e1f
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:23:08.176Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:23:08.177Z
+Path: /me
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:35:22.590Z
+Path: /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 404
+Message: {"message":"Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:35:24.700Z
+Path: /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 404
+Message: {"message":"Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:35:44.793Z
+Path: /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 404
+Message: {"message":"Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /clients?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:48:06.244Z
+Path: /orders
+Status: 400
+Message: {"message":["property observaciones should not exist","property total should not exist","priority must not be less than 1","priority must be an integer number","items.0.property cantidad should not exist","items.0.property precioUnitario should not exist","items.0.property nombreProducto should not exist","items.0.property seDiseñaSTL should not exist","items.0.property status should not exist","items.0.name should not be empty","items.0.name must be a string","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints","items.0.price must not be less than 0","items.0.price must be a number conforming to the specified constraints","items.0.qty must not be less than 1","items.0.qty must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T11:48:17.899Z
+Path: /orders
+Status: 400
+Message: {"message":["property observaciones should not exist","property total should not exist","priority must not be less than 1","priority must be an integer number","items.0.property cantidad should not exist","items.0.property precioUnitario should not exist","items.0.property nombreProducto should not exist","items.0.property seDiseñaSTL should not exist","items.0.property status should not exist","items.0.name should not be empty","items.0.name must be a string","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints","items.0.price must not be less than 0","items.0.price must be a number conforming to the specified constraints","items.0.qty must not be less than 1","items.0.qty must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T12:13:13.843Z
+Path: /orders
+Status: 400
+Message: {"message":["property observaciones should not exist","property total should not exist","priority must not be less than 1","priority must be an integer number","items.0.property cantidad should not exist","items.0.property precioUnitario should not exist","items.0.property senia should not exist","items.0.property nombreProducto should not exist","items.0.property seDiseñaSTL should not exist","items.0.property tipo_filamento should not exist","items.0.property status should not exist","items.0.name should not be empty","items.0.name must be a string","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints","items.0.price must not be less than 0","items.0.price must be a number conforming to the specified constraints","items.0.qty must not be less than 1","items.0.qty must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T12:17:56.896Z
+Path: /orders
+Status: 400
+Message: {"message":["property observaciones should not exist","property total should not exist","priority must not be less than 1","priority must be an integer number","items.0.property cantidad should not exist","items.0.property precioUnitario should not exist","items.0.property senia should not exist","items.0.property nombreProducto should not exist","items.0.property seDiseñaSTL should not exist","items.0.property tipo_filamento should not exist","items.0.property status should not exist","items.0.name should not be empty","items.0.name must be a string","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints","items.0.price must not be less than 0","items.0.price must be a number conforming to the specified constraints","items.0.qty must not be less than 1","items.0.qty must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T13:17:12.413Z
+Path: /orders
+Status: 400
+Message: {"message":["property observaciones should not exist","property total should not exist","priority must not be less than 1","priority must be an integer number","items.0.property cantidad should not exist","items.0.property precioUnitario should not exist","items.0.property senia should not exist","items.0.property nombreProducto should not exist","items.0.property seDiseñaSTL should not exist","items.0.property tipo_filamento should not exist","items.0.property peso_gramos should not exist","items.0.property duracion_estimada_minutos should not exist","items.0.property status should not exist","items.0.name should not be empty","items.0.name must be a string","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints","items.0.price must not be less than 0","items.0.price must be a number conforming to the specified constraints","items.0.qty must not be less than 1","items.0.qty must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T14:09:00.783Z
+Path: /orders
+Status: 400
+Message: {"message":["items.0.property status should not exist","items.0.property seDiseñaSTL should not exist","items.0.property tipo_filamento should not exist","items.0.property precioDiseno should not exist","items.0.property peso_gramos should not exist","items.0.property duracion_estimada_minutos should not exist","items.0.estimatedMinutes must not be less than 0","items.0.estimatedMinutes must be an integer number","items.0.weightGrams must not be less than 0","items.0.weightGrams must be a number conforming to the specified constraints"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T15:01:54.278Z
+Path: /orders/4b598fc0-bd3d-4c40-a791-588df0cebb1f/status
+Status: 500
+Message: "invalid input syntax for type uuid: \"\""
+Stack: QueryFailedError: invalid input syntax for type uuid: ""
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:673:17)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:630:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T15:02:48.964Z
+Path: /orders/4b598fc0-bd3d-4c40-a791-588df0cebb1f/payments
+Status: 400
+Message: {"message":["amount must not be less than 0.01","method must be one of the following values: CASH, TRANSFER, CARD, MP"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T15:02:58.077Z
+Path: /orders/4b598fc0-bd3d-4c40-a791-588df0cebb1f/status
+Status: 500
+Message: "invalid input syntax for type uuid: \"\""
+Stack: QueryFailedError: invalid input syntax for type uuid: ""
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:673:17)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:630:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T15:54:17.309Z
+Path: /orders/31554356-8a8f-4490-88c8-9d7abb18aaac/status/failure
+Status: 404
+Message: {"message":"Cannot POST /orders/31554356-8a8f-4490-88c8-9d7abb18aaac/status/failure","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /orders/31554356-8a8f-4490-88c8-9d7abb18aaac/status/failure
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:35.658Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:35.659Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:43.510Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:43.547Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:51.977Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:12:52.012Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:14:00.481Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-03-30T16:14:00.500Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
