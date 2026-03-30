@@ -1,0 +1,61 @@
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+@Entity('subscription_plans')
+export class SubscriptionPlan {
+    @PrimaryColumn()
+    id: string; // 'free', 'pro', 'business'
+
+    @Column()
+    name: string;
+
+    @Column('decimal', { precision: 12, scale: 2, default: 0 })
+    price: number;
+
+    @Column({ default: 'ARS' })
+    currency: string;
+
+    @Column({ nullable: true })
+    description: string;
+
+    @Column('simple-json', { default: '[]' })
+    features: string[];
+
+    @Column({ default: 0 })
+    maxUsers: number; // 0 = unlimited
+
+    @Column({ default: 0 })
+    maxOrdersPerMonth: number; // 0 = unlimited
+
+    @Column({ default: 0 })
+    maxBusinesses: number; // 0 = unlimited
+
+    @Column({ default: 0 })
+    maxMachines: number; // 0 = unlimited
+
+    @Column({ default: false })
+    isRecommended: boolean;
+
+    @Column({ nullable: true })
+    ctaText: string; // 'Comenzar gratis', 'Probar 14 días gratis', etc.
+
+    @Column({ nullable: true })
+    ctaLink: string; // '/register', etc.
+
+    @Column({ default: 0 })
+    sortOrder: number;
+
+    @Column({ default: true })
+    active: boolean;
+
+    @Column({ default: false })
+    hasTrial: boolean;
+
+    @Column({ default: 0 })
+    trialDays: number;
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
+}

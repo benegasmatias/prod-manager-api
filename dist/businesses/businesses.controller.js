@@ -31,6 +31,9 @@ let BusinessesController = class BusinessesController {
     async getSummary(req, id) {
         return this.businessesService.getDashboardSummary(req.user.id, id);
     }
+    async testReload() {
+        return { message: "RELOAD_SUCCESS_OK_v1", time: new Date().toISOString() };
+    }
     async create(req, createDto) {
         return this.businessesService.createFromTemplate(req.user.id, createDto);
     }
@@ -62,6 +65,12 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], BusinessesController.prototype, "getSummary", null);
+__decorate([
+    (0, common_1.Get)('test-reload'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], BusinessesController.prototype, "testReload", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Request)()),

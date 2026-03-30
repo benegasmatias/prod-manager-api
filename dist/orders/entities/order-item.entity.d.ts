@@ -20,4 +20,7 @@ export declare class OrderItem {
     subtotal: number;
     notes: string;
     deposit: number;
+    metadata: any;
+    estimatedUnitCost: number;
+    estimatedSaleUnitPrice: number;
 }

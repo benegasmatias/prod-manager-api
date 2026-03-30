@@ -24,6 +24,19 @@ export class Business {
     @Column({ default: 'ARS' })
     currency: string; // ARS, USD, etc
 
+    @Column({ default: 'ACTIVE' })
+    status: string; // ACTIVE, SUSPENDED, TRIAL
+
+    @Column({ name: 'plan_id', nullable: true })
+    planId: string; // Pro, Enterprise, Free, etc
+
+    @Column({ type: 'timestamp', name: 'trial_expires_at', nullable: true })
+    trialExpiresAt: Date;
+
+    @Column({ type: 'timestamp', name: 'subscription_expires_at', nullable: true })
+    subscriptionExpiresAt: Date;
+
+
     @OneToMany('BusinessMembership', (membership: any) => membership.business)
     memberships: BusinessMembership[];
 

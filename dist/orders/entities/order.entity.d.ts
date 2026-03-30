@@ -1,10 +1,12 @@
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
-import { OrderStatus } from '../../common/enums';
+import { OrderStatus, OrderType } from '../../common/enums';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { OrderStatusHistory } from '../../history/entities/order-status-history.entity';
 import { Payment } from '../../payments/entities/payment.entity';
+import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 export declare class Order {
     id: string;
     businessId: string;
@@ -13,14 +15,25 @@ export declare class Order {
     dueDate: Date;
     priority: number;
     status: OrderStatus;
+    type: OrderType;
     createdAt: Date;
+    updatedAt: Date;
     items: OrderItem[];
     customerId: string;
     customer: Customer;
     jobs: ProductionJob[];
     statusHistory: OrderStatusHistory[];
+    failures: OrderFailure[];
     payments: Payment[];
     totalPrice: number;
+    totalSenias: number;
     notes: string;
     code: string;
+    responsableGeneralId: string;
+    responsableGeneral: Employee;
+    direccion_obra: string;
+    fecha_visita: string;
+    hora_visita: string;
+    observaciones_visita: string;
+    metadata: any;
 }

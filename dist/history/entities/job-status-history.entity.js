@@ -13,6 +13,7 @@ exports.JobStatusHistory = void 0;
 const typeorm_1 = require("typeorm");
 const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
 const enums_1 = require("../../common/enums");
+const user_entity_1 = require("../../users/entities/user.entity");
 let JobStatusHistory = class JobStatusHistory {
 };
 exports.JobStatusHistory = JobStatusHistory;
@@ -45,6 +46,15 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], JobStatusHistory.prototype, "note", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'performed_by_id', nullable: true }),
+    __metadata("design:type", String)
+], JobStatusHistory.prototype, "performedById", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'performed_by_id' }),
+    __metadata("design:type", user_entity_1.User)
+], JobStatusHistory.prototype, "performedBy", void 0);
 exports.JobStatusHistory = JobStatusHistory = __decorate([
     (0, typeorm_1.Entity)('job_status_history')
 ], JobStatusHistory);

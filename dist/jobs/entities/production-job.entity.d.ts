@@ -1,7 +1,8 @@
 import { Order } from '../../orders/entities/order.entity';
 import { OrderItem } from '../../orders/entities/order-item.entity';
-import { Printer } from '../../printers/entities/printer.entity';
+import { Machine } from '../../machines/entities/machine.entity';
 import { Material } from '../../materials/entities/material.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 import { JobStatus } from '../../common/enums';
 import { JobProgress } from './job-progress.entity';
 import { JobStatusHistory } from '../../history/entities/job-status-history.entity';
@@ -11,8 +12,8 @@ export declare class ProductionJob {
     order: Order;
     orderItemId: string;
     orderItem: OrderItem;
-    printerId: string;
-    printer: Printer;
+    machineId: string;
+    machine: Machine;
     materialId: string;
     material: Material;
     title: string;
@@ -23,6 +24,10 @@ export declare class ProductionJob {
     dueDate: Date;
     status: JobStatus;
     sortRank: number;
+    responsableId: string;
+    responsable: Employee;
+    notes: string;
+    metadata: any;
     progress: JobProgress[];
     statusHistory: JobStatusHistory[];
     createdAt: Date;

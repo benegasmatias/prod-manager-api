@@ -22,37 +22,39 @@ let JobsController = class JobsController {
     constructor(jobsService) {
         this.jobsService = jobsService;
     }
-    create(createJobDto) {
-        return this.jobsService.create(createJobDto);
+    create(createJobDto, req) {
+        return this.jobsService.create(createJobDto, req.user.id);
     }
-    getQueue() {
-        return this.jobsService.getQueue();
+    getQueue(businessId) {
+        return this.jobsService.getQueue(businessId);
     }
     findOne(id) {
         return this.jobsService.findOne(id);
     }
-    updateStatus(id, status, notes) {
-        return this.jobsService.updateStatus(id, status, notes);
+    updateStatus(id, status, notes, req) {
+        return this.jobsService.updateStatus(id, status, notes, req?.user?.id);
     }
-    update(id, updateJobDto) {
-        return this.jobsService.update(id, updateJobDto);
+    update(id, updateJobDto, req) {
+        return this.jobsService.update(id, updateJobDto, req.user.id);
     }
-    addProgress(id, createProgressDto) {
-        return this.jobsService.addProgress(id, createProgressDto);
+    addProgress(id, createProgressDto, req) {
+        return this.jobsService.addProgress(id, createProgressDto, req.user.id);
     }
 };
 exports.JobsController = JobsController;
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [job_dto_1.CreateJobDto]),
+    __metadata("design:paramtypes", [job_dto_1.CreateJobDto, Object]),
     __metadata("design:returntype", void 0)
 ], JobsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('queue'),
+    __param(0, (0, common_1.Query)('businessId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], JobsController.prototype, "getQueue", null);
 __decorate([
@@ -67,24 +69,27 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)('status')),
     __param(2, (0, common_1.Body)('notes')),
+    __param(3, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, Object]),
     __metadata("design:returntype", void 0)
 ], JobsController.prototype, "updateStatus", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, job_dto_1.UpdateJobDto]),
+    __metadata("design:paramtypes", [String, job_dto_1.UpdateJobDto, Object]),
     __metadata("design:returntype", void 0)
 ], JobsController.prototype, "update", null);
 __decorate([
     (0, common_1.Post)(':id/progress'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
+    __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, job_dto_1.CreateProgressDto]),
+    __metadata("design:paramtypes", [String, job_dto_1.CreateProgressDto, Object]),
     __metadata("design:returntype", void 0)
 ], JobsController.prototype, "addProgress", null);
 exports.JobsController = JobsController = __decorate([

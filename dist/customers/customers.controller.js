@@ -32,7 +32,7 @@ let CustomersController = class CustomersController {
     }
     async findAll(req, businessId, q, page, limit) {
         if (!businessId) {
-            throw new common_1.BadRequestException('businessId is required');
+            throw new common_1.BadRequestException('El ID del negocio es obligatorio');
         }
         const hasAccess = await this.businessesService.checkAccess(req.user.id, businessId);
         if (!hasAccess) {

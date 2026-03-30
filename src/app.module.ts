@@ -6,10 +6,13 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { JobsModule } from './jobs/jobs.module';
 import { PaymentsModule } from './payments/payments.module';
-import { PrintersModule } from './printers/printers.module';
+import { MachinesModule } from './machines/machines.module';
 import { MaterialsModule } from './materials/materials.module';
 import { UsersModule } from './users/users.module';
 import { BusinessesModule } from './businesses/businesses.module';
+import { ReportsModule } from './reports/reports.module';
+import { EmployeesModule } from './employees/employees.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -26,9 +29,9 @@ import { BusinessesModule } from './businesses/businesses.module';
         synchronize: true, // Auto-update schema in dev
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
-          max: 20,
+          max: 30,
           idleTimeoutMillis: 30000,
-          connectionTimeoutMillis: 2000,
+          connectionTimeoutMillis: 10000,
         }
       }),
     }),
@@ -37,10 +40,13 @@ import { BusinessesModule } from './businesses/businesses.module';
     OrdersModule,
     JobsModule,
     PaymentsModule,
-    PrintersModule,
+    MachinesModule,
     MaterialsModule,
     UsersModule,
     BusinessesModule,
+    ReportsModule,
+    EmployeesModule,
+    AdminModule,
   ],
 })
 export class AppModule { }

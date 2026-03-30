@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { JobStatus } from '../../common/enums';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('job_status_history')
 export class JobStatusHistory {
@@ -25,4 +26,11 @@ export class JobStatusHistory {
 
     @Column({ type: 'text', nullable: true })
     note: string;
+
+    @Column({ name: 'performed_by_id', nullable: true })
+    performedById: string;
+
+    @ManyToOne(() => User, { nullable: true })
+    @JoinColumn({ name: 'performed_by_id' })
+    performedBy: User;
 }

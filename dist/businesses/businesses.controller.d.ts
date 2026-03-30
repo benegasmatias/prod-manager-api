@@ -7,6 +7,10 @@ export declare class BusinessesController {
     findAll(req: any): Promise<import("./entities/business.entity").Business[]>;
     findOne(req: any, id: string): Promise<import("./entities/business.entity").Business>;
     getSummary(req: any, id: string): Promise<import("./dto/dashboard-summary.dto").DashboardSummaryDto>;
+    testReload(): Promise<{
+        message: string;
+        time: string;
+    }>;
     create(req: any, createDto: CreateBusinessFromTemplateDto): Promise<any>;
     update(req: any, id: string, updateDto: UpdateBusinessDto): Promise<import("./entities/business.entity").Business>;
 }

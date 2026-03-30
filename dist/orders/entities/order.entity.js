@@ -17,7 +17,9 @@ const enums_1 = require("../../common/enums");
 const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
 const order_status_history_entity_1 = require("../../history/entities/order-status-history.entity");
 const payment_entity_1 = require("../../payments/entities/payment.entity");
+const order_failure_entity_1 = require("./order-failure.entity");
 const business_entity_1 = require("../../businesses/entities/business.entity");
+const employee_entity_1 = require("../../employees/entities/employee.entity");
 let Order = class Order {
 };
 exports.Order = Order;
@@ -39,7 +41,7 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "clientName", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'due_date' }),
+    (0, typeorm_1.Column)({ name: 'due_date', nullable: true }),
     __metadata("design:type", Date)
 ], Order.prototype, "dueDate", void 0);
 __decorate([
@@ -55,9 +57,21 @@ __decorate([
     __metadata("design:type", String)
 ], Order.prototype, "status", void 0);
 __decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enums_1.OrderType,
+        default: enums_1.OrderType.CUSTOMER
+    }),
+    __metadata("design:type", String)
+], Order.prototype, "type", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
 ], Order.prototype, "createdAt", void 0);
+__decorate([
+    (0, typeorm_1.UpdateDateColumn)({ name: 'updated_at' }),
+    __metadata("design:type", Date)
+], Order.prototype, "updatedAt", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => order_item_entity_1.OrderItem, (item) => item.order, { cascade: true }),
     __metadata("design:type", Array)
@@ -80,6 +94,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Order.prototype, "statusHistory", void 0);
 __decorate([
+    (0, typeorm_1.OneToMany)(() => order_failure_entity_1.OrderFailure, (failure) => failure.order),
+    __metadata("design:type", Array)
+], Order.prototype, "failures", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => payment_entity_1.Payment, (payment) => payment.order),
     __metadata("design:type", Array)
 ], Order.prototype, "payments", void 0);
@@ -88,6 +106,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "totalPrice", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ name: 'total_senias', type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true }),
+    __metadata("design:type", Number)
+], Order.prototype, "totalSenias", void 0);
+__decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "notes", void 0);
@@ -95,6 +117,35 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Order.prototype, "code", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'responsable_general_id', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "responsableGeneralId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => employee_entity_1.Employee, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'responsable_general_id' }),
+    __metadata("design:type", employee_entity_1.Employee)
+], Order.prototype, "responsableGeneral", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'direccion_obra', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "direccion_obra", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'fecha_visita', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "fecha_visita", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'hora_visita', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "hora_visita", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'observaciones_visita', type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Order.prototype, "observaciones_visita", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'jsonb', nullable: true }),
+    __metadata("design:type", Object)
+], Order.prototype, "metadata", void 0);
 exports.Order = Order = __decorate([
     (0, typeorm_1.Entity)('orders'),
     (0, typeorm_1.Unique)(['code', 'businessId'])

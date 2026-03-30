@@ -26,11 +26,24 @@ let PrintersService = class PrintersService {
         this.ordersService = ordersService;
         this.jobsService = jobsService;
     }
-    async assignOrder(printerId, orderId) {
-        const printer = await this.findOne(printerId);
+    async assignOrder(printerId, orderId, materialId, businessId, metadata) {
+        const printer = await this.findOne(printerId, businessId);
         const order = await this.ordersService.findOne(orderId);
         if (!order.items || order.items.length === 0) {
             throw new common_1.NotFoundException('El pedido no tiene ítems para producir');
+        }
+        if (order.jobs && order.jobs.length > 0) {
+            const activeJobs = order.jobs.filter(j => j.printerId &&
+                [enums_1.JobStatus.QUEUED, enums_1.JobStatus.PRINTING, enums_1.JobStatus.PAUSED].includes(j.status));
+            for (const job of activeJobs) {
+                if (job.printerId !== printerId) {
+                    await this.printerRepository.update(job.printerId, { status: enums_1.PrinterStatus.IDLE });
+                    await this.jobsService.updateStatus(job.id, enums_1.JobStatus.CANCELLED, 'Pedido movido a otra impresora');
+                }
+                else {
+                    await this.jobsService.updateStatus(job.id, enums_1.JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                }
+            }
         }
         await this.printerRepository.update(printerId, { status: enums_1.PrinterStatus.PRINTING });
         if (order.status !== enums_1.OrderStatus.IN_PROGRESS) {
@@ -41,34 +54,47 @@ let PrintersService = class PrintersService {
             orderId: order.id,
             orderItemId: firstItem.id,
             printerId: printerId,
+            materialId: materialId,
+            metadata: metadata,
             totalUnits: firstItem.qty,
             title: `Prod: ${order.code || 'S/N'} - ${firstItem.name}`
         });
-        return this.findOne(printerId);
+        return this.findOne(printerId, businessId);
     }
-    async release(printerId) {
+    async release(printerId, businessId) {
+        await this.findOne(printerId, businessId);
         const jobs = await this.jobsService.getQueue();
         const printerJobs = jobs.filter(j => j.printerId === printerId);
         for (const job of printerJobs) {
-            await this.jobsService.updateStatus(job.id, enums_1.JobStatus.DONE, 'Liberado mediante gestión de máquinas');
+            await this.jobsService.updateStatus(job.id, enums_1.JobStatus.DONE, 'Liberado mediante gestión de unidades de producción');
         }
         await this.printerRepository.update(printerId, { status: enums_1.PrinterStatus.IDLE });
-        return this.findOne(printerId);
+        return this.findOne(printerId, businessId);
     }
-    async create(createPrinterDto) {
-        const printer = this.printerRepository.create(createPrinterDto);
+    async create(createDto) {
+        const printer = this.printerRepository.create(createDto);
         return this.printerRepository.save(printer);
     }
-    async findAll(businessId) {
-        const where = businessId ? { businessId } : {};
-        return this.printerRepository.find({
+    async findAll(businessId, onlyActive = true, page = 1, pageSize = 50) {
+        const where = {};
+        if (businessId)
+            where.businessId = businessId;
+        if (onlyActive)
+            where.active = true;
+        const [data, total] = await this.printerRepository.findAndCount({
             where,
             order: { name: 'ASC' },
+            skip: (page - 1) * pageSize,
+            take: pageSize
         });
+        return { data, total };
     }
-    async findOne(id) {
+    async findOne(id, businessId) {
+        const where = { id };
+        if (businessId)
+            where.businessId = businessId;
         const printer = await this.printerRepository.findOne({
-            where: { id },
+            where,
             relations: ['productionJobs', 'productionJobs.order', 'productionJobs.orderItem', 'productionJobs.orderItem.product'],
             order: {
                 productionJobs: {
@@ -77,13 +103,23 @@ let PrintersService = class PrintersService {
             }
         });
         if (!printer) {
-            throw new common_1.NotFoundException(`Impresora con ID ${id} no encontrada`);
+            throw new common_1.NotFoundException(`Unidad de producción con ID ${id} no encontrada`);
         }
         return printer;
     }
-    async updateStatus(id, status) {
+    async update(id, updateDto, businessId) {
+        await this.findOne(id, businessId);
+        await this.printerRepository.update(id, updateDto);
+        return this.findOne(id, businessId);
+    }
+    async updateStatus(id, status, businessId) {
+        await this.findOne(id, businessId);
         await this.printerRepository.update(id, { status });
-        return this.findOne(id);
+        return this.findOne(id, businessId);
+    }
+    async deactivate(id, businessId) {
+        await this.findOne(id, businessId);
+        await this.printerRepository.update(id, { active: false });
     }
 };
 exports.PrintersService = PrintersService;

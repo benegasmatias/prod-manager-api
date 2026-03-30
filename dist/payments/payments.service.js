@@ -26,7 +26,7 @@ let PaymentsService = class PaymentsService {
     async create(orderId, createPaymentDto) {
         const order = await this.orderRepository.findOne({ where: { id: orderId } });
         if (!order)
-            throw new common_1.NotFoundException('Order not found');
+            throw new common_1.NotFoundException('Pedido no encontrado');
         const payment = this.paymentRepository.create({
             orderId,
             ...createPaymentDto,
@@ -36,7 +36,7 @@ let PaymentsService = class PaymentsService {
     async findByOrder(orderId) {
         const order = await this.orderRepository.findOne({ where: { id: orderId } });
         if (!order)
-            throw new common_1.NotFoundException('Order not found');
+            throw new common_1.NotFoundException('Pedido no encontrado');
         return this.paymentRepository.find({
             where: { orderId },
             order: { paidAt: 'DESC' },

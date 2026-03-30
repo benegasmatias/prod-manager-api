@@ -20,4 +20,8 @@ export class UpdateBusinessDto {
     @IsString()
     @IsOptional()
     currency?: string;
+
+    @IsString()
+    @IsOptional()
+    category?: string;
 }

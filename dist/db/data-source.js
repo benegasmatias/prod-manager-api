@@ -6,10 +6,11 @@ const customer_entity_1 = require("../customers/entities/customer.entity");
 const product_entity_1 = require("../products/entities/product.entity");
 const order_entity_1 = require("../orders/entities/order.entity");
 const order_item_entity_1 = require("../orders/entities/order-item.entity");
+const order_failure_entity_1 = require("../orders/entities/order-failure.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const payment_entity_1 = require("../payments/entities/payment.entity");
-const printer_entity_1 = require("../printers/entities/printer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 const file_asset_entity_1 = require("../products/entities/file-asset.entity");
 const product_file_entity_1 = require("../products/entities/product-file.entity");
@@ -19,6 +20,9 @@ const user_entity_1 = require("../users/entities/user.entity");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const business_membership_entity_1 = require("../businesses/entities/business-membership.entity");
 const business_template_entity_1 = require("../businesses/entities/business-template.entity");
+const employee_entity_1 = require("../employees/entities/employee.entity");
+const global_role_config_entity_1 = require("../admin/entities/global-role-config.entity");
+const notification_entity_1 = require("../notifications/entities/notification.entity");
 const dotenv = require("dotenv");
 dotenv.config();
 exports.AppDataSource = new typeorm_1.DataSource({
@@ -31,10 +35,11 @@ exports.AppDataSource = new typeorm_1.DataSource({
         product_entity_1.Product,
         order_entity_1.Order,
         order_item_entity_1.OrderItem,
+        order_failure_entity_1.OrderFailure,
         order_status_history_entity_1.OrderStatusHistory,
         production_job_entity_1.ProductionJob,
         payment_entity_1.Payment,
-        printer_entity_1.Printer,
+        machine_entity_1.Machine,
         material_entity_1.Material,
         file_asset_entity_1.FileAsset,
         product_file_entity_1.ProductFile,
@@ -44,6 +49,9 @@ exports.AppDataSource = new typeorm_1.DataSource({
         business_entity_1.Business,
         business_membership_entity_1.BusinessMembership,
         business_template_entity_1.BusinessTemplate,
+        employee_entity_1.Employee,
+        global_role_config_entity_1.GlobalRoleConfig,
+        notification_entity_1.Notification,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

@@ -41,6 +41,10 @@ __decorate([
     __metadata("design:type", String)
 ], Printer.prototype, "status", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ name: 'max_filaments', type: 'int', default: 1 }),
+    __metadata("design:type", Number)
+], Printer.prototype, "maxFilaments", void 0);
+__decorate([
     (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
 ], Printer.prototype, "active", void 0);

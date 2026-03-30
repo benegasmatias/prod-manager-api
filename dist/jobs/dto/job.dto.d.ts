@@ -2,20 +2,24 @@ import { JobStatus, Priority } from '../../common/enums';
 export declare class CreateJobDto {
     orderId: string;
     orderItemId: string;
-    printerId?: string;
+    machineId?: string;
     materialId?: string;
     totalUnits: number;
     priority?: Priority;
     sortRank?: number;
     title?: string;
+    responsableId?: string;
+    metadata?: any;
 }
 export declare class UpdateJobDto {
     status?: JobStatus;
     priority?: Priority;
     sortRank?: number;
-    printerId?: string;
+    machineId?: string;
     materialId?: string;
-    note?: string;
+    notes?: string;
+    responsableId?: string;
+    metadata?: any;
 }
 export declare class CreateProgressDto {
     unitsDone: number;

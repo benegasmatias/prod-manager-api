@@ -7,6 +7,12 @@ export declare class Material {
     brand: string;
     color: string;
     costPerKg: number;
+    businessId: string;
+    totalWeightGrams: number;
+    remainingWeightGrams: number;
+    bedTemperature?: number;
+    nozzleTemperature?: number;
+    unit: string;
     active: boolean;
     productionJobs: ProductionJob[];
 }

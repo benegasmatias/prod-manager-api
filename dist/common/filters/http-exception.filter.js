@@ -22,7 +22,17 @@ let AllExceptionsFilter = AllExceptionsFilter_1 = class AllExceptionsFilter {
             : common_1.HttpStatus.INTERNAL_SERVER_ERROR;
         const message = exception instanceof common_1.HttpException
             ? exception.getResponse()
-            : 'Internal server error';
+            : exception.message || 'Error interno del servidor';
+        const errorLog = `
+--- ERROR ---
+Timestamp: ${new Date().toISOString()}
+Path: ${request.url}
+Status: ${status}
+Message: ${JSON.stringify(message)}
+Stack: ${exception.stack}
+-------------
+`;
+        require('fs').appendFileSync('error_debug.log', errorLog);
         this.logger.error(`Http Status: ${status} Error Message: ${JSON.stringify(message)}`, exception.stack);
         response.status(status).json({
             statusCode: status,

@@ -6,13 +6,16 @@ import { BusinessTemplateDto } from './dto/business-template.dto';
 import { BusinessMembership, UserRole } from './entities/business-membership.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
-import { DataSource, MoreThanOrEqual } from 'typeorm';
+import { DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
-import { OrderStatus } from '../common/enums';
-import { DashboardSummaryDto } from './dto/dashboard-summary.dto';
+import { Machine } from '../machines/entities/machine.entity';
+import { MachineStatus, OrderStatus, OrderType } from '../common/enums';
+import { Material } from '../materials/entities/material.entity';
+import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
+import { Employee } from '../employees/entities/employee.entity';
 
 @Injectable()
 export class BusinessesService {
@@ -29,6 +32,10 @@ export class BusinessesService {
         private readonly orderRepository: Repository<Order>,
         @InjectRepository(Customer)
         private readonly customerRepository: Repository<Customer>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
+        @InjectRepository(Material)
+        private readonly materialRepository: Repository<Material>,
         private readonly dataSource: DataSource,
     ) { }
 
@@ -80,8 +87,32 @@ export class BusinessesService {
             });
             await manager.save(BusinessMembership, membership);
 
-            // 2. Setear defaultBusinessId en el usuario si no tiene uno
+            // 1.b Autocompletar el Personal con el Dueño
             const user = await manager.findOneBy(User, { id: userId });
+            if (user) {
+                // Verificar si ya existe (por si acaso se reintenta la transacción)
+                const existingEmployee = await manager.findOne(Employee, {
+                    where: { businessId: businessToUse.id, email: user.email }
+                });
+
+                if (!existingEmployee) {
+                    const nameParts = (user.fullName || 'Propietario').trim().split(/\s+/);
+                    const firstName = nameParts[0] || 'Propietario';
+                    const lastName = nameParts.slice(1).join(' ');
+
+                    const employee = manager.create(Employee, {
+                        businessId: businessToUse.id,
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: user.email,
+                        active: true,
+                        specialties: 'Administrador / Dueño'
+                    });
+                    await manager.save(Employee, employee);
+                    console.log(`✅ [Onboarding] Owner ${user.email} added as first Employee for business ${businessToUse.id}`);
+                }
+            }
+
             if (user && !user.defaultBusinessId) {
                 user.defaultBusinessId = businessToUse.id;
                 await manager.save(User, user);
@@ -124,74 +155,209 @@ export class BusinessesService {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-        // 1. Total Sales (DELIVERED/DONE orders)
-        const salesResult = await this.orderRepository
-            .createQueryBuilder('order')
-            .select('SUM(order.totalPrice)', 'total')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
-            .getRawOne();
+        const ACTIVE_WORKING_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED,
+            OrderStatus.READY, OrderStatus.DONE, OrderStatus.DESIGN,
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK,
+            OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.VISITA_REPROGRAMADA, 
+            OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN, OrderStatus.APPROVED,
+            OrderStatus.OFFICIAL_ORDER, OrderStatus.INSTALACION_OBRA
+        ];
 
-        // 2. Active Orders
-        const activeOrdersCount = await this.orderRepository.count({
+        const PRODUCTION_STATUSES = [
+            OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, OrderStatus.CUTTING,
+            OrderStatus.WELDING, OrderStatus.ASSEMBLY, OrderStatus.PAINTING,
+            OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS, OrderStatus.RE_WORK,
+            OrderStatus.OFFICIAL_ORDER // El taller suele considerarse también como producción activa
+        ];
+
+
+        // Ejecutar todas las consultas en paralelo
+        const [
+            salesResult,
+            activeOrdersWithItems,
+            activeMachinesCount,
+            productionOrdersCount,
+            newCustomersCount,
+            recentOrders,
+            realOverdue
+        ] = await Promise.all([
+            // 1. Total Sales
+            this.orderRepository.createQueryBuilder('order')
+                .select('SUM(order.totalPrice)', 'total')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
+                .getRawOne(),
+
+            // 2. Pending Balance (necesitamos los items para los saldos)
+            this.orderRepository.find({
+                where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
+                relations: ['items']
+            }),
+
+            // 3. Active Machines
+            this.machineRepository.count({
+                where: { businessId, status: MachineStatus.PRINTING }
+            }),
+
+            // 3.b Production Orders
+            this.orderRepository.count({
+                where: { businessId, status: In(PRODUCTION_STATUSES) }
+            }),
+
+            // 4. New Customers
+            this.customerRepository.count({
+                where: { businessId, createdAt: MoreThanOrEqual(thirtyDaysAgo) }
+            }),
+
+            // 5. Recent Orders
+            this.orderRepository.find({
+                where: { businessId },
+                order: { updatedAt: 'DESC' },
+                take: 5
+            }),
+
+            // 6. Overdue Alerts
+            this.orderRepository.createQueryBuilder('order')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
+                .andWhere('order.type != :stockType', { stockType: OrderType.STOCK })
+                .andWhere('LOWER(order.clientName) != :stockName', { stockName: 'stock' })
+                .andWhere('order.dueDate < :now', { now: new Date() })
+                .getMany()
+        ]);
+
+        const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
+            const total = Number(order.totalPrice) || 0;
+            const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
+            return acc + (total - deposits - payments);
+        }, 0);
+
+        // --- NEW: Operational Calculations for Business Pipeline & Dashboard ---
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
+        
+        // Detección heurística por estados de pedidos si no coincide la categoría exacta
+        const hasMetalStatuses = activeOrdersWithItems.some(o => 
+            [OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.OFFICIAL_ORDER, OrderStatus.WELDING, OrderStatus.CUTTING, OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED]
+            .includes(o.status)
+        );
+
+        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
+        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
+
+        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
+
+        let operationalCounters = undefined;
+        let pipelineSummary = undefined;
+        let calendarEvents = undefined;
+
+        if (isMetalurgica || isCarpinteria) {
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(now.getDate() + 7);
+
+            // Operational Counters
+            operationalCounters = {
+                visitsToday: activeOrdersWithItems.filter(o => (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
+                pendingBudgets: activeOrdersWithItems.filter(o => o.status === OrderStatus.QUOTATION || o.status === OrderStatus.SURVEY_DESIGN || o.status === OrderStatus.BUDGET_GENERATED).length,
+                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
+                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== OrderStatus.DONE).length,
+                delayedOrders: realOverdue.length,
+                pendingPayments: activeOrdersWithItems.filter(o => {
+                    const total = Number(o.totalPrice) || 0;
+                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
+                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
+                    return (total - dep - pay) > 0;
+                }).length
+            };
+
+            // Pipeline Summary
+            const pipelineStages = [
+                { stage: 'VISITA', statuses: [OrderStatus.SITE_VISIT, OrderStatus.VISITA_REPROGRAMADA, OrderStatus.SITE_VISIT_DONE] },
+                { stage: 'PRESUPUESTO', statuses: [OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN] },
+                { stage: 'APROBADO', statuses: [OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER] },
+                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
+                { stage: 'LISTO', statuses: [OrderStatus.DONE, OrderStatus.READY] },
+                { stage: 'ENTREGADO', statuses: [OrderStatus.DELIVERED] }
+            ];
+
+            pipelineSummary = pipelineStages.map(s => ({
+                stage: s.stage,
+                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
+            }));
+
+            // Agenda: Visitas hoy/mañana y entregas próximas
+            calendarEvents = activeOrdersWithItems
+                .filter(o => 
+                    ((o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) || 
+                    (o.dueDate && [OrderStatus.DONE, OrderStatus.READY, OrderStatus.INSTALACION_OBRA].includes(o.status))
+                )
+                .sort((a, b) => {
+                    const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
+                    const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
+                    return dateA.localeCompare(dateB);
+                })
+                .slice(0, 10)
+                .map(o => ({
+                    id: o.id,
+                    type: (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
+                    clientName: o.clientName || 'Cliente',
+                    date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
+                    time: o.hora_visita,
+                    status: o.status
+                }));
+        }
+
+        const mergedAlerts: DashboardAlertDto[] = [
+            ...realOverdue.map(o => ({
+                type: 'vencido' as const,
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+        ];
+
+        // 7. Low Stock Material Alerts
+        const CRITICAL_STOCK_UMBRAL = 200; // gramos
+        const lowStockMaterials = await this.materialRepository.find({
             where: {
                 businessId,
-                status: OrderStatus.PENDING, // Or any non-final status
+                active: true,
+                remainingWeightGrams: MoreThanOrEqual(0)
             }
         });
+        const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
 
-        // 3. New Customers (Last 30 days)
-        // Note: Customer entity currently doesn't have businessId.
-        // For now, filtering only by date. TODO: Add businessId to Customer entity.
-        const newCustomersCount = await this.customerRepository.count({
-            where: {
-                createdAt: MoreThanOrEqual(thirtyDaysAgo)
-            }
-        });
-
-        // 4. Recent Orders
-        const recentOrders = await this.orderRepository.find({
-            where: { businessId },
-            order: { createdAt: 'DESC' },
-            take: 5
-        });
-
-        // 5. Alerts (Overdue orders)
-        const now = new Date();
-        const overdueOrders = await this.orderRepository.find({
-            where: {
-                businessId,
-                status: OrderStatus.PENDING,
-                dueDate: MoreThanOrEqual(now) // Technically should be LessThan, but let's check your priority logic
-            }
-        });
-
-        // Real overdue check: status not final AND dueDate < now
-        const realOverdue = await this.orderRepository
-            .createQueryBuilder('order')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
-            .andWhere('order.dueDate < :now', { now: new Date() })
-            .getMany();
+        mergedAlerts.push(...criticalMaterials.map(m => ({
+            type: 'stock_bajo' as const,
+            message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
+            metadata: { materialId: m.id }
+        })));
 
         return {
             totalSales: Number(salesResult?.total) || 0,
-            profit: null, // No cost model yet
-            activeOrders: activeOrdersCount,
+            pendingBalance,
+            activeOrders: activeOrdersWithItems.length,
+            productionOrders: productionOrdersCount,
+            activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({
                 id: o.id,
                 clientName: o.clientName || 'Sin Nombre',
                 total: Number(o.totalPrice),
                 status: o.status,
-                dueDate: o.dueDate
+                dueDate: o.dueDate,
+                type: o.type
             })),
-            alerts: realOverdue.map(o => ({
-                type: 'vencido',
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-            trends: null // Trends not yet calculated
+            alerts: mergedAlerts,
+            trends: null,
+            operationalCounters,
+            pipelineSummary,
+            calendarEvents
         };
     }
 
@@ -216,5 +382,23 @@ export class BusinessesService {
 
         await this.businessRepository.update(id, updateDto);
         return this.findOne(userId, id);
+    }
+
+    async addMemberToBusiness(userId: string, businessId: string, role: string): Promise<BusinessMembership> {
+        let membership = await this.membershipRepository.findOne({
+            where: { userId, businessId }
+        });
+
+        if (!membership) {
+            membership = this.membershipRepository.create({
+                userId,
+                businessId,
+                role: role as any
+            });
+        } else {
+            membership.role = role as any;
+        }
+
+        return this.membershipRepository.save(membership);
     }
 }

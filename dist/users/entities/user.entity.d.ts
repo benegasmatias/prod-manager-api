@@ -3,6 +3,9 @@ export declare class User {
     email: string;
     fullName: string;
     defaultBusinessId: string;
+    globalRole: string;
+    active: boolean;
+    mustChangePassword: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
