@@ -12,7 +12,7 @@ export class CreateJobDto {
 
     @IsString()
     @IsOptional()
-    printerId?: string;
+    machineId?: string;
 
     @IsString()
     @IsOptional()
@@ -33,6 +33,13 @@ export class CreateJobDto {
     @IsString()
     @IsOptional()
     title?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableId?: string;
+
+    @IsOptional()
+    metadata?: any;
 }
 
 export class UpdateJobDto {
@@ -50,7 +57,7 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    printerId?: string;
+    machineId?: string;
 
     @IsString()
     @IsOptional()
@@ -58,7 +65,14 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    note?: string; // Changed from notes to note to match entity if needed, but entity has notes in many places. The service complained about 'note'.
+    notes?: string;
+
+    @IsString()
+    @IsOptional()
+    responsableId?: string;
+
+    @IsOptional()
+    metadata?: any;
 }
 
 export class CreateProgressDto {

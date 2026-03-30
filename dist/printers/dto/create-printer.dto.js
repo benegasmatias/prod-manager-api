@@ -37,4 +37,8 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Boolean)
 ], CreatePrinterDto.prototype, "active", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreatePrinterDto.prototype, "maxFilaments", void 0);
 //# sourceMappingURL=create-printer.dto.js.map

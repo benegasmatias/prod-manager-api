@@ -23,15 +23,20 @@ const business_template_entity_1 = require("./entities/business-template.entity"
 const typeorm_3 = require("typeorm");
 const order_entity_1 = require("../orders/entities/order.entity");
 const customer_entity_1 = require("../customers/entities/customer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const enums_1 = require("../common/enums");
+const material_entity_1 = require("../materials/entities/material.entity");
+const employee_entity_1 = require("../employees/entities/employee.entity");
 let BusinessesService = class BusinessesService {
-    constructor(businessRepository, membershipRepository, userRepository, templateRepository, orderRepository, customerRepository, dataSource) {
+    constructor(businessRepository, membershipRepository, userRepository, templateRepository, orderRepository, customerRepository, machineRepository, materialRepository, dataSource) {
         this.businessRepository = businessRepository;
         this.membershipRepository = membershipRepository;
         this.userRepository = userRepository;
         this.templateRepository = templateRepository;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
+        this.machineRepository = machineRepository;
+        this.materialRepository = materialRepository;
         this.dataSource = dataSource;
     }
     async getTemplates() {
@@ -73,6 +78,26 @@ let BusinessesService = class BusinessesService {
             });
             await manager.save(business_membership_entity_1.BusinessMembership, membership);
             const user = await manager.findOneBy(user_entity_1.User, { id: userId });
+            if (user) {
+                const existingEmployee = await manager.findOne(employee_entity_1.Employee, {
+                    where: { businessId: businessToUse.id, email: user.email }
+                });
+                if (!existingEmployee) {
+                    const nameParts = (user.fullName || 'Propietario').trim().split(/\s+/);
+                    const firstName = nameParts[0] || 'Propietario';
+                    const lastName = nameParts.slice(1).join(' ');
+                    const employee = manager.create(employee_entity_1.Employee, {
+                        businessId: businessToUse.id,
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: user.email,
+                        active: true,
+                        specialties: 'Administrador / Dueño'
+                    });
+                    await manager.save(employee_entity_1.Employee, employee);
+                    console.log(`✅ [Onboarding] Owner ${user.email} added as first Employee for business ${businessToUse.id}`);
+                }
+            }
             if (user && !user.defaultBusinessId) {
                 user.defaultBusinessId = businessToUse.id;
                 await manager.save(user_entity_1.User, user);
@@ -108,60 +133,159 @@ let BusinessesService = class BusinessesService {
         }
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        const salesResult = await this.orderRepository
-            .createQueryBuilder('order')
-            .select('SUM(order.totalPrice)', 'total')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status IN (:...statuses)', { statuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.DONE] })
-            .getRawOne();
-        const activeOrdersCount = await this.orderRepository.count({
+        const ACTIVE_WORKING_STATUSES = [
+            enums_1.OrderStatus.PENDING, enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.CONFIRMED,
+            enums_1.OrderStatus.READY, enums_1.OrderStatus.DONE, enums_1.OrderStatus.DESIGN,
+            enums_1.OrderStatus.CUTTING, enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY,
+            enums_1.OrderStatus.PAINTING, enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS,
+            enums_1.OrderStatus.REPRINT_PENDING, enums_1.OrderStatus.RE_WORK, enums_1.OrderStatus.IN_STOCK,
+            enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.SITE_VISIT_DONE, enums_1.OrderStatus.VISITA_REPROGRAMADA,
+            enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED, enums_1.OrderStatus.SURVEY_DESIGN, enums_1.OrderStatus.APPROVED,
+            enums_1.OrderStatus.OFFICIAL_ORDER, enums_1.OrderStatus.INSTALACION_OBRA
+        ];
+        const PRODUCTION_STATUSES = [
+            enums_1.OrderStatus.IN_PROGRESS, enums_1.OrderStatus.DESIGN, enums_1.OrderStatus.CUTTING,
+            enums_1.OrderStatus.WELDING, enums_1.OrderStatus.ASSEMBLY, enums_1.OrderStatus.PAINTING,
+            enums_1.OrderStatus.BARNIZADO, enums_1.OrderStatus.POST_PROCESS, enums_1.OrderStatus.RE_WORK,
+            enums_1.OrderStatus.OFFICIAL_ORDER
+        ];
+        const [salesResult, activeOrdersWithItems, activeMachinesCount, productionOrdersCount, newCustomersCount, recentOrders, realOverdue] = await Promise.all([
+            this.orderRepository.createQueryBuilder('order')
+                .select('SUM(order.totalPrice)', 'total')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.DONE] })
+                .getRawOne(),
+            this.orderRepository.find({
+                where: { businessId, status: (0, typeorm_3.In)(ACTIVE_WORKING_STATUSES) },
+                relations: ['items']
+            }),
+            this.machineRepository.count({
+                where: { businessId, status: enums_1.MachineStatus.PRINTING }
+            }),
+            this.orderRepository.count({
+                where: { businessId, status: (0, typeorm_3.In)(PRODUCTION_STATUSES) }
+            }),
+            this.customerRepository.count({
+                where: { businessId, createdAt: (0, typeorm_3.MoreThanOrEqual)(thirtyDaysAgo) }
+            }),
+            this.orderRepository.find({
+                where: { businessId },
+                order: { updatedAt: 'DESC' },
+                take: 5
+            }),
+            this.orderRepository.createQueryBuilder('order')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.CANCELLED] })
+                .andWhere('order.type != :stockType', { stockType: enums_1.OrderType.STOCK })
+                .andWhere('LOWER(order.clientName) != :stockName', { stockName: 'stock' })
+                .andWhere('order.dueDate < :now', { now: new Date() })
+                .getMany()
+        ]);
+        const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
+            const total = Number(order.totalPrice) || 0;
+            const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
+            return acc + (total - deposits - payments);
+        }, 0);
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
+        const hasMetalStatuses = activeOrdersWithItems.some(o => [enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.SITE_VISIT_DONE, enums_1.OrderStatus.OFFICIAL_ORDER, enums_1.OrderStatus.WELDING, enums_1.OrderStatus.CUTTING, enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED]
+            .includes(o.status));
+        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
+        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
+        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
+        let operationalCounters = undefined;
+        let pipelineSummary = undefined;
+        let calendarEvents = undefined;
+        if (isMetalurgica || isCarpinteria) {
+            const now = new Date();
+            const todayStr = now.toISOString().split('T')[0];
+            const nextWeek = new Date();
+            nextWeek.setDate(now.getDate() + 7);
+            operationalCounters = {
+                visitsToday: activeOrdersWithItems.filter(o => (o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
+                pendingBudgets: activeOrdersWithItems.filter(o => o.status === enums_1.OrderStatus.QUOTATION || o.status === enums_1.OrderStatus.SURVEY_DESIGN || o.status === enums_1.OrderStatus.BUDGET_GENERATED).length,
+                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
+                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== enums_1.OrderStatus.DONE).length,
+                delayedOrders: realOverdue.length,
+                pendingPayments: activeOrdersWithItems.filter(o => {
+                    const total = Number(o.totalPrice) || 0;
+                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
+                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
+                    return (total - dep - pay) > 0;
+                }).length
+            };
+            const pipelineStages = [
+                { stage: 'VISITA', statuses: [enums_1.OrderStatus.SITE_VISIT, enums_1.OrderStatus.VISITA_REPROGRAMADA, enums_1.OrderStatus.SITE_VISIT_DONE] },
+                { stage: 'PRESUPUESTO', statuses: [enums_1.OrderStatus.QUOTATION, enums_1.OrderStatus.BUDGET_GENERATED, enums_1.OrderStatus.SURVEY_DESIGN] },
+                { stage: 'APROBADO', statuses: [enums_1.OrderStatus.APPROVED, enums_1.OrderStatus.OFFICIAL_ORDER] },
+                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
+                { stage: 'LISTO', statuses: [enums_1.OrderStatus.DONE, enums_1.OrderStatus.READY] },
+                { stage: 'ENTREGADO', statuses: [enums_1.OrderStatus.DELIVERED] }
+            ];
+            pipelineSummary = pipelineStages.map(s => ({
+                stage: s.stage,
+                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
+            }));
+            calendarEvents = activeOrdersWithItems
+                .filter(o => ((o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) ||
+                (o.dueDate && [enums_1.OrderStatus.DONE, enums_1.OrderStatus.READY, enums_1.OrderStatus.INSTALACION_OBRA].includes(o.status)))
+                .sort((a, b) => {
+                const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
+                const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
+                return dateA.localeCompare(dateB);
+            })
+                .slice(0, 10)
+                .map(o => ({
+                id: o.id,
+                type: (o.status === enums_1.OrderStatus.SITE_VISIT || o.status === enums_1.OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
+                clientName: o.clientName || 'Cliente',
+                date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
+                time: o.hora_visita,
+                status: o.status
+            }));
+        }
+        const mergedAlerts = [
+            ...realOverdue.map(o => ({
+                type: 'vencido',
+                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
+                metadata: { orderId: o.id }
+            })),
+        ];
+        const CRITICAL_STOCK_UMBRAL = 200;
+        const lowStockMaterials = await this.materialRepository.find({
             where: {
                 businessId,
-                status: enums_1.OrderStatus.PENDING,
+                active: true,
+                remainingWeightGrams: (0, typeorm_3.MoreThanOrEqual)(0)
             }
         });
-        const newCustomersCount = await this.customerRepository.count({
-            where: {
-                createdAt: (0, typeorm_3.MoreThanOrEqual)(thirtyDaysAgo)
-            }
-        });
-        const recentOrders = await this.orderRepository.find({
-            where: { businessId },
-            order: { createdAt: 'DESC' },
-            take: 5
-        });
-        const now = new Date();
-        const overdueOrders = await this.orderRepository.find({
-            where: {
-                businessId,
-                status: enums_1.OrderStatus.PENDING,
-                dueDate: (0, typeorm_3.MoreThanOrEqual)(now)
-            }
-        });
-        const realOverdue = await this.orderRepository
-            .createQueryBuilder('order')
-            .where('order.businessId = :businessId', { businessId })
-            .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [enums_1.OrderStatus.DELIVERED, enums_1.OrderStatus.CANCELLED] })
-            .andWhere('order.dueDate < :now', { now: new Date() })
-            .getMany();
+        const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
+        mergedAlerts.push(...criticalMaterials.map(m => ({
+            type: 'stock_bajo',
+            message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
+            metadata: { materialId: m.id }
+        })));
         return {
             totalSales: Number(salesResult?.total) || 0,
-            profit: null,
-            activeOrders: activeOrdersCount,
+            pendingBalance,
+            activeOrders: activeOrdersWithItems.length,
+            productionOrders: productionOrdersCount,
+            activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({
                 id: o.id,
                 clientName: o.clientName || 'Sin Nombre',
                 total: Number(o.totalPrice),
                 status: o.status,
-                dueDate: o.dueDate
+                dueDate: o.dueDate,
+                type: o.type
             })),
-            alerts: realOverdue.map(o => ({
-                type: 'vencido',
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-            trends: null
+            alerts: mergedAlerts,
+            trends: null,
+            operationalCounters,
+            pipelineSummary,
+            calendarEvents
         };
     }
     async findOne(userId, id) {
@@ -183,6 +307,22 @@ let BusinessesService = class BusinessesService {
         await this.businessRepository.update(id, updateDto);
         return this.findOne(userId, id);
     }
+    async addMemberToBusiness(userId, businessId, role) {
+        let membership = await this.membershipRepository.findOne({
+            where: { userId, businessId }
+        });
+        if (!membership) {
+            membership = this.membershipRepository.create({
+                userId,
+                businessId,
+                role: role
+            });
+        }
+        else {
+            membership.role = role;
+        }
+        return this.membershipRepository.save(membership);
+    }
 };
 exports.BusinessesService = BusinessesService;
 exports.BusinessesService = BusinessesService = __decorate([
@@ -193,7 +333,11 @@ exports.BusinessesService = BusinessesService = __decorate([
     __param(3, (0, typeorm_1.InjectRepository)(business_template_entity_1.BusinessTemplate)),
     __param(4, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
     __param(5, (0, typeorm_1.InjectRepository)(customer_entity_1.Customer)),
+    __param(6, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
+    __param(7, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,

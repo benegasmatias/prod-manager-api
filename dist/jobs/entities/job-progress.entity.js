@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.JobProgress = void 0;
 const typeorm_1 = require("typeorm");
 const production_job_entity_1 = require("./production-job.entity");
+const user_entity_1 = require("../../users/entities/user.entity");
 let JobProgress = class JobProgress {
 };
 exports.JobProgress = JobProgress;
@@ -48,6 +49,15 @@ __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], JobProgress.prototype, "note", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'performed_by_id', nullable: true }),
+    __metadata("design:type", String)
+], JobProgress.prototype, "performedById", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'performed_by_id' }),
+    __metadata("design:type", user_entity_1.User)
+], JobProgress.prototype, "performedBy", void 0);
 exports.JobProgress = JobProgress = __decorate([
     (0, typeorm_1.Entity)('job_progress')
 ], JobProgress);

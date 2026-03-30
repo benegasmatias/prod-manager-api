@@ -4,4 +4,5 @@ export declare class UpdateBusinessDto {
     address?: string;
     phone?: string;
     currency?: string;
+    category?: string;
 }

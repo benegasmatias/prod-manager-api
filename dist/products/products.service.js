@@ -45,7 +45,7 @@ let ProductsService = class ProductsService {
             relations: ['productFiles', 'productFiles.fileAsset'],
         });
         if (!product)
-            throw new common_1.NotFoundException('Product not found');
+            throw new common_1.NotFoundException('Producto no encontrado');
         return product;
     }
     async update(id, updateProductDto) {

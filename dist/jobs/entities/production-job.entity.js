@@ -13,8 +13,9 @@ exports.ProductionJob = void 0;
 const typeorm_1 = require("typeorm");
 const order_entity_1 = require("../../orders/entities/order.entity");
 const order_item_entity_1 = require("../../orders/entities/order-item.entity");
-const printer_entity_1 = require("../../printers/entities/printer.entity");
+const machine_entity_1 = require("../../machines/entities/machine.entity");
 const material_entity_1 = require("../../materials/entities/material.entity");
+const employee_entity_1 = require("../../employees/entities/employee.entity");
 const enums_1 = require("../../common/enums");
 const job_progress_entity_1 = require("./job-progress.entity");
 const job_status_history_entity_1 = require("../../history/entities/job-status-history.entity");
@@ -44,14 +45,14 @@ __decorate([
     __metadata("design:type", order_item_entity_1.OrderItem)
 ], ProductionJob.prototype, "orderItem", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'printer_id', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'machine_id', nullable: true }),
     __metadata("design:type", String)
-], ProductionJob.prototype, "printerId", void 0);
+], ProductionJob.prototype, "machineId", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => printer_entity_1.Printer, (printer) => printer.productionJobs, { nullable: true }),
-    (0, typeorm_1.JoinColumn)({ name: 'printer_id' }),
-    __metadata("design:type", printer_entity_1.Printer)
-], ProductionJob.prototype, "printer", void 0);
+    (0, typeorm_1.ManyToOne)(() => machine_entity_1.Machine, (machine) => machine.productionJobs, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'machine_id' }),
+    __metadata("design:type", machine_entity_1.Machine)
+], ProductionJob.prototype, "machine", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'material_id', nullable: true }),
     __metadata("design:type", String)
@@ -93,6 +94,23 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'sort_rank', default: 0 }),
     __metadata("design:type", Number)
 ], ProductionJob.prototype, "sortRank", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'responsable_id', nullable: true }),
+    __metadata("design:type", String)
+], ProductionJob.prototype, "responsableId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => employee_entity_1.Employee, { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'responsable_id' }),
+    __metadata("design:type", employee_entity_1.Employee)
+], ProductionJob.prototype, "responsable", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true, name: 'notes' }),
+    __metadata("design:type", String)
+], ProductionJob.prototype, "notes", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'json', nullable: true }),
+    __metadata("design:type", Object)
+], ProductionJob.prototype, "metadata", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => job_progress_entity_1.JobProgress, (progress) => progress.productionJob),
     __metadata("design:type", Array)

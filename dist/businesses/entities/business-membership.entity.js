@@ -27,7 +27,7 @@ __decorate([
     __metadata("design:type", String)
 ], BusinessMembership.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'user_id' }),
+    (0, typeorm_1.Column)({ name: 'user_id', type: 'uuid' }),
     __metadata("design:type", String)
 ], BusinessMembership.prototype, "userId", void 0);
 __decorate([
@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", user_entity_1.User)
 ], BusinessMembership.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'business_id' }),
+    (0, typeorm_1.Column)({ name: 'business_id', type: 'uuid' }),
     __metadata("design:type", String)
 ], BusinessMembership.prototype, "businessId", void 0);
 __decorate([

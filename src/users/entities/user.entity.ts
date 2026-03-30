@@ -14,6 +14,15 @@ export class User {
     @Column({ name: 'default_business_id', nullable: true, type: 'uuid' })
     defaultBusinessId: string;
 
+    @Column({ name: 'global_role', default: 'USER' })
+    globalRole: string; // SUPER_ADMIN, ADMIN, SUPPORT, USER
+
+    @Column({ default: true })
+    active: boolean;
+
+    @Column({ name: 'must_change_password', default: false })
+    mustChangePassword: boolean;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

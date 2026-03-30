@@ -7,6 +7,7 @@ export declare class Printer {
     model: string;
     nozzle: string;
     status: PrinterStatus;
+    maxFilaments: number;
     active: boolean;
     productionJobs: ProductionJob[];
     createdAt: Date;

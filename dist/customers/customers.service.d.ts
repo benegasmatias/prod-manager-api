@@ -6,7 +6,15 @@ export declare class CustomersService {
     constructor(customerRepository: Repository<Customer>);
     create(createCustomerDto: CreateCustomerDto): Promise<Customer>;
     findAll(businessId: string, q?: string, page?: number, limit?: number): Promise<{
-        items: Customer[];
+        items: {
+            id: string;
+            name: string;
+            phone: string;
+            email: string;
+            notes: string;
+            createdAt: Date;
+            totalOrders: any;
+        }[];
         total: number;
         page: number;
         limit: number;

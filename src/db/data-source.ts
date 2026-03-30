@@ -3,10 +3,11 @@ import { Customer } from '../customers/entities/customer.entity';
 import { Product } from '../products/entities/product.entity';
 import { Order } from '../orders/entities/order.entity';
 import { OrderItem } from '../orders/entities/order-item.entity';
+import { OrderFailure } from '../orders/entities/order-failure.entity';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Payment } from '../payments/entities/payment.entity';
-import { Printer } from '../printers/entities/printer.entity';
+import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 import { FileAsset } from '../products/entities/file-asset.entity';
 import { ProductFile } from '../products/entities/product-file.entity';
@@ -16,6 +17,9 @@ import { User } from '../users/entities/user.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessMembership } from '../businesses/entities/business-membership.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
+import { Employee } from '../employees/entities/employee.entity';
+import { GlobalRoleConfig } from '../admin/entities/global-role-config.entity';
+import { Notification } from '../notifications/entities/notification.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -30,10 +34,11 @@ export const AppDataSource = new DataSource({
         Product,
         Order,
         OrderItem,
+        OrderFailure,
         OrderStatusHistory,
         ProductionJob,
         Payment,
-        Printer,
+        Machine,
         Material,
         FileAsset,
         ProductFile,
@@ -43,6 +48,9 @@ export const AppDataSource = new DataSource({
         Business,
         BusinessMembership,
         BusinessTemplate,
+        Employee,
+        GlobalRoleConfig,
+        Notification,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

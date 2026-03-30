@@ -30,7 +30,7 @@ export class CustomersController {
         @Query('limit') limit?: number
     ) {
         if (!businessId) {
-            throw new BadRequestException('businessId is required');
+            throw new BadRequestException('El ID del negocio es obligatorio');
         }
         const hasAccess = await this.businessesService.checkAccess(req.user.id, businessId);
         if (!hasAccess) {

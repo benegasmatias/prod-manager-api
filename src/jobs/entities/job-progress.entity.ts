@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ProductionJob } from './production-job.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('job_progress')
 export class JobProgress {
@@ -27,4 +28,11 @@ export class JobProgress {
 
     @Column({ type: 'text', nullable: true })
     note: string;
+
+    @Column({ name: 'performed_by_id', nullable: true })
+    performedById: string;
+
+    @ManyToOne(() => User, { nullable: true })
+    @JoinColumn({ name: 'performed_by_id' })
+    performedBy: User;
 }

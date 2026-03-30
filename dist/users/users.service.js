@@ -26,14 +26,18 @@ let UsersService = class UsersService {
     async findOne(id) {
         const user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            throw new common_1.NotFoundException(`User with ID ${id} not found`);
+            throw new common_1.NotFoundException(`Usuario con ID ${id} no encontrado`);
         }
         return user;
     }
-    async findOrCreate(id, email) {
+    async findOrCreate(id, email, fullName) {
         let user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
-            user = this.userRepository.create({ id, email });
+            user = this.userRepository.create({ id, email, fullName });
+            await this.userRepository.save(user);
+        }
+        else if (fullName && !user.fullName) {
+            user.fullName = fullName;
             await this.userRepository.save(user);
         }
         return user;
@@ -44,13 +48,22 @@ let UsersService = class UsersService {
         return this.userRepository.save(user);
     }
     async setDefaultBusiness(userId, businessId) {
-        const hasAccess = await this.businessesService.checkAccess(userId, businessId);
-        if (!hasAccess) {
-            throw new common_1.ForbiddenException(`User does not have access to business ${businessId}`);
+        console.log(`[UsersService] Setting default business ${businessId} for user ${userId}`);
+        try {
+            const hasAccess = await this.businessesService.checkAccess(userId, businessId);
+            if (!hasAccess) {
+                console.warn(`[UsersService] User ${userId} does not have access to business ${businessId}`);
+                throw new common_1.ForbiddenException(`El usuario no tiene acceso al negocio ${businessId}`);
+            }
+            await this.userRepository.update(userId, { defaultBusinessId: businessId });
+            const updatedUser = await this.findOne(userId);
+            console.log(`[UsersService] Successfully updated default business for user ${userId}`);
+            return updatedUser;
         }
-        const user = await this.findOne(userId);
-        user.defaultBusinessId = businessId;
-        return this.userRepository.save(user);
+        catch (error) {
+            console.error(`[UsersService] Error setting default business:`, error.message, error.stack);
+            throw error;
+        }
     }
 };
 exports.UsersService = UsersService;

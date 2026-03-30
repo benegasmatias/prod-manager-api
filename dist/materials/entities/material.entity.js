@@ -41,6 +41,30 @@ __decorate([
     __metadata("design:type", Number)
 ], Material.prototype, "costPerKg", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ name: 'business_id', nullable: true }),
+    __metadata("design:type", String)
+], Material.prototype, "businessId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'total_weight_grams', type: 'float', default: 1000 }),
+    __metadata("design:type", Number)
+], Material.prototype, "totalWeightGrams", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'remaining_weight_grams', type: 'float', default: 1000 }),
+    __metadata("design:type", Number)
+], Material.prototype, "remainingWeightGrams", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'int', nullable: true }),
+    __metadata("design:type", Number)
+], Material.prototype, "bedTemperature", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'int', nullable: true }),
+    __metadata("design:type", Number)
+], Material.prototype, "nozzleTemperature", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Material.prototype, "unit", void 0);
+__decorate([
     (0, typeorm_1.Column)({ default: true }),
     __metadata("design:type", Boolean)
 ], Material.prototype, "active", void 0);

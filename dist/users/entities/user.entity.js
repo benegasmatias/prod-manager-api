@@ -31,6 +31,18 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "defaultBusinessId", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ name: 'global_role', default: 'USER' }),
+    __metadata("design:type", String)
+], User.prototype, "globalRole", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: true }),
+    __metadata("design:type", Boolean)
+], User.prototype, "active", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'must_change_password', default: false }),
+    __metadata("design:type", Boolean)
+], User.prototype, "mustChangePassword", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
 ], User.prototype, "createdAt", void 0);

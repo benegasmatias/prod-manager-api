@@ -22,17 +22,18 @@ let SupabaseAuthGuard = class SupabaseAuthGuard {
         const request = context.switchToHttp().getRequest();
         const authHeader = request.headers['authorization'];
         if (!authHeader) {
-            throw new common_1.UnauthorizedException('No authorization header found');
+            throw new common_1.UnauthorizedException('No se encontró el encabezado de autorización');
         }
         const token = authHeader.split(' ')[1];
         if (!token) {
-            throw new common_1.UnauthorizedException('No token found');
+            throw new common_1.UnauthorizedException('No se encontró el token de acceso');
         }
         const { data: { user }, error } = await this.supabaseService.getClient().auth.getUser(token);
         if (error || !user) {
-            throw new common_1.UnauthorizedException('Invalid or expired token');
+            throw new common_1.UnauthorizedException('Token inválido o expirado');
         }
-        const profile = await this.usersService.findOrCreate(user.id, user.email);
+        const fullName = user.user_metadata?.full_name;
+        const profile = await this.usersService.findOrCreate(user.id, user.email, fullName);
         request.user = profile;
         return true;
     }

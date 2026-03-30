@@ -15,10 +15,13 @@ const products_module_1 = require("./products/products.module");
 const orders_module_1 = require("./orders/orders.module");
 const jobs_module_1 = require("./jobs/jobs.module");
 const payments_module_1 = require("./payments/payments.module");
-const printers_module_1 = require("./printers/printers.module");
+const machines_module_1 = require("./machines/machines.module");
 const materials_module_1 = require("./materials/materials.module");
 const users_module_1 = require("./users/users.module");
 const businesses_module_1 = require("./businesses/businesses.module");
+const reports_module_1 = require("./reports/reports.module");
+const employees_module_1 = require("./employees/employees.module");
+const admin_module_1 = require("./admin/admin.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -38,9 +41,9 @@ exports.AppModule = AppModule = __decorate([
                     synchronize: true,
                     ssl: configService.get('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
                     extra: {
-                        max: 20,
+                        max: 30,
                         idleTimeoutMillis: 30000,
-                        connectionTimeoutMillis: 2000,
+                        connectionTimeoutMillis: 10000,
                     }
                 }),
             }),
@@ -49,10 +52,13 @@ exports.AppModule = AppModule = __decorate([
             orders_module_1.OrdersModule,
             jobs_module_1.JobsModule,
             payments_module_1.PaymentsModule,
-            printers_module_1.PrintersModule,
+            machines_module_1.MachinesModule,
             materials_module_1.MaterialsModule,
             users_module_1.UsersModule,
             businesses_module_1.BusinessesModule,
+            reports_module_1.ReportsModule,
+            employees_module_1.EmployeesModule,
+            admin_module_1.AdminModule,
         ],
     })
 ], AppModule);

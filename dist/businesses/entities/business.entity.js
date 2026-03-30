@@ -43,6 +43,22 @@ __decorate([
     __metadata("design:type", String)
 ], Business.prototype, "currency", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 'ACTIVE' }),
+    __metadata("design:type", String)
+], Business.prototype, "status", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'plan_id', nullable: true }),
+    __metadata("design:type", String)
+], Business.prototype, "planId", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', name: 'trial_expires_at', nullable: true }),
+    __metadata("design:type", Date)
+], Business.prototype, "trialExpiresAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'timestamp', name: 'subscription_expires_at', nullable: true }),
+    __metadata("design:type", Date)
+], Business.prototype, "subscriptionExpiresAt", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)('BusinessMembership', (membership) => membership.business),
     __metadata("design:type", Array)
 ], Business.prototype, "memberships", void 0);

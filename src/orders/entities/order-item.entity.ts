@@ -62,4 +62,13 @@ export class OrderItem {
 
     @Column({ type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true })
     deposit: number;
+
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
+
+    @Column({ name: 'estimated_unit_cost', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    estimatedUnitCost: number;
+
+    @Column({ name: 'estimated_sale_unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    estimatedSaleUnitPrice: number;
 }

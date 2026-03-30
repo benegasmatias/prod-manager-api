@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaterialType = exports.ProductFileRole = exports.PaymentMethod = exports.FileType = exports.Priority = exports.PrinterStatus = exports.JobStatus = exports.OrderStatus = void 0;
+exports.MaterialType = exports.ProductFileRole = exports.PaymentMethod = exports.FileType = exports.Priority = exports.MachineStatus = exports.JobStatus = exports.OrderStatus = exports.OrderType = void 0;
+var OrderType;
+(function (OrderType) {
+    OrderType["CUSTOMER"] = "CUSTOMER";
+    OrderType["STOCK"] = "STOCK";
+})(OrderType || (exports.OrderType = OrderType = {}));
 var OrderStatus;
 (function (OrderStatus) {
     OrderStatus["PENDING"] = "PENDING";
@@ -11,6 +16,29 @@ var OrderStatus;
     OrderStatus["READY"] = "READY";
     OrderStatus["DELIVERED"] = "DELIVERED";
     OrderStatus["CANCELLED"] = "CANCELLED";
+    OrderStatus["DESIGN"] = "DESIGN";
+    OrderStatus["CUTTING"] = "CUTTING";
+    OrderStatus["WELDING"] = "WELDING";
+    OrderStatus["ASSEMBLY"] = "ASSEMBLY";
+    OrderStatus["PAINTING"] = "PAINTING";
+    OrderStatus["BARNIZADO"] = "BARNIZADO";
+    OrderStatus["POST_PROCESS"] = "POST_PROCESS";
+    OrderStatus["FAILED"] = "FAILED";
+    OrderStatus["REPRINT_PENDING"] = "REPRINT_PENDING";
+    OrderStatus["RE_WORK"] = "RE_WORK";
+    OrderStatus["IN_STOCK"] = "IN_STOCK";
+    OrderStatus["SITE_VISIT"] = "SITE_VISIT";
+    OrderStatus["SITE_VISIT_DONE"] = "SITE_VISIT_DONE";
+    OrderStatus["VISITA_REPROGRAMADA"] = "VISITA_REPROGRAMADA";
+    OrderStatus["VISITA_CANCELADA"] = "VISITA_CANCELADA";
+    OrderStatus["QUOTATION"] = "QUOTATION";
+    OrderStatus["BUDGET_GENERATED"] = "BUDGET_GENERATED";
+    OrderStatus["BUDGET_REJECTED"] = "BUDGET_REJECTED";
+    OrderStatus["SURVEY_DESIGN"] = "SURVEY_DESIGN";
+    OrderStatus["APPROVED"] = "APPROVED";
+    OrderStatus["OFFICIAL_ORDER"] = "OFFICIAL_ORDER";
+    OrderStatus["INSTALACION_OBRA"] = "INSTALACION_OBRA";
+    OrderStatus["ARMADO"] = "ARMADO";
 })(OrderStatus || (exports.OrderStatus = OrderStatus = {}));
 var JobStatus;
 (function (JobStatus) {
@@ -21,13 +49,13 @@ var JobStatus;
     JobStatus["DONE"] = "DONE";
     JobStatus["CANCELLED"] = "CANCELLED";
 })(JobStatus || (exports.JobStatus = JobStatus = {}));
-var PrinterStatus;
-(function (PrinterStatus) {
-    PrinterStatus["IDLE"] = "IDLE";
-    PrinterStatus["PRINTING"] = "PRINTING";
-    PrinterStatus["MAINTENANCE"] = "MAINTENANCE";
-    PrinterStatus["DOWN"] = "DOWN";
-})(PrinterStatus || (exports.PrinterStatus = PrinterStatus = {}));
+var MachineStatus;
+(function (MachineStatus) {
+    MachineStatus["IDLE"] = "IDLE";
+    MachineStatus["PRINTING"] = "PRINTING";
+    MachineStatus["MAINTENANCE"] = "MAINTENANCE";
+    MachineStatus["DOWN"] = "DOWN";
+})(MachineStatus || (exports.MachineStatus = MachineStatus = {}));
 var Priority;
 (function (Priority) {
     Priority["LOW"] = "LOW";
@@ -63,5 +91,17 @@ var MaterialType;
     MaterialType["ABS"] = "ABS";
     MaterialType["TPU"] = "TPU";
     MaterialType["RESIN"] = "RESIN";
+    MaterialType["LIMPIEZA"] = "LIMPIEZA";
+    MaterialType["PERFIL"] = "PERFIL";
+    MaterialType["CHAPA"] = "CHAPA";
+    MaterialType["MACHO"] = "MACHO";
+    MaterialType["HIERRO"] = "HIERRO";
+    MaterialType["ACERO"] = "ACERO";
+    MaterialType["PLACA"] = "PLACA";
+    MaterialType["MADERA"] = "MADERA";
+    MaterialType["HERRAJE"] = "HERRAJE";
+    MaterialType["INSUMO"] = "INSUMO";
+    MaterialType["PRODUCTO"] = "PRODUCTO";
+    MaterialType["OTRO"] = "OTRO";
 })(MaterialType || (exports.MaterialType = MaterialType = {}));
 //# sourceMappingURL=enums.js.map

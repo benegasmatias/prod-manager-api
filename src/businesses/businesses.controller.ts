@@ -24,6 +24,11 @@ export class BusinessesController {
         return this.businessesService.getDashboardSummary(req.user.id, id);
     }
 
+    @Get('test-reload')
+    async testReload() {
+        return { message: "RELOAD_SUCCESS_OK_v1", time: new Date().toISOString() };
+    }
+
     @Post()
     async create(@Request() req, @Body() createDto: CreateBusinessFromTemplateDto) {
         return this.businessesService.createFromTemplate(req.user.id, createDto);

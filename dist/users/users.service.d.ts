@@ -7,7 +7,7 @@ export declare class UsersService {
     private readonly businessesService;
     constructor(userRepository: Repository<User>, businessesService: BusinessesService);
     findOne(id: string): Promise<User>;
-    findOrCreate(id: string, email: string): Promise<User>;
+    findOrCreate(id: string, email: string, fullName?: string): Promise<User>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<User>;
     setDefaultBusiness(userId: string, businessId: string): Promise<User>;
 }

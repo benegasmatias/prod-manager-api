@@ -15,15 +15,17 @@ const business_template_entity_1 = require("./entities/business-template.entity"
 const user_entity_1 = require("../users/entities/user.entity");
 const order_entity_1 = require("../orders/entities/order.entity");
 const customer_entity_1 = require("../customers/entities/customer.entity");
+const machine_entity_1 = require("../machines/entities/machine.entity");
 const businesses_service_1 = require("./businesses.service");
 const businesses_controller_1 = require("./businesses.controller");
 const business_templates_controller_1 = require("./business-templates.controller");
+const material_entity_1 = require("../materials/entities/material.entity");
 let BusinessesModule = class BusinessesModule {
 };
 exports.BusinessesModule = BusinessesModule;
 exports.BusinessesModule = BusinessesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([business_entity_1.Business, business_membership_entity_1.BusinessMembership, user_entity_1.User, business_template_entity_1.BusinessTemplate, order_entity_1.Order, customer_entity_1.Customer])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([business_entity_1.Business, business_membership_entity_1.BusinessMembership, user_entity_1.User, business_template_entity_1.BusinessTemplate, order_entity_1.Order, customer_entity_1.Customer, machine_entity_1.Machine, material_entity_1.Material])],
         controllers: [businesses_controller_1.BusinessesController, business_templates_controller_1.BusinessTemplatesController],
         providers: [businesses_service_1.BusinessesService],
         exports: [businesses_service_1.BusinessesService],

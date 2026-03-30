@@ -40,7 +40,7 @@ export class ProductsService {
             where: { id },
             relations: ['productFiles', 'productFiles.fileAsset'],
         });
-        if (!product) throw new NotFoundException('Product not found');
+        if (!product) throw new NotFoundException('Producto no encontrado');
         return product;
     }
 

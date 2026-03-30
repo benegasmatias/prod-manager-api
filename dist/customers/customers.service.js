@@ -22,25 +22,42 @@ let CustomersService = class CustomersService {
         this.customerRepository = customerRepository;
     }
     async create(createCustomerDto) {
-        const customer = this.customerRepository.create(createCustomerDto);
-        return this.customerRepository.save(customer);
+        try {
+            const customer = this.customerRepository.create(createCustomerDto);
+            return await this.customerRepository.save(customer);
+        }
+        catch (error) {
+            if (error.code === '23505') {
+                throw new common_1.ConflictException('Ya existe un cliente con ese email en este negocio');
+            }
+            throw error;
+        }
     }
     async findAll(businessId, q, page = 1, limit = 10) {
         const skip = (page - 1) * limit;
         const queryBuilder = this.customerRepository.createQueryBuilder('customer');
         queryBuilder
-            .leftJoinAndSelect('customer.orders', 'orders')
             .where('customer.businessId = :businessId', { businessId });
         if (q) {
             queryBuilder.andWhere('customer.name ILIKE :q', { q: `%${q}%` });
         }
+        queryBuilder.loadRelationCountAndMap('customer.totalOrders', 'customer.orders');
         const [items, total] = await queryBuilder
             .skip(skip)
             .take(limit)
             .orderBy('customer.createdAt', 'DESC')
             .getManyAndCount();
+        const mappedItems = items.map(customer => ({
+            id: customer.id,
+            name: customer.name,
+            phone: customer.phone,
+            email: customer.email,
+            notes: customer.notes,
+            createdAt: customer.createdAt,
+            totalOrders: customer.totalOrders || 0
+        }));
         return {
-            items,
+            items: mappedItems,
             total,
             page,
             limit,
@@ -51,7 +68,7 @@ let CustomersService = class CustomersService {
             where: { id },
         });
         if (!customer)
-            throw new common_1.NotFoundException('Customer not found');
+            throw new common_1.NotFoundException('Cliente no encontrado');
         return customer;
     }
     async update(id, updateCustomerDto) {
