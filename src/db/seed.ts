@@ -8,6 +8,7 @@ import { BusinessMembership, UserRole } from '../businesses/entities/business-me
 import { Machine } from '../machines/entities/machine.entity';
 import { MachineStatus } from '../common/enums';
 import { GlobalRoleConfig } from '../admin/entities/global-role-config.entity';
+import { OrderSiteInfo } from '../orders/entities/order-site-info.entity';
 
 async function seed() {
 
@@ -17,9 +18,7 @@ async function seed() {
 
         const orderRepo = AppDataSource.getRepository(Order);
         const itemRepo = AppDataSource.getRepository(OrderItem);
-        const userRepo = AppDataSource.getRepository(User);
         const businessRepo = AppDataSource.getRepository(Business);
-        const membershipRepo = AppDataSource.getRepository(BusinessMembership);
         const roleConfigRepo = AppDataSource.getRepository(GlobalRoleConfig);
 
         // 0. Global Roles
@@ -33,14 +32,8 @@ async function seed() {
                 role: 'ADMIN',
                 description: 'Administrador operativo del panel general',
                 capabilities: { 'manage_businesses': true, 'manage_users': true, 'view_audit': true }
-            },
-            {
-                role: 'SUPPORT',
-                description: 'Soporte técnico y atención al cliente',
-                capabilities: { 'view_businesses': true, 'view_users': true, 'manage_tickets': true }
             }
         ];
-
 
         for (const r of baseRoles) {
             const exists = await roleConfigRepo.findOneBy({ role: r.role });
@@ -50,12 +43,9 @@ async function seed() {
             }
         }
 
-        // 1. Negocios Base (Idempotente)
-
+        // 1. Negocios Base
         const baseBusinesses = [
             { name: 'Taller Impresión 3D Alfa', category: 'IMPRESIONES_3D' },
-            { name: 'Impresiones 3D Express', category: 'IMPRESIONES_3D' },
-            { name: 'PrintWorks 3D Studio', category: 'IMPRESIONES_3D' },
             { name: 'Servicios Metalúrgicos', category: 'METALURGICA' },
             { name: 'Carpintería Moderna', category: 'CARPINTERIA' },
         ];
@@ -72,124 +62,71 @@ async function seed() {
                 });
                 biz = await businessRepo.save(biz);
                 console.log(`✅ Negocio creado: ${base.name} [${base.category}]`);
-            } else {
-                console.log(`ℹ️ Negocio ya existe: ${base.name}`);
             }
             createdBusinesses.push(biz);
         }
 
-        if (createdBusinesses.length < 2) {
-            console.warn('⚠️ Menos de 2 negocios encontrados/creados. Algunos otros seeds podrían fallar.');
-        }
+        const biz3D = createdBusinesses.find(b => b.category === 'IMPRESIONES_3D');
+        const bizMetal = createdBusinesses.find(b => b.category === 'METALURGICA');
 
-        const biz1 = createdBusinesses[0];
-        const biz2 = createdBusinesses[1];
-
-        // 2. No vinculamos usuarios automáticamente (El usuario debe entrar y crear/seleccionar)
-        console.log('ℹ️ Auto-vinculación de usuarios deshabilitada.');
-
-        // 1. Pedido 1: Fecha de entrega cercana (1 día despues de hoy) + 2 items
+        // 2. Pedido 3D
         const dueSoon = new Date();
         dueSoon.setDate(dueSoon.getDate() + 1);
 
-        const order1 = orderRepo.create({
-            businessId: biz1.id, // Asignar al primer negocio
-            clientName: 'Cliente Urgente (Matias)',
+        const order3D = orderRepo.create({
+            businessId: biz3D.id,
+            clientName: 'Cliente 3D (Matias)',
             dueDate: dueSoon,
             priority: 10,
-            status: OrderStatus.IN_PROGRESS, // En producción para que aparezca en el dashboard/producción
+            status: OrderStatus.IN_PROGRESS,
         });
-        const savedOrder1 = await orderRepo.save(order1);
+        const savedOrder3D = await orderRepo.save(order3D);
 
         await itemRepo.save([
             itemRepo.create({
-                orderId: savedOrder1.id,
+                orderId: savedOrder3D.id,
                 name: 'Soporte Laptop Gamer',
-                description: 'Diseño reforzado en PLA blanco',
-                stlUrl: 'https://example.com/stl/soporte-laptop.stl',
                 estimatedMinutes: 360,
                 weightGrams: 240,
                 price: 15.5,
                 qty: 2,
-                doneQty: 1, // 1 de 2 terminado
-            }),
-            itemRepo.create({
-                orderId: savedOrder1.id,
-                name: 'Pikachu Articulado',
-                description: 'Pintado a mano, 10cm',
-                stlUrl: 'https://example.com/stl/pikachu.stl',
-                estimatedMinutes: 120,
-                weightGrams: 45,
-                price: 25.0,
-                qty: 1,
-                doneQty: 0,
-            }),
+                doneQty: 1,
+            })
         ]);
-        console.log('✅ Pedido 1 creado con 2 items.');
+        console.log('✅ Pedido 3D creado.');
 
-        // 2. Pedido 2: Fecha de entrega más lejana (10 días despues de hoy) + 3 items
+        // 3. Pedido Metalúrgica (Con SiteInfo)
         const dueFar = new Date();
         dueFar.setDate(dueFar.getDate() + 10);
 
-        const order2 = orderRepo.create({
-            businessId: biz1.id, // También al primer negocio
-            clientName: 'Juan Gomez (Pedidazo)',
+        const orderMetal = orderRepo.create({
+            businessId: bizMetal.id,
+            clientName: 'Instalación Rejas (Gomez)',
             dueDate: dueFar,
             priority: 5,
             status: OrderStatus.PENDING,
+            siteInfo: {
+                address: 'Av. Corrientes 1234, CABA',
+                visitDate: '2026-04-15',
+                visitTime: '10:00 AM',
+                visitObservations: 'Traer escalera de 4 metros.'
+            } as OrderSiteInfo
         });
-        const savedOrder2 = await orderRepo.save(order2);
+        await orderRepo.save(orderMetal);
+        console.log('✅ Pedido Metalúrgica creado con SiteInfo.');
 
-        await itemRepo.save([
-            itemRepo.create({
-                orderId: savedOrder2.id,
-                name: 'Maceta Geometríca S',
-                description: 'Material: PETG, Color: Negro',
-                stlUrl: 'https://example.com/stl/maceta-s.stl',
-                estimatedMinutes: 80,
-                weightGrams: 30,
-                price: 5.0,
-                qty: 5,
-                doneQty: 0,
-            }),
-            itemRepo.create({
-                orderId: savedOrder2.id,
-                name: 'Maceta Geometríca M',
-                description: 'Material: PETG, Color: Negro',
-                stlUrl: 'https://example.com/stl/maceta-m.stl',
-                estimatedMinutes: 150,
-                weightGrams: 65,
-                price: 8.5,
-                qty: 3,
-                doneQty: 0,
-            }),
-            itemRepo.create({
-                orderId: savedOrder2.id,
-                name: 'Llavero Logotipo',
-                description: 'Lote de llaveros corporativos',
-                stlUrl: 'https://example.com/stl/logo.stl',
-                estimatedMinutes: 15,
-                weightGrams: 5,
-                price: 1.5,
-                qty: 20,
-                doneQty: 0,
-            }),
-        ]);
-        console.log('✅ Pedido 2 creado con 3 items.');
-
-        // 3. Impresoras (Máquinas)
+        // 4. Máquinas
         const printerRepo = AppDataSource.getRepository(Machine);
         const baseMachines = [
-            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz1.id },
-            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: MachineStatus.PRINTING, businessId: biz1.id },
-            { name: 'Artillery Genius #1', model: 'Artillery Genius Pro', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz1.id },
+            { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz3D.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: MachineStatus.PRINTING, businessId: biz3D.id },
         ];
 
         for (const p of baseMachines) {
             const exists = await printerRepo.findOne({ where: { name: p.name, businessId: p.businessId } });
             if (!exists) {
                 await printerRepo.save(printerRepo.create(p));
-                console.log(`✅ Impresora creada: ${p.name}`);
+                console.log(`✅ Máquina creada: ${p.name}`);
             }
         }
 

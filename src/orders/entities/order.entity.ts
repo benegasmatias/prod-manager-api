@@ -96,22 +96,6 @@ export class Order {
     @JoinColumn({ name: 'responsable_general_id' })
     responsableGeneral: Employee;
 
-    /** @deprecated Usar siteInfo.address */
-    @Column({ name: 'direccion_obra', nullable: true })
-    direccion_obra: string;
-
-    /** @deprecated Usar siteInfo.visitDate */
-    @Column({ name: 'fecha_visita', nullable: true })
-    fecha_visita: string;
-
-    /** @deprecated Usar siteInfo.visitTime */
-    @Column({ name: 'hora_visita', nullable: true })
-    hora_visita: string;
-
-    /** @deprecated Usar siteInfo.visitObservations */
-    @Column({ name: 'observaciones_visita', type: 'text', nullable: true })
-    observaciones_visita: string;
-
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
 }

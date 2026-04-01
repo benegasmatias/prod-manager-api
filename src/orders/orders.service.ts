@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, ILike, Not, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { OrderSiteInfo } from './entities/order-site-info.entity';
 import { OrderStatus, JobStatus, MachineStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Machine } from '../machines/entities/machine.entity';
@@ -100,8 +101,7 @@ export class OrdersService {
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority', 
                 'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice', 
-                'order.code', 'order.responsableGeneralId', 'order.customerId',
-                'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias',
+                'order.code', 'order.responsableGeneralId', 'order.customerId', 'order.totalSenias',
                 'customer.id', 'customer.name', 'customer.phone',
                 'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
                 'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
@@ -240,7 +240,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
-                'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias', 'order.createdAt',
+                'order.totalSenias', 'order.createdAt',
                 'customer.id', 'customer.name',
                 'responsableGeneral.id', 'responsableGeneral.firstName',
                 'items.id', 'items.name', 'items.metadata',
@@ -299,7 +299,6 @@ export class OrdersService {
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
                 'order.totalPrice', 'order.totalSenias', 'order.createdAt', 'order.updatedAt',
-                'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.observaciones_visita',
                 'customer.id', 'customer.name',
                 'responsableGeneral.id', 'responsableGeneral.firstName',
                 'items.id', 'items.name', 'items.price', 'items.qty',
@@ -385,7 +384,6 @@ export class OrdersService {
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } }) as any;
             const strategy = this.strategyProvider.getStrategy(business?.category);
 
-            const { direccion_obra, fecha_visita, hora_visita, observaciones_visita } = orderData;
             const initialStatus = createOrderDto.status || strategy.getInitialStatus(items);
 
             const order = manager.create(Order, {
@@ -393,13 +391,7 @@ export class OrdersService {
                 code,
                 totalPrice,
                 status: initialStatus,
-                // Fase Sombra: Guardamos en siteInfo manteniendo compatibilidad legacy
-                siteInfo: (direccion_obra || fecha_visita || hora_visita || observaciones_visita) ? {
-                    address: direccion_obra,
-                    visitDate: fecha_visita,
-                    visitTime: hora_visita,
-                    visitObservations: observaciones_visita
-                } : null
+                siteInfo: createOrderDto.siteInfo ? manager.create(OrderSiteInfo, createOrderDto.siteInfo) : null
             });
 
             const savedOrder = await manager.save(Order, order);
@@ -614,32 +606,17 @@ export class OrdersService {
             if (totalSenias !== undefined) updateData.totalSenias = totalSenias;
             if (dueDate !== undefined) updateData.dueDate = dueDate;
             if (responsableGeneralId !== undefined) updateData.responsableGeneralId = responsableGeneralId;
-            if (updateStatusDto.direccion_obra !== undefined) updateData.direccion_obra = updateStatusDto.direccion_obra;
-            if (updateStatusDto.fecha_visita !== undefined) updateData.fecha_visita = updateStatusDto.fecha_visita;
-            if (updateStatusDto.hora_visita !== undefined) updateData.hora_visita = updateStatusDto.hora_visita;
-            if (updateStatusDto.observaciones_visita !== undefined) updateData.observaciones_visita = updateStatusDto.observaciones_visita;
-            if (updateStatusDto.metadata !== undefined) updateData.metadata = updateStatusDto.metadata;
             if (notes !== undefined) updateData.notes = notes;
+            if (updateStatusDto.metadata !== undefined) updateData.metadata = updateStatusDto.metadata;
 
-            // Fase Sombra: Actualizar siteInfo si vienen campos de visita/obra
-            if (updateStatusDto.direccion_obra !== undefined || 
-                updateStatusDto.fecha_visita !== undefined || 
-                updateStatusDto.hora_visita !== undefined || 
-                updateStatusDto.observaciones_visita !== undefined) {
-                
-                // Importante: No inyectar OrderSiteInfo en el constructor para evitar circulares si las hubiera, 
-                // usamos el manager directamente.
-                let siteInfo = await manager.findOne('OrderSiteInfo', { where: { orderId: id } }) as any;
+            // Actualizar siteInfo si viene en el DTO
+            if (updateStatusDto.siteInfo !== undefined) {
+                let siteInfo = await manager.findOne(OrderSiteInfo, { where: { orderId: id } });
                 if (!siteInfo) {
-                    siteInfo = manager.create('OrderSiteInfo', { orderId: id });
+                    siteInfo = manager.create(OrderSiteInfo, { orderId: id });
                 }
-
-                if (updateStatusDto.direccion_obra !== undefined) siteInfo.address = updateStatusDto.direccion_obra;
-                if (updateStatusDto.fecha_visita !== undefined) siteInfo.visitDate = updateStatusDto.fecha_visita;
-                if (updateStatusDto.hora_visita !== undefined) siteInfo.visitTime = updateStatusDto.hora_visita;
-                if (updateStatusDto.observaciones_visita !== undefined) siteInfo.visitObservations = updateStatusDto.observaciones_visita;
-                
-                await manager.save('OrderSiteInfo', siteInfo);
+                Object.assign(siteInfo, updateStatusDto.siteInfo);
+                await manager.save(OrderSiteInfo, siteInfo);
             }
 
             // Si vienen items, los actualizamos
