@@ -27,6 +27,12 @@ let FilesController = class FilesController {
         }
         return this.filesService.uploadFile(file);
     }
+    async delete(path) {
+        if (!path) {
+            throw new common_1.BadRequestException('Path is required');
+        }
+        return this.filesService.deleteFile(path);
+    }
 };
 exports.FilesController = FilesController;
 __decorate([
@@ -37,6 +43,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], FilesController.prototype, "upload", null);
+__decorate([
+    (0, common_1.Delete)('delete'),
+    __param(0, (0, common_1.Body)('path')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], FilesController.prototype, "delete", null);
 exports.FilesController = FilesController = __decorate([
     (0, common_1.Controller)('files'),
     (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard),

@@ -20,21 +20,25 @@ const order_entity_1 = require("./entities/order.entity");
 const order_item_entity_1 = require("./entities/order-item.entity");
 const enums_1 = require("../common/enums");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
-const machine_entity_1 = require("../machines/entities/machine.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
 const order_failure_entity_1 = require("./entities/order-failure.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 const payment_entity_1 = require("../payments/entities/payment.entity");
+const order_strategy_provider_1 = require("./order-strategy.provider");
+const order_workflow_service_1 = require("./order-workflow.service");
+const order_financial_service_1 = require("./order-financial.service");
 let OrdersService = class OrdersService {
-    constructor(orderRepository, orderItemRepository, jobRepository, machineRepository, statusHistoryRepository, orderFailureRepository, materialRepository, paymentRepository) {
+    constructor(orderRepository, orderItemRepository, jobRepository, statusHistoryRepository, orderFailureRepository, materialRepository, paymentRepository, strategyProvider, workflowService, financialService) {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.jobRepository = jobRepository;
-        this.machineRepository = machineRepository;
         this.statusHistoryRepository = statusHistoryRepository;
         this.orderFailureRepository = orderFailureRepository;
         this.materialRepository = materialRepository;
         this.paymentRepository = paymentRepository;
+        this.strategyProvider = strategyProvider;
+        this.workflowService = workflowService;
+        this.financialService = financialService;
     }
     async findAll(query) {
         const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search } = query;
@@ -82,6 +86,7 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
             .leftJoinAndSelect('order.payments', 'payments')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority',
             'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice',
@@ -90,7 +95,8 @@ let OrdersService = class OrdersService {
             'customer.id', 'customer.name', 'customer.phone',
             'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
             'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
-            'payments.id', 'payments.amount'
+            'payments.id', 'payments.amount',
+            'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
         ]);
         if (businessId) {
             qb.andWhere('order.businessId = :businessId', { businessId });
@@ -150,11 +156,7 @@ let OrdersService = class OrdersService {
         ])
             .getMany();
         const pendingBalance = activeOrders.reduce((acc, order) => {
-            const total = Number(order.totalPrice) || 0;
-            const totalSenias = order.items?.reduce((sAcc, item) => sAcc + (Number(item.deposit) || 0), 0) || 0;
-            const totalPayments = order.payments?.reduce((pAcc, p) => pAcc + (Number(p.amount) || 0), 0) || 0;
-            const saldo = Math.max(0, total - totalSenias - totalPayments);
-            return acc + saldo;
+            return acc + this.financialService.calculatePendingBalance(order);
         }, 0);
         return {
             totalVolume,
@@ -183,7 +185,7 @@ let OrdersService = class OrdersService {
             .select(['order.id', 'order.totalPrice', 'order.status'])
             .getMany();
         const currentBudgets = allRelevantOrders.filter(o => BUDGET_STAGES.includes(o.status));
-        const totalBudgeted = currentBudgets.reduce((acc, b) => acc + (Number(b.totalPrice) || 0), 0);
+        const totalBudgeted = this.financialService.calculateItemsTotal(currentBudgets);
         const pendingApprovalCount = currentBudgets.filter(b => b.status === enums_1.OrderStatus.BUDGET_GENERATED).length;
         const totalActiveAndConverted = allRelevantOrders.length;
         const converted = allRelevantOrders.filter(o => CONVERTED_STAGES.includes(o.status)).length;
@@ -200,12 +202,14 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.customer', 'customer')
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
             'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias', 'order.createdAt',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
-            'items.id', 'items.name', 'items.metadata'
+            'items.id', 'items.name', 'items.metadata',
+            'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
         ]);
         qb.andWhere('order.businessId = :businessId', { businessId });
         const VISIT_STATUSES = [
@@ -248,13 +252,15 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.customer', 'customer')
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
             'order.totalPrice', 'order.totalSenias', 'order.createdAt', 'order.updatedAt',
             'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.observaciones_visita',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
-            'items.id', 'items.name', 'items.price', 'items.qty'
+            'items.id', 'items.name', 'items.price', 'items.qty',
+            'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime', 'siteInfo.visitObservations'
         ]);
         qb.andWhere('order.businessId = :businessId', { businessId });
         const BUDGET_STATUSES = [
@@ -298,7 +304,7 @@ let OrdersService = class OrdersService {
                 'items', 'customer', 'responsableGeneral',
                 'jobs', 'jobs.responsable', 'business',
                 'statusHistory', 'statusHistory.performedBy',
-                'failures', 'failures.material', 'payments'
+                'failures', 'failures.material', 'payments', 'siteInfo'
             ],
         });
         if (!order) {
@@ -309,26 +315,24 @@ let OrdersService = class OrdersService {
     async create(createOrderDto) {
         const { items, ...orderData } = createOrderDto;
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
-        const calculatedTotalPrice = items?.reduce((acc, item) => {
-            const basePrice = Number(item.price) * (item.qty || 1);
-            const designPrice = Number(item.metadata?.precioDiseno) || 0;
-            return acc + basePrice + designPrice;
-        }, 0) || 0;
+        const calculatedTotalPrice = this.financialService.calculateItemsTotal(items);
         const totalPrice = createOrderDto.totalPrice !== undefined ? createOrderDto.totalPrice : calculatedTotalPrice;
         return await this.orderRepository.manager.transaction(async (manager) => {
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } });
-            let initialStatus = enums_1.OrderStatus.PENDING;
-            if (business?.category === 'IMPRESION_3D') {
-                const needsDesign = items?.some(item => item.metadata?.seDiseñaSTL === true || item.metadata?.seDiseñaSTL === 'true');
-                if (needsDesign) {
-                    initialStatus = enums_1.OrderStatus.DESIGN;
-                }
-            }
+            const strategy = this.strategyProvider.getStrategy(business?.category);
+            const { direccion_obra, fecha_visita, hora_visita, observaciones_visita } = orderData;
+            const initialStatus = createOrderDto.status || strategy.getInitialStatus(items);
             const order = manager.create(order_entity_1.Order, {
                 ...orderData,
                 code,
                 totalPrice,
-                status: createOrderDto.status || initialStatus,
+                status: initialStatus,
+                siteInfo: (direccion_obra || fecha_visita || hora_visita || observaciones_visita) ? {
+                    address: direccion_obra,
+                    visitDate: fecha_visita,
+                    visitTime: hora_visita,
+                    visitObservations: observaciones_visita
+                } : null
             });
             const savedOrder = await manager.save(order_entity_1.Order, order);
             if (items && items.length > 0) {
@@ -339,28 +343,10 @@ let OrdersService = class OrdersService {
                         doneQty: 0,
                     });
                     const savedItem = await manager.save(order_item_entity_1.OrderItem, orderItem);
-                    const isVisitOrQuote = savedOrder.status === enums_1.OrderStatus.SITE_VISIT || savedOrder.status === enums_1.OrderStatus.SITE_VISIT_DONE || savedOrder.status === enums_1.OrderStatus.QUOTATION;
-                    if ((business?.category === 'METALURGICA' || business?.category === 'CARPINTERIA') && !isVisitOrQuote) {
-                        const stages = [
-                            { title: 'Diseño / Preparación', rank: 10 },
-                            { title: 'Corte / Dimensionado', rank: 20 },
-                            { title: 'Soldadura / Unión', rank: 30 },
-                            { title: 'Armado / Ensamble', rank: 40 },
-                            { title: 'Pintura / Acabado', rank: 50 }
-                        ];
-                        const jobs = stages.map(s => manager.create(production_job_entity_1.ProductionJob, {
-                            orderId: savedOrder.id,
-                            orderItemId: savedItem.id,
-                            title: s.title,
-                            totalUnits: savedItem.qty || 1,
-                            status: enums_1.JobStatus.QUEUED,
-                            sortRank: s.rank,
-                            responsableId: savedOrder.responsableGeneralId
-                        }));
-                        await manager.save(production_job_entity_1.ProductionJob, jobs);
-                    }
+                    await this.workflowService.createWorkflow(savedOrder, savedItem, strategy, manager);
                 }
             }
+            await strategy.onAfterCreate(savedOrder, manager);
             const result = await manager.findOne(order_entity_1.Order, {
                 where: { id: savedOrder.id },
                 relations: ['items', 'responsableGeneral', 'jobs', 'business']
@@ -400,36 +386,44 @@ let OrdersService = class OrdersService {
         await this.orderItemRepository.save(item);
         const allItems = await this.orderItemRepository.find({ where: { orderId } });
         const isOrderComplete = allItems.every((i) => i.doneQty === i.qty);
-        if (isOrderComplete) {
-            await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.DONE });
-            const history = this.statusHistoryRepository.create({
-                orderId,
-                fromStatus: enums_1.OrderStatus.IN_PROGRESS,
-                toStatus: enums_1.OrderStatus.DONE,
-                note: 'Completado automático por carga de progreso',
-                performedById: userId
-            });
-            await this.statusHistoryRepository.save(history);
-            await this.releaseMachinesForOrder(orderId, enums_1.JobStatus.DONE);
-        }
-        else if (doneQty > 0) {
-            const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
-            if (oldOrder && oldOrder.status !== enums_1.OrderStatus.IN_PROGRESS) {
-                await this.orderRepository.update(orderId, { status: enums_1.OrderStatus.IN_PROGRESS });
-                const history = this.statusHistoryRepository.create({
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const order = await manager.findOne(order_entity_1.Order, { where: { id: orderId }, relations: ['business'] });
+            if (!order)
+                throw new common_1.NotFoundException('Pedido no encontrado');
+            const strategy = this.strategyProvider.getStrategy(order.business?.category);
+            if (isOrderComplete) {
+                await manager.update(order_entity_1.Order, orderId, { status: enums_1.OrderStatus.DONE });
+                const history = manager.create(order_status_history_entity_1.OrderStatusHistory, {
                     orderId,
-                    fromStatus: oldOrder.status,
-                    toStatus: enums_1.OrderStatus.IN_PROGRESS,
-                    note: 'Iniciado automático por carga de progreso',
+                    fromStatus: order.status,
+                    toStatus: enums_1.OrderStatus.DONE,
+                    note: 'Completado automático por carga de progreso',
                     performedById: userId
                 });
-                await this.statusHistoryRepository.save(history);
+                await manager.save(order_status_history_entity_1.OrderStatusHistory, history);
+                await strategy.releaseResources(order, manager, { targetStatus: enums_1.JobStatus.DONE });
             }
-            if (doneQty === item.qty) {
-                await this.releaseMachinesForOrder(orderId, enums_1.JobStatus.DONE, itemId);
+            else if (doneQty > 0) {
+                if (order.status !== enums_1.OrderStatus.IN_PROGRESS) {
+                    await manager.update(order_entity_1.Order, orderId, { status: enums_1.OrderStatus.IN_PROGRESS });
+                    const history = manager.create(order_status_history_entity_1.OrderStatusHistory, {
+                        orderId,
+                        fromStatus: order.status,
+                        toStatus: enums_1.OrderStatus.IN_PROGRESS,
+                        note: 'Iniciado automático por carga de progreso',
+                        performedById: userId
+                    });
+                    await manager.save(order_status_history_entity_1.OrderStatusHistory, history);
+                }
+                if (doneQty === item.qty) {
+                    await strategy.releaseResources(order, manager, { itemId: itemId, targetStatus: enums_1.JobStatus.DONE });
+                }
             }
-        }
-        return this.findOne(orderId);
+            return await manager.findOne(order_entity_1.Order, {
+                where: { id: orderId },
+                relations: ['items', 'customer', 'responsableGeneral', 'payments']
+            });
+        });
     }
     async checkAndSetReadyStatus(orderId) {
         const jobs = await this.jobRepository.find({
@@ -444,55 +438,41 @@ let OrdersService = class OrdersService {
         }
     }
     async reportFailure(id, reportFailureDto, userId) {
-        const order = await this.orderRepository.findOne({ where: { id } });
-        if (!order) {
-            throw new common_1.NotFoundException(`Pedido ${id} no encontrado`);
-        }
-        const { reason, wastedGrams, materialId, moveToReprint, metadata } = reportFailureDto;
-        const failure = this.orderFailureRepository.create({
-            orderId: id,
-            reason,
-            wastedGrams,
-            materialId,
-        });
-        await this.orderFailureRepository.save(failure);
-        if (metadata?.materials && Array.isArray(metadata.materials)) {
-            for (const matSpec of metadata.materials) {
-                const { materialId: matId, wastedGrams: wasted } = matSpec;
-                if (!matId || !wasted)
-                    continue;
-                const material = await this.materialRepository.findOneBy({ id: matId });
-                if (material) {
-                    const newRemaining = Math.max(0, material.remainingWeightGrams - wasted);
-                    await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                    console.log(`[Auditoría Fallo Multi] Descontados ${wasted}g de ${material.name}.`);
-                }
+        const order = await this.findOne(id);
+        const strategy = this.strategyProvider.getStrategy(order.business?.category);
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const { reason, wastedGrams, materialId, metadata } = reportFailureDto;
+            const failure = manager.create(order_failure_entity_1.OrderFailure, {
+                orderId: id,
+                reason,
+                wastedGrams,
+                materialId,
+            });
+            await manager.save(order_failure_entity_1.OrderFailure, failure);
+            const targetStatus = await strategy.handleProductionFailure(order, reportFailureDto, manager, userId);
+            let totalWasted = wastedGrams;
+            if (metadata?.materials && Array.isArray(metadata.materials)) {
+                totalWasted = metadata.materials.reduce((sum, m) => sum + (m.wastedGrams || 0), 0);
             }
-        }
-        else if (materialId && wastedGrams > 0) {
-            const material = await this.materialRepository.findOneBy({ id: materialId });
-            if (material) {
-                const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
-                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                console.log(`[Auditoría Fallo] Descontados ${wastedGrams}g de ${material.name} por fallo en pedido ${id}.`);
-            }
-        }
-        const targetStatus = moveToReprint ? enums_1.OrderStatus.REPRINT_PENDING : enums_1.OrderStatus.FAILED;
-        let totalWasted = wastedGrams;
-        if (metadata?.materials && Array.isArray(metadata.materials)) {
-            totalWasted = metadata.materials.reduce((sum, m) => sum + (m.wastedGrams || 0), 0);
-        }
-        const history = this.statusHistoryRepository.create({
-            orderId: id,
-            fromStatus: order.status,
-            toStatus: targetStatus,
-            note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
-            performedById: userId
+            const history = manager.create(order_status_history_entity_1.OrderStatusHistory, {
+                orderId: id,
+                fromStatus: order.status,
+                toStatus: targetStatus,
+                note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
+                performedById: userId
+            });
+            await manager.save(order_status_history_entity_1.OrderStatusHistory, history);
+            await manager.update(order_entity_1.Order, id, { status: targetStatus });
+            return await manager.findOne(order_entity_1.Order, {
+                where: { id },
+                relations: [
+                    'items', 'customer', 'responsableGeneral',
+                    'jobs', 'jobs.responsable', 'business',
+                    'statusHistory', 'statusHistory.performedBy',
+                    'failures', 'failures.material', 'payments'
+                ],
+            });
         });
-        await this.statusHistoryRepository.save(history);
-        order.status = targetStatus;
-        await this.orderRepository.save(order);
-        return this.findOne(id);
     }
     async updateStatus(id, updateStatusDto, userId) {
         const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items } = updateStatusDto;
@@ -526,8 +506,25 @@ let OrdersService = class OrdersService {
                 updateData.metadata = updateStatusDto.metadata;
             if (notes !== undefined)
                 updateData.notes = notes;
+            if (updateStatusDto.direccion_obra !== undefined ||
+                updateStatusDto.fecha_visita !== undefined ||
+                updateStatusDto.hora_visita !== undefined ||
+                updateStatusDto.observaciones_visita !== undefined) {
+                let siteInfo = await manager.findOne('OrderSiteInfo', { where: { orderId: id } });
+                if (!siteInfo) {
+                    siteInfo = manager.create('OrderSiteInfo', { orderId: id });
+                }
+                if (updateStatusDto.direccion_obra !== undefined)
+                    siteInfo.address = updateStatusDto.direccion_obra;
+                if (updateStatusDto.fecha_visita !== undefined)
+                    siteInfo.visitDate = updateStatusDto.fecha_visita;
+                if (updateStatusDto.hora_visita !== undefined)
+                    siteInfo.visitTime = updateStatusDto.hora_visita;
+                if (updateStatusDto.observaciones_visita !== undefined)
+                    siteInfo.visitObservations = updateStatusDto.observaciones_visita;
+                await manager.save('OrderSiteInfo', siteInfo);
+            }
             if (items && items.length > 0) {
-                let calculatedTotal = 0;
                 for (const itemData of items) {
                     const { id: itemId, ...rest } = itemData;
                     if (itemId) {
@@ -537,13 +534,9 @@ let OrdersService = class OrdersService {
                         const newItem = manager.create(order_item_entity_1.OrderItem, { ...rest, orderId: id });
                         await manager.save(order_item_entity_1.OrderItem, newItem);
                     }
-                    const itemPrice = Number(itemData.price) || 0;
-                    const itemQty = Number(itemData.qty) || 1;
-                    const designPrice = Number(itemData.metadata?.precioDiseno) || 0;
-                    calculatedTotal += (itemPrice * itemQty) + designPrice;
                 }
                 if (totalPrice === undefined) {
-                    updateData.totalPrice = calculatedTotal;
+                    updateData.totalPrice = this.financialService.calculateItemsTotal(items);
                 }
             }
             if (Object.keys(updateData).length > 0) {
@@ -561,7 +554,8 @@ let OrdersService = class OrdersService {
             }
             if (status && status !== enums_1.OrderStatus.IN_PROGRESS) {
                 const targetJobStatus = status === enums_1.OrderStatus.DONE ? enums_1.JobStatus.DONE : enums_1.JobStatus.CANCELLED;
-                await this.releaseMachinesForOrder(id, targetJobStatus);
+                const strategy = this.strategyProvider.getStrategy(order.business?.category);
+                await strategy.releaseResources(order, manager, { targetStatus: targetJobStatus });
             }
             return await manager.findOne(order_entity_1.Order, {
                 where: { id },
@@ -573,24 +567,6 @@ let OrdersService = class OrdersService {
                 ],
             });
         });
-    }
-    async releaseMachinesForOrder(orderId, targetJobStatus = enums_1.JobStatus.DONE, orderItemId) {
-        const where = { orderId };
-        if (orderItemId)
-            where.orderItemId = orderItemId;
-        const activeJobs = await this.jobRepository.find({
-            where: {
-                ...where,
-                status: (0, typeorm_2.In)([enums_1.JobStatus.QUEUED, enums_1.JobStatus.PRINTING, enums_1.JobStatus.PAUSED])
-            }
-        });
-        for (const job of activeJobs) {
-            await this.jobRepository.update(job.id, { status: targetJobStatus });
-            if (job.machineId) {
-                await this.machineRepository.update(job.machineId, { status: enums_1.MachineStatus.IDLE });
-                console.log(`[Auditoría] Impresora ${job.machineId} liberada al cambiar estado de pedido ${orderId}`);
-            }
-        }
     }
     async addPayment(id, createPaymentDto) {
         const order = await this.orderRepository.findOne({ where: { id } });
@@ -610,11 +586,10 @@ exports.OrdersService = OrdersService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(order_entity_1.Order)),
     __param(1, (0, typeorm_1.InjectRepository)(order_item_entity_1.OrderItem)),
     __param(2, (0, typeorm_1.InjectRepository)(production_job_entity_1.ProductionJob)),
-    __param(3, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
-    __param(4, (0, typeorm_1.InjectRepository)(order_status_history_entity_1.OrderStatusHistory)),
-    __param(5, (0, typeorm_1.InjectRepository)(order_failure_entity_1.OrderFailure)),
-    __param(6, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
-    __param(7, (0, typeorm_1.InjectRepository)(payment_entity_1.Payment)),
+    __param(3, (0, typeorm_1.InjectRepository)(order_status_history_entity_1.OrderStatusHistory)),
+    __param(4, (0, typeorm_1.InjectRepository)(order_failure_entity_1.OrderFailure)),
+    __param(5, (0, typeorm_1.InjectRepository)(material_entity_1.Material)),
+    __param(6, (0, typeorm_1.InjectRepository)(payment_entity_1.Payment)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
@@ -622,6 +597,8 @@ exports.OrdersService = OrdersService = __decorate([
         typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository,
-        typeorm_2.Repository])
+        order_strategy_provider_1.OrderStrategyProvider,
+        order_workflow_service_1.OrderWorkflowService,
+        order_financial_service_1.OrderFinancialService])
 ], OrdersService);
 //# sourceMappingURL=orders.service.js.map

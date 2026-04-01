@@ -37,10 +37,21 @@ let FilesService = class FilesService {
             .getPublicUrl(filePath);
         return {
             url: publicUrlData.publicUrl,
+            path: filePath,
             fileName: file.originalname,
             size: file.size,
             mimeType: file.mimetype,
         };
+    }
+    async deleteFile(filePath) {
+        const client = this.supabaseService.getClient();
+        const { error } = await client.storage
+            .from('prodmanager-files')
+            .remove([filePath]);
+        if (error) {
+            throw new common_1.BadRequestException(`Delete error: ${error.message}`);
+        }
+        return { success: true };
     }
 };
 exports.FilesService = FilesService;

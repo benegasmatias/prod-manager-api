@@ -4,8 +4,12 @@ export declare class FilesController {
     constructor(filesService: FilesService);
     upload(file: any): Promise<{
         url: string;
+        path: string;
         fileName: string;
         size: number;
         mimeType: string;
+    }>;
+    delete(path: string): Promise<{
+        success: boolean;
     }>;
 }

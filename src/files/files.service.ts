@@ -1,11 +1,11 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { SupabaseService } from '../common/supabase/supabase.service';
 
 @Injectable()
 export class FilesService {
   constructor(private readonly supabaseService: SupabaseService) {}
 
-  async uploadFile(file: any, path: string = 'stls'): Promise<{ url: string; fileName: string; size: number; mimeType: string }> {
+  async uploadFile(file: any, path: string = 'stls'): Promise<{ url: string; path: string; fileName: string; size: number; mimeType: string }> {
     if (!file) {
       throw new BadRequestException('No file provided');
     }
@@ -31,9 +31,24 @@ export class FilesService {
 
     return {
       url: publicUrlData.publicUrl,
+      path: filePath,
       fileName: file.originalname,
       size: file.size,
       mimeType: file.mimetype,
     };
+  }
+
+  async deleteFile(filePath: string): Promise<{ success: boolean }> {
+    const client = this.supabaseService.getClient();
+
+    const { error } = await client.storage
+      .from('prodmanager-files')
+      .remove([filePath]);
+
+    if (error) {
+      throw new BadRequestException(`Delete error: ${error.message}`);
+    }
+
+    return { success: true };
   }
 }

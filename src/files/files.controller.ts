@@ -1,4 +1,4 @@
-import { Controller, Post, UseInterceptors, UploadedFile, UseGuards, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Delete, Body, UseInterceptors, UploadedFile, UseGuards, BadRequestException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { FilesService } from './files.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -15,5 +15,13 @@ export class FilesController {
       throw new BadRequestException('No file provided');
     }
     return this.filesService.uploadFile(file);
+  }
+
+  @Delete('delete')
+  async delete(@Body('path') path: string) {
+    if (!path) {
+      throw new BadRequestException('Path is required');
+    }
+    return this.filesService.deleteFile(path);
   }
 }

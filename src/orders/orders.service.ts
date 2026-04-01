@@ -12,6 +12,9 @@ import { OrderFailure } from './entities/order-failure.entity';
 import { Material } from '../materials/entities/material.entity';
 import { Payment } from '../payments/entities/payment.entity';
 import { CreatePaymentDto } from '../payments/dto/payment.dto';
+import { OrderStrategyProvider } from './order-strategy.provider';
+import { OrderWorkflowService } from './order-workflow.service';
+import { OrderFinancialService } from './order-financial.service';
 
 @Injectable()
 export class OrdersService {
@@ -22,8 +25,6 @@ export class OrdersService {
         private readonly orderItemRepository: Repository<OrderItem>,
         @InjectRepository(ProductionJob)
         private readonly jobRepository: Repository<ProductionJob>,
-        @InjectRepository(Machine)
-        private readonly machineRepository: Repository<Machine>,
         @InjectRepository(OrderStatusHistory)
         private readonly statusHistoryRepository: Repository<OrderStatusHistory>,
         @InjectRepository(OrderFailure)
@@ -32,6 +33,9 @@ export class OrdersService {
         private readonly materialRepository: Repository<Material>,
         @InjectRepository(Payment)
         private readonly paymentRepository: Repository<Payment>,
+        private readonly strategyProvider: OrderStrategyProvider,
+        private readonly workflowService: OrderWorkflowService,
+        private readonly financialService: OrderFinancialService,
     ) { }
 
     /**
@@ -92,6 +96,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
             .leftJoinAndSelect('order.payments', 'payments')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority', 
                 'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice', 
@@ -100,7 +105,8 @@ export class OrdersService {
                 'customer.id', 'customer.name', 'customer.phone',
                 'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
                 'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
-                'payments.id', 'payments.amount'
+                'payments.id', 'payments.amount',
+                'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
             ]);
 
         if (businessId) {
@@ -172,11 +178,7 @@ export class OrdersService {
             .getMany();
 
         const pendingBalance = activeOrders.reduce((acc, order) => {
-            const total = Number(order.totalPrice) || 0;
-            const totalSenias = order.items?.reduce((sAcc, item) => sAcc + (Number(item.deposit) || 0), 0) || 0;
-            const totalPayments = order.payments?.reduce((pAcc, p) => pAcc + (Number(p.amount) || 0), 0) || 0;
-            const saldo = Math.max(0, total - totalSenias - totalPayments);
-            return acc + saldo;
+            return acc + this.financialService.calculatePendingBalance(order);
         }, 0);
 
         return {
@@ -214,7 +216,7 @@ export class OrdersService {
             .getMany();
 
         const currentBudgets = allRelevantOrders.filter(o => BUDGET_STAGES.includes(o.status));
-        const totalBudgeted = currentBudgets.reduce((acc, b) => acc + (Number(b.totalPrice) || 0), 0);
+        const totalBudgeted = this.financialService.calculateItemsTotal(currentBudgets);
         const pendingApprovalCount = currentBudgets.filter(b => b.status === OrderStatus.BUDGET_GENERATED).length;
 
         // Tasa de conversión (Aproximada: órdenes oficiales / total histórico relevante)
@@ -235,12 +237,14 @@ export class OrdersService {
             .leftJoinAndSelect('order.customer', 'customer')
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
                 'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias', 'order.createdAt',
                 'customer.id', 'customer.name',
                 'responsableGeneral.id', 'responsableGeneral.firstName',
-                'items.id', 'items.name', 'items.metadata'
+                'items.id', 'items.name', 'items.metadata',
+                'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
             ]);
 
         qb.andWhere('order.businessId = :businessId', { businessId });
@@ -291,13 +295,15 @@ export class OrdersService {
             .leftJoinAndSelect('order.customer', 'customer')
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .leftJoinAndSelect('order.items', 'items')
+            .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
                 'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
                 'order.totalPrice', 'order.totalSenias', 'order.createdAt', 'order.updatedAt',
                 'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.observaciones_visita',
                 'customer.id', 'customer.name',
                 'responsableGeneral.id', 'responsableGeneral.firstName',
-                'items.id', 'items.name', 'items.price', 'items.qty'
+                'items.id', 'items.name', 'items.price', 'items.qty',
+                'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime', 'siteInfo.visitObservations'
             ]);
 
         qb.andWhere('order.businessId = :businessId', { businessId });
@@ -350,7 +356,7 @@ export class OrdersService {
                 'items', 'customer', 'responsableGeneral',
                 'jobs', 'jobs.responsable', 'business',
                 'statusHistory', 'statusHistory.performedBy',
-                'failures', 'failures.material', 'payments'
+                'failures', 'failures.material', 'payments', 'siteInfo'
             ],
         });
 
@@ -369,34 +375,31 @@ export class OrdersService {
         // Generar un código único simple si no viene uno
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
 
-        // Calcular el precio total sumando los ítems (incluyendo costo de diseño si existe en metadata)
-        // Pero priorizamos totalPrice si viene en el DTO (usado por el front para pasar el total calculado con extras)
-        const calculatedTotalPrice = items?.reduce((acc, item) => {
-            const basePrice = Number(item.price) * (item.qty || 1);
-            const designPrice = Number(item.metadata?.precioDiseno) || 0;
-            return acc + basePrice + designPrice;
-        }, 0) || 0;
+        // Calcular el precio total sumando los ítems
+        const calculatedTotalPrice = this.financialService.calculateItemsTotal(items);
 
         const totalPrice = createOrderDto.totalPrice !== undefined ? createOrderDto.totalPrice : calculatedTotalPrice;
 
         // Usar transacción para asegurar atomicidad
         return await this.orderRepository.manager.transaction(async (manager) => {
-            // Obtener el rubro del negocio para automatizar workflow
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } }) as any;
+            const strategy = this.strategyProvider.getStrategy(business?.category);
 
-            let initialStatus = OrderStatus.PENDING;
-            if (business?.category === 'IMPRESION_3D') {
-                const needsDesign = items?.some(item => item.metadata?.seDiseñaSTL === true || item.metadata?.seDiseñaSTL === 'true');
-                if (needsDesign) {
-                    initialStatus = OrderStatus.DESIGN;
-                }
-            }
+            const { direccion_obra, fecha_visita, hora_visita, observaciones_visita } = orderData;
+            const initialStatus = createOrderDto.status || strategy.getInitialStatus(items);
 
             const order = manager.create(Order, {
                 ...orderData,
                 code,
                 totalPrice,
-                status: createOrderDto.status || initialStatus,
+                status: initialStatus,
+                // Fase Sombra: Guardamos en siteInfo manteniendo compatibilidad legacy
+                siteInfo: (direccion_obra || fecha_visita || hora_visita || observaciones_visita) ? {
+                    address: direccion_obra,
+                    visitDate: fecha_visita,
+                    visitTime: hora_visita,
+                    visitObservations: observaciones_visita
+                } : null
             });
 
             const savedOrder = await manager.save(Order, order);
@@ -410,31 +413,13 @@ export class OrdersService {
                     });
                     const savedItem = await manager.save(OrderItem, orderItem);
 
-                    // Automatizar Workflow según rubro (Solo si no es visita técnica o presupuesto inicial)
-                    const isVisitOrQuote = savedOrder.status === OrderStatus.SITE_VISIT || savedOrder.status === OrderStatus.SITE_VISIT_DONE || savedOrder.status === OrderStatus.QUOTATION;
-                    
-                    if ((business?.category === 'METALURGICA' || business?.category === 'CARPINTERIA') && !isVisitOrQuote) {
-                        const stages = [
-                            { title: 'Diseño / Preparación', rank: 10 },
-                            { title: 'Corte / Dimensionado', rank: 20 },
-                            { title: 'Soldadura / Unión', rank: 30 },
-                            { title: 'Armado / Ensamble', rank: 40 },
-                            { title: 'Pintura / Acabado', rank: 50 }
-                        ];
-
-                        const jobs = stages.map(s => manager.create(ProductionJob, {
-                            orderId: savedOrder.id,
-                            orderItemId: savedItem.id,
-                            title: s.title,
-                            totalUnits: savedItem.qty || 1,
-                            status: JobStatus.QUEUED,
-                            sortRank: s.rank,
-                            responsableId: savedOrder.responsableGeneralId
-                        }));
-                        await manager.save(ProductionJob, jobs);
-                    }
+                    // Automatizar Workflow delegando en el servicio especializado y la estrategia
+                    await this.workflowService.createWorkflow(savedOrder, savedItem, strategy, manager);
                 }
             }
+
+            // Ejecutar lógica post-creación de la estrategia
+            await strategy.onAfterCreate(savedOrder, manager);
 
             // Usar el manager para encontrar el pedido recién creado con todas sus relaciones
             const result = await manager.findOne(Order, {
@@ -494,40 +479,49 @@ export class OrdersService {
         const allItems = await this.orderItemRepository.find({ where: { orderId } });
         const isOrderComplete = allItems.every((i) => i.doneQty === i.qty);
 
-        if (isOrderComplete) {
-            await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
-            // Registrar cambio automático en el historial
-            const history = this.statusHistoryRepository.create({
-                orderId,
-                fromStatus: OrderStatus.IN_PROGRESS,
-                toStatus: OrderStatus.DONE,
-                note: 'Completado automático por carga de progreso',
-                performedById: userId
-            });
-            await this.statusHistoryRepository.save(history);
+        // Usar transacción para actualizaciones de estado y liberación de recursos
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const order = await manager.findOne(Order, { where: { id: orderId }, relations: ['business'] });
+            if (!order) throw new NotFoundException('Pedido no encontrado');
+            const strategy = this.strategyProvider.getStrategy(order.business?.category);
 
-            // También finalizamos todos los trabajos de este pedido
-            await this.releaseMachinesForOrder(orderId, JobStatus.DONE);
-        } else if (doneQty > 0) {
-            const oldOrder = await this.orderRepository.findOneBy({ id: orderId });
-            if (oldOrder && oldOrder.status !== OrderStatus.IN_PROGRESS) {
-                await this.orderRepository.update(orderId, { status: OrderStatus.IN_PROGRESS });
-                const history = this.statusHistoryRepository.create({
+            if (isOrderComplete) {
+                await manager.update(Order, orderId, { status: OrderStatus.DONE });
+                const history = manager.create(OrderStatusHistory, {
                     orderId,
-                    fromStatus: oldOrder.status,
-                    toStatus: OrderStatus.IN_PROGRESS,
-                    note: 'Iniciado automático por carga de progreso',
+                    fromStatus: order.status,
+                    toStatus: OrderStatus.DONE,
+                    note: 'Completado automático por carga de progreso',
                     performedById: userId
                 });
-                await this.statusHistoryRepository.save(history);
-            }
-            if (doneQty === item.qty) {
-                // Si este ítem específico se terminó, finalizamos sus trabajos
-                await this.releaseMachinesForOrder(orderId, JobStatus.DONE, itemId);
-            }
-        }
+                await manager.save(OrderStatusHistory, history);
 
-        return this.findOne(orderId);
+                // Liberamos recursos delegando en la estrategia
+                await strategy.releaseResources(order, manager, { targetStatus: JobStatus.DONE });
+            } else if (doneQty > 0) {
+                if (order.status !== OrderStatus.IN_PROGRESS) {
+                    await manager.update(Order, orderId, { status: OrderStatus.IN_PROGRESS });
+                    const history = manager.create(OrderStatusHistory, {
+                        orderId,
+                        fromStatus: order.status,
+                        toStatus: OrderStatus.IN_PROGRESS,
+                        note: 'Iniciado automático por carga de progreso',
+                        performedById: userId
+                    });
+                    await manager.save(OrderStatusHistory, history);
+                }
+                
+                if (doneQty === item.qty) {
+                    // Si este ítem específico se terminó, liberamos sus recursos
+                    await strategy.releaseResources(order, manager, { itemId: itemId, targetStatus: JobStatus.DONE });
+                }
+            }
+
+            return await manager.findOne(Order, {
+                where: { id: orderId },
+                relations: ['items', 'customer', 'responsableGeneral', 'payments']
+            });
+        });
     }
 
     /**
@@ -553,68 +547,52 @@ export class OrdersService {
      * Reportar un fallo en un pedido (específicamente Impresión 3D)
      */
     async reportFailure(id: string, reportFailureDto: ReportFailureDto, userId: string): Promise<Order> {
-        const order = await this.orderRepository.findOne({ where: { id } });
-        if (!order) {
-            throw new NotFoundException(`Pedido ${id} no encontrado`);
-        }
+        const order = await this.findOne(id);
+        const strategy = this.strategyProvider.getStrategy(order.business?.category);
 
-        const { reason, wastedGrams, materialId, moveToReprint, metadata } = reportFailureDto;
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const { reason, wastedGrams, materialId, metadata } = reportFailureDto;
 
-        // Registrar la entidad de fallo
-        const failure = this.orderFailureRepository.create({
-            orderId: id,
-            reason,
-            wastedGrams,
-            materialId,
-        });
-        await this.orderFailureRepository.save(failure);
+            // 1. Registrar el fallo
+            const failure = manager.create(OrderFailure, {
+                orderId: id,
+                reason,
+                wastedGrams,
+                materialId,
+            });
+            await manager.save(OrderFailure, failure);
 
-        // Descontar material si se especificó (Multi-filamento prioridad)
-        if (metadata?.materials && Array.isArray(metadata.materials)) {
-            for (const matSpec of metadata.materials) {
-                const { materialId: matId, wastedGrams: wasted } = matSpec;
-                if (!matId || !wasted) continue;
+            // 2. Delegar lógica de negocio (asíncrona) a la estrategia del rubro
+            const targetStatus = await strategy.handleProductionFailure(order, reportFailureDto, manager, userId);
 
-                const material = await this.materialRepository.findOneBy({ id: matId });
-                if (material) {
-                    const newRemaining = Math.max(0, material.remainingWeightGrams - wasted);
-                    await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                    console.log(`[Auditoría Fallo Multi] Descontados ${wasted}g de ${material.name}.`);
-                }
+            // 3. Registrar historia del cambio
+            let totalWasted = wastedGrams;
+            if (metadata?.materials && Array.isArray(metadata.materials)) {
+                totalWasted = metadata.materials.reduce((sum: number, m: any) => sum + (m.wastedGrams || 0), 0);
             }
-        } else if (materialId && wastedGrams > 0) {
-            // Fallback para material único
-            const material = await this.materialRepository.findOneBy({ id: materialId });
-            if (material) {
-                const newRemaining = Math.max(0, material.remainingWeightGrams - wastedGrams);
-                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                console.log(`[Auditoría Fallo] Descontados ${wastedGrams}g de ${material.name} por fallo en pedido ${id}.`);
-            }
-        }
 
-        // Actualizar el estado del pedido
-        const targetStatus = moveToReprint ? OrderStatus.REPRINT_PENDING : OrderStatus.FAILED;
+            const history = manager.create(OrderStatusHistory, {
+                orderId: id,
+                fromStatus: order.status,
+                toStatus: targetStatus,
+                note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
+                performedById: userId
+            });
+            await manager.save(OrderStatusHistory, history);
 
-        // Calcular total desperdiciado para la nota
-        let totalWasted = wastedGrams;
-        if (metadata?.materials && Array.isArray(metadata.materials)) {
-            totalWasted = metadata.materials.reduce((sum: number, m: any) => sum + (m.wastedGrams || 0), 0);
-        }
+            // 4. Actualizar estado final
+            await manager.update(Order, id, { status: targetStatus });
 
-        // Agregar nota histórica
-        const history = this.statusHistoryRepository.create({
-            orderId: id,
-            fromStatus: order.status,
-            toStatus: targetStatus,
-            note: `Fallo reportado: ${reason} (${totalWasted}g desperdiciados)`,
-            performedById: userId
+            return await manager.findOne(Order, {
+                where: { id },
+                relations: [
+                    'items', 'customer', 'responsableGeneral',
+                    'jobs', 'jobs.responsable', 'business',
+                    'statusHistory', 'statusHistory.performedBy',
+                    'failures', 'failures.material', 'payments'
+                ],
+            });
         });
-        await this.statusHistoryRepository.save(history);
-
-        order.status = targetStatus;
-        await this.orderRepository.save(order);
-
-        return this.findOne(id);
     }
 
     /**
@@ -643,9 +621,29 @@ export class OrdersService {
             if (updateStatusDto.metadata !== undefined) updateData.metadata = updateStatusDto.metadata;
             if (notes !== undefined) updateData.notes = notes;
 
+            // Fase Sombra: Actualizar siteInfo si vienen campos de visita/obra
+            if (updateStatusDto.direccion_obra !== undefined || 
+                updateStatusDto.fecha_visita !== undefined || 
+                updateStatusDto.hora_visita !== undefined || 
+                updateStatusDto.observaciones_visita !== undefined) {
+                
+                // Importante: No inyectar OrderSiteInfo en el constructor para evitar circulares si las hubiera, 
+                // usamos el manager directamente.
+                let siteInfo = await manager.findOne('OrderSiteInfo', { where: { orderId: id } }) as any;
+                if (!siteInfo) {
+                    siteInfo = manager.create('OrderSiteInfo', { orderId: id });
+                }
+
+                if (updateStatusDto.direccion_obra !== undefined) siteInfo.address = updateStatusDto.direccion_obra;
+                if (updateStatusDto.fecha_visita !== undefined) siteInfo.visitDate = updateStatusDto.fecha_visita;
+                if (updateStatusDto.hora_visita !== undefined) siteInfo.visitTime = updateStatusDto.hora_visita;
+                if (updateStatusDto.observaciones_visita !== undefined) siteInfo.visitObservations = updateStatusDto.observaciones_visita;
+                
+                await manager.save('OrderSiteInfo', siteInfo);
+            }
+
             // Si vienen items, los actualizamos
             if (items && items.length > 0) {
-                let calculatedTotal = 0;
                 for (const itemData of items) {
                     const { id: itemId, ...rest } = itemData;
                     if (itemId) {
@@ -654,17 +652,11 @@ export class OrdersService {
                         const newItem = manager.create(OrderItem, { ...rest, orderId: id });
                         await manager.save(OrderItem, newItem);
                     }
-
-                    // Recalcular total (precio * qty + precioDiseno)
-                    const itemPrice = Number(itemData.price) || 0;
-                    const itemQty = Number(itemData.qty) || 1;
-                    const designPrice = Number(itemData.metadata?.precioDiseno) || 0;
-                    calculatedTotal += (itemPrice * itemQty) + designPrice;
                 }
 
                 // Si no se pasó un totalPrice explícito, usamos el calculado
                 if (totalPrice === undefined) {
-                    updateData.totalPrice = calculatedTotal;
+                    updateData.totalPrice = this.financialService.calculateItemsTotal(items);
                 }
             }
 
@@ -685,12 +677,11 @@ export class OrdersService {
                 await manager.save(OrderStatusHistory, history);
             }
 
-            // Si el estado ya no es "EN PROCESO", liberamos las impresoras asociadas
+            // Si el estado ya no es "EN PROCESO", liberamos recursos asociados delegando en la estrategia
             if (status && status !== OrderStatus.IN_PROGRESS) {
                 const targetJobStatus = status === OrderStatus.DONE ? JobStatus.DONE : JobStatus.CANCELLED;
-                // Nota: releaseMachinesForOrder debería usar el manager si quisiéramos ser 100% atómicos, 
-                // pero por ahora lo dejamos así ya que maneja sus propias transacciones o updates.
-                await this.releaseMachinesForOrder(id, targetJobStatus);
+                const strategy = this.strategyProvider.getStrategy(order.business?.category);
+                await strategy.releaseResources(order, manager, { targetStatus: targetJobStatus });
             }
 
             return await manager.findOne(Order, {
@@ -705,31 +696,6 @@ export class OrdersService {
         });
     }
 
-    /**
-     * Libera impresoras asociadas a un pedido y marca sus trabajos activos como terminados/cancelados
-     */
-    async releaseMachinesForOrder(orderId: string, targetJobStatus: JobStatus = JobStatus.DONE, orderItemId?: string) {
-        const where: any = { orderId };
-        if (orderItemId) where.orderItemId = orderItemId;
-
-        const activeJobs = await this.jobRepository.find({
-            where: {
-                ...where,
-                status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED])
-            }
-        });
-
-        for (const job of activeJobs) {
-            // Marcar trabajo con el estado objetivo
-            await this.jobRepository.update(job.id, { status: targetJobStatus });
-
-            // Si tenía impresora, liberarla
-            if (job.machineId) {
-                await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
-                console.log(`[Auditoría] Impresora ${job.machineId} liberada al cambiar estado de pedido ${orderId}`);
-            }
-        }
-    }
     
     /**
      * Registrar un pago para un pedido

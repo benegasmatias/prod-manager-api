@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique, OneToOne } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus, OrderType } from '../../common/enums';
@@ -7,8 +7,8 @@ import { OrderStatusHistory } from '../../history/entities/order-status-history.
 import { Payment } from '../../payments/entities/payment.entity';
 import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
-import { BusinessTemplate } from '../../businesses/entities/business-template.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { OrderSiteInfo } from './order-site-info.entity';
 
 @Entity('orders')
 @Unique(['code', 'businessId'])
@@ -52,8 +52,6 @@ export class Order {
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    // --- Relationships (kept for compatibility and app integrity) ---
-
     @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
     items: OrderItem[];
 
@@ -76,6 +74,9 @@ export class Order {
     @OneToMany(() => Payment, (payment) => payment.order)
     payments: Payment[];
 
+    @OneToOne(() => OrderSiteInfo, (si) => si.order, { cascade: true })
+    siteInfo: OrderSiteInfo;
+
     @Column({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
     totalPrice: number;
 
@@ -95,15 +96,19 @@ export class Order {
     @JoinColumn({ name: 'responsable_general_id' })
     responsableGeneral: Employee;
 
+    /** @deprecated Usar siteInfo.address */
     @Column({ name: 'direccion_obra', nullable: true })
     direccion_obra: string;
 
+    /** @deprecated Usar siteInfo.visitDate */
     @Column({ name: 'fecha_visita', nullable: true })
     fecha_visita: string;
 
+    /** @deprecated Usar siteInfo.visitTime */
     @Column({ name: 'hora_visita', nullable: true })
     hora_visita: string;
 
+    /** @deprecated Usar siteInfo.visitObservations */
     @Column({ name: 'observaciones_visita', type: 'text', nullable: true })
     observaciones_visita: string;
 

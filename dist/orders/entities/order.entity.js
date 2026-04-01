@@ -20,6 +20,7 @@ const payment_entity_1 = require("../../payments/entities/payment.entity");
 const order_failure_entity_1 = require("./order-failure.entity");
 const business_entity_1 = require("../../businesses/entities/business.entity");
 const employee_entity_1 = require("../../employees/entities/employee.entity");
+const order_site_info_entity_1 = require("./order-site-info.entity");
 let Order = class Order {
 };
 exports.Order = Order;
@@ -101,6 +102,10 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => payment_entity_1.Payment, (payment) => payment.order),
     __metadata("design:type", Array)
 ], Order.prototype, "payments", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => order_site_info_entity_1.OrderSiteInfo, (si) => si.order, { cascade: true }),
+    __metadata("design:type", order_site_info_entity_1.OrderSiteInfo)
+], Order.prototype, "siteInfo", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, default: 0 }),
     __metadata("design:type", Number)

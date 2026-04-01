@@ -4,8 +4,12 @@ export declare class FilesService {
     constructor(supabaseService: SupabaseService);
     uploadFile(file: any, path?: string): Promise<{
         url: string;
+        path: string;
         fileName: string;
         size: number;
         mimeType: string;
+    }>;
+    deleteFile(filePath: string): Promise<{
+        success: boolean;
     }>;
 }
