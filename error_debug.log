@@ -2814,3 +2814,93 @@ Stack: UnauthorizedException: Token inválido o expirado
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T16:34:23.213Z
+Path: /businesses
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:520:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T16:34:24.135Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:520:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T17:44:04.659Z
+Path: /businesses
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:520:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T17:44:04.675Z
+Path: /notifications?businessId=23924b72-b11a-48bd-a4a4-d1b36bba2986
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:520:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T18:21:23.079Z
+Path: /employees
+Status: 500
+Message: "null value in column \"business_id\" of relation \"business_memberships\" violates not-null constraint"
+Stack: QueryFailedError: null value in column "business_id" of relation "business_memberships" violates not-null constraint
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async EmployeesService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\employees\employees.service.ts:82:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-02T18:21:31.487Z
+Path: /employees
+Status: 500
+Message: "null value in column \"business_id\" of relation \"business_memberships\" violates not-null constraint"
+Stack: QueryFailedError: null value in column "business_id" of relation "business_memberships" violates not-null constraint
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async EmployeesService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\employees\employees.service.ts:82:9)
+-------------

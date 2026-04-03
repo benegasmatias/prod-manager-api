@@ -1,4 +1,4 @@
-import { IsString, IsOptional } from 'class-validator';
+import { IsString, IsOptional, IsBoolean } from 'class-validator';
 
 export class UpdateBusinessDto {
     @IsString()
@@ -24,4 +24,20 @@ export class UpdateBusinessDto {
     @IsString()
     @IsOptional()
     category?: string;
+
+    @IsBoolean()
+    @IsOptional()
+    isEnabled?: boolean;
+
+    @IsBoolean()
+    @IsOptional()
+    acceptingOrders?: boolean;
+
+    @IsBoolean()
+    @IsOptional()
+    onboardingCompleted?: boolean;
+
+    @IsString()
+    @IsOptional()
+    onboardingStep?: string;
 }

@@ -16,6 +16,25 @@ import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Employee } from '../employees/entities/employee.entity';
+import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
+
+const DEFAULT_BASE_CONFIG = {
+    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
+    labels: { produccion: 'Producción', items: 'Trabajos' },
+    icons: { pedidos: 'Box', produccion: 'Cpu' },
+    stats: [
+        { key: 'totalSales', label: 'Ventas Totales', icon: 'TrendingUp', format: 'currency' },
+        { key: 'pendingBalance', label: 'Saldo a Cobrar', icon: 'Wallet', format: 'currency' }
+    ],
+    productionStages: [
+        { key: 'PENDING', label: 'Pendiente', color: 'bg-zinc-100' },
+        { key: 'DONE', label: 'Terminado', color: 'bg-emerald-500' }
+    ],
+    itemFields: [
+        { key: 'nombreProducto', label: 'Nombre / Trabajo', tipo: 'text', required: true }
+    ],
+    features: { hasMaterials: false, hasVisits: false },
+};
 
 @Injectable()
 export class BusinessesService {
@@ -37,15 +56,20 @@ export class BusinessesService {
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
         private readonly dataSource: DataSource,
+        private readonly strategyProvider: BusinessStrategyProvider,
     ) { }
 
     async getTemplates(): Promise<BusinessTemplateDto[]> {
-        const templates = await this.templateRepository.find();
+        const templates = await this.templateRepository.find({
+            where: { isEnabled: true }
+        });
         return templates.map(t => ({
             key: t.key,
             name: t.name,
             description: t.description,
             imageKey: t.imageKey,
+            isAvailable: t.isAvailable,
+            isComingSoon: t.isComingSoon
         }));
     }
 
@@ -55,6 +79,10 @@ export class BusinessesService {
 
         if (!template && templateKey !== 'GENERICO') {
             throw new NotFoundException(`Template with key ${templateKey} not found`);
+        }
+
+        if (template && !template.isEnabled) {
+            throw new BadRequestException(`El rubro ${template.name} no está habilitado para nuevos registros en este momento.`);
         }
 
         return await this.dataSource.transaction(async (manager) => {
@@ -71,11 +99,13 @@ export class BusinessesService {
                 throw new BadRequestException(`Ya tienes un negocio registrado en el rubro ${templateKey}. No se permiten duplicados por rubro.`);
             }
 
-            console.log(`[Onboarding] Creating new business for user ${userId} [Category: ${templateKey}]`);
-            // Crear el negocio
+            console.log(`[Onboarding] Creating new business for user ${userId} [Category: ${templateKey}] - Status: DRAFT`);
+            // Crear el negocio en estado DRAFT
             const business = manager.create(Business, {
                 name: name || (template ? `${template.name} - Mi Espacio` : 'Mi Negocio'),
-                category: templateKey
+                category: templateKey,
+                status: 'DRAFT',
+                onboardingStep: 'BASIC_INFO'
             });
             const businessToUse = await manager.save(Business, business);
 
@@ -90,7 +120,6 @@ export class BusinessesService {
             // 1.b Autocompletar el Personal con el Dueño
             const user = await manager.findOneBy(User, { id: userId });
             if (user) {
-                // Verificar si ya existe (por si acaso se reintenta la transacción)
                 const existingEmployee = await manager.findOne(Employee, {
                     where: { businessId: businessToUse.id, email: user.email }
                 });
@@ -109,26 +138,70 @@ export class BusinessesService {
                         specialties: 'Administrador / Dueño'
                     });
                     await manager.save(Employee, employee);
-                    console.log(`✅ [Onboarding] Owner ${user.email} added as first Employee for business ${businessToUse.id}`);
+                }
+                
+                // Si es su primer negocio (o no tiene default), lo asignamos como default aunque esté en DRAFT
+                if (!user.defaultBusinessId) {
+                    user.defaultBusinessId = businessToUse.id;
+                    await manager.save(User, user);
                 }
             }
 
-            if (user && !user.defaultBusinessId) {
-                user.defaultBusinessId = businessToUse.id;
-                await manager.save(User, user);
-                console.log(`✅ [Onboarding] defaultBusinessId seteado (primera vez) -> ${businessToUse.id}`);
-            }
-
-            // 3. Respuesta estructurada exacta
             return {
-                business: {
-                    id: businessToUse.id,
-                    name: businessToUse.name,
-                    category: businessToUse.category
-                },
-                defaultBusinessId: businessToUse.id
+                businessId: businessToUse.id,
+                name: businessToUse.name,
+                status: businessToUse.status,
+                onboardingStep: businessToUse.onboardingStep
             };
         });
+    }
+
+    async updateOnboardingStep(userId: string, businessId: string, step: string): Promise<any> {
+        const business = await this.findOne(userId, businessId);
+        if (business.status !== 'DRAFT' && business.status !== 'ACTIVE') {
+            throw new BadRequestException('Solo se puede actualizar onboarding en negocios activos o borradores.');
+        }
+
+        business.onboardingStep = step;
+        await this.businessRepository.save(business);
+        return { businessId, onboardingStep: step };
+    }
+
+    async activateBusiness(userId: string, businessId: string): Promise<any> {
+        const business = await this.findOne(userId, businessId);
+        
+        if (business.status === 'ACTIVE') {
+            return { businessId, status: 'ACTIVE', message: 'El negocio ya está activo.' };
+        }
+
+        if (business.status !== 'DRAFT') {
+            throw new BadRequestException('Solo se pueden activar negocios que estén en modo borrador (DRAFT).');
+        }
+
+        // VALIDACIÓN DE CONSISTENCIA (Mínimo necesario para operar)
+        if (!business.name || business.name.length < 3) {
+            throw new BadRequestException('El nombre del negocio debe tener al menos 3 caracteres.');
+        }
+
+        if (!business.category) {
+            throw new BadRequestException('El negocio debe tener un rubro definido.');
+        }
+
+        // El Onboarding debe estar virtualmente terminado para activar
+        business.status = 'ACTIVE';
+        business.onboardingCompleted = true;
+        business.onboardingStep = 'DONE';
+        
+        await this.businessRepository.save(business);
+        
+        console.log(`✅ [SaaS Lifecycle] Business ${businessId} [${business.name}] ACTIVATED by user ${userId}`);
+        
+        return {
+            businessId: business.id,
+            name: business.name,
+            status: business.status,
+            message: 'Negocio activado con éxito.'
+        };
     }
 
     async checkAccess(userId: string, businessId: string): Promise<boolean> {
@@ -138,9 +211,18 @@ export class BusinessesService {
         return !!membership;
     }
 
-    async findUserBusinesses(userId: string): Promise<Business[]> {
+    async findUserBusinesses(userId: string, filters?: { isEnabled?: boolean, acceptingOrders?: boolean, status?: string }): Promise<Business[]> {
+        const whereClause: any = { userId };
+        
+        if (filters) {
+            whereClause.business = {};
+            if (filters.isEnabled !== undefined) whereClause.business.isEnabled = filters.isEnabled;
+            if (filters.acceptingOrders !== undefined) whereClause.business.acceptingOrders = filters.acceptingOrders;
+            if (filters.status !== undefined) whereClause.business.status = filters.status;
+        }
+
         const memberships = await this.membershipRepository.find({
-            where: { userId },
+            where: whereClause,
             relations: ['business']
         });
         return memberships.map(m => m.business);
@@ -194,7 +276,7 @@ export class BusinessesService {
             // 2. Pending Balance (necesitamos los items para los saldos)
             this.orderRepository.find({
                 where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
-                relations: ['items']
+                relations: ['items', 'siteInfo']
             }),
 
             // 3. Active Machines
@@ -236,82 +318,21 @@ export class BusinessesService {
             return acc + (total - deposits - payments);
         }, 0);
 
-        // --- NEW: Operational Calculations for Business Pipeline & Dashboard ---
+        // --- NUEVA LÓGICA DE STRATEGY (CAPA 2) ---
         const business = await this.businessRepository.findOneBy({ id: businessId });
-        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
-        
-        // Detección heurística por estados de pedidos si no coincide la categoría exacta
-        const hasMetalStatuses = activeOrdersWithItems.some(o => 
-            [OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.OFFICIAL_ORDER, OrderStatus.WELDING, OrderStatus.CUTTING, OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED]
-            .includes(o.status)
-        );
+        const strategy = this.strategyProvider.getStrategy(business?.category);
+        const now = new Date();
+        const context = {
+            activeOrders: activeOrdersWithItems,
+            realOverdueCount: realOverdue.length,
+            todayStr: now.toISOString().split('T')[0],
+            nextWeekDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+        };
 
-        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
-        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
-
-        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
-
-        let operationalCounters = undefined;
-        let pipelineSummary = undefined;
-        let calendarEvents = undefined;
-
-        if (isMetalurgica || isCarpinteria) {
-            const now = new Date();
-            const todayStr = now.toISOString().split('T')[0];
-            const nextWeek = new Date();
-            nextWeek.setDate(now.getDate() + 7);
-
-            // Operational Counters
-            operationalCounters = {
-                visitsToday: activeOrdersWithItems.filter(o => (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
-                pendingBudgets: activeOrdersWithItems.filter(o => o.status === OrderStatus.QUOTATION || o.status === OrderStatus.SURVEY_DESIGN || o.status === OrderStatus.BUDGET_GENERATED).length,
-                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
-                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== OrderStatus.DONE).length,
-                delayedOrders: realOverdue.length,
-                pendingPayments: activeOrdersWithItems.filter(o => {
-                    const total = Number(o.totalPrice) || 0;
-                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
-                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
-                    return (total - dep - pay) > 0;
-                }).length
-            };
-
-            // Pipeline Summary
-            const pipelineStages = [
-                { stage: 'VISITA', statuses: [OrderStatus.SITE_VISIT, OrderStatus.VISITA_REPROGRAMADA, OrderStatus.SITE_VISIT_DONE] },
-                { stage: 'PRESUPUESTO', statuses: [OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN] },
-                { stage: 'APROBADO', statuses: [OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER] },
-                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
-                { stage: 'LISTO', statuses: [OrderStatus.DONE, OrderStatus.READY] },
-                { stage: 'ENTREGADO', statuses: [OrderStatus.DELIVERED] }
-            ];
-
-            pipelineSummary = pipelineStages.map(s => ({
-                stage: s.stage,
-                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
-            }));
-
-            // Agenda: Visitas hoy/mañana y entregas próximas
-            calendarEvents = activeOrdersWithItems
-                .filter(o => 
-                    ((o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) || 
-                    (o.dueDate && [OrderStatus.DONE, OrderStatus.READY, OrderStatus.INSTALACION_OBRA].includes(o.status))
-                )
-                .sort((a, b) => {
-                    const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
-                    const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
-                    return dateA.localeCompare(dateB);
-                })
-                .slice(0, 10)
-                .map(o => ({
-                    id: o.id,
-                    type: (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
-                    clientName: o.clientName || 'Cliente',
-                    date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
-                    time: o.hora_visita,
-                    status: o.status
-                }));
-        }
+        const operationalCounters = strategy.getOperationalCounters(context);
+        const pipelineSummary = strategy.getPipelineSummary(context);
+        const calendarEvents = strategy.getCalendarEvents(context);
+        // ----------------------------------------
 
         const mergedAlerts: DashboardAlertDto[] = [
             ...realOverdue.map(o => ({
@@ -382,6 +403,69 @@ export class BusinessesService {
 
         await this.businessRepository.update(id, updateDto);
         return this.findOne(userId, id);
+    }
+
+    async resolveBusinessConfig(userId: string, businessId: string): Promise<any> {
+        const business = await this.findOne(userId, businessId);
+        if (!business) throw new NotFoundException('Negocio no encontrado');
+
+        const template = await this.templateRepository.findOneBy({ key: business.category });
+        
+        // 1. Iniciar con defaults del sistema para asegurar contrato
+        let resolvedConfig = JSON.parse(JSON.stringify(DEFAULT_BASE_CONFIG));
+
+        // 2. Aplicar configuración del template (si existe)
+        if (template && template.config) {
+            resolvedConfig = {
+                ...resolvedConfig,
+                ...template.config,
+                labels: { ...(resolvedConfig.labels || {}), ...(template.config.labels || {}) },
+                icons: { ...(resolvedConfig.icons || {}), ...(template.config.icons || {}) },
+                features: { ...(resolvedConfig.features || {}), ...(template.config.features || {}) }
+            };
+        }
+
+        // 3. Aplicar overrides del inquilino (Business)
+        const overrides = business.capabilitiesOverride || {};
+        if (Object.keys(overrides).length > 0) {
+            resolvedConfig = {
+                ...resolvedConfig,
+                ...overrides,
+                // Mergear features explícitamente para permitir overrides parciales
+                features: { 
+                    ...(resolvedConfig.features || {}), 
+                    ...(overrides.features || {}) 
+                }
+            };
+            
+            // Si el inquilino re-define listas completas, el Spread ya las pisa
+        }
+
+        // 4. Validación estructural final
+        this.validateConfigSchema(resolvedConfig);
+
+        return {
+            businessId: business.id,
+            businessName: business.name,
+            category: business.category,
+            status: business.status,
+            isEnabled: business.isEnabled,
+            onboardingCompleted: business.onboardingCompleted,
+            config: resolvedConfig
+        };
+    }
+
+    private validateConfigSchema(config: any) {
+        const requiredKeys = ['sidebarItems', 'productionStages', 'itemFields', 'features'];
+        const missing = requiredKeys.filter(k => !config[k]);
+        if (missing.length > 0) {
+            console.warn(`[BusinessesService] Configuración con keys faltantes: ${missing.join(', ')}`);
+            // Sanitización: asegurar que al menos sean arrays vacíos para no romper JS
+            missing.forEach(k => {
+                if (k === 'features') config[k] = {};
+                else config[k] = [];
+            });
+        }
     }
 
     async addMemberToBusiness(userId: string, businessId: string, role: string): Promise<BusinessMembership> {

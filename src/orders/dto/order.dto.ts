@@ -77,6 +77,10 @@ export class CreateOrderItemDto {
     @IsOptional()
     stlUrl?: string;
 
+    @IsArray()
+    @IsOptional()
+    referenceImages?: any[];
+
     @IsInt()
     @Min(0)
     estimatedMinutes: number;

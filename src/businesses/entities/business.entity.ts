@@ -24,8 +24,8 @@ export class Business {
     @Column({ default: 'ARS' })
     currency: string; // ARS, USD, etc
 
-    @Column({ default: 'ACTIVE' })
-    status: string; // ACTIVE, SUSPENDED, TRIAL
+    @Column({ default: 'DRAFT' })
+    status: string; // DRAFT, ACTIVE, SUSPENDED, ARCHIVED
 
     @Column({ name: 'plan_id', nullable: true })
     planId: string; // Pro, Enterprise, Free, etc
@@ -35,6 +35,21 @@ export class Business {
 
     @Column({ type: 'timestamp', name: 'subscription_expires_at', nullable: true })
     subscriptionExpiresAt: Date;
+
+    @Column({ name: 'is_enabled', default: true })
+    isEnabled: boolean;
+
+    @Column({ name: 'accepting_orders', default: true })
+    acceptingOrders: boolean;
+
+    @Column({ name: 'onboarding_completed', default: false })
+    onboardingCompleted: boolean;
+
+    @Column({ name: 'onboarding_step', default: 'BASIC_INFO' })
+    onboardingStep: string;
+
+    @Column({ type: 'jsonb', name: 'capabilities_override', nullable: true })
+    capabilitiesOverride: any;
 
 
     @OneToMany('BusinessMembership', (membership: any) => membership.business)

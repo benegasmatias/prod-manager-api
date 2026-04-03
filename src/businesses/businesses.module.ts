@@ -10,13 +10,14 @@ import { Machine } from '../machines/entities/machine.entity';
 import { BusinessesService } from './businesses.service';
 import { BusinessesController } from './businesses.controller';
 import { BusinessTemplatesController } from './business-templates.controller';
+import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
 
 import { Material } from '../materials/entities/material.entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Business, BusinessMembership, User, BusinessTemplate, Order, Customer, Machine, Material])],
     controllers: [BusinessesController, BusinessTemplatesController],
-    providers: [BusinessesService],
-    exports: [BusinessesService],
+    providers: [BusinessesService, BusinessStrategyProvider],
+    exports: [BusinessesService, BusinessStrategyProvider],
 })
 export class BusinessesModule { }

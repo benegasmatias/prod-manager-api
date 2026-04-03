@@ -24,6 +24,9 @@ export class OrderItem {
     @Column({ name: 'stl_url', nullable: true })
     stlUrl: string;
 
+    @Column({ name: 'reference_images', type: 'jsonb', nullable: true })
+    referenceImages: any[];
+
     @Column({ name: 'estimated_minutes', type: 'int', default: 0 })
     estimatedMinutes: number;
 

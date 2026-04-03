@@ -109,3 +109,11 @@ export enum MaterialType {
     PRODUCTO = 'PRODUCTO',
     OTRO = 'OTRO'
 }
+
+export enum BusinessStatus {
+    DRAFT = 'DRAFT',
+    ACTIVE = 'ACTIVE',
+    SUSPENDED = 'SUSPENDED',
+    TRIAL = 'TRIAL',
+    ARCHIVED = 'ARCHIVED',
+}
