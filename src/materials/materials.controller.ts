@@ -27,16 +27,22 @@ export class MaterialsController {
     }
 
     @Get(':id')
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findOne(@Param('id') id: string) {
         return this.materialsService.findOne(id);
     }
 
     @Patch(':id')
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async update(@Param('id') id: string, @Body() updateMaterialDto: UpdateMaterialDto) {
         return this.materialsService.update(id, updateMaterialDto);
     }
 
     @Delete(':id')
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async remove(@Param('id') id: string) {
         return this.materialsService.deactivate(id);
     }

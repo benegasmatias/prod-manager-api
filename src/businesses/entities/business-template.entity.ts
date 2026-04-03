@@ -29,6 +29,9 @@ export class BusinessTemplate {
     @Column({ name: 'is_coming_soon', default: false })
     isComingSoon: boolean;
 
+    @Column({ name: 'required_plan', default: 'FREE' })
+    requiredPlan: string;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

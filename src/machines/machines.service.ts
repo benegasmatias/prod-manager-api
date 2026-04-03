@@ -8,6 +8,8 @@ import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
 import { JobsService } from '../jobs/jobs.service';
 
+import { PlanUsageService } from '../businesses/plan-usage.service';
+
 @Injectable()
 export class MachinesService {
     constructor(
@@ -15,6 +17,7 @@ export class MachinesService {
         private readonly machineRepository: Repository<Machine>,
         private readonly ordersService: OrdersService,
         private readonly jobsService: JobsService,
+        private readonly planUsageService: PlanUsageService,
     ) { }
 
     async assignOrder(machineId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
@@ -85,6 +88,7 @@ export class MachinesService {
     }
 
     async create(createDto: CreateMachineDto): Promise<Machine> {
+        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId);
         const machine = this.machineRepository.create(createDto);
         return this.machineRepository.save(machine);
     }

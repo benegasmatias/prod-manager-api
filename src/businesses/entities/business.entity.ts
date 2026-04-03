@@ -39,6 +39,18 @@ export class Business {
     @Column({ name: 'is_enabled', default: true })
     isEnabled: boolean;
 
+    @Column({ name: 'status_reason_code', nullable: true })
+    statusReasonCode: string;
+
+    @Column({ name: 'status_reason_text', type: 'text', nullable: true })
+    statusReasonText: string;
+
+    @Column({ name: 'status_updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    statusUpdatedAt: Date;
+
+    @Column({ default: 'FREE' })
+    plan: string;
+
     @Column({ name: 'accepting_orders', default: true })
     acceptingOrders: boolean;
 
@@ -51,6 +63,8 @@ export class Business {
     @Column({ type: 'jsonb', name: 'capabilities_override', nullable: true })
     capabilitiesOverride: any;
 
+    @Column({ name: 'admin_notes', type: 'text', nullable: true })
+    adminNotes: string;
 
     @OneToMany('BusinessMembership', (membership: any) => membership.business)
     memberships: BusinessMembership[];

@@ -13,11 +13,23 @@ import { BusinessTemplatesController } from './business-templates.controller';
 import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
 
 import { Material } from '../materials/entities/material.entity';
+import { Employee } from '../employees/entities/employee.entity';
+import { PlanUsageService } from './plan-usage.service';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Business, BusinessMembership, User, BusinessTemplate, Order, Customer, Machine, Material])],
+    imports: [TypeOrmModule.forFeature([
+        Business, 
+        BusinessMembership, 
+        User, 
+        BusinessTemplate, 
+        Order, 
+        Customer, 
+        Machine, 
+        Material,
+        Employee
+    ])],
     controllers: [BusinessesController, BusinessTemplatesController],
-    providers: [BusinessesService, BusinessStrategyProvider],
-    exports: [BusinessesService, BusinessStrategyProvider],
+    providers: [BusinessesService, BusinessStrategyProvider, PlanUsageService],
+    exports: [BusinessesService, BusinessStrategyProvider, PlanUsageService],
 })
 export class BusinessesModule { }

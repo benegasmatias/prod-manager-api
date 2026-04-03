@@ -56,6 +56,26 @@ export class BusinessesController {
         return { message: "RELOAD_SUCCESS_OK_v1", time: new Date().toISOString() };
     }
 
+    @Get('templates')
+    async getTemplates(@Request() req) {
+        return this.businessesService.getTemplates(req.user.id);
+    }
+
+    @Get(':id/plan-usage')
+    @UseGuards(BusinessAccessGuard)
+    async getPlanUsage(@Param('id') id: string) {
+        return this.businessesService.getBusinessUsage(id);
+    }
+
+    @Patch('admin/:id/status')
+    @UseGuards(BusinessAccessGuard) // En el futuro será un GlobalRoleGuard(SUPER_ADMIN)
+    async updateStatusAdmin(
+        @Param('id') id: string,
+        @Body() body: { status: string, reasonCode?: string, reasonText?: string }
+    ) {
+        return this.businessesService.updateStatusAdmin(id, body.status, body.reasonCode, body.reasonText);
+    }
+
     @Post()
     async create(@Request() req, @Body() createDto: CreateBusinessFromTemplateDto) {
         return this.businessesService.createFromTemplate(req.user.id, createDto);

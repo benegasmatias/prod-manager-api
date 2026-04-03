@@ -5,4 +5,7 @@ export class BusinessTemplateDto {
     imageKey: string;
     isAvailable: boolean;
     isComingSoon: boolean;
+    requiredPlan: string;
+    accessible: boolean;
+    accessReason?: string;
 }

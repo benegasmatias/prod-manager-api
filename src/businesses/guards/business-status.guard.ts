@@ -37,6 +37,16 @@ export class BusinessStatusGuard implements CanActivate {
         return true; // No lo encontró o no tiene membresía, que el Guard de acceso se encargue si este falla o resuelva 403 genérico
     }
 
+    // 1. KILL SWITCH (GLOBAL ADMIN CONTROL)
+    if (!business.isEnabled) {
+        throw new ForbiddenException({
+            statusCode: 403,
+            message: 'El acceso a este negocio ha sido deshabilitado administrativamente.',
+            errorCode: 'BUSINESS_DISABLED',
+            businessId: business.id,
+        });
+    }
+
     const currentStatus = business.status as BusinessStatus;
     
     if (!requiredStatuses.includes(currentStatus)) {

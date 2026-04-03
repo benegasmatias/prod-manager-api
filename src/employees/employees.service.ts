@@ -6,6 +6,8 @@ import { SupabaseService } from '../common/supabase/supabase.service';
 import { BusinessesService } from '../businesses/businesses.service';
 import { UsersService } from '../users/users.service';
 
+import { PlanUsageService } from '../businesses/plan-usage.service';
+
 @Injectable()
 export class EmployeesService {
     constructor(
@@ -14,6 +16,7 @@ export class EmployeesService {
         private readonly supabaseService: SupabaseService,
         private readonly businessesService: BusinessesService,
         private readonly usersService: UsersService,
+        private readonly planUsageService: PlanUsageService,
     ) { }
 
     async findAll(businessId: string, active?: boolean): Promise<Employee[]> {
@@ -38,6 +41,8 @@ export class EmployeesService {
     }
 
     async create(businessId: string, data: any): Promise<Employee> {
+        await this.planUsageService.ensureEmployeeCreationAllowed(businessId);
+        
         const { email, firstName, lastName, role } = data;
         const supabase = this.supabaseService.getClient();
 

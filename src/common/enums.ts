@@ -117,3 +117,16 @@ export enum BusinessStatus {
     TRIAL = 'TRIAL',
     ARCHIVED = 'ARCHIVED',
 }
+
+export enum Plan {
+    FREE = 'FREE',
+    PRO = 'PRO',
+    ENTERPRISE = 'ENTERPRISE',
+}
+
+export enum GlobalRole {
+    SUPER_ADMIN = 'SUPER_ADMIN',
+    ADMIN = 'ADMIN',
+    SUPPORT = 'SUPPORT',
+    USER = 'USER',
+}
