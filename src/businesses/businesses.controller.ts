@@ -4,6 +4,8 @@ import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { BusinessAccessGuard } from './guards/business-access.guard';
+import { BusinessStatusGuard } from './guards/business-status.guard';
+import { AllowBusinessStatuses } from './decorators/allow-business-statuses.decorator';
 import { BusinessStatus } from '../common/enums';
 
 @Controller('businesses')
@@ -37,7 +39,8 @@ export class BusinessesController {
     }
 
     @Get(':id/dashboard-summary')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async getSummary(@Request() req, @Param('id') id: string) {
         return this.businessesService.getDashboardSummary(req.user.id, id);
     }
