@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Business } from './entities/business.entity';
 import { BusinessMembership } from './entities/business-membership.entity';
+import { BusinessSubscription } from './entities/business-subscription.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
 import { User } from '../users/entities/user.entity';
 import { Order } from '../orders/entities/order.entity';
@@ -20,6 +21,7 @@ import { PlanUsageService } from './plan-usage.service';
     imports: [TypeOrmModule.forFeature([
         Business, 
         BusinessMembership, 
+        BusinessSubscription,
         User, 
         BusinessTemplate, 
         Order, 

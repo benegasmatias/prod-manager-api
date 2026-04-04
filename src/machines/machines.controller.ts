@@ -1,27 +1,30 @@
 import { Controller, Get, Post, Patch, Body, Param, ParseUUIDPipe, UseGuards, Query, Put, Delete } from '@nestjs/common';
 import { MachinesService } from './machines.service';
-import { MachineStatus, BusinessStatus } from '../common/enums';
+import { MachineStatus, BusinessStatus, BusinessRole } from '../common/enums';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
 import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
+import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
+import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
 
 @Controller('machines')
-@UseGuards(SupabaseAuthGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
 export class MachinesController {
     constructor(private readonly printersService: MachinesService) { }
 
     @Post()
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async create(@Body() createDto: CreateMachineDto) {
         return this.printersService.create(createDto);
     }
 
     @Get()
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findAll(
         @Query('businessId') businessId?: string,
@@ -34,6 +37,8 @@ export class MachinesController {
     }
 
     @Get(':id')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findOne(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,
@@ -42,8 +47,9 @@ export class MachinesController {
     }
 
     @Put(':id')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async update(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateDto: UpdateMachineDto,
@@ -53,8 +59,9 @@ export class MachinesController {
     }
 
     @Patch(':id/status')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async updateStatus(
         @Param('id', ParseUUIDPipe) id: string,
         @Body('status') status: MachineStatus,
@@ -64,8 +71,9 @@ export class MachinesController {
     }
 
     @Post(':id/assign-order')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async assignOrder(
         @Param('id', ParseUUIDPipe) id: string,
         @Body('orderId', ParseUUIDPipe) orderId: string,
@@ -77,8 +85,9 @@ export class MachinesController {
     }
 
     @Post(':id/release')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async release(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,
@@ -87,8 +96,9 @@ export class MachinesController {
     }
 
     @Delete(':id')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async remove(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,

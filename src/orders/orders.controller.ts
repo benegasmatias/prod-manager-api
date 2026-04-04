@@ -1,73 +1,85 @@
-import { Controller, Get, Post, Body, Patch, Param, ParseUUIDPipe, UseGuards, Query, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, ParseUUIDPipe, UseGuards, Query, Request, UseInterceptors } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderStatusDto, UpdateProgressDto, FindOrdersDto, FindVisitsDto, FindQuotationsDto } from './dto/order.dto';
 import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
 import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
+import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
-import { BusinessStatus } from '../common/enums';
+import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { BusinessStatus, BusinessRole } from '../common/enums';
+import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-privacy.interceptor';
 
 @Controller('orders')
-@UseGuards(SupabaseAuthGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
+@UseInterceptors(FinancialPrivacyInterceptor)
 export class OrdersController {
     constructor(private readonly ordersService: OrdersService) { }
 
     @Get('summary')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async getSummary(@Query('businessId') businessId: string) {
         return this.ordersService.getSummaryStats(businessId);
     }
 
     @Get('budget-summary')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async getBudgetSummary(@Query('businessId') businessId: string) {
         return this.ordersService.getBudgetSummaryStats(businessId);
     }
 
     @Get('listing')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findListing(@Query() query: FindOrdersDto) {
         return this.ordersService.findListing(query);
     }
 
     @Get('visits')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findVisits(@Query() query: FindVisitsDto) {
         return this.ordersService.findVisits(query);
     }
 
     @Get('quotations')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findQuotations(@Query() query: FindQuotationsDto) {
         return this.ordersService.findQuotations(query);
     }
 
     @Get()
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findAll(@Query() query: FindOrdersDto) {
         return this.ordersService.findAll(query);
     }
 
     @Get(':id')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findOne(@Param('id', ParseUUIDPipe) id: string) {
         return this.ordersService.findOne(id);
     }
 
     @Post()
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async create(@Body() createOrderDto: CreateOrderDto) {
         return this.ordersService.create(createOrderDto);
     }
 
     @Post(':id/fail')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
     async reportFailure(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() reportFailureDto: import('./dto/order.dto').ReportFailureDto,
@@ -77,6 +89,9 @@ export class OrdersController {
     }
 
     @Post(':id/payments')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async addPayment(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() createPaymentDto: CreatePaymentDto,
@@ -85,6 +100,9 @@ export class OrdersController {
     }
 
     @Patch(':id/status')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
     async updateStatus(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateStatusDto: UpdateOrderStatusDto,
@@ -94,6 +112,9 @@ export class OrdersController {
     }
 
     @Patch(':orderId/items/:itemId/progress')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
     async updateProgress(
         @Param('orderId', ParseUUIDPipe) orderId: string,
         @Param('itemId', ParseUUIDPipe) itemId: string,

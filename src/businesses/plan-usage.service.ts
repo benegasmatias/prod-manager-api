@@ -8,6 +8,7 @@ import { Employee } from '../employees/entities/employee.entity';
 import { PLAN_LIMITS, PlanLimits } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
+import { BusinessSubscription } from './entities/business-subscription.entity';
 
 @Injectable()
 export class PlanUsageService {
@@ -20,6 +21,8 @@ export class PlanUsageService {
         private readonly machineRepository: Repository<Machine>,
         @InjectRepository(Employee)
         private readonly employeeRepository: Repository<Employee>,
+        @InjectRepository(BusinessSubscription)
+        private readonly subscriptionRepository: Repository<BusinessSubscription>,
         private readonly auditService: AuditService,
     ) { }
 
@@ -39,8 +42,11 @@ export class PlanUsageService {
     }
 
     async ensureMachineCreationAllowed(businessId: string): Promise<void> {
-        const business = await this.businessRepository.findOneBy({ id: businessId });
-        const plan = business?.plan || 'FREE';
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
         const limits = PLAN_LIMITS[plan];
 
         const machineCount = await this.machineRepository.countBy({ businessId, active: true });
@@ -52,8 +58,11 @@ export class PlanUsageService {
     }
 
     async ensureEmployeeCreationAllowed(businessId: string): Promise<void> {
-        const business = await this.businessRepository.findOneBy({ id: businessId });
-        const plan = business?.plan || 'FREE';
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
         const limits = PLAN_LIMITS[plan];
 
         const employeeCount = await this.employeeRepository.countBy({ businessId, active: true });
@@ -65,8 +74,12 @@ export class PlanUsageService {
     }
 
     async getBusinessUsage(businessId: string): Promise<any> {
-        const business = await this.businessRepository.findOneBy({ id: businessId });
-        const plan = business?.plan || 'FREE';
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const status = business?.subscription?.status || 'ACTIVE';
         const limits = PLAN_LIMITS[plan];
 
         const [machines, employees] = await Promise.all([
@@ -76,6 +89,7 @@ export class PlanUsageService {
 
         return {
             plan,
+            status,
             limits,
             usage: {
                 MACHINES: machines,

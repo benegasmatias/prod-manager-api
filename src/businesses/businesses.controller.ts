@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Query, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Query, BadRequestException, UseInterceptors } from '@nestjs/common';
+import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-privacy.interceptor';
 import { BusinessesService } from './businesses.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
@@ -41,8 +42,9 @@ export class BusinessesController {
     }
 
     @Get(':id/dashboard-summary')
-    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard, BusinessRoleGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @UseInterceptors(FinancialPrivacyInterceptor)
     async getSummary(@Request() req, @Param('id') id: string) {
         return this.businessesService.getDashboardSummary(req.user.id, id);
     }

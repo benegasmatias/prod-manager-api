@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne } from 'typeorm';
 import { BusinessMembership } from './business-membership.entity';
+import { BusinessSubscription } from './business-subscription.entity';
 
 @Entity('businesses')
 export class Business {
@@ -66,8 +67,11 @@ export class Business {
     @Column({ name: 'admin_notes', type: 'text', nullable: true })
     adminNotes: string;
 
-    @OneToMany('BusinessMembership', (membership: any) => membership.business)
+    @OneToMany(() => BusinessMembership, (membership) => membership.business)
     memberships: BusinessMembership[];
+
+    @OneToOne(() => BusinessSubscription, (sub) => sub.business)
+    subscription: BusinessSubscription;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

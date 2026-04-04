@@ -272,7 +272,12 @@ export class BusinessesService {
     }
 
     async resolveBusinessConfig(userId: string, businessId: string): Promise<any> {
-        const business = await this.findOne(userId, businessId);
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        if (!business) throw new ForbiddenException('Negocio no encontrado');
+
         const template = await this.templateRepository.findOneBy({ key: business.category });
         
         let config = JSON.parse(JSON.stringify(DEFAULT_BASE_CONFIG));
@@ -285,8 +290,9 @@ export class BusinessesService {
             };
         }
 
-        // SaaS Gating (Plan)
-        const plan = business.plan || 'FREE';
+        // SaaS Gating (Subscription Source of Truth)
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const subscriptionStatus = business?.subscription?.status || 'ACTIVE';
         const limits = PLAN_LIMITS[plan];
         if (config.features) {
             config.features.hasMaterials = limits.features.hasMaterials;
@@ -305,7 +311,14 @@ export class BusinessesService {
             businessId: business.id, 
             config,
             userRole,
-            userPermissions
+            userPermissions,
+            subscription: {
+                plan,
+                status: subscriptionStatus,
+                currentPeriodEnd: business?.subscription?.currentPeriodEnd,
+                trialEndAt: business?.subscription?.trialEndAt,
+                cancelAtPeriodEnd: business?.subscription?.cancelAtPeriodEnd || false
+            }
         };
     }
 
@@ -315,36 +328,51 @@ export class BusinessesService {
                 employees: { canRead: true, canManage: true },
                 audit: { canRead: true, canManage: true },
                 config_admin: { canRead: true, canManage: true },
-                machines: { canRead: true, canManage: true },
+                materials: { canRead: true, canManage: true },
+                stockMoves: { canCreate: true },
+                machines: { canRead: true, canManage: true, canUpdateStatus: true },
                 payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
             },
             [BusinessRole.BUSINESS_ADMIN]: {
                 employees: { canRead: true, canManage: true },
                 audit: { canRead: true, canManage: false },
                 config_admin: { canRead: true, canManage: false },
-                machines: { canRead: true, canManage: true },
+                materials: { canRead: true, canManage: true },
+                stockMoves: { canCreate: true },
+                machines: { canRead: true, canManage: true, canUpdateStatus: true },
                 payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
             },
             [BusinessRole.SALES]: {
                 employees: { canRead: true, canManage: false },
                 audit: { canRead: false, canManage: false },
                 config_admin: { canRead: false, canManage: false },
-                machines: { canRead: true, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: false },
+                machines: { canRead: true, canManage: false, canUpdateStatus: false },
                 payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
             },
             [BusinessRole.OPERATOR]: {
                 employees: { canRead: false, canManage: false },
                 audit: { canRead: false, canManage: false },
                 config_admin: { canRead: false, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: true },
                 machines: { canRead: true, canManage: false, canUpdateStatus: true },
                 payments: { canRead: false, canManage: false },
+                orders: { canRead: true, canManage: false, canUpdateStatus: true, canReadFinancials: false },
             },
             [BusinessRole.VIEWER]: {
                 employees: { canRead: true, canManage: false },
                 audit: { canRead: false, canManage: false },
                 config_admin: { canRead: true, canManage: false },
-                machines: { canRead: true, canManage: false },
-                payments: { canRead: true, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: false },
+                machines: { canRead: true, canManage: false, canUpdateStatus: false },
+                payments: { canRead: false, canManage: false },
+                orders: { canRead: true, canManage: false, canUpdateStatus: false, canReadFinancials: false },
             }
         };
 
