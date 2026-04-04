@@ -31,6 +31,6 @@ import { Payment } from '../payments/entities/payment.entity';
     ])],
     controllers: [OrdersController],
     providers: [OrdersService, OrderStrategyProvider, OrderWorkflowService, OrderFinancialService],
-    exports: [OrdersService, TypeOrmModule],
+    exports: [OrdersService, OrderWorkflowService, TypeOrmModule],
 })
 export class OrdersModule { }

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn, Index, Unique } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
 import { OrderItem } from '../../orders/entities/order-item.entity';
 import { Machine } from '../../machines/entities/machine.entity';
@@ -7,6 +7,11 @@ import { Business } from '../../businesses/entities/business.entity';
 import { ProductionJobStatus, ProductionJobPriority } from '../../common/enums';
 
 @Entity('production_jobs')
+@Index(['businessId'])
+@Index(['status'])
+@Index(['machineId'])
+@Index(['operatorId'])
+@Unique(['orderItemId'])
 export class ProductionJob {
     @PrimaryGeneratedColumn('uuid')
     id: string;

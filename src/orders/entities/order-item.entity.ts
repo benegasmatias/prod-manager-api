@@ -1,12 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { Order } from './order.entity';
 import { Product } from '../../products/entities/product.entity';
+import { OrderItemStatus } from '../../common/enums';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 
 @Entity('order_items')
 export class OrderItem {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Column({
+        type: 'enum',
+        enum: OrderItemStatus,
+        default: OrderItemStatus.PENDING
+    })
+    status: OrderItemStatus;
 
     @Column({ name: 'order_id' })
     orderId: string;

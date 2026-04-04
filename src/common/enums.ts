@@ -108,6 +108,15 @@ export enum WebhookStatus {
     IGNORED = 'IGNORED',
 }
 
+export enum OrderItemStatus {
+    PENDING = 'PENDING',
+    IN_PROGRESS = 'IN_PROGRESS',
+    READY = 'READY',
+    DONE = 'DONE', // Entregado final
+    FAILED = 'FAILED',
+    CANCELLED = 'CANCELLED',
+}
+
 export enum ProductionJobStatus {
     QUEUED = 'QUEUED',
     IN_PROGRESS = 'IN_PROGRESS',
