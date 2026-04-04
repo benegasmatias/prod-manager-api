@@ -12,6 +12,8 @@ import { BusinessesService } from './businesses.service';
 import { BusinessesController } from './businesses.controller';
 import { BusinessTemplatesController } from './business-templates.controller';
 import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
+import { BusinessSubscriptionController } from './business-subscription.controller';
+import { BillingService } from './billing.service';
 
 import { Material } from '../materials/entities/material.entity';
 import { Employee } from '../employees/entities/employee.entity';
@@ -30,8 +32,8 @@ import { PlanUsageService } from './plan-usage.service';
         Material,
         Employee
     ])],
-    controllers: [BusinessesController, BusinessTemplatesController],
-    providers: [BusinessesService, BusinessStrategyProvider, PlanUsageService],
-    exports: [BusinessesService, BusinessStrategyProvider, PlanUsageService],
+    controllers: [BusinessesController, BusinessTemplatesController, BusinessSubscriptionController],
+    providers: [BusinessesService, BusinessStrategyProvider, PlanUsageService, BillingService],
+    exports: [BusinessesService, BusinessStrategyProvider, PlanUsageService, BillingService],
 })
 export class BusinessesModule { }

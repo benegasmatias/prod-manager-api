@@ -18,6 +18,7 @@ import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Employee } from '../employees/entities/employee.entity';
 import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
 import { PlanUsageService } from './plan-usage.service';
+import { BillingService } from './billing.service';
 import { PLAN_LIMITS } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
@@ -63,6 +64,7 @@ export class BusinessesService {
         private readonly employeeRepository: Repository<Employee>,
         private readonly planUsageService: PlanUsageService,
         private readonly auditService: AuditService,
+        private readonly billingService: BillingService,
         private readonly dataSource: DataSource,
         private readonly strategyProvider: BusinessStrategyProvider,
     ) { }
@@ -128,6 +130,10 @@ export class BusinessesService {
                 plan: 'FREE'
             });
             const businessToUse = await manager.save(Business, business);
+
+            // Fase 5.2: Suscripción por defecto (Atómica)
+            const initialPlan = template?.requiredPlan || 'FREE';
+            await this.billingService.createDefaultSubscription(businessToUse.id, initialPlan, manager);
 
             await manager.save(BusinessMembership, manager.create(BusinessMembership, {
                 userId,
