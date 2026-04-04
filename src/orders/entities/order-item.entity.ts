@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { Order } from './order.entity';
 import { Product } from '../../products/entities/product.entity';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
@@ -51,8 +51,8 @@ export class OrderItem {
     @JoinColumn({ name: 'product_id' })
     product: Product;
 
-    @OneToMany(() => ProductionJob, (job) => job.orderItem)
-    productionJobs: ProductionJob[];
+    @OneToOne(() => ProductionJob, (job) => job.orderItem)
+    productionJob: ProductionJob;
 
     @Column({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
     unitPrice: number;

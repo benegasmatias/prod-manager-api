@@ -107,3 +107,19 @@ export enum WebhookStatus {
     FAILED = 'FAILED',
     IGNORED = 'IGNORED',
 }
+
+export enum ProductionJobStatus {
+    QUEUED = 'QUEUED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    PAUSED = 'PAUSED',
+    DONE = 'DONE',
+    FAILED = 'FAILED',
+    CANCELLED = 'CANCELLED',
+}
+
+export enum ProductionJobPriority {
+    LOW = 'LOW',
+    NORMAL = 'NORMAL',
+    HIGH = 'HIGH',
+    URGENT = 'URGENT',
+}
