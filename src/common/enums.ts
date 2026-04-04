@@ -1,6 +1,6 @@
 export enum OrderType {
-    CUSTOMER = 'CUSTOMER',
-    STOCK = 'STOCK',
+    CLIENT = 'CLIENT',
+    STOCK = 'STOCK'
 }
 
 export enum OrderStatus {
@@ -77,56 +77,17 @@ export enum PaymentMethod {
     MP = 'MP',
 }
 
-export enum ProductFileRole {
-    MODEL = 'MODEL',
-    PREVIEW = 'PREVIEW',
-    INSTRUCTIONS = 'INSTRUCTIONS',
-}
-
-export enum MaterialType {
-    // 3D Printing
-    PLA = 'PLA',
-    PETG = 'PETG',
-    ABS = 'ABS',
-    TPU = 'TPU',
-    RESIN = 'RESIN',
-    LIMPIEZA = 'LIMPIEZA',
-
-    // Metalwork / Construction
-    PERFIL = 'PERFIL',
-    CHAPA = 'CHAPA',
-    MACHO = 'MACHO', // Machimbre / Revestimientos
-    HIERRO = 'HIERRO',
-    ACERO = 'ACERO',
-
-    // Carpentry
-    PLACA = 'PLACA',
-    MADERA = 'MADERA',
-
-    // Common / General
-    HERRAJE = 'HERRAJE',
-    INSUMO = 'INSUMO',
-    PRODUCTO = 'PRODUCTO',
-    OTRO = 'OTRO'
-}
-
 export enum BusinessStatus {
     DRAFT = 'DRAFT',
     ACTIVE = 'ACTIVE',
     SUSPENDED = 'SUSPENDED',
-    TRIAL = 'TRIAL',
     ARCHIVED = 'ARCHIVED',
 }
 
-export enum Plan {
-    FREE = 'FREE',
-    PRO = 'PRO',
-    ENTERPRISE = 'ENTERPRISE',
-}
-
-export enum GlobalRole {
-    SUPER_ADMIN = 'SUPER_ADMIN',
-    ADMIN = 'ADMIN',
-    SUPPORT = 'SUPPORT',
-    USER = 'USER',
+export enum BusinessRole {
+    OWNER = 'OWNER',
+    BUSINESS_ADMIN = 'BUSINESS_ADMIN',
+    SALES = 'SALES',
+    OPERATOR = 'OPERATOR',
+    VIEWER = 'VIEWER',
 }

@@ -1,12 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, CreateDateColumn, Unique } from 'typeorm';
 import { Business } from './business.entity';
 import { User } from '../../users/entities/user.entity';
-
-export enum UserRole {
-    OWNER = 'OWNER',
-    ADMIN = 'ADMIN',
-    MEMBER = 'MEMBER',
-}
+import { BusinessRole } from '../../common/enums';
 
 @Entity('business_memberships')
 @Unique(['userId', 'businessId'])
@@ -30,10 +25,10 @@ export class BusinessMembership {
 
     @Column({
         type: 'enum',
-        enum: UserRole,
-        default: UserRole.MEMBER,
+        enum: BusinessRole,
+        default: BusinessRole.OPERATOR,
     })
-    role: UserRole;
+    role: BusinessRole;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { Business } from './entities/business.entity';
 import { BusinessTemplateDto } from './dto/business-template.dto';
-import { BusinessMembership, UserRole } from './entities/business-membership.entity';
+import { BusinessMembership } from './entities/business-membership.entity';
+import { BusinessRole } from '../common/enums';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
@@ -131,7 +132,7 @@ export class BusinessesService {
             await manager.save(BusinessMembership, manager.create(BusinessMembership, {
                 userId,
                 businessId: businessToUse.id,
-                role: UserRole.OWNER
+                role: BusinessRole.OWNER
             }));
 
             const user = await manager.findOneBy(User, { id: userId });
@@ -192,28 +193,74 @@ export class BusinessesService {
         if (!business) throw new NotFoundException('Negocio no encontrado');
 
         const oldStatus = business.status;
+        const oldEnabled = business.isEnabled;
+
         business.status = newStatus;
         business.statusUpdatedAt = new Date();
         if (reasonCode) business.statusReasonCode = reasonCode;
         if (reasonText) business.statusReasonText = reasonText;
 
         if (newStatus === 'ARCHIVED') {
-            business.isEnabled = false;
-            await this.auditService.log(AuditAction.BUSINESS_ARCHIVED, 'BUSINESS', businessId, businessId, null, { reasonCode });
+             business.isEnabled = false;
         }
 
         await this.businessRepository.save(business);
 
+        // --- AUDIT LOGS ---
+        if (oldStatus !== newStatus) {
+            await this.auditService.log(
+                AuditAction.BUSINESS_STATUS_CHANGED,
+                'BUSINESS',
+                businessId,
+                businessId,
+                null,
+                { oldStatus, newStatus, reasonCode, reasonText }
+            );
+
+            if (newStatus === 'ARCHIVED') {
+                await this.auditService.log(AuditAction.BUSINESS_ARCHIVED, 'BUSINESS', businessId, businessId, null, { reasonCode });
+            }
+        }
+
+        if (oldEnabled !== business.isEnabled) {
+            await this.auditService.log(
+                AuditAction.BUSINESS_ENABLED_CHANGED,
+                'BUSINESS',
+                businessId,
+                businessId,
+                null,
+                { previousValue: oldEnabled, newValue: business.isEnabled, reasonCode, reasonText }
+            );
+        }
+        // ------------------
+
+        return { businessId, status: newStatus, isEnabled: business.isEnabled };
+    }
+
+    async updateEnabledAdmin(businessId: string, isEnabled: boolean, reasonCode?: string, reasonText?: string): Promise<any> {
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Negocio no encontrado');
+
+        const previousValue = business.isEnabled;
+        if (previousValue === isEnabled) return { businessId, isEnabled };
+
+        business.isEnabled = isEnabled;
+        business.statusUpdatedAt = new Date();
+        if (reasonCode) business.statusReasonCode = reasonCode;
+        if (reasonText) business.statusReasonText = reasonText;
+
+        await this.businessRepository.save(business);
+
         await this.auditService.log(
-            AuditAction.BUSINESS_STATUS_CHANGED,
+            AuditAction.BUSINESS_ENABLED_CHANGED,
             'BUSINESS',
             businessId,
             businessId,
             null,
-            { oldStatus, newStatus, reasonCode, reasonText }
+            { previousValue, newValue: isEnabled, reasonCode, reasonText }
         );
 
-        return { businessId, status: newStatus };
+        return { businessId, isEnabled, status: business.status };
     }
 
     async getBusinessAuditLogs(businessId: string): Promise<any> {
@@ -238,7 +285,7 @@ export class BusinessesService {
             };
         }
 
-        // SaaS Gating
+        // SaaS Gating (Plan)
         const plan = business.plan || 'FREE';
         const limits = PLAN_LIMITS[plan];
         if (config.features) {
@@ -249,7 +296,59 @@ export class BusinessesService {
             config = { ...config, ...business.capabilitiesOverride };
         }
 
-        return { businessId: business.id, config };
+        // RBAC Context
+        const membership = await this.membershipRepository.findOneBy({ userId, businessId });
+        const userRole = membership?.role || BusinessRole.OPERATOR;
+        const userPermissions = this.getPermissionsForRole(userRole);
+
+        return { 
+            businessId: business.id, 
+            config,
+            userRole,
+            userPermissions
+        };
+    }
+
+    private getPermissionsForRole(role: BusinessRole) {
+        const matrix: any = {
+            [BusinessRole.OWNER]: {
+                employees: { canRead: true, canManage: true },
+                audit: { canRead: true, canManage: true },
+                config_admin: { canRead: true, canManage: true },
+                machines: { canRead: true, canManage: true },
+                payments: { canRead: true, canManage: true },
+            },
+            [BusinessRole.BUSINESS_ADMIN]: {
+                employees: { canRead: true, canManage: true },
+                audit: { canRead: true, canManage: false },
+                config_admin: { canRead: true, canManage: false },
+                machines: { canRead: true, canManage: true },
+                payments: { canRead: true, canManage: true },
+            },
+            [BusinessRole.SALES]: {
+                employees: { canRead: true, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: false, canManage: false },
+                machines: { canRead: true, canManage: false },
+                payments: { canRead: true, canManage: true },
+            },
+            [BusinessRole.OPERATOR]: {
+                employees: { canRead: false, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: false, canManage: false },
+                machines: { canRead: true, canManage: false, canUpdateStatus: true },
+                payments: { canRead: false, canManage: false },
+            },
+            [BusinessRole.VIEWER]: {
+                employees: { canRead: true, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: true, canManage: false },
+                machines: { canRead: true, canManage: false },
+                payments: { canRead: true, canManage: false },
+            }
+        };
+
+        return matrix[role] || matrix[BusinessRole.VIEWER];
     }
 
     async getDashboardSummary(userId: string, businessId: string): Promise<DashboardSummaryDto> {

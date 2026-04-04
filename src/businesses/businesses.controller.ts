@@ -5,8 +5,10 @@ import { CreateBusinessFromTemplateDto } from './dto/create-business-from-templa
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { BusinessAccessGuard } from './guards/business-access.guard';
 import { BusinessStatusGuard } from './guards/business-status.guard';
+import { BusinessRoleGuard } from './guards/business-role.guard';
 import { AllowBusinessStatuses } from './decorators/allow-business-statuses.decorator';
-import { BusinessStatus } from '../common/enums';
+import { RequireBusinessRole } from './decorators/require-business-role.decorator';
+import { BusinessStatus, BusinessRole } from '../common/enums';
 
 @Controller('businesses')
 @UseGuards(SupabaseAuthGuard)
@@ -62,13 +64,15 @@ export class BusinessesController {
     }
 
     @Get(':id/plan-usage')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async getPlanUsage(@Param('id') id: string) {
         return this.businessesService.getBusinessUsage(id);
     }
 
     @Patch('admin/:id/status')
-    @UseGuards(BusinessAccessGuard) // En el futuro será un GlobalRoleGuard(SUPER_ADMIN)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER)
     async updateStatusAdmin(
         @Param('id') id: string,
         @Body() body: { status: string, reasonCode?: string, reasonText?: string }
@@ -76,8 +80,19 @@ export class BusinessesController {
         return this.businessesService.updateStatusAdmin(id, body.status, body.reasonCode, body.reasonText);
     }
 
+    @Patch('admin/:id/enabled')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER)
+    async updateEnabledAdmin(
+        @Param('id') id: string,
+        @Body() body: { isEnabled: boolean, reasonCode?: string, reasonText?: string }
+    ) {
+        return this.businessesService.updateEnabledAdmin(id, body.isEnabled, body.reasonCode, body.reasonText);
+    }
+
     @Get(':id/audit-trace')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER)
     async getAuditTrace(@Param('id') id: string) {
         return this.businessesService.getBusinessAuditLogs(id);
     }
@@ -88,19 +103,22 @@ export class BusinessesController {
     }
 
     @Patch('/:id')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async update(@Request() req, @Param('id') id: string, @Body() updateDto: UpdateBusinessDto) {
         return this.businessesService.update(req.user.id, id, updateDto);
     }
 
     @Patch('/:id/onboarding')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async updateOnboarding(@Request() req, @Param('id') id: string, @Body('onboardingStep') step: string) {
         return this.businessesService.updateOnboardingStep(req.user.id, id, step);
     }
 
     @Post('/:id/activate')
-    @UseGuards(BusinessAccessGuard)
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async activate(@Request() req, @Param('id') id: string) {
         return this.businessesService.activateBusiness(req.user.id, id);
     }
