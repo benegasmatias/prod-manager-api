@@ -18,6 +18,8 @@ import { Employee } from '../employees/entities/employee.entity';
 import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
 import { PlanUsageService } from './plan-usage.service';
 import { PLAN_LIMITS } from './config/plan-limits.config';
+import { AuditService } from '../audit/audit.service';
+import { AuditAction } from '../audit/entities/audit-log.entity';
 
 const DEFAULT_BASE_CONFIG = {
     sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
@@ -59,6 +61,7 @@ export class BusinessesService {
         @InjectRepository(Employee)
         private readonly employeeRepository: Repository<Employee>,
         private readonly planUsageService: PlanUsageService,
+        private readonly auditService: AuditService,
         private readonly dataSource: DataSource,
         private readonly strategyProvider: BusinessStrategyProvider,
     ) { }
@@ -164,12 +167,23 @@ export class BusinessesService {
         const business = await this.findOne(userId, businessId);
         if (business.status === 'ACTIVE') return { businessId, status: 'ACTIVE' };
 
+        const previousStatus = business.status;
         business.status = 'ACTIVE';
         business.onboardingCompleted = true;
         business.onboardingStep = 'DONE';
         business.statusUpdatedAt = new Date();
         
         await this.businessRepository.save(business);
+
+        await this.auditService.log(
+            AuditAction.BUSINESS_ACTIVATED,
+            'BUSINESS',
+            businessId,
+            businessId,
+            userId,
+            { previousStatus, newStatus: 'ACTIVE' }
+        );
+
         return { businessId, status: 'ACTIVE', message: 'Activado con éxito.' };
     }
 
@@ -177,15 +191,33 @@ export class BusinessesService {
         const business = await this.businessRepository.findOneBy({ id: businessId });
         if (!business) throw new NotFoundException('Negocio no encontrado');
 
+        const oldStatus = business.status;
         business.status = newStatus;
         business.statusUpdatedAt = new Date();
         if (reasonCode) business.statusReasonCode = reasonCode;
         if (reasonText) business.statusReasonText = reasonText;
 
-        if (newStatus === 'ARCHIVED') business.isEnabled = false;
+        if (newStatus === 'ARCHIVED') {
+            business.isEnabled = false;
+            await this.auditService.log(AuditAction.BUSINESS_ARCHIVED, 'BUSINESS', businessId, businessId, null, { reasonCode });
+        }
 
         await this.businessRepository.save(business);
+
+        await this.auditService.log(
+            AuditAction.BUSINESS_STATUS_CHANGED,
+            'BUSINESS',
+            businessId,
+            businessId,
+            null,
+            { oldStatus, newStatus, reasonCode, reasonText }
+        );
+
         return { businessId, status: newStatus };
+    }
+
+    async getBusinessAuditLogs(businessId: string): Promise<any> {
+        return this.auditService.findByBusiness(businessId);
     }
 
     async getBusinessUsage(businessId: string): Promise<any> {
@@ -315,7 +347,7 @@ export class BusinessesService {
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
-            alerts: [], // Omitido por brevedad en este fix masivo de integridad
+            alerts: [], 
             trends: null,
             operationalCounters,
             pipelineSummary,
@@ -337,8 +369,19 @@ export class BusinessesService {
         return this.findOne(userId, id);
     }
 
-    async findUserBusinesses(userId: string): Promise<Business[]> {
-        const memberships = await this.membershipRepository.find({ where: { userId }, relations: ['business'] });
+    async findUserBusinesses(userId: string, filters?: any): Promise<Business[]> {
+        const query = this.membershipRepository.createQueryBuilder('membership')
+            .innerJoinAndSelect('membership.business', 'business')
+            .where('membership.userId = :userId', { userId });
+
+        if (filters?.isEnabled !== undefined) {
+            query.andWhere('business.isEnabled = :isEnabled', { isEnabled: filters.isEnabled });
+        }
+        if (filters?.status) {
+            query.andWhere('business.status = :status', { status: filters.status });
+        }
+
+        const memberships = await query.getMany();
         return memberships.map(m => m.business);
     }
 

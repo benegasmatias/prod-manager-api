@@ -76,6 +76,12 @@ export class BusinessesController {
         return this.businessesService.updateStatusAdmin(id, body.status, body.reasonCode, body.reasonText);
     }
 
+    @Get(':id/audit-trace')
+    @UseGuards(BusinessAccessGuard)
+    async getAuditTrace(@Param('id') id: string) {
+        return this.businessesService.getBusinessAuditLogs(id);
+    }
+
     @Post()
     async create(@Request() req, @Body() createDto: CreateBusinessFromTemplateDto) {
         return this.businessesService.createFromTemplate(req.user.id, createDto);

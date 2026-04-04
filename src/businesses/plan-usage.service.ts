@@ -6,6 +6,8 @@ import { User } from '../users/entities/user.entity';
 import { Machine } from '../machines/entities/machine.entity';
 import { Employee } from '../employees/entities/employee.entity';
 import { PLAN_LIMITS, PlanLimits } from './config/plan-limits.config';
+import { AuditService } from '../audit/audit.service';
+import { AuditAction } from '../audit/entities/audit-log.entity';
 
 @Injectable()
 export class PlanUsageService {
@@ -18,6 +20,7 @@ export class PlanUsageService {
         private readonly machineRepository: Repository<Machine>,
         @InjectRepository(Employee)
         private readonly employeeRepository: Repository<Employee>,
+        private readonly auditService: AuditService,
     ) { }
 
     async ensureBusinessCreationAllowed(userId: string): Promise<void> {
@@ -26,10 +29,11 @@ export class PlanUsageService {
         const limits = PLAN_LIMITS[userPlan];
 
         const businessCount = await this.businessRepository.countBy({ 
-            memberships: { userId } as any // Simplificado, idealmente vía query builder
+            memberships: { userId } as any
         });
 
         if (businessCount >= limits.maxBusinessesPerUser) {
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'USER', userId, null, userId, { resource: 'BUSINESSES', usage: businessCount, limit: limits.maxBusinessesPerUser, plan: userPlan });
             this.throwQuotaException('BUSINESSES', userPlan, limits.maxBusinessesPerUser, businessCount);
         }
     }
@@ -42,6 +46,7 @@ export class PlanUsageService {
         const machineCount = await this.machineRepository.countBy({ businessId, active: true });
 
         if (machineCount >= limits.maxMachinesPerBusiness) {
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'MACHINES', usage: machineCount, limit: limits.maxMachinesPerBusiness, plan });
             this.throwQuotaException('MACHINES', plan, limits.maxMachinesPerBusiness, machineCount);
         }
     }
@@ -54,6 +59,7 @@ export class PlanUsageService {
         const employeeCount = await this.employeeRepository.countBy({ businessId, active: true });
 
         if (employeeCount >= limits.maxEmployeesPerBusiness) {
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'EMPLOYEES', usage: employeeCount, limit: limits.maxEmployeesPerBusiness, plan });
             this.throwQuotaException('EMPLOYEES', plan, limits.maxEmployeesPerBusiness, employeeCount);
         }
     }

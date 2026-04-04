@@ -7,6 +7,8 @@ import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
 import { JobsService } from '../jobs/jobs.service';
+import { AuditService } from '../audit/audit.service';
+import { AuditAction } from '../audit/entities/audit-log.entity';
 
 import { PlanUsageService } from '../businesses/plan-usage.service';
 
@@ -18,6 +20,7 @@ export class MachinesService {
         private readonly ordersService: OrdersService,
         private readonly jobsService: JobsService,
         private readonly planUsageService: PlanUsageService,
+        private readonly auditService: AuditService,
     ) { }
 
     async assignOrder(machineId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
@@ -90,7 +93,18 @@ export class MachinesService {
     async create(createDto: CreateMachineDto): Promise<Machine> {
         await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId);
         const machine = this.machineRepository.create(createDto);
-        return this.machineRepository.save(machine);
+        const saved = await this.machineRepository.save(machine);
+        
+        await this.auditService.log(
+            AuditAction.RESOURCE_CREATED,
+            'MACHINE',
+            saved.id,
+            saved.businessId,
+            null,
+            { name: saved.name, model: saved.model }
+        );
+
+        return saved;
     }
 
     async findAll(businessId?: string, onlyActive: boolean = true, page: number = 1, pageSize: number = 50): Promise<{ data: Machine[], total: number }> {
