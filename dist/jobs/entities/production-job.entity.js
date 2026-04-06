@@ -19,6 +19,8 @@ const business_entity_1 = require("../../businesses/entities/business.entity");
 const enums_1 = require("../../common/enums");
 const production_job_material_entity_1 = require("./production-job-material.entity");
 const typeorm_2 = require("typeorm");
+const job_progress_entity_1 = require("./job-progress.entity");
+const job_status_history_entity_1 = require("../../history/entities/job-status-history.entity");
 let ProductionJob = class ProductionJob {
 };
 exports.ProductionJob = ProductionJob;
@@ -119,6 +121,35 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'pause_reason', type: 'text', nullable: true }),
     __metadata("design:type", String)
 ], ProductionJob.prototype, "pauseReason", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], ProductionJob.prototype, "notes", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'total_units', type: 'int', default: 1 }),
+    __metadata("design:type", Number)
+], ProductionJob.prototype, "totalUnits", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'material_id', nullable: true }),
+    __metadata("design:type", String)
+], ProductionJob.prototype, "materialId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)('Material', { nullable: true }),
+    (0, typeorm_1.JoinColumn)({ name: 'material_id' }),
+    __metadata("design:type", Object)
+], ProductionJob.prototype, "material", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'estimated_weight_g_total', type: 'float', nullable: true }),
+    __metadata("design:type", Number)
+], ProductionJob.prototype, "estimatedWeightGTotal", void 0);
+__decorate([
+    (0, typeorm_2.OneToMany)(() => job_progress_entity_1.JobProgress, (p) => p.productionJob),
+    __metadata("design:type", Array)
+], ProductionJob.prototype, "progress", void 0);
+__decorate([
+    (0, typeorm_2.OneToMany)(() => job_status_history_entity_1.JobStatusHistory, (h) => h.productionJob),
+    __metadata("design:type", Array)
+], ProductionJob.prototype, "statusHistory", void 0);
 __decorate([
     (0, typeorm_2.OneToMany)(() => production_job_material_entity_1.ProductionJobMaterial, (jm) => jm.job, { cascade: true }),
     __metadata("design:type", Array)

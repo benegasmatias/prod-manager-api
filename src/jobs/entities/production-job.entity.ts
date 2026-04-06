@@ -7,6 +7,8 @@ import { Business } from '../../businesses/entities/business.entity';
 import { ProductionJobStatus, ProductionJobPriority } from '../../common/enums';
 import { ProductionJobMaterial } from './production-job-material.entity';
 import { OneToMany } from 'typeorm';
+import { JobProgress } from './job-progress.entity';
+import { JobStatusHistory } from '../../history/entities/job-status-history.entity';
 
 @Entity('production_jobs')
 @Index(['businessId'])
@@ -90,6 +92,28 @@ export class ProductionJob {
 
     @Column({ name: 'pause_reason', type: 'text', nullable: true })
     pauseReason: string;
+
+    @Column({ type: 'text', nullable: true })
+    notes: string;
+
+    @Column({ name: 'total_units', type: 'int', default: 1 })
+    totalUnits: number;
+
+    @Column({ name: 'material_id', nullable: true })
+    materialId: string;
+
+    @ManyToOne('Material', { nullable: true })
+    @JoinColumn({ name: 'material_id' })
+    material: any;
+
+    @Column({ name: 'estimated_weight_g_total', type: 'float', nullable: true })
+    estimatedWeightGTotal: number;
+
+    @OneToMany(() => JobProgress, (p) => p.productionJob)
+    progress: JobProgress[];
+
+    @OneToMany(() => JobStatusHistory, (h) => h.productionJob)
+    statusHistory: JobStatusHistory[];
 
     @OneToMany(() => ProductionJobMaterial, (jm) => jm.job, { cascade: true })
     jobMaterials: ProductionJobMaterial[];

@@ -5,6 +5,8 @@ import { Employee } from '../../employees/entities/employee.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { ProductionJobStatus, ProductionJobPriority } from '../../common/enums';
 import { ProductionJobMaterial } from './production-job-material.entity';
+import { JobProgress } from './job-progress.entity';
+import { JobStatusHistory } from '../../history/entities/job-status-history.entity';
 export declare class ProductionJob {
     id: string;
     businessId: string;
@@ -27,6 +29,13 @@ export declare class ProductionJob {
     estimatedMinutes: number;
     actualMinutes: number;
     pauseReason: string;
+    notes: string;
+    totalUnits: number;
+    materialId: string;
+    material: any;
+    estimatedWeightGTotal: number;
+    progress: JobProgress[];
+    statusHistory: JobStatusHistory[];
     jobMaterials: ProductionJobMaterial[];
     metadata: any;
     createdAt: Date;

@@ -6,7 +6,7 @@ import { OrderItem } from '../orders/entities/order-item.entity';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Material } from '../materials/entities/material.entity';
 import { Machine } from '../machines/entities/machine.entity';
-import { OrderStatus, JobStatus } from '../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus } from '../common/enums';
 
 @Injectable()
 export class ReportsService {

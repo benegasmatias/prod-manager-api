@@ -1,5 +1,6 @@
 export enum OrderType {
     CLIENT = 'CLIENT',
+    CUSTOMER = 'CLIENT', // Alias for legacy/migration
     STOCK = 'STOCK'
 }
 
@@ -92,6 +93,14 @@ export enum BusinessRole {
     VIEWER = 'VIEWER',
 }
 
+export enum UserRole {
+    OWNER = 'OWNER',
+    BUSINESS_ADMIN = 'BUSINESS_ADMIN',
+    SALES = 'SALES',
+    OPERATOR = 'OPERATOR',
+    VIEWER = 'VIEWER',
+}
+
 export enum SubscriptionStatus {
     TRIALING = 'TRIALING',
     ACTIVE = 'ACTIVE',
@@ -120,6 +129,7 @@ export enum OrderItemStatus {
 export enum ProductionJobStatus {
     QUEUED = 'QUEUED',
     IN_PROGRESS = 'IN_PROGRESS',
+    PRINTING = 'IN_PROGRESS', // Alias for legacy 3D printing
     PAUSED = 'PAUSED',
     DONE = 'DONE',
     FAILED = 'FAILED',
@@ -147,4 +157,13 @@ export enum MaterialType {
     MADERA = 'MADERA',
     HERRAJE = 'HERRAJE',
     INSUMO = 'INSUMO'
+}
+
+export enum ProductFileRole {
+    THUMBNAIL = 'THUMBNAIL',
+    GALLERY = 'GALLERY',
+    MODEL = 'MODEL', // Added
+    SOURCE = 'SOURCE',
+    GCODE = 'GCODE',
+    OTHER = 'OTHER'
 }

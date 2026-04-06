@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaterialType = exports.ProductionJobPriority = exports.ProductionJobStatus = exports.OrderItemStatus = exports.WebhookStatus = exports.SubscriptionStatus = exports.BusinessRole = exports.BusinessStatus = exports.PaymentMethod = exports.FileType = exports.Priority = exports.MachineStatus = exports.JobStatus = exports.OrderStatus = exports.OrderType = void 0;
+exports.ProductFileRole = exports.MaterialType = exports.ProductionJobPriority = exports.ProductionJobStatus = exports.OrderItemStatus = exports.WebhookStatus = exports.SubscriptionStatus = exports.UserRole = exports.BusinessRole = exports.BusinessStatus = exports.PaymentMethod = exports.FileType = exports.Priority = exports.MachineStatus = exports.JobStatus = exports.OrderStatus = exports.OrderType = void 0;
 var OrderType;
 (function (OrderType) {
     OrderType["CLIENT"] = "CLIENT";
+    OrderType["CUSTOMER"] = "CLIENT";
     OrderType["STOCK"] = "STOCK";
 })(OrderType || (exports.OrderType = OrderType = {}));
 var OrderStatus;
@@ -93,6 +94,14 @@ var BusinessRole;
     BusinessRole["OPERATOR"] = "OPERATOR";
     BusinessRole["VIEWER"] = "VIEWER";
 })(BusinessRole || (exports.BusinessRole = BusinessRole = {}));
+var UserRole;
+(function (UserRole) {
+    UserRole["OWNER"] = "OWNER";
+    UserRole["BUSINESS_ADMIN"] = "BUSINESS_ADMIN";
+    UserRole["SALES"] = "SALES";
+    UserRole["OPERATOR"] = "OPERATOR";
+    UserRole["VIEWER"] = "VIEWER";
+})(UserRole || (exports.UserRole = UserRole = {}));
 var SubscriptionStatus;
 (function (SubscriptionStatus) {
     SubscriptionStatus["TRIALING"] = "TRIALING";
@@ -122,6 +131,7 @@ var ProductionJobStatus;
 (function (ProductionJobStatus) {
     ProductionJobStatus["QUEUED"] = "QUEUED";
     ProductionJobStatus["IN_PROGRESS"] = "IN_PROGRESS";
+    ProductionJobStatus["PRINTING"] = "IN_PROGRESS";
     ProductionJobStatus["PAUSED"] = "PAUSED";
     ProductionJobStatus["DONE"] = "DONE";
     ProductionJobStatus["FAILED"] = "FAILED";
@@ -150,4 +160,13 @@ var MaterialType;
     MaterialType["HERRAJE"] = "HERRAJE";
     MaterialType["INSUMO"] = "INSUMO";
 })(MaterialType || (exports.MaterialType = MaterialType = {}));
+var ProductFileRole;
+(function (ProductFileRole) {
+    ProductFileRole["THUMBNAIL"] = "THUMBNAIL";
+    ProductFileRole["GALLERY"] = "GALLERY";
+    ProductFileRole["MODEL"] = "MODEL";
+    ProductFileRole["SOURCE"] = "SOURCE";
+    ProductFileRole["GCODE"] = "GCODE";
+    ProductFileRole["OTHER"] = "OTHER";
+})(ProductFileRole || (exports.ProductFileRole = ProductFileRole = {}));
 //# sourceMappingURL=enums.js.map

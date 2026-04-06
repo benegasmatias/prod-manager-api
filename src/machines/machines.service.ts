@@ -35,7 +35,7 @@ export class MachinesService {
         if (order.jobs && order.jobs.length > 0) {
             const activeJobs = order.jobs.filter(j =>
                 j.machineId &&
-                [JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED].includes(j.status)
+                [JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED].includes(j.status as any)
             );
 
             for (const job of activeJobs) {

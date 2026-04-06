@@ -527,7 +527,7 @@ export class OrdersService {
         // Si no hay trabajos, no hacemos nada automatico (podria ser un pedido manual)
         if (jobs.length === 0) return;
 
-        const allJobsDone = jobs.every(j => j.status === JobStatus.DONE);
+        const allJobsDone = jobs.every(j => (j.status as any) === JobStatus.DONE);
 
         if (allJobsDone) {
             await this.orderRepository.update(orderId, { status: OrderStatus.DONE });

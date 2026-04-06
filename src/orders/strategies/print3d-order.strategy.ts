@@ -94,7 +94,7 @@ export class Print3DOrderStrategy implements OrderBusinessStrategy {
                 console.log(`[Estrategia 3D] Impresora ${job.machineId} liberada.`);
             }
             // Actualizar estado del trabajo
-            await jobRepo.update(job.id, { status: targetStatus });
+            await jobRepo.update(job.id, { status: targetStatus as any });
         }
     }
 }
