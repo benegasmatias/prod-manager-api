@@ -12,12 +12,13 @@ const typeorm_1 = require("@nestjs/typeorm");
 const materials_service_1 = require("./materials.service");
 const materials_controller_1 = require("./materials.controller");
 const material_entity_1 = require("./entities/material.entity");
+const businesses_module_1 = require("../businesses/businesses.module");
 let MaterialsModule = class MaterialsModule {
 };
 exports.MaterialsModule = MaterialsModule;
 exports.MaterialsModule = MaterialsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([material_entity_1.Material])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([material_entity_1.Material]), businesses_module_1.BusinessesModule],
         controllers: [materials_controller_1.MaterialsController],
         providers: [materials_service_1.MaterialsService],
         exports: [materials_service_1.MaterialsService],

@@ -14,6 +14,8 @@ import { OrderItem } from '../orders/entities/order-item.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 import { ProductionJobMaterial } from './entities/production-job-material.entity';
+import { BusinessesModule } from '../businesses/businesses.module';
+
 
 @Module({
     imports: [
@@ -29,6 +31,7 @@ import { ProductionJobMaterial } from './entities/production-job-material.entity
             ProductionJobMaterial
         ]),
         OrdersModule,
+        BusinessesModule,
     ],
     controllers: [JobsController, ProductionJobsController],
     providers: [JobsService, ProductionJobService],

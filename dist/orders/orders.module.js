@@ -24,6 +24,7 @@ const production_job_entity_1 = require("../jobs/entities/production-job.entity"
 const machine_entity_1 = require("../machines/entities/machine.entity");
 const material_entity_1 = require("../materials/entities/material.entity");
 const payment_entity_1 = require("../payments/entities/payment.entity");
+const businesses_module_1 = require("../businesses/businesses.module");
 let OrdersModule = class OrdersModule {
 };
 exports.OrdersModule = OrdersModule;
@@ -40,7 +41,7 @@ exports.OrdersModule = OrdersModule = __decorate([
                 machine_entity_1.Machine,
                 material_entity_1.Material,
                 payment_entity_1.Payment
-            ])],
+            ]), businesses_module_1.BusinessesModule],
         controllers: [orders_controller_1.OrdersController],
         providers: [orders_service_1.OrdersService, order_strategy_provider_1.OrderStrategyProvider, order_workflow_service_1.OrderWorkflowService, order_financial_service_1.OrderFinancialService],
         exports: [orders_service_1.OrdersService, order_workflow_service_1.OrderWorkflowService, typeorm_1.TypeOrmModule],
