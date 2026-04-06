@@ -15,6 +15,8 @@ import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 import { Payment } from '../payments/entities/payment.entity';
+import { BusinessesModule } from '../businesses/businesses.module';
+
 
 @Module({
     imports: [TypeOrmModule.forFeature([
@@ -28,7 +30,7 @@ import { Payment } from '../payments/entities/payment.entity';
         Machine, 
         Material, 
         Payment
-    ])],
+    ]), BusinessesModule],
     controllers: [OrdersController],
     providers: [OrdersService, OrderStrategyProvider, OrderWorkflowService, OrderFinancialService],
     exports: [OrdersService, OrderWorkflowService, TypeOrmModule],
