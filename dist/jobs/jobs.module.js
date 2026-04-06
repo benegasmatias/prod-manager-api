@@ -23,6 +23,7 @@ const order_item_entity_1 = require("../orders/entities/order-item.entity");
 const business_entity_1 = require("../businesses/entities/business.entity");
 const business_template_entity_1 = require("../businesses/entities/business-template.entity");
 const production_job_material_entity_1 = require("./entities/production-job-material.entity");
+const businesses_module_1 = require("../businesses/businesses.module");
 let JobsModule = class JobsModule {
 };
 exports.JobsModule = JobsModule;
@@ -41,6 +42,7 @@ exports.JobsModule = JobsModule = __decorate([
                 production_job_material_entity_1.ProductionJobMaterial
             ]),
             orders_module_1.OrdersModule,
+            businesses_module_1.BusinessesModule,
         ],
         controllers: [jobs_controller_1.JobsController, production_jobs_controller_1.ProductionJobsController],
         providers: [jobs_service_1.JobsService, production_job_service_1.ProductionJobService],

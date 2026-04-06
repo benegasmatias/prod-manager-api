@@ -65,7 +65,8 @@ exports.BusinessesModule = BusinessesModule = __decorate([
         exports: [
             businesses_service_1.BusinessesService,
             plan_usage_service_1.PlanUsageService,
-            billing_service_1.BillingService
+            billing_service_1.BillingService,
+            typeorm_1.TypeOrmModule
         ],
     })
 ], BusinessesModule);

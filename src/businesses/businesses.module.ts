@@ -53,7 +53,8 @@ import { AuditModule } from '../audit/audit.module';
     exports: [
         BusinessesService, 
         PlanUsageService, 
-        BillingService
+        BillingService,
+        TypeOrmModule
     ],
 })
 export class BusinessesModule { }
