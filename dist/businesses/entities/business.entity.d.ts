@@ -1,4 +1,5 @@
 import { BusinessMembership } from './business-membership.entity';
+import { BusinessSubscription } from './business-subscription.entity';
 export declare class Business {
     id: string;
     name: string;
@@ -11,7 +12,18 @@ export declare class Business {
     planId: string;
     trialExpiresAt: Date;
     subscriptionExpiresAt: Date;
+    isEnabled: boolean;
+    statusReasonCode: string;
+    statusReasonText: string;
+    statusUpdatedAt: Date;
+    plan: string;
+    acceptingOrders: boolean;
+    onboardingCompleted: boolean;
+    onboardingStep: string;
+    capabilitiesOverride: any;
+    adminNotes: string;
     memberships: BusinessMembership[];
+    subscription: BusinessSubscription;
     createdAt: Date;
     updatedAt: Date;
 }

@@ -1,13 +1,16 @@
 import { Order } from './order.entity';
 import { Product } from '../../products/entities/product.entity';
+import { OrderItemStatus } from '../../common/enums';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 export declare class OrderItem {
     id: string;
+    status: OrderItemStatus;
     orderId: string;
     order: Order;
     name: string;
     description: string;
     stlUrl: string;
+    referenceImages: any[];
     estimatedMinutes: number;
     weightGrams: number;
     price: number;
@@ -15,7 +18,7 @@ export declare class OrderItem {
     doneQty: number;
     productId: string;
     product: Product;
-    productionJobs: ProductionJob[];
+    productionJob: ProductionJob;
     unitPrice: number;
     subtotal: number;
     notes: string;

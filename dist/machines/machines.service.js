@@ -20,11 +20,16 @@ const machine_entity_1 = require("./entities/machine.entity");
 const enums_1 = require("../common/enums");
 const orders_service_1 = require("../orders/orders.service");
 const jobs_service_1 = require("../jobs/jobs.service");
+const audit_service_1 = require("../audit/audit.service");
+const audit_log_entity_1 = require("../audit/entities/audit-log.entity");
+const plan_usage_service_1 = require("../businesses/plan-usage.service");
 let MachinesService = class MachinesService {
-    constructor(machineRepository, ordersService, jobsService) {
+    constructor(machineRepository, ordersService, jobsService, planUsageService, auditService) {
         this.machineRepository = machineRepository;
         this.ordersService = ordersService;
         this.jobsService = jobsService;
+        this.planUsageService = planUsageService;
+        this.auditService = auditService;
     }
     async assignOrder(machineId, orderId, materialId, businessId, metadata) {
         const machine = await this.findOne(machineId, businessId);
@@ -72,8 +77,11 @@ let MachinesService = class MachinesService {
         return this.findOne(machineId, businessId);
     }
     async create(createDto) {
+        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId);
         const machine = this.machineRepository.create(createDto);
-        return this.machineRepository.save(machine);
+        const saved = await this.machineRepository.save(machine);
+        await this.auditService.log(audit_log_entity_1.AuditAction.RESOURCE_CREATED, 'MACHINE', saved.id, saved.businessId, null, { name: saved.name, model: saved.model });
+        return saved;
     }
     async findAll(businessId, onlyActive = true, page = 1, pageSize = 50) {
         const where = {};
@@ -128,6 +136,8 @@ exports.MachinesService = MachinesService = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(machine_entity_1.Machine)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         orders_service_1.OrdersService,
-        jobs_service_1.JobsService])
+        jobs_service_1.JobsService,
+        plan_usage_service_1.PlanUsageService,
+        audit_service_1.AuditService])
 ], MachinesService);
 //# sourceMappingURL=machines.service.js.map

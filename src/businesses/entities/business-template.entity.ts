@@ -17,6 +17,21 @@ export class BusinessTemplate {
     @Column({ name: 'image_key' })
     imageKey: string;
 
+    @Column({ type: 'jsonb', nullable: true })
+    config: any;
+
+    @Column({ name: 'is_enabled', default: true })
+    isEnabled: boolean;
+
+    @Column({ name: 'is_available', default: true })
+    isAvailable: boolean;
+
+    @Column({ name: 'is_coming_soon', default: false })
+    isComingSoon: boolean;
+
+    @Column({ name: 'required_plan', default: 'FREE' })
+    requiredPlan: string;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

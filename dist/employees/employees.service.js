@@ -20,12 +20,17 @@ const employee_entity_1 = require("./entities/employee.entity");
 const supabase_service_1 = require("../common/supabase/supabase.service");
 const businesses_service_1 = require("../businesses/businesses.service");
 const users_service_1 = require("../users/users.service");
+const audit_service_1 = require("../audit/audit.service");
+const audit_log_entity_1 = require("../audit/entities/audit-log.entity");
+const plan_usage_service_1 = require("../businesses/plan-usage.service");
 let EmployeesService = class EmployeesService {
-    constructor(employeeRepository, supabaseService, businessesService, usersService) {
+    constructor(employeeRepository, supabaseService, businessesService, usersService, planUsageService, auditService) {
         this.employeeRepository = employeeRepository;
         this.supabaseService = supabaseService;
         this.businessesService = businessesService;
         this.usersService = usersService;
+        this.planUsageService = planUsageService;
+        this.auditService = auditService;
     }
     async findAll(businessId, active) {
         const where = { businessId };
@@ -45,6 +50,7 @@ let EmployeesService = class EmployeesService {
         return employee;
     }
     async create(businessId, data) {
+        await this.planUsageService.ensureEmployeeCreationAllowed(businessId);
         const { email, firstName, lastName, role } = data;
         const supabase = this.supabaseService.getClient();
         const { data: { users }, error: listError } = await supabase.auth.admin.listUsers();
@@ -79,8 +85,10 @@ let EmployeesService = class EmployeesService {
             ...data,
             businessId,
         });
-        const saved = await this.employeeRepository.save(employee);
-        return (Array.isArray(saved) ? saved[0] : saved);
+        const result = await this.employeeRepository.save(employee);
+        const savedEmployee = Array.isArray(result) ? result[0] : result;
+        await this.auditService.log(audit_log_entity_1.AuditAction.RESOURCE_CREATED, 'EMPLOYEE', savedEmployee.id, businessId, null, { email: savedEmployee.email, role: savedEmployee.role });
+        return savedEmployee;
     }
     async update(id, businessId, data) {
         await this.findOne(id, businessId);
@@ -100,6 +108,8 @@ exports.EmployeesService = EmployeesService = __decorate([
     __metadata("design:paramtypes", [typeorm_2.Repository,
         supabase_service_1.SupabaseService,
         businesses_service_1.BusinessesService,
-        users_service_1.UsersService])
+        users_service_1.UsersService,
+        plan_usage_service_1.PlanUsageService,
+        audit_service_1.AuditService])
 ], EmployeesService);
 //# sourceMappingURL=employees.service.js.map

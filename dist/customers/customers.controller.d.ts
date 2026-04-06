@@ -1,10 +1,8 @@
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto, UpdateCustomerDto } from './dto/customer.dto';
-import { BusinessesService } from '../businesses/businesses.service';
 export declare class CustomersController {
     private readonly customersService;
-    private readonly businessesService;
-    constructor(customersService: CustomersService, businessesService: BusinessesService);
+    constructor(customersService: CustomersService);
     create(req: any, createCustomerDto: CreateCustomerDto): Promise<import("./entities/customer.entity").Customer>;
     findAll(req: any, businessId: string, q?: string, page?: number, limit?: number): Promise<{
         items: {

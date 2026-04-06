@@ -5,6 +5,10 @@ import { Employee } from './entities/employee.entity';
 import { SupabaseService } from '../common/supabase/supabase.service';
 import { BusinessesService } from '../businesses/businesses.service';
 import { UsersService } from '../users/users.service';
+import { AuditService } from '../audit/audit.service';
+import { AuditAction } from '../audit/entities/audit-log.entity';
+
+import { PlanUsageService } from '../businesses/plan-usage.service';
 
 @Injectable()
 export class EmployeesService {
@@ -14,6 +18,8 @@ export class EmployeesService {
         private readonly supabaseService: SupabaseService,
         private readonly businessesService: BusinessesService,
         private readonly usersService: UsersService,
+        private readonly planUsageService: PlanUsageService,
+        private readonly auditService: AuditService,
     ) { }
 
     async findAll(businessId: string, active?: boolean): Promise<Employee[]> {
@@ -38,6 +44,8 @@ export class EmployeesService {
     }
 
     async create(businessId: string, data: any): Promise<Employee> {
+        await this.planUsageService.ensureEmployeeCreationAllowed(businessId);
+        
         const { email, firstName, lastName, role } = data;
         const supabase = this.supabaseService.getClient();
 
@@ -86,8 +94,19 @@ export class EmployeesService {
             ...data,
             businessId,
         });
-        const saved = await this.employeeRepository.save(employee);
-        return (Array.isArray(saved) ? saved[0] : saved) as Employee;
+        const result = await this.employeeRepository.save(employee);
+        const savedEmployee = Array.isArray(result) ? result[0] : result;
+
+        await this.auditService.log(
+            AuditAction.RESOURCE_CREATED,
+            'EMPLOYEE',
+            savedEmployee.id,
+            businessId,
+            null,
+            { email: savedEmployee.email, role: savedEmployee.role }
+        );
+
+        return savedEmployee;
     }
 
     async update(id: string, businessId: string, data: any): Promise<Employee> {

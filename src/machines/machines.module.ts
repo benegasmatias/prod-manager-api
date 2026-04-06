@@ -6,11 +6,14 @@ import { MachinesService } from './machines.service';
 import { OrdersModule } from '../orders/orders.module';
 import { JobsModule } from '../jobs/jobs.module';
 
+import { BusinessesModule } from '../businesses/businesses.module';
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([Machine]),
         OrdersModule,
-        JobsModule
+        JobsModule,
+        BusinessesModule
     ],
     controllers: [MachinesController],
     providers: [MachinesService],

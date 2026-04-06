@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
+import { UsersManagementController } from './users-management.controller';
 import { SupabaseService } from '../common/supabase/supabase.service';
 
 import { BusinessesModule } from '../businesses/businesses.module';
@@ -13,7 +14,7 @@ import { BusinessesModule } from '../businesses/businesses.module';
         TypeOrmModule.forFeature([User]),
         BusinessesModule,
     ],
-    controllers: [UsersController],
+    controllers: [UsersController, UsersManagementController],
     providers: [UsersService, SupabaseService],
     exports: [UsersService, SupabaseService, TypeOrmModule],
 })

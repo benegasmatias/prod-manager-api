@@ -28,15 +28,16 @@ export class JobsService {
 
     async create(createJobDto: CreateJobDto, userId?: string) {
         const job = this.jobRepository.create({
-            ...createJobDto,
-            status: JobStatus.QUEUED,
+            ...(createJobDto as any),
+            status: JobStatus.QUEUED as any,
         });
 
-        const savedJob = await this.jobRepository.save(job);
+        const saved = await this.jobRepository.save(job);
+        const savedJob = Array.isArray(saved) ? saved[0] : saved;
 
         const history = this.statusHistoryRepository.create({
             productionJobId: savedJob.id,
-            toStatus: JobStatus.QUEUED,
+            toStatus: JobStatus.QUEUED as any, // Cast for enum alignment
             note: 'Initial queuing',
             performedById: userId
         });
@@ -66,9 +67,7 @@ export class JobsService {
             where,
             relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
             order: {
-                order: { priority: 'DESC' },
-                dueDate: 'ASC',
-                sortRank: 'ASC',
+                createdAt: 'DESC'
             },
         });
     }
@@ -93,12 +92,12 @@ export class JobsService {
         const job = await this.findOne(id);
         const oldStatus = job.status;
 
-        await this.jobRepository.update(id, { status });
+        await this.jobRepository.update(id, { status: status as any });
 
         const history = this.statusHistoryRepository.create({
             productionJobId: id,
-            fromStatus: oldStatus,
-            toStatus: status,
+            fromStatus: oldStatus as any,
+            toStatus: status as any,
             note,
             performedById: userId
         });
@@ -129,11 +128,11 @@ export class JobsService {
         const { status, notes, ...data } = updateJobDto;
 
         if (status) {
-            return this.updateStatus(id, status, notes, userId);
+            return this.updateStatus(id, status as any, notes, userId);
         }
 
         if (Object.keys(data).length > 0 || notes) {
-            await this.jobRepository.update(id, { ...data, notes });
+            await this.jobRepository.update(id, { ...data, notes } as any);
         }
 
         return this.findOne(id);

@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Business = void 0;
 const typeorm_1 = require("typeorm");
+const business_membership_entity_1 = require("./business-membership.entity");
+const business_subscription_entity_1 = require("./business-subscription.entity");
 let Business = class Business {
 };
 exports.Business = Business;
@@ -43,7 +45,7 @@ __decorate([
     __metadata("design:type", String)
 ], Business.prototype, "currency", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ default: 'ACTIVE' }),
+    (0, typeorm_1.Column)({ default: 'DRAFT' }),
     __metadata("design:type", String)
 ], Business.prototype, "status", void 0);
 __decorate([
@@ -59,9 +61,53 @@ __decorate([
     __metadata("design:type", Date)
 ], Business.prototype, "subscriptionExpiresAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)('BusinessMembership', (membership) => membership.business),
+    (0, typeorm_1.Column)({ name: 'is_enabled', default: true }),
+    __metadata("design:type", Boolean)
+], Business.prototype, "isEnabled", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'status_reason_code', nullable: true }),
+    __metadata("design:type", String)
+], Business.prototype, "statusReasonCode", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'status_reason_text', type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Business.prototype, "statusReasonText", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'status_updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' }),
+    __metadata("design:type", Date)
+], Business.prototype, "statusUpdatedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: 'FREE' }),
+    __metadata("design:type", String)
+], Business.prototype, "plan", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'accepting_orders', default: true }),
+    __metadata("design:type", Boolean)
+], Business.prototype, "acceptingOrders", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'onboarding_completed', default: false }),
+    __metadata("design:type", Boolean)
+], Business.prototype, "onboardingCompleted", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'onboarding_step', default: 'BASIC_INFO' }),
+    __metadata("design:type", String)
+], Business.prototype, "onboardingStep", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ type: 'jsonb', name: 'capabilities_override', nullable: true }),
+    __metadata("design:type", Object)
+], Business.prototype, "capabilitiesOverride", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'admin_notes', type: 'text', nullable: true }),
+    __metadata("design:type", String)
+], Business.prototype, "adminNotes", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => business_membership_entity_1.BusinessMembership, (membership) => membership.business),
     __metadata("design:type", Array)
 ], Business.prototype, "memberships", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => business_subscription_entity_1.BusinessSubscription, (sub) => sub.business),
+    __metadata("design:type", business_subscription_entity_1.BusinessSubscription)
+], Business.prototype, "subscription", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)

@@ -35,6 +35,26 @@ __decorate([
     __metadata("design:type", String)
 ], BusinessTemplate.prototype, "imageKey", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ type: 'jsonb', nullable: true }),
+    __metadata("design:type", Object)
+], BusinessTemplate.prototype, "config", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'is_enabled', default: true }),
+    __metadata("design:type", Boolean)
+], BusinessTemplate.prototype, "isEnabled", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'is_available', default: true }),
+    __metadata("design:type", Boolean)
+], BusinessTemplate.prototype, "isAvailable", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'is_coming_soon', default: false }),
+    __metadata("design:type", Boolean)
+], BusinessTemplate.prototype, "isComingSoon", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'required_plan', default: 'FREE' }),
+    __metadata("design:type", String)
+], BusinessTemplate.prototype, "requiredPlan", void 0);
+__decorate([
     (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
     __metadata("design:type", Date)
 ], BusinessTemplate.prototype, "createdAt", void 0);

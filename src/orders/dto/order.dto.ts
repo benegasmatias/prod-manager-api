@@ -2,6 +2,24 @@ import { Type } from 'class-transformer';
 import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
 import { OrderStatus, OrderType } from '../../common/enums';
 
+export class OrderSiteInfoDto {
+    @IsString()
+    @IsOptional()
+    address?: string;
+
+    @IsString()
+    @IsOptional()
+    visitDate?: string;
+
+    @IsString()
+    @IsOptional()
+    visitTime?: string;
+
+    @IsString()
+    @IsOptional()
+    visitObservations?: string;
+}
+
 export class CreateOrderItemDto {
     @IsString()
     @IsOptional()
@@ -53,27 +71,15 @@ export class CreateOrderItemDto {
 
     @IsString()
     @IsOptional()
-    direccion_obra?: string;
-
-    @IsString()
-    @IsOptional()
-    fecha_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    hora_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    observaciones_visita?: string;
-
-    @IsString()
-    @IsOptional()
     description?: string;
 
     @IsString()
     @IsOptional()
     stlUrl?: string;
+
+    @IsArray()
+    @IsOptional()
+    referenceImages?: any[];
 
     @IsInt()
     @Min(0)
@@ -163,21 +169,10 @@ export class CreateOrderDto {
     @IsOptional()
     responsableGeneralId?: string;
 
-    @IsString()
     @IsOptional()
-    direccion_obra?: string;
-
-    @IsString()
-    @IsOptional()
-    fecha_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    hora_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    observaciones_visita?: string;
+    @ValidateNested()
+    @Type(() => OrderSiteInfoDto)
+    siteInfo?: OrderSiteInfoDto;
 
     @IsOptional()
     metadata?: any;
@@ -204,10 +199,12 @@ export class UpdateOrderStatusDto {
 
     @IsNumber()
     @IsOptional()
+    @Min(0)
     totalPrice?: number;
 
     @IsNumber()
     @IsOptional()
+    @Min(0)
     totalSenias?: number;
 
     @IsDate()
@@ -227,88 +224,78 @@ export class UpdateOrderStatusDto {
     @IsOptional()
     @ValidateNested({ each: true })
     @Type(() => CreateOrderItemDto)
-    items?: any[];
+    items?: CreateOrderItemDto[];
 
-    @IsString()
     @IsOptional()
-    direccion_obra?: string;
-
-    @IsString()
-    @IsOptional()
-    fecha_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    hora_visita?: string;
-
-    @IsString()
-    @IsOptional()
-    observaciones_visita?: string;
+    @ValidateNested()
+    @Type(() => OrderSiteInfoDto)
+    siteInfo?: OrderSiteInfoDto;
 
     @IsOptional()
     metadata?: any;
 }
 
-export class BaseOrderFilterDto {
+export class FindOrdersDto {
     @IsString()
     @IsOptional()
     businessId?: string;
 
-    @IsInt()
+    @IsString()
     @IsOptional()
-    @Type(() => Number)
-    page?: number = 1;
+    responsableId?: string;
+
+    @IsEnum(OrderStatus)
+    @IsOptional()
+    status?: OrderStatus;
+
+    @IsOptional()
+    statuses?: OrderStatus[] | string;
+
+    @IsOptional()
+    excludeStatuses?: OrderStatus[] | string;
+
+    @IsEnum(OrderType)
+    @IsOptional()
+    type?: OrderType;
 
     @IsInt()
     @IsOptional()
-    @Type(() => Number)
-    pageSize?: number = 50;
+    @Min(1)
+    page?: number;
+
+    @IsInt()
+    @IsOptional()
+    @Min(1)
+    pageSize?: number;
 
     @IsString()
     @IsOptional()
     search?: string;
 
-    @IsOptional()
     @IsDate()
+    @IsOptional()
     @Type(() => Date)
     startDate?: Date;
 
-    @IsOptional()
     @IsDate()
+    @IsOptional()
     @Type(() => Date)
     endDate?: Date;
-
-    @IsOptional()
-    @IsString()
-    responsableId?: string;
 }
 
-export class FindOrdersDto extends BaseOrderFilterDto {
-    @IsEnum(OrderStatus)
-    @IsOptional()
-    status?: OrderStatus;
+export class FindVisitsDto extends FindOrdersDto { }
+export class FindQuotationsDto extends FindOrdersDto { }
 
-    @IsOptional()
-    statuses?: string | string[];
-
-    @IsOptional()
-    excludeStatuses?: string | string[];
-
-    @IsEnum(OrderType)
-    @IsOptional()
-    type?: OrderType;
+export class OrderSummaryResponseDto {
+    totalVolume: number;
+    pendingBalance: number;
+    activeCount: number;
 }
 
-export class FindVisitsDto extends BaseOrderFilterDto {
-    @IsEnum(OrderStatus)
-    @IsOptional()
-    status?: OrderStatus; // Permite filtrar por un estado de visita específico dentro de las visitas
-}
-
-export class FindQuotationsDto extends BaseOrderFilterDto {
-    @IsEnum(OrderStatus)
-    @IsOptional()
-    status?: OrderStatus;
+export class BudgetSummaryResponseDto {
+    totalBudgeted: number;
+    pendingApprovalCount: number;
+    conversionRate: number;
 }
 
 export class ReportFailureDto {
@@ -325,24 +312,9 @@ export class ReportFailureDto {
     materialId?: string;
 
     @IsBoolean()
-    moveToReprint: boolean;
-
     @IsOptional()
-    @IsEnum(OrderStatus)
-    targetStatus?: OrderStatus;
+    moveToReprint?: boolean;
 
     @IsOptional()
     metadata?: any;
-}
-
-export class OrderSummaryResponseDto {
-    totalVolume: number;
-    pendingBalance: number;
-    activeCount: number;
-}
-
-export class BudgetSummaryResponseDto {
-    totalBudgeted: number;
-    pendingApprovalCount: number;
-    conversionRate: number;
 }
