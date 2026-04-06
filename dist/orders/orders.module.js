@@ -43,7 +43,7 @@ exports.OrdersModule = OrdersModule = __decorate([
             ])],
         controllers: [orders_controller_1.OrdersController],
         providers: [orders_service_1.OrdersService, order_strategy_provider_1.OrderStrategyProvider, order_workflow_service_1.OrderWorkflowService, order_financial_service_1.OrderFinancialService],
-        exports: [orders_service_1.OrdersService, typeorm_1.TypeOrmModule],
+        exports: [orders_service_1.OrdersService, order_workflow_service_1.OrderWorkflowService, typeorm_1.TypeOrmModule],
     })
 ], OrdersModule);
 //# sourceMappingURL=orders.module.js.map

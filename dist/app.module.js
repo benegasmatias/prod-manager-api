@@ -23,12 +23,14 @@ const reports_module_1 = require("./reports/reports.module");
 const employees_module_1 = require("./employees/employees.module");
 const admin_module_1 = require("./admin/admin.module");
 const files_module_1 = require("./files/files.module");
+const audit_module_1 = require("./audit/audit.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            audit_module_1.AuditModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),

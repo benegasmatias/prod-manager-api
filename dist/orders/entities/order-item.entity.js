@@ -13,6 +13,7 @@ exports.OrderItem = void 0;
 const typeorm_1 = require("typeorm");
 const order_entity_1 = require("./order.entity");
 const product_entity_1 = require("../../products/entities/product.entity");
+const enums_1 = require("../../common/enums");
 const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
 let OrderItem = class OrderItem {
 };
@@ -21,6 +22,14 @@ __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], OrderItem.prototype, "id", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        type: 'enum',
+        enum: enums_1.OrderItemStatus,
+        default: enums_1.OrderItemStatus.PENDING
+    }),
+    __metadata("design:type", String)
+], OrderItem.prototype, "status", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'order_id' }),
     __metadata("design:type", String)
@@ -42,6 +51,10 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'stl_url', nullable: true }),
     __metadata("design:type", String)
 ], OrderItem.prototype, "stlUrl", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ name: 'reference_images', type: 'jsonb', nullable: true }),
+    __metadata("design:type", Array)
+], OrderItem.prototype, "referenceImages", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'estimated_minutes', type: 'int', default: 0 }),
     __metadata("design:type", Number)
@@ -72,9 +85,9 @@ __decorate([
     __metadata("design:type", product_entity_1.Product)
 ], OrderItem.prototype, "product", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => production_job_entity_1.ProductionJob, (job) => job.orderItem),
-    __metadata("design:type", Array)
-], OrderItem.prototype, "productionJobs", void 0);
+    (0, typeorm_1.OneToOne)(() => production_job_entity_1.ProductionJob, (job) => job.orderItem),
+    __metadata("design:type", production_job_entity_1.ProductionJob)
+], OrderItem.prototype, "productionJob", void 0);
 __decorate([
     (0, typeorm_1.Column)({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 }),
     __metadata("design:type", Number)

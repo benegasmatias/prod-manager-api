@@ -9,16 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BusinessMembership = exports.UserRole = void 0;
+exports.BusinessMembership = void 0;
 const typeorm_1 = require("typeorm");
 const business_entity_1 = require("./business.entity");
 const user_entity_1 = require("../../users/entities/user.entity");
-var UserRole;
-(function (UserRole) {
-    UserRole["OWNER"] = "OWNER";
-    UserRole["ADMIN"] = "ADMIN";
-    UserRole["MEMBER"] = "MEMBER";
-})(UserRole || (exports.UserRole = UserRole = {}));
+const enums_1 = require("../../common/enums");
 let BusinessMembership = class BusinessMembership {
 };
 exports.BusinessMembership = BusinessMembership;
@@ -47,8 +42,8 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: UserRole,
-        default: UserRole.MEMBER,
+        enum: enums_1.BusinessRole,
+        default: enums_1.BusinessRole.OPERATOR,
     }),
     __metadata("design:type", String)
 ], BusinessMembership.prototype, "role", void 0);

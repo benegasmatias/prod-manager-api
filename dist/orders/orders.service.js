@@ -18,6 +18,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const order_entity_1 = require("./entities/order.entity");
 const order_item_entity_1 = require("./entities/order-item.entity");
+const order_site_info_entity_1 = require("./entities/order-site-info.entity");
 const enums_1 = require("../common/enums");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
@@ -90,8 +91,7 @@ let OrdersService = class OrdersService {
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority',
             'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice',
-            'order.code', 'order.responsableGeneralId', 'order.customerId',
-            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias',
+            'order.code', 'order.responsableGeneralId', 'order.customerId', 'order.totalSenias',
             'customer.id', 'customer.name', 'customer.phone',
             'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
             'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
@@ -205,7 +205,7 @@ let OrdersService = class OrdersService {
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
-            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.totalSenias', 'order.createdAt',
+            'order.totalSenias', 'order.createdAt',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
             'items.id', 'items.name', 'items.metadata',
@@ -256,7 +256,6 @@ let OrdersService = class OrdersService {
             .select([
             'order.id', 'order.businessId', 'order.clientName', 'order.status', 'order.code',
             'order.totalPrice', 'order.totalSenias', 'order.createdAt', 'order.updatedAt',
-            'order.direccion_obra', 'order.fecha_visita', 'order.hora_visita', 'order.observaciones_visita',
             'customer.id', 'customer.name',
             'responsableGeneral.id', 'responsableGeneral.firstName',
             'items.id', 'items.name', 'items.price', 'items.qty',
@@ -320,19 +319,13 @@ let OrdersService = class OrdersService {
         return await this.orderRepository.manager.transaction(async (manager) => {
             const business = await manager.findOne('Business', { where: { id: orderData.businessId } });
             const strategy = this.strategyProvider.getStrategy(business?.category);
-            const { direccion_obra, fecha_visita, hora_visita, observaciones_visita } = orderData;
             const initialStatus = createOrderDto.status || strategy.getInitialStatus(items);
             const order = manager.create(order_entity_1.Order, {
                 ...orderData,
                 code,
                 totalPrice,
                 status: initialStatus,
-                siteInfo: (direccion_obra || fecha_visita || hora_visita || observaciones_visita) ? {
-                    address: direccion_obra,
-                    visitDate: fecha_visita,
-                    visitTime: hora_visita,
-                    visitObservations: observaciones_visita
-                } : null
+                siteInfo: createOrderDto.siteInfo ? manager.create(order_site_info_entity_1.OrderSiteInfo, createOrderDto.siteInfo) : null
             });
             const savedOrder = await manager.save(order_entity_1.Order, order);
             if (items && items.length > 0) {
@@ -494,35 +487,17 @@ let OrdersService = class OrdersService {
                 updateData.dueDate = dueDate;
             if (responsableGeneralId !== undefined)
                 updateData.responsableGeneralId = responsableGeneralId;
-            if (updateStatusDto.direccion_obra !== undefined)
-                updateData.direccion_obra = updateStatusDto.direccion_obra;
-            if (updateStatusDto.fecha_visita !== undefined)
-                updateData.fecha_visita = updateStatusDto.fecha_visita;
-            if (updateStatusDto.hora_visita !== undefined)
-                updateData.hora_visita = updateStatusDto.hora_visita;
-            if (updateStatusDto.observaciones_visita !== undefined)
-                updateData.observaciones_visita = updateStatusDto.observaciones_visita;
-            if (updateStatusDto.metadata !== undefined)
-                updateData.metadata = updateStatusDto.metadata;
             if (notes !== undefined)
                 updateData.notes = notes;
-            if (updateStatusDto.direccion_obra !== undefined ||
-                updateStatusDto.fecha_visita !== undefined ||
-                updateStatusDto.hora_visita !== undefined ||
-                updateStatusDto.observaciones_visita !== undefined) {
-                let siteInfo = await manager.findOne('OrderSiteInfo', { where: { orderId: id } });
+            if (updateStatusDto.metadata !== undefined)
+                updateData.metadata = updateStatusDto.metadata;
+            if (updateStatusDto.siteInfo !== undefined) {
+                let siteInfo = await manager.findOne(order_site_info_entity_1.OrderSiteInfo, { where: { orderId: id } });
                 if (!siteInfo) {
-                    siteInfo = manager.create('OrderSiteInfo', { orderId: id });
+                    siteInfo = manager.create(order_site_info_entity_1.OrderSiteInfo, { orderId: id });
                 }
-                if (updateStatusDto.direccion_obra !== undefined)
-                    siteInfo.address = updateStatusDto.direccion_obra;
-                if (updateStatusDto.fecha_visita !== undefined)
-                    siteInfo.visitDate = updateStatusDto.fecha_visita;
-                if (updateStatusDto.hora_visita !== undefined)
-                    siteInfo.visitTime = updateStatusDto.hora_visita;
-                if (updateStatusDto.observaciones_visita !== undefined)
-                    siteInfo.visitObservations = updateStatusDto.observaciones_visita;
-                await manager.save('OrderSiteInfo', siteInfo);
+                Object.assign(siteInfo, updateStatusDto.siteInfo);
+                await manager.save(order_site_info_entity_1.OrderSiteInfo, siteInfo);
             }
             if (items && items.length > 0) {
                 for (const itemData of items) {

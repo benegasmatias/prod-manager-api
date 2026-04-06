@@ -16,6 +16,10 @@ exports.EmployeesController = void 0;
 const common_1 = require("@nestjs/common");
 const employees_service_1 = require("./employees.service");
 const supabase_auth_guard_1 = require("../users/guards/supabase-auth.guard");
+const business_access_guard_1 = require("../businesses/guards/business-access.guard");
+const business_role_guard_1 = require("../businesses/guards/business-role.guard");
+const require_business_role_decorator_1 = require("../businesses/decorators/require-business-role.decorator");
+const enums_1 = require("../common/enums");
 let EmployeesController = class EmployeesController {
     constructor(employeesService) {
         this.employeesService = employeesService;
@@ -40,6 +44,7 @@ let EmployeesController = class EmployeesController {
 exports.EmployeesController = EmployeesController;
 __decorate([
     (0, common_1.Post)(),
+    (0, require_business_role_decorator_1.RequireBusinessRole)(enums_1.BusinessRole.OWNER, enums_1.BusinessRole.BUSINESS_ADMIN),
     __param(0, (0, common_1.Query)('businessId')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -64,6 +69,7 @@ __decorate([
 ], EmployeesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, require_business_role_decorator_1.RequireBusinessRole)(enums_1.BusinessRole.OWNER, enums_1.BusinessRole.BUSINESS_ADMIN),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Query)('businessId')),
     __param(2, (0, common_1.Body)()),
@@ -73,6 +79,7 @@ __decorate([
 ], EmployeesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, require_business_role_decorator_1.RequireBusinessRole)(enums_1.BusinessRole.OWNER, enums_1.BusinessRole.BUSINESS_ADMIN),
     __param(0, (0, common_1.Param)('id', common_1.ParseUUIDPipe)),
     __param(1, (0, common_1.Query)('businessId')),
     __metadata("design:type", Function),
@@ -81,7 +88,7 @@ __decorate([
 ], EmployeesController.prototype, "remove", null);
 exports.EmployeesController = EmployeesController = __decorate([
     (0, common_1.Controller)('employees'),
-    (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard),
+    (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard, business_access_guard_1.BusinessAccessGuard, business_role_guard_1.BusinessRoleGuard),
     __metadata("design:paramtypes", [employees_service_1.EmployeesService])
 ], EmployeesController);
 //# sourceMappingURL=employees.controller.js.map

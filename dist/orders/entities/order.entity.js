@@ -132,22 +132,6 @@ __decorate([
     __metadata("design:type", employee_entity_1.Employee)
 ], Order.prototype, "responsableGeneral", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'direccion_obra', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "direccion_obra", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'fecha_visita', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "fecha_visita", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'hora_visita', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "hora_visita", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'observaciones_visita', type: 'text', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "observaciones_visita", void 0);
-__decorate([
     (0, typeorm_1.Column)({ type: 'jsonb', nullable: true }),
     __metadata("design:type", Object)
 ], Order.prototype, "metadata", void 0);

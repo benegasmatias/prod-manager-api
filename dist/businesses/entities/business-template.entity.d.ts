@@ -4,6 +4,11 @@ export declare class BusinessTemplate {
     name: string;
     description: string;
     imageKey: string;
+    config: any;
+    isEnabled: boolean;
+    isAvailable: boolean;
+    isComingSoon: boolean;
+    requiredPlan: string;
     createdAt: Date;
     updatedAt: Date;
 }

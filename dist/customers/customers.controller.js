@@ -17,52 +17,38 @@ const common_1 = require("@nestjs/common");
 const customers_service_1 = require("./customers.service");
 const customer_dto_1 = require("./dto/customer.dto");
 const supabase_auth_guard_1 = require("../users/guards/supabase-auth.guard");
-const businesses_service_1 = require("../businesses/businesses.service");
+const business_access_guard_1 = require("../businesses/guards/business-access.guard");
+const business_status_guard_1 = require("../businesses/guards/business-status.guard");
+const allow_business_statuses_decorator_1 = require("../businesses/decorators/allow-business-statuses.decorator");
+const enums_1 = require("../common/enums");
 let CustomersController = class CustomersController {
-    constructor(customersService, businessesService) {
+    constructor(customersService) {
         this.customersService = customersService;
-        this.businessesService = businessesService;
     }
     async create(req, createCustomerDto) {
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, createCustomerDto.businessId);
-        if (!hasAccess) {
-            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.create(createCustomerDto);
     }
     async findAll(req, businessId, q, page, limit) {
         if (!businessId) {
             throw new common_1.BadRequestException('El ID del negocio es obligatorio');
         }
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, businessId);
-        if (!hasAccess) {
-            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.findAll(businessId, q, Number(page) || 1, Number(limit) || 10);
     }
-    findOne(id) {
+    async findOne(id) {
         return this.customersService.findOne(id);
     }
     async update(req, id, updateCustomerDto) {
-        const customer = await this.customersService.findOne(id);
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, customer.businessId);
-        if (!hasAccess) {
-            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.update(id, updateCustomerDto);
     }
     async remove(req, id) {
-        const customer = await this.customersService.findOne(id);
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, customer.businessId);
-        if (!hasAccess) {
-            throw new common_1.ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.remove(id);
     }
 };
 exports.CustomersController = CustomersController;
 __decorate([
     (0, common_1.Post)(),
+    (0, common_1.UseGuards)(business_access_guard_1.BusinessAccessGuard, business_status_guard_1.BusinessStatusGuard),
+    (0, allow_business_statuses_decorator_1.AllowBusinessStatuses)(enums_1.BusinessStatus.ACTIVE),
     __param(0, (0, common_1.Request)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -71,6 +57,8 @@ __decorate([
 ], CustomersController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, common_1.UseGuards)(business_access_guard_1.BusinessAccessGuard, business_status_guard_1.BusinessStatusGuard),
+    (0, allow_business_statuses_decorator_1.AllowBusinessStatuses)(enums_1.BusinessStatus.ACTIVE),
     __param(0, (0, common_1.Request)()),
     __param(1, (0, common_1.Query)('businessId')),
     __param(2, (0, common_1.Query)('q')),
@@ -85,7 +73,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], CustomersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
@@ -107,7 +95,6 @@ __decorate([
 exports.CustomersController = CustomersController = __decorate([
     (0, common_1.Controller)('customers'),
     (0, common_1.UseGuards)(supabase_auth_guard_1.SupabaseAuthGuard),
-    __metadata("design:paramtypes", [customers_service_1.CustomersService,
-        businesses_service_1.BusinessesService])
+    __metadata("design:paramtypes", [customers_service_1.CustomersService])
 ], CustomersController);
 //# sourceMappingURL=customers.controller.js.map

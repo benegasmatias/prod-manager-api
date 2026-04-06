@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaterialType = exports.ProductFileRole = exports.PaymentMethod = exports.FileType = exports.Priority = exports.MachineStatus = exports.JobStatus = exports.OrderStatus = exports.OrderType = void 0;
+exports.MaterialType = exports.ProductionJobPriority = exports.ProductionJobStatus = exports.OrderItemStatus = exports.WebhookStatus = exports.SubscriptionStatus = exports.BusinessRole = exports.BusinessStatus = exports.PaymentMethod = exports.FileType = exports.Priority = exports.MachineStatus = exports.JobStatus = exports.OrderStatus = exports.OrderType = void 0;
 var OrderType;
 (function (OrderType) {
-    OrderType["CUSTOMER"] = "CUSTOMER";
+    OrderType["CLIENT"] = "CLIENT";
     OrderType["STOCK"] = "STOCK";
 })(OrderType || (exports.OrderType = OrderType = {}));
 var OrderStatus;
@@ -78,30 +78,76 @@ var PaymentMethod;
     PaymentMethod["CARD"] = "CARD";
     PaymentMethod["MP"] = "MP";
 })(PaymentMethod || (exports.PaymentMethod = PaymentMethod = {}));
-var ProductFileRole;
-(function (ProductFileRole) {
-    ProductFileRole["MODEL"] = "MODEL";
-    ProductFileRole["PREVIEW"] = "PREVIEW";
-    ProductFileRole["INSTRUCTIONS"] = "INSTRUCTIONS";
-})(ProductFileRole || (exports.ProductFileRole = ProductFileRole = {}));
+var BusinessStatus;
+(function (BusinessStatus) {
+    BusinessStatus["DRAFT"] = "DRAFT";
+    BusinessStatus["ACTIVE"] = "ACTIVE";
+    BusinessStatus["SUSPENDED"] = "SUSPENDED";
+    BusinessStatus["ARCHIVED"] = "ARCHIVED";
+})(BusinessStatus || (exports.BusinessStatus = BusinessStatus = {}));
+var BusinessRole;
+(function (BusinessRole) {
+    BusinessRole["OWNER"] = "OWNER";
+    BusinessRole["BUSINESS_ADMIN"] = "BUSINESS_ADMIN";
+    BusinessRole["SALES"] = "SALES";
+    BusinessRole["OPERATOR"] = "OPERATOR";
+    BusinessRole["VIEWER"] = "VIEWER";
+})(BusinessRole || (exports.BusinessRole = BusinessRole = {}));
+var SubscriptionStatus;
+(function (SubscriptionStatus) {
+    SubscriptionStatus["TRIALING"] = "TRIALING";
+    SubscriptionStatus["ACTIVE"] = "ACTIVE";
+    SubscriptionStatus["PAST_DUE"] = "PAST_DUE";
+    SubscriptionStatus["SUSPENDED"] = "SUSPENDED";
+    SubscriptionStatus["CANCELED"] = "CANCELED";
+    SubscriptionStatus["EXPIRED"] = "EXPIRED";
+})(SubscriptionStatus || (exports.SubscriptionStatus = SubscriptionStatus = {}));
+var WebhookStatus;
+(function (WebhookStatus) {
+    WebhookStatus["RECEIVED"] = "RECEIVED";
+    WebhookStatus["PROCESSED"] = "PROCESSED";
+    WebhookStatus["FAILED"] = "FAILED";
+    WebhookStatus["IGNORED"] = "IGNORED";
+})(WebhookStatus || (exports.WebhookStatus = WebhookStatus = {}));
+var OrderItemStatus;
+(function (OrderItemStatus) {
+    OrderItemStatus["PENDING"] = "PENDING";
+    OrderItemStatus["IN_PROGRESS"] = "IN_PROGRESS";
+    OrderItemStatus["READY"] = "READY";
+    OrderItemStatus["DONE"] = "DONE";
+    OrderItemStatus["FAILED"] = "FAILED";
+    OrderItemStatus["CANCELLED"] = "CANCELLED";
+})(OrderItemStatus || (exports.OrderItemStatus = OrderItemStatus = {}));
+var ProductionJobStatus;
+(function (ProductionJobStatus) {
+    ProductionJobStatus["QUEUED"] = "QUEUED";
+    ProductionJobStatus["IN_PROGRESS"] = "IN_PROGRESS";
+    ProductionJobStatus["PAUSED"] = "PAUSED";
+    ProductionJobStatus["DONE"] = "DONE";
+    ProductionJobStatus["FAILED"] = "FAILED";
+    ProductionJobStatus["CANCELLED"] = "CANCELLED";
+})(ProductionJobStatus || (exports.ProductionJobStatus = ProductionJobStatus = {}));
+var ProductionJobPriority;
+(function (ProductionJobPriority) {
+    ProductionJobPriority["LOW"] = "LOW";
+    ProductionJobPriority["NORMAL"] = "NORMAL";
+    ProductionJobPriority["HIGH"] = "HIGH";
+    ProductionJobPriority["URGENT"] = "URGENT";
+})(ProductionJobPriority || (exports.ProductionJobPriority = ProductionJobPriority = {}));
 var MaterialType;
 (function (MaterialType) {
     MaterialType["PLA"] = "PLA";
     MaterialType["PETG"] = "PETG";
     MaterialType["ABS"] = "ABS";
     MaterialType["TPU"] = "TPU";
-    MaterialType["RESIN"] = "RESIN";
-    MaterialType["LIMPIEZA"] = "LIMPIEZA";
+    MaterialType["RESINA"] = "RESINA";
+    MaterialType["CA\u00D1O"] = "CA\u00D1O";
     MaterialType["PERFIL"] = "PERFIL";
     MaterialType["CHAPA"] = "CHAPA";
-    MaterialType["MACHO"] = "MACHO";
-    MaterialType["HIERRO"] = "HIERRO";
-    MaterialType["ACERO"] = "ACERO";
+    MaterialType["BARRA"] = "BARRA";
     MaterialType["PLACA"] = "PLACA";
     MaterialType["MADERA"] = "MADERA";
     MaterialType["HERRAJE"] = "HERRAJE";
     MaterialType["INSUMO"] = "INSUMO";
-    MaterialType["PRODUCTO"] = "PRODUCTO";
-    MaterialType["OTRO"] = "OTRO";
 })(MaterialType || (exports.MaterialType = MaterialType = {}));
 //# sourceMappingURL=enums.js.map

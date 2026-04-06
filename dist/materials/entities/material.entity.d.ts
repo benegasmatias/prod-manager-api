@@ -1,5 +1,5 @@
 import { MaterialType } from '../../common/enums';
-import { ProductionJob } from '../../jobs/entities/production-job.entity';
+import { ProductionJobMaterial } from '../../jobs/entities/production-job-material.entity';
 export declare class Material {
     id: string;
     name: string;
@@ -14,5 +14,5 @@ export declare class Material {
     nozzleTemperature?: number;
     unit: string;
     active: boolean;
-    productionJobs: ProductionJob[];
+    jobMaterials: Array<ProductionJobMaterial>;
 }

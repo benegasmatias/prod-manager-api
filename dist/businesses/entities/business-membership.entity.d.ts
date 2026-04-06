@@ -1,16 +1,12 @@
 import { Business } from './business.entity';
 import { User } from '../../users/entities/user.entity';
-export declare enum UserRole {
-    OWNER = "OWNER",
-    ADMIN = "ADMIN",
-    MEMBER = "MEMBER"
-}
+import { BusinessRole } from '../../common/enums';
 export declare class BusinessMembership {
     id: string;
     userId: string;
     user: User;
     businessId: string;
     business: Business;
-    role: UserRole;
+    role: BusinessRole;
     createdAt: Date;
 }
