@@ -5,6 +5,7 @@ export declare class User {
     defaultBusinessId: string;
     globalRole: string;
     active: boolean;
+    plan: string;
     mustChangePassword: boolean;
     createdAt: Date;
     updatedAt: Date;

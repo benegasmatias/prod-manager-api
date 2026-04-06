@@ -2,34 +2,53 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } f
 import { MaterialsService } from './materials.service';
 import { CreateMaterialDto, UpdateMaterialDto } from './dto/material.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
+import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
+import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
+import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
+import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
+import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { BusinessStatus, BusinessRole } from '../common/enums';
 
 @Controller('materials')
-@UseGuards(SupabaseAuthGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
 export class MaterialsController {
     constructor(private readonly materialsService: MaterialsService) { }
 
     @Post()
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     create(@Body() createMaterialDto: CreateMaterialDto) {
         return this.materialsService.create(createMaterialDto);
     }
 
     @Get()
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     findAll(@Query('businessId') businessId?: string) {
         return this.materialsService.findAll(businessId);
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    async findOne(@Param('id') id: string) {
         return this.materialsService.findOne(id);
     }
 
     @Patch(':id')
-    update(@Param('id') id: string, @Body() updateMaterialDto: UpdateMaterialDto) {
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async update(@Param('id') id: string, @Body() updateMaterialDto: UpdateMaterialDto) {
         return this.materialsService.update(id, updateMaterialDto);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string) {
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async remove(@Param('id') id: string) {
         return this.materialsService.deactivate(id);
     }
 }

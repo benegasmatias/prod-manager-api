@@ -1,27 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Query, UseGuards, Delete, Request, ForbiddenException, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Query, UseGuards, Delete, Request, BadRequestException } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto, UpdateCustomerDto } from './dto/customer.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
-import { BusinessesService } from '../businesses/businesses.service';
+import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
+import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
+import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
+import { BusinessStatus } from '../common/enums';
 
 @Controller('customers')
 @UseGuards(SupabaseAuthGuard)
 export class CustomersController {
     constructor(
         private readonly customersService: CustomersService,
-        private readonly businessesService: BusinessesService,
     ) { }
 
     @Post()
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async create(@Request() req, @Body() createCustomerDto: CreateCustomerDto) {
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, createCustomerDto.businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.create(createCustomerDto);
     }
 
     @Get()
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     async findAll(
         @Request() req,
         @Query('businessId') businessId: string,
@@ -32,35 +34,22 @@ export class CustomersController {
         if (!businessId) {
             throw new BadRequestException('El ID del negocio es obligatorio');
         }
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.findAll(businessId, q, Number(page) || 1, Number(limit) || 10);
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
+    async findOne(@Param('id') id: string) {
         return this.customersService.findOne(id);
     }
 
     @Patch(':id')
     async update(@Request() req, @Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-        const customer = await this.customersService.findOne(id);
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, customer.businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
+        // En un futuro estos también deberían usar los guards si el DTO no trae businessId
         return this.customersService.update(id, updateCustomerDto);
     }
 
     @Delete(':id')
     async remove(@Request() req, @Param('id') id: string) {
-        const customer = await this.customersService.findOne(id);
-        const hasAccess = await this.businessesService.checkAccess(req.user.id, customer.businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
         return this.customersService.remove(id);
     }
 }

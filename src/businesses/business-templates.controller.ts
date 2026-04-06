@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request } from '@nestjs/common';
 import { BusinessesService } from './businesses.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { BusinessTemplateDto } from './dto/business-template.dto';
@@ -9,7 +9,7 @@ export class BusinessTemplatesController {
     constructor(private readonly businessesService: BusinessesService) { }
 
     @Get()
-    async getTemplates(): Promise<BusinessTemplateDto[]> {
-        return await this.businessesService.getTemplates();
+    async getTemplates(@Request() req): Promise<BusinessTemplateDto[]> {
+        return await this.businessesService.getTemplates(req.user.id);
     }
 }

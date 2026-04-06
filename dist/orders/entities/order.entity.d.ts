@@ -7,6 +7,7 @@ import { Payment } from '../../payments/entities/payment.entity';
 import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { Employee } from '../../employees/entities/employee.entity';
+import { OrderSiteInfo } from './order-site-info.entity';
 export declare class Order {
     id: string;
     businessId: string;
@@ -25,15 +26,12 @@ export declare class Order {
     statusHistory: OrderStatusHistory[];
     failures: OrderFailure[];
     payments: Payment[];
+    siteInfo: OrderSiteInfo;
     totalPrice: number;
     totalSenias: number;
     notes: string;
     code: string;
     responsableGeneralId: string;
     responsableGeneral: Employee;
-    direccion_obra: string;
-    fecha_visita: string;
-    hora_visita: string;
-    observaciones_visita: string;
     metadata: any;
 }

@@ -1,4 +1,10 @@
 import { OrderStatus, OrderType } from '../../common/enums';
+export declare class OrderSiteInfoDto {
+    address?: string;
+    visitDate?: string;
+    visitTime?: string;
+    visitObservations?: string;
+}
 export declare class CreateOrderItemDto {
     id?: string;
     name: string;
@@ -12,12 +18,9 @@ export declare class CreateOrderItemDto {
     color?: string;
     accessories?: string[];
     instalacion?: boolean;
-    direccion_obra?: string;
-    fecha_visita?: string;
-    hora_visita?: string;
-    observaciones_visita?: string;
     description?: string;
     stlUrl?: string;
+    referenceImages?: any[];
     estimatedMinutes: number;
     weightGrams: number;
     price: number;
@@ -40,10 +43,7 @@ export declare class CreateOrderDto {
     totalPrice?: number;
     totalSenias?: number;
     responsableGeneralId?: string;
-    direccion_obra?: string;
-    fecha_visita?: string;
-    hora_visita?: string;
-    observaciones_visita?: string;
+    siteInfo?: OrderSiteInfoDto;
     metadata?: any;
 }
 export declare class UpdateProgressDto {
@@ -58,41 +58,26 @@ export declare class UpdateOrderStatusDto {
     dueDate?: Date;
     notes?: string;
     responsableGeneralId?: string;
-    items?: any[];
-    direccion_obra?: string;
-    fecha_visita?: string;
-    hora_visita?: string;
-    observaciones_visita?: string;
+    items?: CreateOrderItemDto[];
+    siteInfo?: OrderSiteInfoDto;
     metadata?: any;
 }
-export declare class BaseOrderFilterDto {
+export declare class FindOrdersDto {
     businessId?: string;
+    responsableId?: string;
+    status?: OrderStatus;
+    statuses?: OrderStatus[] | string;
+    excludeStatuses?: OrderStatus[] | string;
+    type?: OrderType;
     page?: number;
     pageSize?: number;
     search?: string;
     startDate?: Date;
     endDate?: Date;
-    responsableId?: string;
 }
-export declare class FindOrdersDto extends BaseOrderFilterDto {
-    status?: OrderStatus;
-    statuses?: string | string[];
-    excludeStatuses?: string | string[];
-    type?: OrderType;
+export declare class FindVisitsDto extends FindOrdersDto {
 }
-export declare class FindVisitsDto extends BaseOrderFilterDto {
-    status?: OrderStatus;
-}
-export declare class FindQuotationsDto extends BaseOrderFilterDto {
-    status?: OrderStatus;
-}
-export declare class ReportFailureDto {
-    reason: string;
-    wastedGrams: number;
-    materialId?: string;
-    moveToReprint: boolean;
-    targetStatus?: OrderStatus;
-    metadata?: any;
+export declare class FindQuotationsDto extends FindOrdersDto {
 }
 export declare class OrderSummaryResponseDto {
     totalVolume: number;
@@ -103,4 +88,11 @@ export declare class BudgetSummaryResponseDto {
     totalBudgeted: number;
     pendingApprovalCount: number;
     conversionRate: number;
+}
+export declare class ReportFailureDto {
+    reason: string;
+    wastedGrams: number;
+    materialId?: string;
+    moveToReprint?: boolean;
+    metadata?: any;
 }

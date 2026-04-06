@@ -1,21 +1,45 @@
 import { Injectable, ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { Business } from './entities/business.entity';
 import { BusinessTemplateDto } from './dto/business-template.dto';
-import { BusinessMembership, UserRole } from './entities/business-membership.entity';
+import { BusinessMembership } from './entities/business-membership.entity';
+import { BusinessRole } from '../common/enums';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
-import { DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
 import { Machine } from '../machines/entities/machine.entity';
-import { MachineStatus, OrderStatus, OrderType } from '../common/enums';
+import { MachineStatus, OrderStatus, OrderType, BusinessStatus } from '../common/enums';
 import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
 import { Employee } from '../employees/entities/employee.entity';
+import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
+import { PlanUsageService } from './plan-usage.service';
+import { BillingService } from './billing.service';
+import { PLAN_LIMITS } from './config/plan-limits.config';
+import { AuditService } from '../audit/audit.service';
+import { AuditAction } from '../audit/entities/audit-log.entity';
+
+const DEFAULT_BASE_CONFIG = {
+    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
+    labels: { produccion: 'Producción', items: 'Trabajos' },
+    icons: { pedidos: 'Box', produccion: 'Cpu' },
+    stats: [
+        { key: 'totalSales', label: 'Ventas Totales', icon: 'TrendingUp', format: 'currency' },
+        { key: 'pendingBalance', label: 'Saldo a Cobrar', icon: 'Wallet', format: 'currency' }
+    ],
+    productionStages: [
+        { key: 'PENDING', label: 'Pendiente', color: 'bg-zinc-100' },
+        { key: 'DONE', label: 'Terminado', color: 'bg-emerald-500' }
+    ],
+    itemFields: [
+        { key: 'nombreProducto', label: 'Nombre / Trabajo', tipo: 'text', required: true }
+    ],
+    features: { hasMaterials: false, hasVisits: false },
+};
 
 @Injectable()
 export class BusinessesService {
@@ -36,20 +60,60 @@ export class BusinessesService {
         private readonly machineRepository: Repository<Machine>,
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
+        @InjectRepository(Employee)
+        private readonly employeeRepository: Repository<Employee>,
+        private readonly planUsageService: PlanUsageService,
+        private readonly auditService: AuditService,
+        private readonly billingService: BillingService,
         private readonly dataSource: DataSource,
+        private readonly strategyProvider: BusinessStrategyProvider,
     ) { }
 
-    async getTemplates(): Promise<BusinessTemplateDto[]> {
-        const templates = await this.templateRepository.find();
-        return templates.map(t => ({
-            key: t.key,
-            name: t.name,
-            description: t.description,
-            imageKey: t.imageKey,
-        }));
+    async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
+        const templates = await this.templateRepository.find({
+            where: { isEnabled: true }
+        });
+
+        let userPlan = 'FREE';
+        if (userId) {
+            const user = await this.userRepository.findOneBy({ id: userId });
+            if (user) userPlan = user.plan || 'FREE';
+        }
+
+        return templates.map(t => {
+            const { accessible, reason } = this.checkPlanAccessibility(userPlan, t.requiredPlan);
+            return {
+                key: t.key,
+                name: t.name,
+                description: t.description,
+                imageKey: t.imageKey,
+                isAvailable: t.isAvailable,
+                isComingSoon: t.isComingSoon,
+                requiredPlan: t.requiredPlan,
+                accessible,
+                accessReason: reason
+            };
+        });
+    }
+
+    private checkPlanAccessibility(userPlan: string, requiredPlan: string): { accessible: boolean, reason?: string } {
+        const levels: any = { 'FREE': 0, 'PRO': 1, 'ENTERPRISE': 2 };
+        const userLevel = levels[userPlan] || 0;
+        const requiredLevel = levels[requiredPlan] || 0;
+
+        if (userLevel >= requiredLevel) {
+            return { accessible: true };
+        }
+
+        return { 
+            accessible: false, 
+            reason: `Este rubro requiere un plan ${requiredPlan}. Tu plan actual es ${userPlan}.` 
+        };
     }
 
     async createFromTemplate(userId: string, createDto: CreateBusinessFromTemplateDto): Promise<any> {
+        await this.planUsageService.ensureBusinessCreationAllowed(userId);
+
         const { templateKey, name } = createDto;
         const template = await this.templateRepository.findOneBy({ key: templateKey });
 
@@ -58,99 +122,272 @@ export class BusinessesService {
         }
 
         return await this.dataSource.transaction(async (manager) => {
-            // 1. Buscar si el usuario ya tiene un negocio de esta categoría (Regla A: 1 rubro por user)
-            const existingMembership = await manager.findOne(BusinessMembership, {
-                where: {
-                    userId,
-                    business: { category: templateKey }
-                },
-                relations: ['business']
-            });
-
-            if (existingMembership) {
-                throw new BadRequestException(`Ya tienes un negocio registrado en el rubro ${templateKey}. No se permiten duplicados por rubro.`);
-            }
-
-            console.log(`[Onboarding] Creating new business for user ${userId} [Category: ${templateKey}]`);
-            // Crear el negocio
             const business = manager.create(Business, {
                 name: name || (template ? `${template.name} - Mi Espacio` : 'Mi Negocio'),
-                category: templateKey
+                category: templateKey,
+                status: 'DRAFT',
+                onboardingStep: 'BASIC_INFO',
+                plan: 'FREE'
             });
             const businessToUse = await manager.save(Business, business);
 
-            // Crear membership OWNER
-            const membership = manager.create(BusinessMembership, {
+            // Fase 5.2: Suscripción por defecto (Atómica)
+            const initialPlan = template?.requiredPlan || 'FREE';
+            await this.billingService.createDefaultSubscription(businessToUse.id, initialPlan, manager);
+
+            await manager.save(BusinessMembership, manager.create(BusinessMembership, {
                 userId,
                 businessId: businessToUse.id,
-                role: UserRole.OWNER
-            });
-            await manager.save(BusinessMembership, membership);
+                role: BusinessRole.OWNER
+            }));
 
-            // 1.b Autocompletar el Personal con el Dueño
             const user = await manager.findOneBy(User, { id: userId });
             if (user) {
-                // Verificar si ya existe (por si acaso se reintenta la transacción)
-                const existingEmployee = await manager.findOne(Employee, {
-                    where: { businessId: businessToUse.id, email: user.email }
-                });
-
-                if (!existingEmployee) {
-                    const nameParts = (user.fullName || 'Propietario').trim().split(/\s+/);
-                    const firstName = nameParts[0] || 'Propietario';
-                    const lastName = nameParts.slice(1).join(' ');
-
-                    const employee = manager.create(Employee, {
-                        businessId: businessToUse.id,
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: user.email,
-                        active: true,
-                        specialties: 'Administrador / Dueño'
-                    });
-                    await manager.save(Employee, employee);
-                    console.log(`✅ [Onboarding] Owner ${user.email} added as first Employee for business ${businessToUse.id}`);
+                const nameParts = (user.fullName || 'Propietario').split(' ');
+                await manager.save(Employee, manager.create(Employee, {
+                    businessId: businessToUse.id,
+                    firstName: nameParts[0] || 'Propietario',
+                    lastName: nameParts.slice(1).join(' '),
+                    email: user.email,
+                    active: true,
+                    role: 'OWNER'
+                }));
+                
+                if (!user.defaultBusinessId) {
+                    user.defaultBusinessId = businessToUse.id;
+                    await manager.save(User, user);
                 }
             }
 
-            if (user && !user.defaultBusinessId) {
-                user.defaultBusinessId = businessToUse.id;
-                await manager.save(User, user);
-                console.log(`✅ [Onboarding] defaultBusinessId seteado (primera vez) -> ${businessToUse.id}`);
+            return { businessId: businessToUse.id, status: 'DRAFT', onboardingStep: 'BASIC_INFO' };
+        });
+    }
+
+    async updateOnboardingStep(userId: string, businessId: string, step: string): Promise<any> {
+        const business = await this.findOne(userId, businessId);
+        business.onboardingStep = step;
+        await this.businessRepository.save(business);
+        return { businessId, onboardingStep: step };
+    }
+
+    async activateBusiness(userId: string, businessId: string): Promise<any> {
+        const business = await this.findOne(userId, businessId);
+        if (business.status === 'ACTIVE') return { businessId, status: 'ACTIVE' };
+
+        const previousStatus = business.status;
+        business.status = 'ACTIVE';
+        business.onboardingCompleted = true;
+        business.onboardingStep = 'DONE';
+        business.statusUpdatedAt = new Date();
+        
+        await this.businessRepository.save(business);
+
+        await this.auditService.log(
+            AuditAction.BUSINESS_ACTIVATED,
+            'BUSINESS',
+            businessId,
+            businessId,
+            userId,
+            { previousStatus, newStatus: 'ACTIVE' }
+        );
+
+        return { businessId, status: 'ACTIVE', message: 'Activado con éxito.' };
+    }
+
+    async updateStatusAdmin(businessId: string, newStatus: string, reasonCode?: string, reasonText?: string): Promise<any> {
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Negocio no encontrado');
+
+        const oldStatus = business.status;
+        const oldEnabled = business.isEnabled;
+
+        business.status = newStatus;
+        business.statusUpdatedAt = new Date();
+        if (reasonCode) business.statusReasonCode = reasonCode;
+        if (reasonText) business.statusReasonText = reasonText;
+
+        if (newStatus === 'ARCHIVED') {
+             business.isEnabled = false;
+        }
+
+        await this.businessRepository.save(business);
+
+        // --- AUDIT LOGS ---
+        if (oldStatus !== newStatus) {
+            await this.auditService.log(
+                AuditAction.BUSINESS_STATUS_CHANGED,
+                'BUSINESS',
+                businessId,
+                businessId,
+                null,
+                { oldStatus, newStatus, reasonCode, reasonText }
+            );
+
+            if (newStatus === 'ARCHIVED') {
+                await this.auditService.log(AuditAction.BUSINESS_ARCHIVED, 'BUSINESS', businessId, businessId, null, { reasonCode });
             }
+        }
 
-            // 3. Respuesta estructurada exacta
-            return {
-                business: {
-                    id: businessToUse.id,
-                    name: businessToUse.name,
-                    category: businessToUse.category
-                },
-                defaultBusinessId: businessToUse.id
+        if (oldEnabled !== business.isEnabled) {
+            await this.auditService.log(
+                AuditAction.BUSINESS_ENABLED_CHANGED,
+                'BUSINESS',
+                businessId,
+                businessId,
+                null,
+                { previousValue: oldEnabled, newValue: business.isEnabled, reasonCode, reasonText }
+            );
+        }
+        // ------------------
+
+        return { businessId, status: newStatus, isEnabled: business.isEnabled };
+    }
+
+    async updateEnabledAdmin(businessId: string, isEnabled: boolean, reasonCode?: string, reasonText?: string): Promise<any> {
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Negocio no encontrado');
+
+        const previousValue = business.isEnabled;
+        if (previousValue === isEnabled) return { businessId, isEnabled };
+
+        business.isEnabled = isEnabled;
+        business.statusUpdatedAt = new Date();
+        if (reasonCode) business.statusReasonCode = reasonCode;
+        if (reasonText) business.statusReasonText = reasonText;
+
+        await this.businessRepository.save(business);
+
+        await this.auditService.log(
+            AuditAction.BUSINESS_ENABLED_CHANGED,
+            'BUSINESS',
+            businessId,
+            businessId,
+            null,
+            { previousValue, newValue: isEnabled, reasonCode, reasonText }
+        );
+
+        return { businessId, isEnabled, status: business.status };
+    }
+
+    async getBusinessAuditLogs(businessId: string): Promise<any> {
+        return this.auditService.findByBusiness(businessId);
+    }
+
+    async getBusinessUsage(businessId: string): Promise<any> {
+        return this.planUsageService.getBusinessUsage(businessId);
+    }
+
+    async resolveBusinessConfig(userId: string, businessId: string): Promise<any> {
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        if (!business) throw new ForbiddenException('Negocio no encontrado');
+
+        const template = await this.templateRepository.findOneBy({ key: business.category });
+        
+        let config = JSON.parse(JSON.stringify(DEFAULT_BASE_CONFIG));
+
+        if (template?.config) {
+            config = {
+                ...config,
+                ...template.config,
+                features: { ...config.features, ...(template.config.features || {}) }
             };
-        });
+        }
+
+        // SaaS Gating (Subscription Source of Truth)
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const subscriptionStatus = business?.subscription?.status || 'ACTIVE';
+        const limits = PLAN_LIMITS[plan];
+        if (config.features) {
+            config.features.hasMaterials = limits.features.hasMaterials;
+        }
+
+        if (business.capabilitiesOverride) {
+            config = { ...config, ...business.capabilitiesOverride };
+        }
+
+        // RBAC Context
+        const membership = await this.membershipRepository.findOneBy({ userId, businessId });
+        const userRole = membership?.role || BusinessRole.OPERATOR;
+        const userPermissions = this.getPermissionsForRole(userRole);
+
+        return { 
+            businessId: business.id, 
+            config,
+            userRole,
+            userPermissions,
+            subscription: {
+                plan,
+                status: subscriptionStatus,
+                currentPeriodEnd: business?.subscription?.currentPeriodEnd,
+                trialEndAt: business?.subscription?.trialEndAt,
+                cancelAtPeriodEnd: business?.subscription?.cancelAtPeriodEnd || false
+            }
+        };
     }
 
-    async checkAccess(userId: string, businessId: string): Promise<boolean> {
-        const membership = await this.membershipRepository.findOne({
-            where: { userId, businessId }
-        });
-        return !!membership;
-    }
+    private getPermissionsForRole(role: BusinessRole) {
+        const matrix: any = {
+            [BusinessRole.OWNER]: {
+                employees: { canRead: true, canManage: true },
+                audit: { canRead: true, canManage: true },
+                config_admin: { canRead: true, canManage: true },
+                materials: { canRead: true, canManage: true },
+                stockMoves: { canCreate: true },
+                machines: { canRead: true, canManage: true, canUpdateStatus: true },
+                payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
+            },
+            [BusinessRole.BUSINESS_ADMIN]: {
+                employees: { canRead: true, canManage: true },
+                audit: { canRead: true, canManage: false },
+                config_admin: { canRead: true, canManage: false },
+                materials: { canRead: true, canManage: true },
+                stockMoves: { canCreate: true },
+                machines: { canRead: true, canManage: true, canUpdateStatus: true },
+                payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
+            },
+            [BusinessRole.SALES]: {
+                employees: { canRead: true, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: false, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: false },
+                machines: { canRead: true, canManage: false, canUpdateStatus: false },
+                payments: { canRead: true, canManage: true },
+                orders: { canRead: true, canManage: true, canUpdateStatus: true, canReadFinancials: true },
+            },
+            [BusinessRole.OPERATOR]: {
+                employees: { canRead: false, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: false, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: true },
+                machines: { canRead: true, canManage: false, canUpdateStatus: true },
+                payments: { canRead: false, canManage: false },
+                orders: { canRead: true, canManage: false, canUpdateStatus: true, canReadFinancials: false },
+            },
+            [BusinessRole.VIEWER]: {
+                employees: { canRead: true, canManage: false },
+                audit: { canRead: false, canManage: false },
+                config_admin: { canRead: true, canManage: false },
+                materials: { canRead: true, canManage: false },
+                stockMoves: { canCreate: false },
+                machines: { canRead: true, canManage: false, canUpdateStatus: false },
+                payments: { canRead: false, canManage: false },
+                orders: { canRead: true, canManage: false, canUpdateStatus: false, canReadFinancials: false },
+            }
+        };
 
-    async findUserBusinesses(userId: string): Promise<Business[]> {
-        const memberships = await this.membershipRepository.find({
-            where: { userId },
-            relations: ['business']
-        });
-        return memberships.map(m => m.business);
+        return matrix[role] || matrix[BusinessRole.VIEWER];
     }
 
     async getDashboardSummary(userId: string, businessId: string): Promise<DashboardSummaryDto> {
         const hasAccess = await this.checkAccess(userId, businessId);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
+        if (!hasAccess) throw new ForbiddenException('Sin acceso');
 
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -170,11 +407,9 @@ export class BusinessesService {
             OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, OrderStatus.CUTTING,
             OrderStatus.WELDING, OrderStatus.ASSEMBLY, OrderStatus.PAINTING,
             OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS, OrderStatus.RE_WORK,
-            OrderStatus.OFFICIAL_ORDER // El taller suele considerarse también como producción activa
+            OrderStatus.OFFICIAL_ORDER
         ];
 
-
-        // Ejecutar todas las consultas en paralelo
         const [
             salesResult,
             activeOrdersWithItems,
@@ -184,42 +419,29 @@ export class BusinessesService {
             recentOrders,
             realOverdue
         ] = await Promise.all([
-            // 1. Total Sales
             this.orderRepository.createQueryBuilder('order')
                 .select('SUM(order.totalPrice)', 'total')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
                 .getRawOne(),
-
-            // 2. Pending Balance (necesitamos los items para los saldos)
             this.orderRepository.find({
                 where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
-                relations: ['items']
+                relations: ['items', 'siteInfo']
             }),
-
-            // 3. Active Machines
             this.machineRepository.count({
                 where: { businessId, status: MachineStatus.PRINTING }
             }),
-
-            // 3.b Production Orders
             this.orderRepository.count({
                 where: { businessId, status: In(PRODUCTION_STATUSES) }
             }),
-
-            // 4. New Customers
             this.customerRepository.count({
                 where: { businessId, createdAt: MoreThanOrEqual(thirtyDaysAgo) }
             }),
-
-            // 5. Recent Orders
             this.orderRepository.find({
                 where: { businessId },
                 order: { updatedAt: 'DESC' },
                 take: 5
             }),
-
-            // 6. Overdue Alerts
             this.orderRepository.createQueryBuilder('order')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
@@ -236,107 +458,19 @@ export class BusinessesService {
             return acc + (total - deposits - payments);
         }, 0);
 
-        // --- NEW: Operational Calculations for Business Pipeline & Dashboard ---
         const business = await this.businessRepository.findOneBy({ id: businessId });
-        const rawCategory = business?.category?.toUpperCase().trim() || 'GENERICO';
-        
-        // Detección heurística por estados de pedidos si no coincide la categoría exacta
-        const hasMetalStatuses = activeOrdersWithItems.some(o => 
-            [OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.OFFICIAL_ORDER, OrderStatus.WELDING, OrderStatus.CUTTING, OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED]
-            .includes(o.status)
-        );
+        const strategy = this.strategyProvider.getStrategy(business?.category);
+        const now = new Date();
+        const context = {
+            activeOrders: activeOrdersWithItems,
+            realOverdueCount: realOverdue.length,
+            todayStr: now.toISOString().split('T')[0],
+            nextWeekDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000)
+        };
 
-        const isMetalurgica = rawCategory.includes('METAL') || rawCategory.includes('HIERRO') || rawCategory === 'METALURGICA' || hasMetalStatuses;
-        const isCarpinteria = rawCategory.includes('CARP') || rawCategory.includes('MADERA') || rawCategory === 'CARPINTERIA';
-
-        console.log(`[Dashboard] Category: ${rawCategory} | Metal(heur): ${hasMetalStatuses} | FINAL: isMetal=${isMetalurgica}`);
-
-        let operationalCounters = undefined;
-        let pipelineSummary = undefined;
-        let calendarEvents = undefined;
-
-        if (isMetalurgica || isCarpinteria) {
-            const now = new Date();
-            const todayStr = now.toISOString().split('T')[0];
-            const nextWeek = new Date();
-            nextWeek.setDate(now.getDate() + 7);
-
-            // Operational Counters
-            operationalCounters = {
-                visitsToday: activeOrdersWithItems.filter(o => (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita === todayStr).length,
-                pendingBudgets: activeOrdersWithItems.filter(o => o.status === OrderStatus.QUOTATION || o.status === OrderStatus.SURVEY_DESIGN || o.status === OrderStatus.BUDGET_GENERATED).length,
-                inProduction: activeOrdersWithItems.filter(o => PRODUCTION_STATUSES.includes(o.status)).length,
-                deliveriesThisWeek: activeOrdersWithItems.filter(o => o.dueDate && o.dueDate <= nextWeek && o.status !== OrderStatus.DONE).length,
-                delayedOrders: realOverdue.length,
-                pendingPayments: activeOrdersWithItems.filter(o => {
-                    const total = Number(o.totalPrice) || 0;
-                    const dep = o.items?.reduce((a, i) => a + Number(i.deposit || 0), 0) || 0;
-                    const pay = o.payments?.reduce((a, p) => a + Number(p.amount || 0), 0) || 0;
-                    return (total - dep - pay) > 0;
-                }).length
-            };
-
-            // Pipeline Summary
-            const pipelineStages = [
-                { stage: 'VISITA', statuses: [OrderStatus.SITE_VISIT, OrderStatus.VISITA_REPROGRAMADA, OrderStatus.SITE_VISIT_DONE] },
-                { stage: 'PRESUPUESTO', statuses: [OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN] },
-                { stage: 'APROBADO', statuses: [OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER] },
-                { stage: 'PRODUCCION', statuses: PRODUCTION_STATUSES },
-                { stage: 'LISTO', statuses: [OrderStatus.DONE, OrderStatus.READY] },
-                { stage: 'ENTREGADO', statuses: [OrderStatus.DELIVERED] }
-            ];
-
-            pipelineSummary = pipelineStages.map(s => ({
-                stage: s.stage,
-                count: activeOrdersWithItems.filter(o => s.statuses.includes(o.status)).length
-            }));
-
-            // Agenda: Visitas hoy/mañana y entregas próximas
-            calendarEvents = activeOrdersWithItems
-                .filter(o => 
-                    ((o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) && o.fecha_visita) || 
-                    (o.dueDate && [OrderStatus.DONE, OrderStatus.READY, OrderStatus.INSTALACION_OBRA].includes(o.status))
-                )
-                .sort((a, b) => {
-                    const dateA = a.fecha_visita || a.dueDate?.toISOString().split('T')[0] || '';
-                    const dateB = b.fecha_visita || b.dueDate?.toISOString().split('T')[0] || '';
-                    return dateA.localeCompare(dateB);
-                })
-                .slice(0, 10)
-                .map(o => ({
-                    id: o.id,
-                    type: (o.status === OrderStatus.SITE_VISIT || o.status === OrderStatus.SITE_VISIT_DONE) ? 'VISIT' : 'DELIVERY',
-                    clientName: o.clientName || 'Cliente',
-                    date: o.fecha_visita || (o.dueDate ? o.dueDate.toISOString().split('T')[0] : ''),
-                    time: o.hora_visita,
-                    status: o.status
-                }));
-        }
-
-        const mergedAlerts: DashboardAlertDto[] = [
-            ...realOverdue.map(o => ({
-                type: 'vencido' as const,
-                message: `Pedido ${o.code || o.id.slice(0, 8)} está vencido`,
-                metadata: { orderId: o.id }
-            })),
-        ];
-
-        // 7. Low Stock Material Alerts
-        const CRITICAL_STOCK_UMBRAL = 200; // gramos
-        const lowStockMaterials = await this.materialRepository.find({
-            where: {
-                businessId,
-                active: true,
-                remainingWeightGrams: MoreThanOrEqual(0)
-            }
-        });
-        const criticalMaterials = lowStockMaterials.filter(m => m.remainingWeightGrams < CRITICAL_STOCK_UMBRAL);
-
-        mergedAlerts.push(...criticalMaterials.map(m => ({
-            type: 'stock_bajo' as const,
-            message: `${m.name} (${m.type}) tiene bajo stock: ${m.remainingWeightGrams.toFixed(0)}g restantes.`,
-            metadata: { materialId: m.id }
-        })));
+        const operationalCounters = strategy.getOperationalCounters(context);
+        const pipelineSummary = strategy.getPipelineSummary(context);
+        const calendarEvents = strategy.getCalendarEvents(context);
 
         return {
             totalSales: Number(salesResult?.total) || 0,
@@ -345,15 +479,8 @@ export class BusinessesService {
             productionOrders: productionOrdersCount,
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
-            recentOrders: recentOrders.map(o => ({
-                id: o.id,
-                clientName: o.clientName || 'Sin Nombre',
-                total: Number(o.totalPrice),
-                status: o.status,
-                dueDate: o.dueDate,
-                type: o.type
-            })),
-            alerts: mergedAlerts,
+            recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
+            alerts: [], 
             trends: null,
             operationalCounters,
             pipelineSummary,
@@ -363,42 +490,42 @@ export class BusinessesService {
 
     async findOne(userId: string, id: string): Promise<Business> {
         const hasAccess = await this.checkAccess(userId, id);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
-
+        if (!hasAccess) throw new ForbiddenException('Acceso denegado');
         const business = await this.businessRepository.findOneBy({ id });
-        if (!business) {
-            throw new NotFoundException('Negocio no encontrado');
-        }
+        if (!business) throw new NotFoundException('No encontrado');
         return business;
     }
 
     async update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business> {
-        const hasAccess = await this.checkAccess(userId, id);
-        if (!hasAccess) {
-            throw new ForbiddenException('No tienes acceso a este negocio');
-        }
-
+        await this.findOne(userId, id);
         await this.businessRepository.update(id, updateDto);
         return this.findOne(userId, id);
     }
 
-    async addMemberToBusiness(userId: string, businessId: string, role: string): Promise<BusinessMembership> {
-        let membership = await this.membershipRepository.findOne({
-            where: { userId, businessId }
-        });
+    async findUserBusinesses(userId: string, filters?: any): Promise<Business[]> {
+        const query = this.membershipRepository.createQueryBuilder('membership')
+            .innerJoinAndSelect('membership.business', 'business')
+            .where('membership.userId = :userId', { userId });
 
-        if (!membership) {
-            membership = this.membershipRepository.create({
-                userId,
-                businessId,
-                role: role as any
-            });
-        } else {
-            membership.role = role as any;
+        if (filters?.isEnabled !== undefined) {
+            query.andWhere('business.isEnabled = :isEnabled', { isEnabled: filters.isEnabled });
+        }
+        if (filters?.status) {
+            query.andWhere('business.status = :status', { status: filters.status });
         }
 
-        return this.membershipRepository.save(membership);
+        const memberships = await query.getMany();
+        return memberships.map(m => m.business);
+    }
+
+    async checkAccess(userId: string, businessId: string): Promise<boolean> {
+        return (await this.membershipRepository.countBy({ userId, businessId })) > 0;
+    }
+
+    async addMemberToBusiness(userId: string, businessId: string, role: string): Promise<BusinessMembership> {
+        let m = await this.membershipRepository.findOne({ where: { userId, businessId } });
+        if (!m) m = this.membershipRepository.create({ userId, businessId, role: role as any });
+        else m.role = role as any;
+        return this.membershipRepository.save(m);
     }
 }

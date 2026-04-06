@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Material = void 0;
 const typeorm_1 = require("typeorm");
 const enums_1 = require("../../common/enums");
-const production_job_entity_1 = require("../../jobs/entities/production-job.entity");
+const production_job_material_entity_1 = require("../../jobs/entities/production-job-material.entity");
 let Material = class Material {
 };
 exports.Material = Material;
@@ -69,9 +69,9 @@ __decorate([
     __metadata("design:type", Boolean)
 ], Material.prototype, "active", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => production_job_entity_1.ProductionJob, (job) => job.material),
+    (0, typeorm_1.OneToMany)(() => production_job_material_entity_1.ProductionJobMaterial, (jm) => jm.material),
     __metadata("design:type", Array)
-], Material.prototype, "productionJobs", void 0);
+], Material.prototype, "jobMaterials", void 0);
 exports.Material = Material = __decorate([
     (0, typeorm_1.Entity)('materials')
 ], Material);

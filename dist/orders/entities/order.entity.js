@@ -20,6 +20,7 @@ const payment_entity_1 = require("../../payments/entities/payment.entity");
 const order_failure_entity_1 = require("./order-failure.entity");
 const business_entity_1 = require("../../businesses/entities/business.entity");
 const employee_entity_1 = require("../../employees/entities/employee.entity");
+const order_site_info_entity_1 = require("./order-site-info.entity");
 let Order = class Order {
 };
 exports.Order = Order;
@@ -102,6 +103,10 @@ __decorate([
     __metadata("design:type", Array)
 ], Order.prototype, "payments", void 0);
 __decorate([
+    (0, typeorm_1.OneToOne)(() => order_site_info_entity_1.OrderSiteInfo, (si) => si.order, { cascade: true }),
+    __metadata("design:type", order_site_info_entity_1.OrderSiteInfo)
+], Order.prototype, "siteInfo", void 0);
+__decorate([
     (0, typeorm_1.Column)({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, default: 0 }),
     __metadata("design:type", Number)
 ], Order.prototype, "totalPrice", void 0);
@@ -126,22 +131,6 @@ __decorate([
     (0, typeorm_1.JoinColumn)({ name: 'responsable_general_id' }),
     __metadata("design:type", employee_entity_1.Employee)
 ], Order.prototype, "responsableGeneral", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'direccion_obra', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "direccion_obra", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'fecha_visita', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "fecha_visita", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'hora_visita', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "hora_visita", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ name: 'observaciones_visita', type: 'text', nullable: true }),
-    __metadata("design:type", String)
-], Order.prototype, "observaciones_visita", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'jsonb', nullable: true }),
     __metadata("design:type", Object)

@@ -37,7 +37,8 @@ let JobsService = class JobsService {
             ...createJobDto,
             status: enums_1.JobStatus.QUEUED,
         });
-        const savedJob = await this.jobRepository.save(job);
+        const saved = await this.jobRepository.save(job);
+        const savedJob = Array.isArray(saved) ? saved[0] : saved;
         const history = this.statusHistoryRepository.create({
             productionJobId: savedJob.id,
             toStatus: enums_1.JobStatus.QUEUED,
@@ -63,9 +64,7 @@ let JobsService = class JobsService {
             where,
             relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
             order: {
-                order: { priority: 'DESC' },
-                dueDate: 'ASC',
-                sortRank: 'ASC',
+                createdAt: 'DESC'
             },
         });
     }
@@ -88,7 +87,7 @@ let JobsService = class JobsService {
     async updateStatus(id, status, note, userId) {
         const job = await this.findOne(id);
         const oldStatus = job.status;
-        await this.jobRepository.update(id, { status });
+        await this.jobRepository.update(id, { status: status });
         const history = this.statusHistoryRepository.create({
             productionJobId: id,
             fromStatus: oldStatus,

@@ -42,7 +42,7 @@ let ReportsService = class ReportsService {
         const activeJobs = await this.jobRepository.count({
             where: {
                 order: { businessId },
-                status: (0, typeorm_2.In)([enums_1.JobStatus.QUEUED, enums_1.JobStatus.PRINTING, enums_1.JobStatus.PAUSED])
+                status: (0, typeorm_2.In)([enums_1.ProductionJobStatus.QUEUED, enums_1.ProductionJobStatus.PRINTING, enums_1.ProductionJobStatus.PAUSED])
             }
         });
         const monthlySalesData = await this.orderRepository.find({
@@ -74,7 +74,7 @@ let ReportsService = class ReportsService {
         const finishedJobs = await this.jobRepository.find({
             where: {
                 order: { businessId },
-                status: enums_1.JobStatus.DONE
+                status: enums_1.ProductionJobStatus.DONE
             },
             relations: ['machine']
         });

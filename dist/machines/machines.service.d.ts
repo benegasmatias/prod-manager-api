@@ -5,11 +5,15 @@ import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
 import { JobsService } from '../jobs/jobs.service';
+import { AuditService } from '../audit/audit.service';
+import { PlanUsageService } from '../businesses/plan-usage.service';
 export declare class MachinesService {
     private readonly machineRepository;
     private readonly ordersService;
     private readonly jobsService;
-    constructor(machineRepository: Repository<Machine>, ordersService: OrdersService, jobsService: JobsService);
+    private readonly planUsageService;
+    private readonly auditService;
+    constructor(machineRepository: Repository<Machine>, ordersService: OrdersService, jobsService: JobsService, planUsageService: PlanUsageService, auditService: AuditService);
     assignOrder(machineId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine>;
     release(machineId: string, businessId?: string): Promise<Machine>;
     create(createDto: CreateMachineDto): Promise<Machine>;

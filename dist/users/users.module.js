@@ -12,6 +12,7 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const users_service_1 = require("./users.service");
 const users_controller_1 = require("./users.controller");
+const users_management_controller_1 = require("./users-management.controller");
 const supabase_service_1 = require("../common/supabase/supabase.service");
 const businesses_module_1 = require("../businesses/businesses.module");
 let UsersModule = class UsersModule {
@@ -24,7 +25,7 @@ exports.UsersModule = UsersModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([user_entity_1.User]),
             businesses_module_1.BusinessesModule,
         ],
-        controllers: [users_controller_1.UsersController],
+        controllers: [users_controller_1.UsersController, users_management_controller_1.UsersManagementController],
         providers: [users_service_1.UsersService, supabase_service_1.SupabaseService],
         exports: [users_service_1.UsersService, supabase_service_1.SupabaseService, typeorm_1.TypeOrmModule],
     })

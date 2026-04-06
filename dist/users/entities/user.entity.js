@@ -39,6 +39,10 @@ __decorate([
     __metadata("design:type", Boolean)
 ], User.prototype, "active", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: 'FREE' }),
+    __metadata("design:type", String)
+], User.prototype, "plan", void 0);
+__decorate([
     (0, typeorm_1.Column)({ name: 'must_change_password', default: false }),
     __metadata("design:type", Boolean)
 ], User.prototype, "mustChangePassword", void 0);

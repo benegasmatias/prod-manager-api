@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne } from 'typeorm';
 import { BusinessMembership } from './business-membership.entity';
+import { BusinessSubscription } from './business-subscription.entity';
 
 @Entity('businesses')
 export class Business {
@@ -24,8 +25,8 @@ export class Business {
     @Column({ default: 'ARS' })
     currency: string; // ARS, USD, etc
 
-    @Column({ default: 'ACTIVE' })
-    status: string; // ACTIVE, SUSPENDED, TRIAL
+    @Column({ default: 'DRAFT' })
+    status: string; // DRAFT, ACTIVE, SUSPENDED, ARCHIVED
 
     @Column({ name: 'plan_id', nullable: true })
     planId: string; // Pro, Enterprise, Free, etc
@@ -36,9 +37,41 @@ export class Business {
     @Column({ type: 'timestamp', name: 'subscription_expires_at', nullable: true })
     subscriptionExpiresAt: Date;
 
+    @Column({ name: 'is_enabled', default: true })
+    isEnabled: boolean;
 
-    @OneToMany('BusinessMembership', (membership: any) => membership.business)
+    @Column({ name: 'status_reason_code', nullable: true })
+    statusReasonCode: string;
+
+    @Column({ name: 'status_reason_text', type: 'text', nullable: true })
+    statusReasonText: string;
+
+    @Column({ name: 'status_updated_at', type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    statusUpdatedAt: Date;
+
+    @Column({ default: 'FREE' })
+    plan: string;
+
+    @Column({ name: 'accepting_orders', default: true })
+    acceptingOrders: boolean;
+
+    @Column({ name: 'onboarding_completed', default: false })
+    onboardingCompleted: boolean;
+
+    @Column({ name: 'onboarding_step', default: 'BASIC_INFO' })
+    onboardingStep: string;
+
+    @Column({ type: 'jsonb', name: 'capabilities_override', nullable: true })
+    capabilitiesOverride: any;
+
+    @Column({ name: 'admin_notes', type: 'text', nullable: true })
+    adminNotes: string;
+
+    @OneToMany(() => BusinessMembership, (membership) => membership.business)
     memberships: BusinessMembership[];
+
+    @OneToOne(() => BusinessSubscription, (sub) => sub.business)
+    subscription: BusinessSubscription;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

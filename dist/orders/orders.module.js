@@ -11,10 +11,14 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const orders_controller_1 = require("./orders.controller");
 const orders_service_1 = require("./orders.service");
+const order_strategy_provider_1 = require("./order-strategy.provider");
+const order_workflow_service_1 = require("./order-workflow.service");
+const order_financial_service_1 = require("./order-financial.service");
 const order_entity_1 = require("./entities/order.entity");
 const order_item_entity_1 = require("./entities/order-item.entity");
 const order_failure_entity_1 = require("./entities/order-failure.entity");
 const order_status_history_entity_1 = require("../history/entities/order-status-history.entity");
+const order_site_info_entity_1 = require("./entities/order-site-info.entity");
 const product_entity_1 = require("../products/entities/product.entity");
 const production_job_entity_1 = require("../jobs/entities/production-job.entity");
 const machine_entity_1 = require("../machines/entities/machine.entity");
@@ -25,10 +29,21 @@ let OrdersModule = class OrdersModule {
 exports.OrdersModule = OrdersModule;
 exports.OrdersModule = OrdersModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([order_entity_1.Order, order_item_entity_1.OrderItem, order_failure_entity_1.OrderFailure, order_status_history_entity_1.OrderStatusHistory, product_entity_1.Product, production_job_entity_1.ProductionJob, machine_entity_1.Machine, material_entity_1.Material, payment_entity_1.Payment])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([
+                order_entity_1.Order,
+                order_item_entity_1.OrderItem,
+                order_failure_entity_1.OrderFailure,
+                order_status_history_entity_1.OrderStatusHistory,
+                order_site_info_entity_1.OrderSiteInfo,
+                product_entity_1.Product,
+                production_job_entity_1.ProductionJob,
+                machine_entity_1.Machine,
+                material_entity_1.Material,
+                payment_entity_1.Payment
+            ])],
         controllers: [orders_controller_1.OrdersController],
-        providers: [orders_service_1.OrdersService],
-        exports: [orders_service_1.OrdersService, typeorm_1.TypeOrmModule],
+        providers: [orders_service_1.OrdersService, order_strategy_provider_1.OrderStrategyProvider, order_workflow_service_1.OrderWorkflowService, order_financial_service_1.OrderFinancialService],
+        exports: [orders_service_1.OrdersService, order_workflow_service_1.OrderWorkflowService, typeorm_1.TypeOrmModule],
     })
 ], OrdersModule);
 //# sourceMappingURL=orders.module.js.map
