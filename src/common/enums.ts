@@ -132,3 +132,19 @@ export enum ProductionJobPriority {
     HIGH = 'HIGH',
     URGENT = 'URGENT',
 }
+
+export enum MaterialType {
+    PLA = 'PLA',
+    PETG = 'PETG',
+    ABS = 'ABS',
+    TPU = 'TPU',
+    RESINA = 'RESINA',
+    CAÑO = 'CAÑO',
+    PERFIL = 'PERFIL',
+    CHAPA = 'CHAPA',
+    BARRA = 'BARRA',
+    PLACA = 'PLACA',
+    MADERA = 'MADERA',
+    HERRAJE = 'HERRAJE',
+    INSUMO = 'INSUMO'
+}

@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { ProductionJobService } from './production-job.service';
-import { CreateProductionJobsDto, AssignResourcesDto, UpdateJobStatusDto, UpdateJobPriorityDto, UpdateJobStageDto } from './dto/production-job.dto';
+import { CreateProductionJobsDto, AssignResourcesDto, UpdateJobStatusDto, UpdateJobPriorityDto, UpdateJobStageDto, AssignMaterialDto } from './dto/production-job.dto';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
 import { BusinessRole } from '../common/enums';
@@ -75,5 +75,15 @@ export class ProductionJobsController {
         @Body() stageDto: UpdateJobStageDto
     ) {
         return this.jobService.updateStage(businessId, id, stageDto.stage);
+    }
+
+    @Post(':id/materials')
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
+    async addMaterial(
+        @Param('businessId', ParseUUIDPipe) businessId: string, 
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() materialDto: AssignMaterialDto
+    ) {
+        return this.jobService.assignMaterial(businessId, id, materialDto);
     }
 }

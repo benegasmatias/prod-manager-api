@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsUUID, IsArray, IsEnum, IsInt } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsUUID, IsArray, IsEnum, IsInt, IsNumber } from 'class-validator';
 import { ProductionJobStatus, ProductionJobPriority } from '../../common/enums';
 
 export class CreateProductionJobsDto {
@@ -42,4 +42,14 @@ export class UpdateJobStageDto {
     @IsString()
     @IsNotEmpty()
     stage: string;
+}
+
+export class AssignMaterialDto {
+    @IsUUID()
+    @IsNotEmpty()
+    materialId: string;
+
+    @IsNumber()
+    @IsNotEmpty()
+    quantity: number;
 }

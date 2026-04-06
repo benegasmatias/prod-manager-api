@@ -13,6 +13,7 @@ import { Material } from '../materials/entities/material.entity';
 import { OrderItem } from '../orders/entities/order-item.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
+import { ProductionJobMaterial } from './entities/production-job-material.entity';
 
 @Module({
     imports: [
@@ -24,7 +25,8 @@ import { BusinessTemplate } from '../businesses/entities/business-template.entit
             Material, 
             OrderItem, 
             Business, 
-            BusinessTemplate
+            BusinessTemplate,
+            ProductionJobMaterial
         ]),
         OrdersModule,
     ],

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { MaterialType } from '../../common/enums';
-import { ProductionJob } from '../../jobs/entities/production-job.entity';
+import { ProductionJobMaterial } from '../../jobs/entities/production-job-material.entity';
 
 @Entity('materials')
 export class Material {
@@ -43,6 +43,6 @@ export class Material {
     @Column({ default: true })
     active: boolean;
 
-    @OneToMany(() => ProductionJob, (job) => job.material)
-    productionJobs: ProductionJob[];
+    @OneToMany(() => ProductionJobMaterial, (jm) => jm.material)
+    jobMaterials: Array<ProductionJobMaterial>;
 }

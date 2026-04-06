@@ -5,6 +5,8 @@ import { Machine } from '../../machines/entities/machine.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { ProductionJobStatus, ProductionJobPriority } from '../../common/enums';
+import { ProductionJobMaterial } from './production-job-material.entity';
+import { OneToMany } from 'typeorm';
 
 @Entity('production_jobs')
 @Index(['businessId'])
@@ -77,6 +79,9 @@ export class ProductionJob {
     @Column({ name: 'completed_at', type: 'timestamp', nullable: true })
     completedAt: Date;
 
+    @Column({ name: 'last_started_at', type: 'timestamp', nullable: true })
+    lastStartedAt: Date;
+
     @Column({ name: 'estimated_minutes', type: 'int', nullable: true })
     estimatedMinutes: number;
 
@@ -85,6 +90,9 @@ export class ProductionJob {
 
     @Column({ name: 'pause_reason', type: 'text', nullable: true })
     pauseReason: string;
+
+    @OneToMany(() => ProductionJobMaterial, (jm) => jm.job, { cascade: true })
+    jobMaterials: ProductionJobMaterial[];
 
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
