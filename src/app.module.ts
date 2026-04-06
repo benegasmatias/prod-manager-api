@@ -29,7 +29,7 @@ import { AuditModule } from './audit/audit.module';
         type: 'postgres',
         url: configService.get<string>('DATABASE_URL'),
         autoLoadEntities: true,
-        synchronize: true, // Auto-update schema in dev
+        synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true', // Only for dev, set DB_SYNCHRONIZE=false in Render
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
           max: 30,
