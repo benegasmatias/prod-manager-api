@@ -110,7 +110,16 @@ export class EmployeesService {
     }
 
     async update(id: string, businessId: string, data: any): Promise<Employee> {
-        await this.findOne(id, businessId);
+        const employee = await this.findOne(id, businessId);
+        
+        // Si el rol cambia y el empleado está vinculado a un email, actualizar la membresía
+        if (data.role && data.role !== employee.role && employee.email) {
+            const user = await this.usersService.findByEmail(employee.email);
+            if (user) {
+                await this.businessesService.addMemberToBusiness(user.id, businessId, data.role);
+            }
+        }
+
         await this.employeeRepository.update(id, data);
         return this.findOne(id, businessId);
     }

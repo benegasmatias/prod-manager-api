@@ -11,10 +11,15 @@ import { AllowBusinessStatuses } from './decorators/allow-business-statuses.deco
 import { RequireBusinessRole } from './decorators/require-business-role.decorator';
 import { BusinessStatus, BusinessRole } from '../common/enums';
 
+import { BusinessInvitationsService } from './business-invitations.service';
+
 @Controller('businesses')
 @UseGuards(SupabaseAuthGuard)
 export class BusinessesController {
-    constructor(private readonly businessesService: BusinessesService) { }
+    constructor(
+        private readonly businessesService: BusinessesService,
+        private readonly invitationsService: BusinessInvitationsService
+    ) { }
 
     @Get()
     async findAll(
@@ -35,7 +40,7 @@ export class BusinessesController {
         return this.businessesService.findUserBusinesses(req.user.id, filters);
     }
 
-    @Get('/:id')
+    @Get(':id')
     @UseGuards(BusinessAccessGuard)
     async findOne(@Request() req, @Param('id') id: string) {
         return this.businessesService.findOne(req.user.id, id);
@@ -104,28 +109,76 @@ export class BusinessesController {
         return this.businessesService.createFromTemplate(req.user.id, createDto);
     }
 
-    @Patch('/:id')
+    @Patch(':id')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async update(@Request() req, @Param('id') id: string, @Body() updateDto: UpdateBusinessDto) {
         return this.businessesService.update(req.user.id, id, updateDto);
     }
 
-    @Patch('/:id/onboarding')
+    @Patch(':id/onboarding')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async updateOnboarding(@Request() req, @Param('id') id: string, @Body('onboardingStep') step: string) {
         return this.businessesService.updateOnboardingStep(req.user.id, id, step);
     }
 
-    @Post('/:id/activate')
+    @Post(':id/activate')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async activate(@Request() req, @Param('id') id: string) {
         return this.businessesService.activateBusiness(req.user.id, id);
     }
 
-    @Delete('/:id')
+    @Post(':id/invitations/check-email')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async checkEmail(
+        @Param('id') id: string,
+        @Body('email') email: string
+    ) {
+        if (!email) throw new BadRequestException('Email es requerido');
+        return this.invitationsService.checkEmail(id, email);
+    }
+
+    @Post(':id/invitations')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async invite(
+        @Param('id') id: string,
+        @Request() req,
+        @Body() body: { email: string, role?: string, firstName?: string, lastName?: string, phone?: string, specialty?: string }
+    ) {
+        // En V1, si no se envía rol, usamos OPERATOR por defecto
+        const role = body.role || 'OPERATOR';
+        
+        const invitation = await this.invitationsService.createInvitation(id, body.email, role, req.user.id, {
+            firstName: body.firstName,
+            lastName: body.lastName,
+            phone: body.phone,
+            specialty: body.specialty
+        });
+
+        // SIMULACIÓN DE ENVÍO DE EMAIL
+        console.log('\n================================================');
+        console.log('📧 SIMULACIÓN DE EMAIL ENVIADO');
+        console.log(`Para: ${body.email}`);
+        console.log(`De: ${req.user.email} (Negocio ID: ${id})`);
+        console.log(`Rol: ${role}`);
+        console.log(`URL de Aceptación: http://localhost:4200/invitaciones/aceptar?token=${invitation.token}`);
+        console.log('================================================\n');
+
+        return invitation;
+    }
+
+    @Get(':id/invitations')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async getAllInvitations(@Param('id') id: string) {
+        return this.invitationsService.getInvitations(id);
+    }
+
+    @Delete(':id')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async remove(@Param('id') id: string) {

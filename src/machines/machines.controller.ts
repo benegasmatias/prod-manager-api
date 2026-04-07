@@ -26,6 +26,7 @@ export class MachinesController {
     @Get()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async findAll(
         @Query('businessId') businessId?: string,
         @Query('onlyActive') onlyActive?: string,
@@ -39,6 +40,7 @@ export class MachinesController {
     @Get(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async findOne(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,
@@ -61,7 +63,7 @@ export class MachinesController {
     @Patch(':id/status')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async updateStatus(
         @Param('id', ParseUUIDPipe) id: string,
         @Body('status') status: MachineStatus,
@@ -73,7 +75,7 @@ export class MachinesController {
     @Post(':id/assign-order')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async assignOrder(
         @Param('id', ParseUUIDPipe) id: string,
         @Body('orderId', ParseUUIDPipe) orderId: string,
@@ -87,7 +89,7 @@ export class MachinesController {
     @Post(':id/release')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async release(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,

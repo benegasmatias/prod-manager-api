@@ -21,6 +21,10 @@ import { PlanUsageService } from './plan-usage.service';
 import { BusinessStrategyProvider } from './strategies/business-strategy.provider';
 import { AuditModule } from '../audit/audit.module';
 
+import { BusinessInvitation } from './entities/business-invitation.entity';
+import { BusinessInvitationsService } from './business-invitations.service';
+import { BusinessInvitationsController } from './business-invitations.controller';
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([
@@ -30,6 +34,7 @@ import { AuditModule } from '../audit/audit.module';
             WebhookEvent,
             User, 
             BusinessTemplate, 
+            BusinessInvitation,
             Order, 
             Customer, 
             Machine, 
@@ -42,16 +47,19 @@ import { AuditModule } from '../audit/audit.module';
         BusinessesController, 
         BusinessTemplatesController, 
         BusinessSubscriptionController, 
-        WebhooksController
+        WebhooksController,
+        BusinessInvitationsController
     ],
     providers: [
         BusinessesService, 
+        BusinessInvitationsService,
         BusinessStrategyProvider, 
         PlanUsageService, 
         BillingService
     ],
     exports: [
         BusinessesService, 
+        BusinessInvitationsService,
         PlanUsageService, 
         BillingService,
         TypeOrmModule

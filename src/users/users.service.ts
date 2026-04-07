@@ -21,6 +21,10 @@ export class UsersService {
         return user;
     }
 
+    async findByEmail(email: string): Promise<User | null> {
+        return this.userRepository.findOne({ where: { email } });
+    }
+
     async findOrCreate(id: string, email: string, fullName?: string): Promise<User> {
         let user = await this.userRepository.findOne({ where: { id } });
         if (!user) {
