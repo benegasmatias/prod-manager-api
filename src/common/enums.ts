@@ -1,6 +1,5 @@
 export enum OrderType {
     CLIENT = 'CLIENT',
-    CUSTOMER = 'CLIENT', // Alias for legacy/migration
     STOCK = 'STOCK'
 }
 
@@ -129,7 +128,6 @@ export enum OrderItemStatus {
 export enum ProductionJobStatus {
     QUEUED = 'QUEUED',
     IN_PROGRESS = 'IN_PROGRESS',
-    PRINTING = 'IN_PROGRESS', // Alias for legacy 3D printing
     PAUSED = 'PAUSED',
     DONE = 'DONE',
     FAILED = 'FAILED',

@@ -11,7 +11,7 @@ export class Customer {
     @Column({ name: 'full_name' })
     name: string;
 
-    @Column({ name: 'business_id', type: 'uuid' })
+    @Column({ name: 'business_id', type: 'uuid', nullable: false })
     businessId: string;
 
     @ManyToOne(() => Business)

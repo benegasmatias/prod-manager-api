@@ -20,6 +20,11 @@ import { BusinessTemplate } from '../businesses/entities/business-template.entit
 import { Employee } from '../employees/entities/employee.entity';
 import { GlobalRoleConfig } from '../admin/entities/global-role-config.entity';
 import { Notification } from '../notifications/entities/notification.entity';
+import { BusinessSubscription } from '../businesses/entities/business-subscription.entity';
+import { WebhookEvent } from '../businesses/entities/webhook-event.entity';
+import { OrderSiteInfo } from '../orders/entities/order-site-info.entity';
+import { AuditLog } from '../audit/entities/audit-log.entity';
+import { ProductionJobMaterial } from '../jobs/entities/production-job-material.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -51,6 +56,11 @@ export const AppDataSource = new DataSource({
         Employee,
         GlobalRoleConfig,
         Notification,
+        BusinessSubscription,
+        WebhookEvent,
+        OrderSiteInfo,
+        AuditLog,
+        ProductionJobMaterial,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

@@ -11,6 +11,7 @@ import { JobProgress } from './job-progress.entity';
 import { JobStatusHistory } from '../../history/entities/job-status-history.entity';
 
 @Entity('production_jobs')
+// @Unique(['email', 'businessId'])
 @Index(['businessId'])
 @Index(['status'])
 @Index(['machineId'])

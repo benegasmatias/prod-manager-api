@@ -16,7 +16,7 @@ export class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'business_id', nullable: true })
+    @Column({ name: 'business_id' })
     businessId: string;
 
     @ManyToOne(() => Business)
@@ -42,7 +42,7 @@ export class Order {
     @Column({
         type: 'enum',
         enum: OrderType,
-        default: OrderType.CUSTOMER
+        default: OrderType.CLIENT
     })
     type: OrderType;
 
