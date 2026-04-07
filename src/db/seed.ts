@@ -15,7 +15,8 @@ import { BusinessTemplate } from '../businesses/entities/business-template.entit
 async function seed() {
     try {
         await AppDataSource.initialize();
-        console.log('🌱 Data Source has been initialized for seeding!');
+        await AppDataSource.synchronize(); // <--- AGREGADO: Crea las tablas si no existen
+        console.log('🌱 Data Source has been initialized and synchronized for seeding!');
 
         const orderRepo = AppDataSource.getRepository(Order);
         const itemRepo = AppDataSource.getRepository(OrderItem);

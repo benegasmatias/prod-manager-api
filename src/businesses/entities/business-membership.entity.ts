@@ -4,7 +4,7 @@ import { User } from '../../users/entities/user.entity';
 import { BusinessRole } from '../../common/enums';
 
 @Entity('business_memberships')
-@Unique(['userId', 'businessId'])
+// @Unique(['userId', 'businessId'])
 export class BusinessMembership {
     @PrimaryGeneratedColumn('uuid')
     id: string;

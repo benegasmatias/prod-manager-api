@@ -7,7 +7,7 @@ export class Machine {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'business_id', nullable: true })
+    @Column({ name: 'business_id' })
     businessId: string;
 
     @Column()

@@ -22,7 +22,7 @@ export class Material {
     @Column({ name: 'cost_per_kg', type: 'decimal', precision: 12, scale: 2, default: 0 })
     costPerKg: number;
 
-    @Column({ name: 'business_id', nullable: true })
+    @Column({ name: 'business_id' })
     businessId: string;
 
     @Column({ name: 'total_weight_grams', type: 'float', default: 1000 })
