@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, UseGuards, Query, Request } from '@nestjs/common';
 import { JobsService } from './jobs.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
-import { JobStatus } from '../common/enums';
+import { ProductionJobStatus as JobStatus } from '../common/enums';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 
 @Controller('jobs')

@@ -1,5 +1,5 @@
 import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
-import { JobStatus, Priority } from '../../common/enums';
+import { ProductionJobStatus as JobStatus, Priority } from '../../common/enums';
 
 export class CreateJobDto {
     @IsString()
