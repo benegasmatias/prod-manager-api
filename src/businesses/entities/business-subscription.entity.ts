@@ -7,7 +7,7 @@ export class BusinessSubscription {
     @PrimaryColumn({ name: 'business_id', type: 'uuid' })
     businessId: string;
 
-    @OneToOne(() => Business, (business) => business.subscription)
+    @OneToOne(() => Business, (business) => business.subscription, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'business_id' })
     business: Business;
 

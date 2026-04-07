@@ -6,10 +6,10 @@ export class Employee {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'business_id' })
+    @Column({ name: 'business_id', nullable: true })
     businessId: string;
 
-    @ManyToOne(() => Business)
+    @ManyToOne(() => Business, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'business_id' })
     business: Business;
 

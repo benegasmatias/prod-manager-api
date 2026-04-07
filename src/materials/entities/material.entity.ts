@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { MaterialType } from '../../common/enums';
 import { ProductionJobMaterial } from '../../jobs/entities/production-job-material.entity';
+import { Business } from '../../businesses/entities/business.entity';
 
 @Entity('materials')
 export class Material {
@@ -19,10 +20,11 @@ export class Material {
     @Column({ nullable: true })
     color: string;
 
-    @Column({ name: 'cost_per_kg', type: 'decimal', precision: 12, scale: 2, default: 0 })
-    costPerKg: number;
+    @ManyToOne(() => Business, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'business_id' })
+    business: Business;
 
-    @Column({ name: 'business_id' })
+    @Column({ name: 'business_id', nullable: true })
     businessId: string;
 
     @Column({ name: 'total_weight_grams', type: 'float', default: 1000 })

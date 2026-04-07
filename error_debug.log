@@ -3372,3 +3372,455 @@ Stack: QueryFailedError: column User.plan does not exist
     at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
     at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:35:33.615Z
+Path: /businesses
+Status: 400
+Message: {"message":["property category should not exist","templateKey must be a string","templateKey should not be empty"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:39:14.230Z
+Path: /me/default-business
+Status: 400
+Message: {"message":["businessId must be a UUID"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:44:00.420Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:44:01.480Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:47:15.137Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:47:16.150Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:50:14.352Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:50:15.285Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:50:40.426Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:50:41.365Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:51:56.320Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:51:57.287Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:53:03.957Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:53:04.922Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:55:01.597Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:55:02.528Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:56:01.910Z
+Path: /me/default-business
+Status: 404
+Message: {"message":"Cannot GET /me/default-business","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /me/default-business
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:56:02.033Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:56:02.261Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:56:03.274Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:56:04.264Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:57:29.348Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:57:30.292Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:57:48.333Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:57:49.665Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T11:59:03.180Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:00:42.811Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:00:43.753Z
+Path: /businesses/4af4d979-a30c-426e-814a-0e7fcc0d93d8/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"4af4d979-a30c-426e-814a-0e7fcc0d93d8"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:15:45.899Z
+Path: /businesses/d91331f9-0816-4a1f-b7d3-b6a5abe6f380/dashboard-summary
+Status: 403
+Message: {"message":"No tienes acceso a los datos de este negocio o el negocio no existe.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el negocio no existe.
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:20:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:22:43.901Z
+Path: /businesses
+Status: 403
+Message: {"statusCode":403,"message":"Límite excedido para BUSINESSES en plan FREE. (1/1)","errorCode":"QUOTA_EXCEEDED","metadata":{"resource":"BUSINESSES","plan":"FREE","limit":1,"usage":1,"remaining":0,"suggestedPlan":"PRO"}}
+Stack: ForbiddenException: Límite excedido para BUSINESSES en plan FREE. (1/1)
+    at PlanUsageService.throwQuotaException (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:108:15)
+    at PlanUsageService.ensureBusinessCreationAllowed (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:40:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async BusinessesService.createFromTemplate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:116:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:23:10.004Z
+Path: /businesses
+Status: 403
+Message: {"statusCode":403,"message":"Límite excedido para BUSINESSES en plan FREE. (1/1)","errorCode":"QUOTA_EXCEEDED","metadata":{"resource":"BUSINESSES","plan":"FREE","limit":1,"usage":1,"remaining":0,"suggestedPlan":"PRO"}}
+Stack: ForbiddenException: Límite excedido para BUSINESSES en plan FREE. (1/1)
+    at PlanUsageService.throwQuotaException (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:108:15)
+    at PlanUsageService.ensureBusinessCreationAllowed (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:40:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async BusinessesService.createFromTemplate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:116:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T12:23:27.035Z
+Path: /businesses
+Status: 403
+Message: {"statusCode":403,"message":"Límite excedido para BUSINESSES en plan FREE. (1/1)","errorCode":"QUOTA_EXCEEDED","metadata":{"resource":"BUSINESSES","plan":"FREE","limit":1,"usage":1,"remaining":0,"suggestedPlan":"PRO"}}
+Stack: ForbiddenException: Límite excedido para BUSINESSES en plan FREE. (1/1)
+    at PlanUsageService.throwQuotaException (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:108:15)
+    at PlanUsageService.ensureBusinessCreationAllowed (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:40:18)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async BusinessesService.createFromTemplate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:116:9)
+-------------

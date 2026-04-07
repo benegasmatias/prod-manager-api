@@ -9,7 +9,7 @@ export class OrderSiteInfo {
     @Column({ name: 'order_id' })
     orderId: string;
 
-    @OneToOne(() => Order, (order) => order.siteInfo)
+    @OneToOne(() => Order, (order) => order.siteInfo, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'order_id' })
     order: Order;
 
