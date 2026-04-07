@@ -39,14 +39,6 @@ export enum OrderStatus {
     ARMADO = 'ARMADO',
 }
 
-export enum JobStatus {
-    QUEUED = 'QUEUED',
-    PRINTING = 'PRINTING',
-    PAUSED = 'PAUSED',
-    FAILED = 'FAILED',
-    DONE = 'DONE',
-    CANCELLED = 'CANCELLED',
-}
 
 export enum MachineStatus {
     IDLE = 'IDLE',

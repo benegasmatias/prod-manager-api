@@ -38,7 +38,7 @@ export class ReportsService {
         const activeJobs = await this.jobRepository.count({
             where: {
                 order: { businessId },
-                status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED])
+                status: In([JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED])
             }
         });
 

@@ -4,7 +4,7 @@ import { Repository, In, ILike, Not, Between, MoreThanOrEqual, LessThanOrEqual }
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderSiteInfo } from './entities/order-site-info.entity';
-import { OrderStatus, JobStatus, MachineStatus } from '../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus, MachineStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Machine } from '../machines/entities/machine.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';

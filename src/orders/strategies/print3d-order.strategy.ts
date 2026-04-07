@@ -1,6 +1,6 @@
 import { OrderBusinessStrategy } from './order-strategy.interface';
 import { CreateOrderItemDto, ReportFailureDto } from '../dto/order.dto';
-import { OrderStatus, JobStatus, MachineStatus } from '../../common/enums';
+import { OrderStatus, ProductionJobStatus, MachineStatus } from '../../common/enums';
 import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/order-item.entity';
 import { EntityManager, In } from 'typeorm';
@@ -70,7 +70,7 @@ export class Print3DOrderStrategy implements OrderBusinessStrategy {
     async releaseResources(
         order: Order, 
         manager: EntityManager, 
-        options: { itemId?: string, targetStatus: JobStatus }
+        options: { itemId?: string, targetStatus: ProductionJobStatus }
     ): Promise<void> {
         const { itemId, targetStatus } = options;
         const jobRepo = manager.getRepository(ProductionJob);
@@ -83,7 +83,7 @@ export class Print3DOrderStrategy implements OrderBusinessStrategy {
         const activeJobs = await jobRepo.find({
             where: {
                 ...where,
-                status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED])
+                status: In([ProductionJobStatus.QUEUED, ProductionJobStatus.IN_PROGRESS, ProductionJobStatus.PAUSED])
             }
         });
 

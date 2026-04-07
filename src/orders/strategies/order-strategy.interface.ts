@@ -1,5 +1,5 @@
 import { CreateOrderItemDto, ReportFailureDto } from '../dto/order.dto';
-import { OrderStatus, JobStatus } from '../../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus } from '../../common/enums';
 import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/order-item.entity';
 import { EntityManager } from 'typeorm';

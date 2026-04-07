@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
-import { JobStatus } from '../../common/enums';
+import { ProductionJobStatus as JobStatus } from '../../common/enums';
 import { User } from '../../users/entities/user.entity';
 
 @Entity('job_status_history')

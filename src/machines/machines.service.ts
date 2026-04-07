@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Machine } from './entities/machine.entity';
-import { MachineStatus, JobStatus, OrderStatus } from '../common/enums';
+import { MachineStatus, ProductionJobStatus as JobStatus, OrderStatus } from '../common/enums';
 import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
@@ -35,7 +35,7 @@ export class MachinesService {
         if (order.jobs && order.jobs.length > 0) {
             const activeJobs = order.jobs.filter(j =>
                 j.machineId &&
-                [JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED].includes(j.status as any)
+                [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(j.status as any)
             );
 
             for (const job of activeJobs) {

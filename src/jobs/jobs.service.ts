@@ -6,7 +6,7 @@ import { JobProgress } from './entities/job-progress.entity';
 import { JobStatusHistory } from '../history/entities/job-status-history.entity';
 import { OrdersService } from '../orders/orders.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
-import { JobStatus, OrderStatus, MachineStatus } from '../common/enums';
+import { ProductionJobStatus as JobStatus, OrderStatus, MachineStatus } from '../common/enums';
 import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
 
@@ -56,7 +56,7 @@ export class JobsService {
 
     async getQueue(businessId?: string) {
         const where: any = {
-            status: In([JobStatus.QUEUED, JobStatus.PRINTING, JobStatus.PAUSED]),
+            status: In([JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED]),
         };
 
         if (businessId) {
