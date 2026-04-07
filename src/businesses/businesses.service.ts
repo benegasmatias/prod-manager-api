@@ -4,6 +4,7 @@ import { Repository, DataSource, MoreThanOrEqual, In } from 'typeorm';
 import { Business } from './entities/business.entity';
 import { BusinessTemplateDto } from './dto/business-template.dto';
 import { BusinessMembership } from './entities/business-membership.entity';
+import { BusinessSubscription } from './entities/business-subscription.entity';
 import { BusinessRole } from '../common/enums';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
@@ -502,7 +503,7 @@ export class BusinessesService {
         return this.findOne(userId, id);
     }
 
-    async findUserBusinesses(userId: string, filters?: any): Promise<Business[]> {
+    async findUserBusinesses(userId: string, filters?: any): Promise<any[]> {
         const query = this.membershipRepository.createQueryBuilder('membership')
             .innerJoinAndSelect('membership.business', 'business')
             .where('membership.userId = :userId', { userId });
@@ -515,7 +516,10 @@ export class BusinessesService {
         }
 
         const memberships = await query.getMany();
-        return memberships.map(m => m.business);
+        return memberships.map(m => ({
+            ...m.business,
+            userRole: m.role
+        }));
     }
 
     async checkAccess(userId: string, businessId: string): Promise<boolean> {
@@ -527,5 +531,16 @@ export class BusinessesService {
         if (!m) m = this.membershipRepository.create({ userId, businessId, role: role as any });
         else m.role = role as any;
         return this.membershipRepository.save(m);
+    }
+
+    async delete(businessId: string): Promise<any> {
+        return await this.dataSource.transaction(async (manager) => {
+            // Delete associated data in order
+            await manager.delete(Employee, { businessId });
+            await manager.delete(BusinessSubscription, { businessId });
+            await manager.delete(BusinessMembership, { businessId });
+            await manager.delete(Business, { id: businessId });
+            return { businessId, deleted: true };
+        });
     }
 }

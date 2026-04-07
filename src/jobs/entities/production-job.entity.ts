@@ -24,14 +24,14 @@ export class ProductionJob {
     @Column({ name: 'business_id' })
     businessId: string;
 
-    @ManyToOne(() => Business)
+    @ManyToOne(() => Business, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'business_id' })
     business: Business;
 
     @Column({ name: 'order_id' })
     orderId: string;
 
-    @ManyToOne(() => Order, (order) => order.jobs)
+    @ManyToOne(() => Order, (order) => order.jobs, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'order_id' })
     order: Order;
 

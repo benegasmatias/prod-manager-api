@@ -1,13 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { MachineStatus } from '../../common/enums';
+import { Business } from '../../businesses/entities/business.entity';
 
 @Entity('machines')
 export class Machine {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'business_id' })
+    @ManyToOne(() => Business, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'business_id' })
+    business: Business;
+
+    @Column({ name: 'business_id', nullable: true })
     businessId: string;
 
     @Column()

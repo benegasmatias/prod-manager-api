@@ -19,7 +19,7 @@ export class BusinessMembership {
     @Column({ name: 'business_id', type: 'uuid' })
     businessId: string;
 
-    @ManyToOne(() => Business, (business) => business.memberships)
+    @ManyToOne(() => Business, (business) => business.memberships, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'business_id' })
     business: Business;
 

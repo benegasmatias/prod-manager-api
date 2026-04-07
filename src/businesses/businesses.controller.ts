@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Query, BadRequestException, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Delete, Query, BadRequestException, UseInterceptors } from '@nestjs/common';
 import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-privacy.interceptor';
 import { BusinessesService } from './businesses.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -123,5 +123,12 @@ export class BusinessesController {
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async activate(@Request() req, @Param('id') id: string) {
         return this.businessesService.activateBusiness(req.user.id, id);
+    }
+
+    @Delete('/:id')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async remove(@Param('id') id: string) {
+        return this.businessesService.delete(id);
     }
 }

@@ -14,7 +14,7 @@ export class Customer {
     @Column({ name: 'business_id', type: 'uuid', nullable: false })
     businessId: string;
 
-    @ManyToOne(() => Business)
+    @ManyToOne(() => Business, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'business_id' })
     business: Business;
 
