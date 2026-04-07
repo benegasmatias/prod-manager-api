@@ -30,6 +30,16 @@ export class BusinessMembership {
     })
     role: BusinessRole;
 
+    @Column({ default: 'ACTIVE' })
+    status: string; // ACTIVE, BLOCKED
+
+    @Column({ name: 'invited_by_user_id', nullable: true })
+    invitedByUserId: string;
+
+    @ManyToOne(() => User, { nullable: true })
+    @JoinColumn({ name: 'invited_by_user_id' })
+    invitedByUser: User;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 }

@@ -18,6 +18,7 @@ export class EmployeesController {
     }
 
     @Get()
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     findAll(
         @Query('businessId') businessId: string,
         @Query('active') active?: string
@@ -27,6 +28,7 @@ export class EmployeesController {
     }
 
     @Get(':id')
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     findOne(@Param('id', ParseUUIDPipe) id: string, @Query('businessId') businessId: string) {
         return this.employeesService.findOne(id, businessId);
     }

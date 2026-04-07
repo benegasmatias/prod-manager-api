@@ -5,17 +5,15 @@ import { Request } from 'express';
  * Prioridad: URL Params > Query Params > Body
  */
 export function getBusinessIdFromRequest(request: any): string | null {
-  // 1. Intentar obtener de params (ej: /businesses/:id o /orders/:businessId)
-  let businessId = request.params?.id || request.params?.businessId;
+  // 1. Prioridad absoluta: Identificadores explícitos
+  let businessId = request.params?.businessId || request.query?.businessId || request.body?.businessId;
 
-  // 2. Intentar obtener de query (ej: ?businessId=...)
-  if (!businessId) {
-    businessId = request.query?.businessId;
-  }
-
-  // 3. Intentar obtener de body (ej: { "businessId": "..." })
-  if (!businessId) {
-    businessId = request.body?.businessId;
+  // 2. Fallback: Solo usar 'id' de params si no se encontró un businessId específico
+  // Esto es común en rutas de /businesses/:id
+  if (!businessId && request.params?.id) {
+    // Si la ruta comienza con /businesses, es muy probable que 'id' sea el businessId
+    // Si no, lo usamos con precaución (mejor ser explícitos en los controladores)
+    businessId = request.params.id;
   }
 
   return businessId || null;
