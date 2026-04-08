@@ -12,13 +12,15 @@ import { RequireBusinessRole } from './decorators/require-business-role.decorato
 import { BusinessStatus, BusinessRole } from '../common/enums';
 
 import { BusinessInvitationsService } from './business-invitations.service';
+import { MailService } from '../common/mail/mail.service';
 
 @Controller('businesses')
 @UseGuards(SupabaseAuthGuard)
 export class BusinessesController {
     constructor(
         private readonly businessesService: BusinessesService,
-        private readonly invitationsService: BusinessInvitationsService
+        private readonly invitationsService: BusinessInvitationsService,
+        private readonly mailService: MailService
     ) { }
 
     @Get()
@@ -149,26 +151,71 @@ export class BusinessesController {
         @Request() req,
         @Body() body: { email: string, role?: string, firstName?: string, lastName?: string, phone?: string, specialty?: string }
     ) {
-        // En V1, si no se envía rol, usamos OPERATOR por defecto
         const role = body.role || 'OPERATOR';
         
-        const invitation = await this.invitationsService.createInvitation(id, body.email, role, req.user.id, {
+        const { invitation, userExists } = await this.invitationsService.createInvitation(id, body.email, role, req.user.id, {
             firstName: body.firstName,
             lastName: body.lastName,
             phone: body.phone,
             specialty: body.specialty
         });
 
-        // SIMULACIÓN DE ENVÍO DE EMAIL
-        console.log('\n================================================');
-        console.log('📧 SIMULACIÓN DE EMAIL ENVIADO');
-        console.log(`Para: ${body.email}`);
-        console.log(`De: ${req.user.email} (Negocio ID: ${id})`);
-        console.log(`Rol: ${role}`);
-        console.log(`URL de Aceptación: http://localhost:4200/invitaciones/aceptar?token=${invitation.token}`);
-        console.log('================================================\n');
+        // ENVÍO REAL DE EMAIL USANDO BREVO
+        try {
+            const business = await this.businessesService.findOne(req.user.id, id);
+            const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
+            const inviteUrl = userExists 
+                ? `http://localhost:4200${acceptPath}`
+                : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+            
+            await this.mailService.sendInvitationEmail(
+                body.email, 
+                business.name, 
+                role, 
+                inviteUrl,
+                userExists
+            );
+        } catch (error) {
+            console.error('Error al enviar el email de invitación:', error);
+        }
 
         return invitation;
+    }
+
+    @Post(':id/invitations/:invitationId/resend')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async resendInvitation(
+        @Param('id') id: string,
+        @Param('invitationId') invitationId: string,
+        @Request() req
+    ) {
+        const { invitation, nextResendAt, userExists } = await this.invitationsService.resendInvitation(id, invitationId);
+
+        // Send email with new token
+        try {
+            const business = await this.businessesService.findOne(req.user.id, id);
+            const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
+            const inviteUrl = userExists 
+                ? `http://localhost:4200${acceptPath}`
+                : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+            
+            await this.mailService.sendInvitationEmail(
+                invitation.email,
+                business.name,
+                invitation.role,
+                inviteUrl,
+                userExists
+            );
+        } catch (error) {
+            console.error('Error al reenviar el email de invitación:', error);
+        }
+
+        return { 
+            message: 'Invitación reenviada con éxito',
+            resendCount: invitation.resendCount,
+            nextResendAt 
+        };
     }
 
     @Get(':id/invitations')
@@ -176,6 +223,17 @@ export class BusinessesController {
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async getAllInvitations(@Param('id') id: string) {
         return this.invitationsService.getInvitations(id);
+    }
+
+    @Delete(':id/invitations/:invitationId')
+    @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    async cancelInvitation(
+        @Param('id') id: string,
+        @Param('invitationId') invitationId: string
+    ) {
+        await this.invitationsService.cancelInvitation(id, invitationId);
+        return { message: 'Invitación cancelada con éxito' };
     }
 
     @Delete(':id')

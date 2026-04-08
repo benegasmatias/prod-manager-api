@@ -70,6 +70,12 @@ export class BusinessInvitation {
     @Column({ nullable: true })
     specialty: string;
 
+    @Column({ name: 'resend_count', default: 0 })
+    resendCount: number;
+
+    @Column({ name: 'last_resent_at', type: 'timestamp', nullable: true })
+    lastResentAt: Date;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

@@ -4019,3 +4019,314 @@ Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el neg
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:16:35.152Z
+Path: /business-invitations/me
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:16:35.161Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:17:02.659Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:17:02.734Z
+Path: /business-invitations/me
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:22:25.289Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:22:25.673Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:22:25.885Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:22:26.009Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:22:39.562Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:23:19.085Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:24:35.637Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:27:57.129Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:30:19.569Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:32:06.987Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T22:51:01.364Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T23:07:41.932Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T23:08:47.430Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-07T23:11:09.233Z
+Path: /employees?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: SALES
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-08T02:36:28.305Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-08T02:36:28.308Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-08T02:36:28.325Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-08T03:01:28.764Z
+Path: /business-invitations/bbda69eb-1ec8-4b1b-b3a9-22b5b027d64c/accept
+Status: 400
+Message: {"message":"Esta invitación fue enviada a otro correo electrónico","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Esta invitación fue enviada a otro correo electrónico
+    at BusinessInvitationsService.validateInvitation (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\business-invitations.service.ts:137:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async BusinessInvitationsService.acceptInvitation (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\business-invitations.service.ts:144:28)
+-------------

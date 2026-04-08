@@ -2,8 +2,10 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { BusinessInvitation, InvitationStatus } from './entities/business-invitation.entity';
+import { Business } from './entities/business.entity';
 import { BusinessMembership } from './entities/business-membership.entity';
 import { User } from '../users/entities/user.entity';
+import { MailService } from '../common/mail/mail.service';
 import { Employee } from '../employees/entities/employee.entity';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -18,6 +20,9 @@ export class BusinessInvitationsService {
         private userRepo: Repository<User>,
         @InjectRepository(Employee)
         private employeeRepo: Repository<Employee>,
+        @InjectRepository(Business)
+        private businessRepo: Repository<Business>,
+        private mailService: MailService,
         private dataSource: DataSource,
     ) {}
 
@@ -28,9 +33,9 @@ export class BusinessInvitationsService {
             where: { email: emailLower }
         });
         
-        const membership = await this.membershipRepo.findOne({ 
-            where: { businessId, userId: user?.id } 
-        });
+        const membership = user ? await this.membershipRepo.findOne({ 
+            where: { businessId, userId: user.id } 
+        }) : null;
 
         const pendingInvite = await this.invitationRepo.findOne({
             where: { businessId, email: emailLower, status: InvitationStatus.PENDING }
@@ -65,7 +70,7 @@ export class BusinessInvitationsService {
         role: string,
         invitedByUserId: string,
         metadata?: { firstName?: string; lastName?: string; phone?: string; specialty?: string }
-    ): Promise<BusinessInvitation> {
+    ): Promise<{ invitation: BusinessInvitation; userExists: boolean }> {
         const emailLower = email.toLowerCase();
 
         const user = await this.userRepo.findOne({ where: { email: emailLower } });
@@ -82,7 +87,7 @@ export class BusinessInvitationsService {
 
         if (existing) {
             existing.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-            return this.invitationRepo.save(existing);
+            return { invitation: await this.invitationRepo.save(existing), userExists: !!user };
         }
 
         const invitation = this.invitationRepo.create({
@@ -99,7 +104,7 @@ export class BusinessInvitationsService {
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 días
         });
 
-        return this.invitationRepo.save(invitation);
+        return { invitation: await this.invitationRepo.save(invitation), userExists: !!user };
     }
 
     async findByToken(token: string): Promise<BusinessInvitation> {
@@ -199,5 +204,59 @@ export class BusinessInvitationsService {
             order: { createdAt: 'DESC' },
             relations: ['business', 'invitedByUser']
         });
+    }
+
+    async resendInvitation(businessId: string, invitationId: string): Promise<{ invitation: BusinessInvitation; nextResendAt: Date; userExists: boolean }> {
+        const invitation = await this.invitationRepo.findOne({
+            where: { id: invitationId, businessId, status: InvitationStatus.PENDING },
+            relations: ['business'],
+        });
+
+        if (!invitation) {
+            throw new NotFoundException('Invitación no encontrada o ya no está pendiente');
+        }
+
+        const user = await this.userRepo.findOne({ where: { email: invitation.email.toLowerCase() } });
+        // Progressive cooldown: 0s, 60s, 120s, 240s... (2^n * 60s)
+        const resendCount = invitation.resendCount || 0;
+        if (resendCount > 0 && invitation.lastResentAt) {
+            const cooldownSeconds = Math.pow(2, resendCount - 1) * 60;
+            const cooldownMs = cooldownSeconds * 1000;
+            const timeSinceLastResend = Date.now() - new Date(invitation.lastResentAt).getTime();
+
+            if (timeSinceLastResend < cooldownMs) {
+                const waitSeconds = Math.ceil((cooldownMs - timeSinceLastResend) / 1000);
+                throw new BadRequestException(
+                    `Debes esperar ${waitSeconds} segundos antes de reenviar esta invitación`
+                );
+            }
+        }
+
+        // Regenerate token and extend expiration
+        invitation.token = uuidv4();
+        invitation.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        invitation.resendCount = resendCount + 1;
+        invitation.lastResentAt = new Date();
+
+        const saved = await this.invitationRepo.save(invitation);
+
+        // Calculate when the next resend will be available
+        const nextCooldownSeconds = Math.pow(2, saved.resendCount - 1) * 60;
+        const nextResendAt = new Date(Date.now() + nextCooldownSeconds * 1000);
+
+        return { invitation: saved, nextResendAt, userExists: !!user };
+    }
+
+    async cancelInvitation(businessId: string, invitationId: string): Promise<void> {
+        const invitation = await this.invitationRepo.findOne({
+            where: { id: invitationId, businessId, status: InvitationStatus.PENDING },
+        });
+
+        if (!invitation) {
+            throw new NotFoundException('Invitación no encontrada o ya no está pendiente');
+        }
+
+        invitation.status = InvitationStatus.CANCELLED;
+        await this.invitationRepo.save(invitation);
     }
 }
