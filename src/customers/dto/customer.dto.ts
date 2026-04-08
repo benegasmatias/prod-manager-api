@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString, ValidateIf } from 'class-validator';
 
 export class CreateCustomerDto {
     @IsString()
@@ -9,6 +9,7 @@ export class CreateCustomerDto {
     @IsNotEmpty()
     businessId: string;
 
+    @ValidateIf(o => o.email !== '' && o.email !== undefined && o.email !== null)
     @IsEmail()
     @IsOptional()
     email?: string;
@@ -27,6 +28,7 @@ export class UpdateCustomerDto {
     @IsOptional()
     name?: string;
 
+    @ValidateIf(o => o.email !== '' && o.email !== undefined && o.email !== null)
     @IsEmail()
     @IsOptional()
     email?: string;
