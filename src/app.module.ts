@@ -15,6 +15,7 @@ import { EmployeesModule } from './employees/employees.module';
 import { AdminModule } from './admin/admin.module';
 import { FilesModule } from './files/files.module';
 import { AuditModule } from './audit/audit.module';
+import { MailModule } from './common/mail/mail.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { AuditModule } from './audit/audit.module';
     EmployeesModule,
     AdminModule,
     FilesModule,
+    MailModule,
   ],
 })
 export class AppModule { }
