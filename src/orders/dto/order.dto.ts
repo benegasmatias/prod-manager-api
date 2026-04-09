@@ -261,11 +261,13 @@ export class FindOrdersDto {
     @IsInt()
     @IsOptional()
     @Min(1)
+    @Type(() => Number)
     page?: number;
 
     @IsInt()
     @IsOptional()
     @Min(1)
+    @Type(() => Number)
     pageSize?: number;
 
     @IsString()

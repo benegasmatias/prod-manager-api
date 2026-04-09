@@ -4330,3 +4330,449 @@ Stack: BadRequestException: Esta invitación fue enviada a otro correo electrón
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
     at async BusinessInvitationsService.acceptInvitation (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\business-invitations.service.ts:144:28)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:02:11.793Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:02:11.797Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:02:12.081Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:03:18.768Z
+Path: /customers
+Status: 409
+Message: {"message":"Ya existe un cliente con ese email en este negocio","error":"Conflict","statusCode":409}
+Stack: ConflictException: Ya existe un cliente con ese email en este negocio
+    at CustomersService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\customers\customers.service.ts:20:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:21:04.241Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:21:04.243Z
+Path: /business-invitations/me
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:21:20.331Z
+Path: /businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:21:20.333Z
+Path: /business-invitations/me
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:27:56.858Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:27:56.887Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:27:56.889Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CUSTOMER
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK","page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:28:37.400Z
+Path: /customers
+Status: 409
+Message: {"message":"Ya existe un cliente con ese email en este negocio","error":"Conflict","statusCode":409}
+Stack: ConflictException: Ya existe un cliente con ese email en este negocio
+    at CustomersService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\customers\customers.service.ts:20:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:35:04.499Z
+Path: /orders
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:35:37.982Z
+Path: /orders
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:35:56.363Z
+Path: /orders
+Status: 400
+Message: {"message":["type must be one of the following values: CLIENT, STOCK"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T01:46:26.881Z
+Path: /notifications?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:20:47.335Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:20:48.732Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:20:48.873Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:32:06.665Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&type=CLIENT
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:59)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:37
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:36:11.302Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:36:11.505Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:36:11.566Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 400
+Message: {"message":["page must not be less than 1","page must be an integer number","pageSize must not be less than 1","pageSize must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:49:24.359Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign
+Status: 404
+Message: {"message":"Cannot POST /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:42:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:50:07.734Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign
+Status: 404
+Message: {"message":"Cannot POST /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:42:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T02:59:26.415Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 403
+Message: {"message":"No tienes acceso a los datos de este negocio o el negocio no existe.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el negocio no existe.
+    at BusinessAccessGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-access.guard.ts:20:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T03:13:15.221Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 403
+Message: {"message":"No tienes acceso a los datos de este negocio o el negocio no existe.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el negocio no existe.
+    at BusinessAccessGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-access.guard.ts:20:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T03:14:02.934Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 403
+Message: {"message":"No tienes acceso a los datos de este negocio o el negocio no existe.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el negocio no existe.
+    at BusinessAccessGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-access.guard.ts:20:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T03:15:31.121Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 403
+Message: {"message":"No tienes acceso a los datos de este negocio o el negocio no existe.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: No tienes acceso a los datos de este negocio o el negocio no existe.
+    at BusinessAccessGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-access.guard.ts:20:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T03:30:36.687Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:1225:14)
+    at Repository.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\repository\src\repository\Repository.ts:626:29)
+-------------
