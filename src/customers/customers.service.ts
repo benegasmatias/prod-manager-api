@@ -13,6 +13,10 @@ export class CustomersService {
 
     async create(createCustomerDto: CreateCustomerDto) {
         try {
+            // Limpiamos strings vacíos a null para evitar violaciones de 'Unique' (ej. email en la BD)
+            if (createCustomerDto.email === '') createCustomerDto.email = null;
+            if (createCustomerDto.phone === '') createCustomerDto.phone = null;
+
             const customer = this.customerRepository.create(createCustomerDto);
             return await this.customerRepository.save(customer);
         } catch (error) {
@@ -72,6 +76,9 @@ export class CustomersService {
     }
 
     async update(id: string, updateCustomerDto: UpdateCustomerDto) {
+        if (updateCustomerDto.email === '') updateCustomerDto.email = null;
+        if (updateCustomerDto.phone === '') updateCustomerDto.phone = null;
+
         await this.findOne(id);
         await this.customerRepository.update(id, updateCustomerDto);
         return this.findOne(id);
