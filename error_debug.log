@@ -4776,3 +4776,103 @@ Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "Pro
     at EntityManager.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:1225:14)
     at Repository.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\repository\src\repository\Repository.ts:626:29)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T20:21:41.436Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 500
+Message: "null value in column \"business_id\" of relation \"production_jobs\" violates not-null constraint"
+Stack: QueryFailedError: null value in column "business_id" of relation "production_jobs" violates not-null constraint
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:35:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T20:37:40.510Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:39:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T20:40:55.290Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:39:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T20:58:05.382Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:41:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T21:38:49.002Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=1000&type=STOCK
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:59)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:37
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-09T21:38:49.089Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------

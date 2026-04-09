@@ -52,7 +52,7 @@ export class MachinesService {
         }
 
         // 1. Marcar impresora como ocupada
-        await this.machineRepository.update(machineId, { status: MachineStatus.PRINTING });
+        await this.machineRepository.update(machineId, { status: MachineStatus.WORKING });
 
         // 2. Marcar pedido como en producción (si no lo estaba)
         if (order.status !== OrderStatus.IN_PROGRESS) {
@@ -63,6 +63,7 @@ export class MachinesService {
         const firstItem = order.items[0];
 
         await this.jobsService.create({
+            businessId: businessId ?? order.businessId,
             orderId: order.id,
             orderItemId: firstItem.id,
             machineId: machineId,

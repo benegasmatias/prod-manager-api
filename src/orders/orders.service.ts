@@ -520,19 +520,30 @@ export class OrdersService {
      * Verifica si se han terminado todos los trabajos de un pedido y lo marca como terminado.
      */
     async checkAndSetReadyStatus(orderId: string) {
-        const jobs = await this.jobRepository.find({
-            where: { orderId }
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const jobs = await manager.find(ProductionJob, { where: { orderId } });
+            if (jobs.length === 0) return;
+
+            const allJobsDone = jobs.every(j => (j.status as any) === JobStatus.DONE);
+            if (!allJobsDone) return;
+
+            const order = await manager.findOne(Order, { where: { id: orderId } });
+            if (!order || order.status === OrderStatus.DONE) return;
+
+            const oldStatus = order.status;
+            await manager.update(Order, orderId, { status: OrderStatus.DONE });
+
+            // Registrar en historial para trazabilidad
+            const history = manager.create(OrderStatusHistory, {
+                orderId,
+                fromStatus: oldStatus,
+                toStatus: OrderStatus.DONE,
+                note: 'Completado automáticamente al finalizar todos los trabajos de producción.'
+            });
+            await manager.save(OrderStatusHistory, history);
+
+            console.log(`[Senior Workflow] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
         });
-
-        // Si no hay trabajos, no hacemos nada automatico (podria ser un pedido manual)
-        if (jobs.length === 0) return;
-
-        const allJobsDone = jobs.every(j => (j.status as any) === JobStatus.DONE);
-
-        if (allJobsDone) {
-            await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
-            console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
-        }
     }
 
     /**
