@@ -353,7 +353,7 @@ export class OrdersService {
             where: { id },
             relations: [
                 'items', 'customer', 'responsableGeneral',
-                'jobs', 'jobs.responsable', 'business',
+                'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
                 'failures', 'failures.material', 'payments', 'siteInfo'
             ],
@@ -579,7 +579,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],
@@ -665,7 +665,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],

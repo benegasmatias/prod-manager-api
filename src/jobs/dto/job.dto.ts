@@ -36,7 +36,7 @@ export class CreateJobDto {
 
     @IsString()
     @IsOptional()
-    responsableId?: string;
+    operatorId?: string;
 
     @IsOptional()
     metadata?: any;
@@ -69,7 +69,7 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    responsableId?: string;
+    operatorId?: string;
 
     @IsOptional()
     metadata?: any;

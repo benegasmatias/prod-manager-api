@@ -65,7 +65,7 @@ export class JobsService {
 
         return this.jobRepository.find({
             where,
-            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
+            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress', 'operator'],
             order: {
                 createdAt: 'DESC'
             },
@@ -82,6 +82,7 @@ export class JobsService {
                 'progress',
                 'statusHistory',
                 'material',
+                'operator',
             ],
         });
         if (!job) throw new NotFoundException('Trabajo no encontrado');

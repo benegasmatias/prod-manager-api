@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean, IsUUID } from 'class-validator';
 import { OrderStatus, OrderType } from '../../common/enums';
 
 export class OrderSiteInfoDto {
@@ -185,6 +185,10 @@ export class UpdateProgressDto {
 }
 
 export class UpdateOrderStatusDto {
+    @IsUUID()
+    @IsOptional()
+    businessId?: string;
+
     @IsEnum(OrderStatus)
     @IsOptional()
     status?: OrderStatus;
@@ -301,6 +305,10 @@ export class BudgetSummaryResponseDto {
 }
 
 export class ReportFailureDto {
+    @IsUUID()
+    @IsOptional()
+    businessId?: string;
+
     @IsString()
     @IsNotEmpty()
     reason: string;
