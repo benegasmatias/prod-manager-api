@@ -1,7 +1,11 @@
-import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
+import { IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Min, IsUUID } from 'class-validator';
 import { ProductionJobStatus as JobStatus, Priority } from '../../common/enums';
 
 export class CreateJobDto {
+    @IsUUID()
+    @IsOptional()
+    businessId?: string;
+
     @IsString()
     @IsNotEmpty()
     orderId: string;
@@ -36,7 +40,7 @@ export class CreateJobDto {
 
     @IsString()
     @IsOptional()
-    responsableId?: string;
+    operatorId?: string;
 
     @IsOptional()
     metadata?: any;
@@ -69,7 +73,7 @@ export class UpdateJobDto {
 
     @IsString()
     @IsOptional()
-    responsableId?: string;
+    operatorId?: string;
 
     @IsOptional()
     metadata?: any;

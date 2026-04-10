@@ -5,14 +5,15 @@ import { Business } from './entities/business.entity';
 import { BusinessTemplateDto } from './dto/business-template.dto';
 import { BusinessMembership } from './entities/business-membership.entity';
 import { BusinessSubscription } from './entities/business-subscription.entity';
-import { BusinessRole } from '../common/enums';
+import { BusinessRole, BusinessStatus, OrderStatus, MachineStatus, OrderType } from '../common/enums';
+import { AppCacheService } from '../common/cache/app-cache.service';
+import { CACHE_KEYS } from '../common/cache/cache.constants';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
 import { Machine } from '../machines/entities/machine.entity';
-import { MachineStatus, OrderStatus, OrderType, BusinessStatus } from '../common/enums';
 import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
@@ -68,6 +69,7 @@ export class BusinessesService {
         private readonly billingService: BillingService,
         private readonly dataSource: DataSource,
         private readonly strategyProvider: BusinessStrategyProvider,
+        private readonly cacheService: AppCacheService,
     ) { }
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
@@ -106,9 +108,9 @@ export class BusinessesService {
             return { accessible: true };
         }
 
-        return { 
-            accessible: false, 
-            reason: `Este rubro requiere un plan ${requiredPlan}. Tu plan actual es ${userPlan}.` 
+        return {
+            accessible: false,
+            reason: `Este rubro requiere un plan ${requiredPlan}. Tu plan actual es ${userPlan}.`
         };
     }
 
@@ -153,7 +155,7 @@ export class BusinessesService {
                     active: true,
                     role: 'OWNER'
                 }));
-                
+
                 if (!user.defaultBusinessId) {
                     user.defaultBusinessId = businessToUse.id;
                     await manager.save(User, user);
@@ -180,8 +182,11 @@ export class BusinessesService {
         business.onboardingCompleted = true;
         business.onboardingStep = 'DONE';
         business.statusUpdatedAt = new Date();
-        
+
         await this.businessRepository.save(business);
+
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
 
         await this.auditService.log(
             AuditAction.BUSINESS_ACTIVATED,
@@ -208,10 +213,13 @@ export class BusinessesService {
         if (reasonText) business.statusReasonText = reasonText;
 
         if (newStatus === 'ARCHIVED') {
-             business.isEnabled = false;
+            business.isEnabled = false;
         }
 
         await this.businessRepository.save(business);
+
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
 
         // --- AUDIT LOGS ---
         if (oldStatus !== newStatus) {
@@ -258,6 +266,9 @@ export class BusinessesService {
 
         await this.businessRepository.save(business);
 
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
+
         await this.auditService.log(
             AuditAction.BUSINESS_ENABLED_CHANGED,
             'BUSINESS',
@@ -286,7 +297,7 @@ export class BusinessesService {
         if (!business) throw new ForbiddenException('Negocio no encontrado');
 
         const template = await this.templateRepository.findOneBy({ key: business.category });
-        
+
         let config = JSON.parse(JSON.stringify(DEFAULT_BASE_CONFIG));
 
         if (template?.config) {
@@ -314,8 +325,8 @@ export class BusinessesService {
         const userRole = membership?.role || BusinessRole.OPERATOR;
         const userPermissions = this.getPermissionsForRole(userRole);
 
-        return { 
-            businessId: business.id, 
+        return {
+            businessId: business.id,
             config,
             userRole,
             userPermissions,
@@ -399,7 +410,7 @@ export class BusinessesService {
             OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
             OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
             OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK,
-            OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.VISITA_REPROGRAMADA, 
+            OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE, OrderStatus.VISITA_REPROGRAMADA,
             OrderStatus.QUOTATION, OrderStatus.BUDGET_GENERATED, OrderStatus.SURVEY_DESIGN, OrderStatus.APPROVED,
             OrderStatus.OFFICIAL_ORDER, OrderStatus.INSTALACION_OBRA
         ];
@@ -430,7 +441,7 @@ export class BusinessesService {
                 relations: ['items', 'siteInfo']
             }),
             this.machineRepository.count({
-                where: { businessId, status: MachineStatus.PRINTING }
+                where: { businessId, status: MachineStatus.WORKING }
             }),
             this.orderRepository.count({
                 where: { businessId, status: In(PRODUCTION_STATUSES) }
@@ -481,7 +492,7 @@ export class BusinessesService {
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
-            alerts: [], 
+            alerts: [],
             trends: null,
             operationalCounters,
             pipelineSummary,
@@ -500,6 +511,10 @@ export class BusinessesService {
     async update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business> {
         await this.findOne(userId, id);
         await this.businessRepository.update(id, updateDto);
+        
+        // Invalidar Cache (Config y Dashboard podrían haber cambiado)
+        await this.cacheService.invalidate(id);
+        
         return this.findOne(userId, id);
     }
 

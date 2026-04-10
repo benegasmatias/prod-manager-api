@@ -294,7 +294,7 @@ async function seed() {
         const printerRepo = AppDataSource.getRepository(Machine);
         const baseMachines = [
             { name: 'Ender 3 S1 #1', model: 'Creality Ender 3 S1', nozzle: '0.4mm', status: MachineStatus.IDLE, businessId: biz3D.id },
-            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: MachineStatus.PRINTING, businessId: biz3D.id },
+            { name: 'Prusa MK3S+ #1', model: 'Prusa i3 MK3S+', nozzle: '0.6mm', status: MachineStatus.WORKING, businessId: biz3D.id },
         ];
 
         for (const p of baseMachines) {

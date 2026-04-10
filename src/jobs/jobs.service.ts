@@ -27,18 +27,30 @@ export class JobsService {
     ) { }
 
     async create(createJobDto: CreateJobDto, userId?: string) {
+        const parentOrder = await this.ordersService.findOne(createJobDto.orderId);
+        if (!parentOrder) throw new NotFoundException('Pedido no encontrado');
+
+        const initialStatus = createJobDto.machineId ? JobStatus.IN_PROGRESS : JobStatus.QUEUED;
+
         const job = this.jobRepository.create({
             ...(createJobDto as any),
-            status: JobStatus.QUEUED as any,
+            businessId: createJobDto.businessId ?? parentOrder.businessId,
+            status: initialStatus as any,
         });
 
         const saved = await this.jobRepository.save(job);
         const savedJob = Array.isArray(saved) ? saved[0] : saved;
 
+        // Discount material immediately if starting
+        if (initialStatus === JobStatus.IN_PROGRESS) {
+            const fullJobForDeduction = await this.findOne(savedJob.id);
+            await this.deductMaterialWeight(fullJobForDeduction, fullJobForDeduction.totalUnits);
+        }
+
         const history = this.statusHistoryRepository.create({
             productionJobId: savedJob.id,
-            toStatus: JobStatus.QUEUED as any, // Cast for enum alignment
-            note: 'Initial queuing',
+            toStatus: initialStatus as any,
+            note: createJobDto.machineId ? 'Started on machine' : 'Initial queuing',
             performedById: userId
         });
         await this.statusHistoryRepository.save(history);
@@ -65,7 +77,7 @@ export class JobsService {
 
         return this.jobRepository.find({
             where,
-            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress'],
+            relations: ['order', 'orderItem', 'orderItem.product', 'machine', 'material', 'progress', 'operator'],
             order: {
                 createdAt: 'DESC'
             },
@@ -82,6 +94,7 @@ export class JobsService {
                 'progress',
                 'statusHistory',
                 'material',
+                'operator',
             ],
         });
         if (!job) throw new NotFoundException('Trabajo no encontrado');
@@ -118,6 +131,7 @@ export class JobsService {
                 await this.deductMaterialWeight(job, unitsPending);
             }
 
+            await this.ordersService.syncOrderItemProgress(job.orderItemId);
             await this.ordersService.checkAndSetReadyStatus(job.orderId);
         }
 

@@ -1,7 +1,11 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, Min, IsUUID } from 'class-validator';
 import { PaymentMethod } from '../../common/enums';
 
 export class CreatePaymentDto {
+    @IsUUID()
+    @IsOptional()
+    businessId?: string;
+
     @IsNumber()
     @Min(0.01)
     amount: number;

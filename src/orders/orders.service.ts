@@ -16,6 +16,8 @@ import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { OrderStrategyProvider } from './order-strategy.provider';
 import { OrderWorkflowService } from './order-workflow.service';
 import { OrderFinancialService } from './order-financial.service';
+import { AppCacheService } from '../common/cache/app-cache.service';
+import { CACHE_KEYS } from '../common/cache/cache.constants';
 
 @Injectable()
 export class OrdersService {
@@ -37,6 +39,7 @@ export class OrdersService {
         private readonly strategyProvider: OrderStrategyProvider,
         private readonly workflowService: OrderWorkflowService,
         private readonly financialService: OrderFinancialService,
+        private readonly cacheService: AppCacheService,
     ) { }
 
     /**
@@ -353,7 +356,7 @@ export class OrdersService {
             where: { id },
             relations: [
                 'items', 'customer', 'responsableGeneral',
-                'jobs', 'jobs.responsable', 'business',
+                'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
                 'failures', 'failures.material', 'payments', 'siteInfo'
             ],
@@ -420,6 +423,10 @@ export class OrdersService {
             });
 
             if (!result) throw new NotFoundException('Error al recuperar el pedido recién creado');
+            
+            // Invalidar Dashboard Cache
+            await this.cacheService.invalidate(orderData.businessId, CACHE_KEYS.BUSINESS_DASHBOARD);
+            
             return result;
         });
     }
@@ -509,6 +516,9 @@ export class OrdersService {
                 }
             }
 
+            // Invalidar Dashboard Cache
+            await this.cacheService.invalidate(order.businessId, CACHE_KEYS.BUSINESS_DASHBOARD);
+
             return await manager.findOne(Order, {
                 where: { id: orderId },
                 relations: ['items', 'customer', 'responsableGeneral', 'payments']
@@ -520,19 +530,30 @@ export class OrdersService {
      * Verifica si se han terminado todos los trabajos de un pedido y lo marca como terminado.
      */
     async checkAndSetReadyStatus(orderId: string) {
-        const jobs = await this.jobRepository.find({
-            where: { orderId }
+        return await this.orderRepository.manager.transaction(async (manager) => {
+            const jobs = await manager.find(ProductionJob, { where: { orderId } });
+            if (jobs.length === 0) return;
+
+            const allJobsDone = jobs.every(j => (j.status as any) === JobStatus.DONE);
+            if (!allJobsDone) return;
+
+            const order = await manager.findOne(Order, { where: { id: orderId } });
+            if (!order || order.status === OrderStatus.DONE) return;
+
+            const oldStatus = order.status;
+            await manager.update(Order, orderId, { status: OrderStatus.DONE });
+
+            // Registrar en historial para trazabilidad
+            const history = manager.create(OrderStatusHistory, {
+                orderId,
+                fromStatus: oldStatus,
+                toStatus: OrderStatus.DONE,
+                note: 'Completado automáticamente al finalizar todos los trabajos de producción.'
+            });
+            await manager.save(OrderStatusHistory, history);
+
+            console.log(`[Senior Workflow] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
         });
-
-        // Si no hay trabajos, no hacemos nada automatico (podria ser un pedido manual)
-        if (jobs.length === 0) return;
-
-        const allJobsDone = jobs.every(j => (j.status as any) === JobStatus.DONE);
-
-        if (allJobsDone) {
-            await this.orderRepository.update(orderId, { status: OrderStatus.DONE });
-            console.log(`[OrdersService] Pedido ${orderId} marcado como TERMINADO automáticamente.`);
-        }
     }
 
     /**
@@ -579,7 +600,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],
@@ -665,7 +686,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],

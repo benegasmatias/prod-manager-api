@@ -16,10 +16,12 @@ import { AdminModule } from './admin/admin.module';
 import { FilesModule } from './files/files.module';
 import { AuditModule } from './audit/audit.module';
 import { MailModule } from './common/mail/mail.module';
+import { AppCacheModule } from './common/cache/app-cache.module';
 
 @Module({
   imports: [
     AuditModule,
+    AppCacheModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
