@@ -64,6 +64,7 @@ export class MachinesService {
 
         await this.jobsService.create({
             orderId: order.id,
+            businessId: businessId || order.businessId,
             orderItemId: firstItem.id,
             machineId: machineId,
             materialId: materialId,

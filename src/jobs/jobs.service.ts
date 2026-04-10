@@ -28,7 +28,16 @@ export class JobsService {
 
     async create(createJobDto: CreateJobDto, userId?: string) {
         const job = this.jobRepository.create({
-            ...(createJobDto as any),
+            orderId: createJobDto.orderId,
+            businessId: createJobDto.businessId,
+            orderItemId: createJobDto.orderItemId,
+            machineId: createJobDto.machineId,
+            materialId: createJobDto.materialId,
+            totalUnits: createJobDto.totalUnits,
+            priority: createJobDto.priority as any,
+            title: createJobDto.title,
+            operatorId: createJobDto.operatorId,
+            metadata: createJobDto.metadata,
             status: JobStatus.QUEUED as any,
         });
 

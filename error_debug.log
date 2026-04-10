@@ -4330,3 +4330,18 @@ Stack: BadRequestException: Esta invitación fue enviada a otro correo electrón
     at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
     at async BusinessInvitationsService.acceptInvitation (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\business-invitations.service.ts:144:28)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-10T11:20:57.398Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/dashboard-summary
+Status: 500
+Message: "invalid input value for enum machines_status_enum: \"PRINTING\""
+Stack: QueryFailedError: invalid input value for enum machines_status_enum: "PRINTING"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeCountQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3101:25)
+    at async SelectQueryBuilder.getCount (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1786:29)
+    at async Promise.all (index 2)
+    at async BusinessesService.getDashboardSummary (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:422:13)
+-------------

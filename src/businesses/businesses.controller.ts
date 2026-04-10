@@ -10,7 +10,6 @@ import { BusinessRoleGuard } from './guards/business-role.guard';
 import { AllowBusinessStatuses } from './decorators/allow-business-statuses.decorator';
 import { RequireBusinessRole } from './decorators/require-business-role.decorator';
 import { BusinessStatus, BusinessRole } from '../common/enums';
-
 import { BusinessInvitationsService } from './business-invitations.service';
 import { MailService } from '../common/mail/mail.service';
 
@@ -152,7 +151,7 @@ export class BusinessesController {
         @Body() body: { email: string, role?: string, firstName?: string, lastName?: string, phone?: string, specialty?: string }
     ) {
         const role = body.role || 'OPERATOR';
-        
+
         const { invitation, userExists } = await this.invitationsService.createInvitation(id, body.email, role, req.user.id, {
             firstName: body.firstName,
             lastName: body.lastName,
@@ -164,14 +163,14 @@ export class BusinessesController {
         try {
             const business = await this.businessesService.findOne(req.user.id, id);
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
-            const inviteUrl = userExists 
+            const inviteUrl = userExists
                 ? `http://localhost:4200${acceptPath}`
                 : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
-            
+
             await this.mailService.sendInvitationEmail(
-                body.email, 
-                business.name, 
-                role, 
+                body.email,
+                business.name,
+                role,
                 inviteUrl,
                 userExists
             );
@@ -196,10 +195,10 @@ export class BusinessesController {
         try {
             const business = await this.businessesService.findOne(req.user.id, id);
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
-            const inviteUrl = userExists 
+            const inviteUrl = userExists
                 ? `http://localhost:4200${acceptPath}`
                 : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
-            
+
             await this.mailService.sendInvitationEmail(
                 invitation.email,
                 business.name,
@@ -211,10 +210,10 @@ export class BusinessesController {
             console.error('Error al reenviar el email de invitación:', error);
         }
 
-        return { 
+        return {
             message: 'Invitación reenviada con éxito',
             resendCount: invitation.resendCount,
-            nextResendAt 
+            nextResendAt
         };
     }
 
