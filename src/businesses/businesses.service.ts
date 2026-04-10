@@ -5,14 +5,15 @@ import { Business } from './entities/business.entity';
 import { BusinessTemplateDto } from './dto/business-template.dto';
 import { BusinessMembership } from './entities/business-membership.entity';
 import { BusinessSubscription } from './entities/business-subscription.entity';
-import { BusinessRole } from '../common/enums';
+import { BusinessRole, BusinessStatus, OrderStatus, MachineStatus, OrderType } from '../common/enums';
+import { AppCacheService } from '../common/cache/app-cache.service';
+import { CACHE_KEYS } from '../common/cache/cache.constants';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
 import { Machine } from '../machines/entities/machine.entity';
-import { MachineStatus, OrderStatus, OrderType, BusinessStatus } from '../common/enums';
 import { Material } from '../materials/entities/material.entity';
 import { DashboardSummaryDto, DashboardAlertDto } from './dto/dashboard-summary.dto';
 import { UpdateBusinessDto } from './dto/update-business.dto';
@@ -68,6 +69,7 @@ export class BusinessesService {
         private readonly billingService: BillingService,
         private readonly dataSource: DataSource,
         private readonly strategyProvider: BusinessStrategyProvider,
+        private readonly cacheService: AppCacheService,
     ) { }
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
@@ -183,6 +185,9 @@ export class BusinessesService {
 
         await this.businessRepository.save(business);
 
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
+
         await this.auditService.log(
             AuditAction.BUSINESS_ACTIVATED,
             'BUSINESS',
@@ -212,6 +217,9 @@ export class BusinessesService {
         }
 
         await this.businessRepository.save(business);
+
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
 
         // --- AUDIT LOGS ---
         if (oldStatus !== newStatus) {
@@ -257,6 +265,9 @@ export class BusinessesService {
         if (reasonText) business.statusReasonText = reasonText;
 
         await this.businessRepository.save(business);
+
+        // Invalidar Cache
+        await this.cacheService.invalidate(businessId);
 
         await this.auditService.log(
             AuditAction.BUSINESS_ENABLED_CHANGED,
@@ -500,6 +511,10 @@ export class BusinessesService {
     async update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business> {
         await this.findOne(userId, id);
         await this.businessRepository.update(id, updateDto);
+        
+        // Invalidar Cache (Config y Dashboard podrían haber cambiado)
+        await this.cacheService.invalidate(id);
+        
         return this.findOne(userId, id);
     }
 

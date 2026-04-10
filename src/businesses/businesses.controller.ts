@@ -10,6 +10,8 @@ import { BusinessRoleGuard } from './guards/business-role.guard';
 import { AllowBusinessStatuses } from './decorators/allow-business-statuses.decorator';
 import { RequireBusinessRole } from './decorators/require-business-role.decorator';
 import { BusinessStatus, BusinessRole } from '../common/enums';
+import { MultiTenantCacheInterceptor, TenantCache } from '../common/interceptors/multi-tenant-cache.interceptor';
+import { CacheTTL, CACHE_KEYS } from '../common/cache/cache.constants';
 
 import { BusinessInvitationsService } from './business-invitations.service';
 import { MailService } from '../common/mail/mail.service';
@@ -51,13 +53,16 @@ export class BusinessesController {
     @Get(':id/dashboard-summary')
     @UseGuards(BusinessAccessGuard, BusinessStatusGuard, BusinessRoleGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @UseInterceptors(FinancialPrivacyInterceptor)
+    @UseInterceptors(FinancialPrivacyInterceptor, MultiTenantCacheInterceptor)
+    @TenantCache({ ttl: CacheTTL.MEDIUM, resource: CACHE_KEYS.BUSINESS_DASHBOARD })
     async getSummary(@Request() req, @Param('id') id: string) {
         return this.businessesService.getDashboardSummary(req.user.id, id);
     }
 
     @Get(':id/config')
     @UseGuards(BusinessAccessGuard)
+    @UseInterceptors(MultiTenantCacheInterceptor)
+    @TenantCache({ ttl: CacheTTL.LONG, resource: CACHE_KEYS.BUSINESS_CONFIG })
     async getConfig(@Request() req, @Param('id') id: string) {
         return this.businessesService.resolveBusinessConfig(req.user.id, id);
     }

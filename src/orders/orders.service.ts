@@ -16,6 +16,8 @@ import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { OrderStrategyProvider } from './order-strategy.provider';
 import { OrderWorkflowService } from './order-workflow.service';
 import { OrderFinancialService } from './order-financial.service';
+import { AppCacheService } from '../common/cache/app-cache.service';
+import { CACHE_KEYS } from '../common/cache/cache.constants';
 
 @Injectable()
 export class OrdersService {
@@ -37,6 +39,7 @@ export class OrdersService {
         private readonly strategyProvider: OrderStrategyProvider,
         private readonly workflowService: OrderWorkflowService,
         private readonly financialService: OrderFinancialService,
+        private readonly cacheService: AppCacheService,
     ) { }
 
     /**
@@ -420,6 +423,10 @@ export class OrdersService {
             });
 
             if (!result) throw new NotFoundException('Error al recuperar el pedido recién creado');
+            
+            // Invalidar Dashboard Cache
+            await this.cacheService.invalidate(orderData.businessId, CACHE_KEYS.BUSINESS_DASHBOARD);
+            
             return result;
         });
     }
@@ -508,6 +515,9 @@ export class OrdersService {
                     await strategy.releaseResources(order, manager, { itemId: itemId, targetStatus: JobStatus.DONE });
                 }
             }
+
+            // Invalidar Dashboard Cache
+            await this.cacheService.invalidate(order.businessId, CACHE_KEYS.BUSINESS_DASHBOARD);
 
             return await manager.findOne(Order, {
                 where: { id: orderId },
