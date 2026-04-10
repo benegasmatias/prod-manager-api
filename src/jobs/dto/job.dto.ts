@@ -34,9 +34,6 @@ export class CreateJobDto {
     @IsOptional()
     sortRank?: number;
 
-    @IsString()
-    @IsOptional()
-    title?: string;
 
     @IsString()
     @IsOptional()

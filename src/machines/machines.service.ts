@@ -69,8 +69,7 @@ export class MachinesService {
             machineId: machineId,
             materialId: materialId,
             metadata: metadata,
-            totalUnits: firstItem.qty,
-            title: `Prod: ${order.code || 'S/N'} - ${firstItem.name}`
+            totalUnits: firstItem.qty
         });
 
         return this.findOne(machineId, businessId);

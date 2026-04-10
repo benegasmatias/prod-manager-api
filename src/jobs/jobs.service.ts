@@ -35,7 +35,6 @@ export class JobsService {
             materialId: createJobDto.materialId,
             totalUnits: createJobDto.totalUnits,
             priority: createJobDto.priority as any,
-            title: createJobDto.title,
             operatorId: createJobDto.operatorId,
             metadata: createJobDto.metadata,
             status: JobStatus.QUEUED as any,
