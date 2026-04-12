@@ -17,9 +17,16 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: '*', // Permitir todos los orígenes en desarrollo para facilitar pruebas móviles
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: [
+      'https://prodmanager.com.ar',
+      'https://www.prodmanager.com.ar',
+      'https://prod-manager-ng.vercel.app',
+      'http://localhost:4200',
+      'http://localhost:3000',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',
   });
 
   const port = process.env.PORT || 3030;
