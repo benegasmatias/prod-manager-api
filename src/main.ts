@@ -17,12 +17,9 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: (origin, callback) => {
-      // Permitir cualquier origen y reflejarlo (necesario para credentials: true en producción)
-      callback(null, true);
-    },
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
+    credentials: false,
     allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',
   });
 
