@@ -72,7 +72,7 @@ export class BusinessesService {
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
         const templates = await this.templateRepository.find({
-            where: { isEnabled: true }
+            where: { isEnabled: true, key: 'IMPRESION_3D' as any }
         });
 
         let userPlan = 'FREE';
@@ -116,9 +116,15 @@ export class BusinessesService {
         await this.planUsageService.ensureBusinessCreationAllowed(userId);
 
         const { templateKey, name } = createDto;
-        const template = await this.templateRepository.findOneBy({ key: templateKey });
+        
+        // Hard restriction: Only IMPRESION_3D allowed for now
+        if (templateKey !== 'IMPRESION_3D') {
+            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D`);
+        }
 
-        if (!template && templateKey !== 'GENERICO') {
+        const template = await this.templateRepository.findOneBy({ key: templateKey as any });
+
+        if (!template) {
             throw new NotFoundException(`Template with key ${templateKey} not found`);
         }
 

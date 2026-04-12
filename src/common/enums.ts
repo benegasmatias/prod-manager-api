@@ -43,6 +43,7 @@ export enum OrderStatus {
 export enum MachineStatus {
     IDLE = 'IDLE',
     PRINTING = 'PRINTING',
+    WORKING = 'WORKING',
     MAINTENANCE = 'MAINTENANCE',
     DOWN = 'DOWN',
 }

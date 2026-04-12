@@ -1,4 +1,4 @@
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
 import { OrderStatus, OrderType } from '../../common/enums';
 
@@ -258,13 +258,15 @@ export class FindOrdersDto {
     @IsOptional()
     type?: OrderType;
 
-    @IsInt()
     @IsOptional()
+    @Transform(({ value }) => (value ? parseInt(String(value), 10) : 1))
+    @IsInt()
     @Min(1)
     page?: number;
 
-    @IsInt()
     @IsOptional()
+    @Transform(({ value }) => (value ? parseInt(String(value), 10) : 50))
+    @IsInt()
     @Min(1)
     pageSize?: number;
 
