@@ -17,13 +17,10 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: [
-      'https://prodmanager.com.ar',
-      'https://www.prodmanager.com.ar',
-      'https://prod-manager-ng.vercel.app',
-      'http://localhost:4200',
-      'http://localhost:3000',
-    ],
+    origin: (origin, callback) => {
+      // Permitir cualquier origen y reflejarlo (necesario para credentials: true en producción)
+      callback(null, true);
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
     allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',
