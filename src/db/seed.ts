@@ -202,6 +202,43 @@ async function seed() {
                     features: { hasNozzle: false, hasMaxFilaments: false, hasVisits: false, hasQuotes: false, hasMaterials: true },
                     machineStatusLabels: { WORKING: 'En Armado', MAINTENANCE: 'Fuera de Servicio', IDLE: 'Banco Libre' }
                 }
+            },
+            {
+                key: 'KIOSCO',
+                name: 'Kiosco y Almacén',
+                description: 'Venta minorista rápida, control de stock por unidad y gestión de caja.',
+                imageKey: 'kiosk-template',
+                config: {
+                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/reportes', '/ajustes'],
+                    labels: { produccion: 'Status de Venta', items: 'Artículos de Venta', maquinas: 'Puestos / Caja', materiales: 'Mercadería', unidadName: 'Nombre de Caja', unidadModel: 'Ubicación' },
+                    icons: { pedidos: 'ShoppingCart', produccion: 'Zap', maquinas: 'Monitor', materiales: 'Package' },
+                    stats: [
+                        { key: 'totalSales', label: 'Ventas del Día', icon: 'TrendingUp', format: 'currency' },
+                        { key: 'pendingBalance', label: 'Fiados / Saldo', icon: 'Wallet', format: 'currency' },
+                        { key: 'activeOrders', label: 'Ventas en Curso', icon: 'Zap', format: 'number' }
+                    ],
+                    productionStages: [
+                        { key: 'PENDING', label: 'Pendiente Pago', color: 'bg-zinc-100' },
+                        { key: 'DONE', label: 'Vendido/Cerrado', color: 'bg-emerald-500' },
+                        { key: 'CANCELLED', label: 'Anulado', color: 'bg-red-500' }
+                    ],
+                    materialConfig: {
+                        namePlaceholder: 'Ej: Coca Cola 500ml',
+                        brandPlaceholder: 'Ej: Coca Cola / Pepsi',
+                        defaultUnit: 'uds',
+                        defaultType: 'INSUMO',
+                        types: [{ key: 'INSUMO', label: 'ARTÍCULO' }, { key: 'BEBIDA', label: 'BEBIDA' }, { key: 'SNACK', label: 'SNACK' }, { key: 'LIMPIEZA', label: 'LIMPIEZA' }],
+                        units: [{ key: 'uds', label: 'Unidades (uds)' }, { key: 'pack', label: 'Pack' }]
+                    },
+                    itemFields: [
+                        { key: 'nombreProducto', label: 'Producto / Descripción', tipo: 'text', section: 'GENERAL', required: true, placeholder: 'Ej. Alfajor Jorgito' },
+                        { key: 'codigo_barras', label: 'BC / Código', tipo: 'text', section: 'GENERAL', placeholder: '779...' },
+                        { key: 'categoria_prod', label: 'Categoría', tipo: 'select', section: 'GENERAL', options: ['Golosinas', 'Bebidas', 'Almacén', 'Cigarrillos'], required: true },
+                        { key: 'cantidad', label: 'Cantidad', tipo: 'number', section: 'GENERAL', required: true, placeholder: '1' }
+                    ],
+                    features: { hasNozzle: false, hasMaxFilaments: false, hasVisits: false, hasQuotes: false, hasMaterials: true },
+                    machineStatusLabels: { WORKING: 'Abierta', MAINTENANCE: 'Cerrada / Arqueo', IDLE: 'Lista' }
+                }
             }
         ];
 

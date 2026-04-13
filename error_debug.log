@@ -6459,3 +6459,637 @@ Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "Pro
     at EntityManager.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:1225:14)
     at Repository.findOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\repository\src\repository\Repository.ts:626:29)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:18:14.858Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"employees\" violates foreign key constraint \"FK_188b11a58492e7272a68735bdc0\" on table \"orders\""
+Stack: QueryFailedError: update or delete on table "employees" violates foreign key constraint "FK_188b11a58492e7272a68735bdc0" on table "orders"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:565:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:18:21.441Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"employees\" violates foreign key constraint \"FK_188b11a58492e7272a68735bdc0\" on table \"orders\""
+Stack: QueryFailedError: update or delete on table "employees" violates foreign key constraint "FK_188b11a58492e7272a68735bdc0" on table "orders"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:565:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:20:36.313Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"employees\" violates foreign key constraint \"FK_188b11a58492e7272a68735bdc0\" on table \"orders\""
+Stack: QueryFailedError: update or delete on table "employees" violates foreign key constraint "FK_188b11a58492e7272a68735bdc0" on table "orders"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:565:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:23:45.078Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"businesses\" violates foreign key constraint \"FK_be825ea9419529b47aa6cbbaee2\" on table \"business_invitations\""
+Stack: QueryFailedError: update or delete on table "businesses" violates foreign key constraint "FK_be825ea9419529b47aa6cbbaee2" on table "business_invitations"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:568:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:24:54.721Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"businesses\" violates foreign key constraint \"FK_be825ea9419529b47aa6cbbaee2\" on table \"business_invitations\""
+Stack: QueryFailedError: update or delete on table "businesses" violates foreign key constraint "FK_be825ea9419529b47aa6cbbaee2" on table "business_invitations"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:568:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:25:52.626Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"businesses\" violates foreign key constraint \"FK_be825ea9419529b47aa6cbbaee2\" on table \"business_invitations\""
+Stack: QueryFailedError: update or delete on table "businesses" violates foreign key constraint "FK_be825ea9419529b47aa6cbbaee2" on table "business_invitations"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:568:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:26:09.714Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"businesses\" violates foreign key constraint \"FK_be825ea9419529b47aa6cbbaee2\" on table \"business_invitations\""
+Stack: QueryFailedError: update or delete on table "businesses" violates foreign key constraint "FK_be825ea9419529b47aa6cbbaee2" on table "business_invitations"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:568:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:28:44.835Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"businesses\" violates foreign key constraint \"FK_be825ea9419529b47aa6cbbaee2\" on table \"business_invitations\""
+Stack: QueryFailedError: update or delete on table "businesses" violates foreign key constraint "FK_be825ea9419529b47aa6cbbaee2" on table "business_invitations"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async DeleteQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:568:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async BusinessesService.delete (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:563:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:30:03.395Z
+Path: /businesses
+Status: 500
+Message: "duplicate key value violates unique constraint \"PK_a3ffb1c0c8416b9fc6f907b7433\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "PK_a3ffb1c0c8416b9fc6f907b7433"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async UsersService.findOrCreate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\users.service.ts:32:13)
+    at async SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:02.340Z
+Path: /businesses/03002232-2db8-4d92-806a-9dbcdc879a08/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:04.789Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:04.967Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:06.122Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:06.441Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:14.449Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:14.451Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:14.454Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:14.867Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:15.876Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:15.887Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:15.934Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:16.033Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:19.591Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:19.698Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:19.759Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:39:20.104Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:43:34.071Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:43:34.090Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:43:34.128Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:43:34.489Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:43.950Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:43.952Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:43.957Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:44.133Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:55.117Z
+Path: /businesses/03002232-2db8-4d92-806a-9dbcdc879a08/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:58.365Z
+Path: /orders/summary?businessId=03002232-2db8-4d92-806a-9dbcdc879a08
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:58.391Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:58.423Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:44:58.666Z
+Path: /orders/listing?businessId=03002232-2db8-4d92-806a-9dbcdc879a08&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T19:45:01.899Z
+Path: /businesses/03002232-2db8-4d92-806a-9dbcdc879a08/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"03002232-2db8-4d92-806a-9dbcdc879a08"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T20:16:42.924Z
+Path: /businesses/b4a602c3-f6b6-475b-b286-b9400234981d/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"b4a602c3-f6b6-475b-b286-b9400234981d"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T20:16:59.953Z
+Path: /businesses/b4a602c3-f6b6-475b-b286-b9400234981d/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"b4a602c3-f6b6-475b-b286-b9400234981d"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T20:17:04.512Z
+Path: /businesses/b4a602c3-f6b6-475b-b286-b9400234981d/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"b4a602c3-f6b6-475b-b286-b9400234981d"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T20:19:37.024Z
+Path: /businesses/b4a602c3-f6b6-475b-b286-b9400234981d/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"b4a602c3-f6b6-475b-b286-b9400234981d"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T20:23:03.842Z
+Path: /businesses/bd71e166-7258-451d-9e54-e727fcbf586e/dashboard-summary
+Status: 403
+Message: {"statusCode":403,"message":"El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.","errorCode":"BUSINESS_DRAFT","businessId":"bd71e166-7258-451d-9e54-e727fcbf586e"}
+Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borrador). Debe activarse para operar.
+    at BusinessStatusGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-status.guard.ts:57:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------

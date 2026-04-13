@@ -8,6 +8,7 @@ import { BusinessSubscription } from './entities/business-subscription.entity';
 import { BusinessRole } from '../common/enums';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
+import { BusinessInvitation } from './entities/business-invitation.entity';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
@@ -72,7 +73,7 @@ export class BusinessesService {
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
         const templates = await this.templateRepository.find({
-            where: { isEnabled: true, key: 'IMPRESION_3D' as any }
+            where: { isEnabled: true, key: In(['IMPRESION_3D', 'KIOSCO']) as any }
         });
 
         let userPlan = 'FREE';
@@ -117,9 +118,9 @@ export class BusinessesService {
 
         const { templateKey, name } = createDto;
         
-        // Hard restriction: Only IMPRESION_3D allowed for now
-        if (templateKey !== 'IMPRESION_3D') {
-            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D`);
+        // Restricción: Permitimos IMPRESION_3D y KIOSCO por ahora
+        if (!['IMPRESION_3D', 'KIOSCO'].includes(templateKey)) {
+            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D o Kiosco`);
         }
 
         const template = await this.templateRepository.findOneBy({ key: templateKey as any });
@@ -129,13 +130,23 @@ export class BusinessesService {
         }
 
         return await this.dataSource.transaction(async (manager) => {
+            // Fallback de capacidades si el template en DB no las tiene cargadas todavía
+            let defaultCaps = template?.defaultCapabilities || [];
+            if (defaultCaps.length === 0) {
+                if (templateKey === 'IMPRESION_3D') {
+                    defaultCaps = ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'];
+                } else if (templateKey === 'KIOSCO') {
+                    defaultCaps = ['SALES_MANAGEMENT', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC'];
+                }
+            }
+
             const business = manager.create(Business, {
                 name: name || (template ? `${template.name} - Mi Espacio` : 'Mi Negocio'),
                 category: templateKey,
-                status: 'DRAFT',
-                onboardingStep: 'BASIC_INFO',
+                status: 'ACTIVE',
+                onboardingStep: 'COMPLETED',
                 plan: 'FREE',
-                capabilities: template?.defaultCapabilities || []
+                capabilities: defaultCaps
             });
             const businessToUse = await manager.save(Business, business);
 
@@ -564,6 +575,7 @@ export class BusinessesService {
             // Delete associated data in order
             await manager.delete(Employee, { businessId });
             await manager.delete(BusinessSubscription, { businessId });
+            await manager.delete(BusinessInvitation, { businessId });
             await manager.delete(BusinessMembership, { businessId });
             await manager.delete(Business, { id: businessId });
             return { businessId, deleted: true };

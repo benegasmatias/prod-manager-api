@@ -41,6 +41,16 @@ export class BusinessesController {
         return this.businessesService.findUserBusinesses(req.user.id, filters);
     }
 
+    @Get('templates')
+    async getTemplates(@Request() req) {
+        return this.businessesService.getTemplates(req.user.id);
+    }
+
+    @Get('test-reload')
+    async testReload() {
+        return { message: "RELOAD_SUCCESS_OK_v1", time: new Date().toISOString() };
+    }
+
     @Get(':id')
     @UseGuards(BusinessAccessGuard)
     async findOne(@Request() req, @Param('id') id: string) {
@@ -61,15 +71,9 @@ export class BusinessesController {
         return this.businessesService.resolveBusinessConfig(req.user.id, id);
     }
 
-    @Get('test-reload')
-    async testReload() {
-        return { message: "RELOAD_SUCCESS_OK_v1", time: new Date().toISOString() };
-    }
 
-    @Get('templates')
-    async getTemplates(@Request() req) {
-        return this.businessesService.getTemplates(req.user.id);
-    }
+
+
 
     @Get(':id/plan-usage')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
