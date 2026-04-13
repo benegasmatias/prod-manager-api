@@ -1,11 +1,15 @@
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CashDrawer } from './entities/cash-drawer.entity';
 import { CashMovement } from './entities/cash-movement.entity';
 import { RetailProduct } from './entities/retail-product.entity';
 import { RetailStockMovement } from './entities/retail-stock-movement.entity';
+import { Sale } from './entities/sale.entity';
+import { SaleItem } from './entities/sale-item.entity';
 import { CashService } from './services/cash.service';
 import { RetailProductsService } from './services/retail-products.service';
 import { InventoryEngineService } from './services/inventory-engine.service';
+import { SalesService } from './services/sales.service';
 import { RetailController } from './controllers/retail.controller';
 import { BusinessesModule } from '../businesses/businesses.module';
 
@@ -15,7 +19,9 @@ import { BusinessesModule } from '../businesses/businesses.module';
       CashDrawer, 
       CashMovement, 
       RetailProduct, 
-      RetailStockMovement
+      RetailStockMovement,
+      Sale,
+      SaleItem
     ]),
     BusinessesModule,
   ],
@@ -23,11 +29,14 @@ import { BusinessesModule } from '../businesses/businesses.module';
   providers: [
     CashService, 
     RetailProductsService, 
-    InventoryEngineService
+    InventoryEngineService,
+    SalesService
   ],
   exports: [
     CashService, 
     RetailProductsService, 
-    InventoryEngineService
+    InventoryEngineService,
+    SalesService
   ],
 })
+export class RetailModule {}

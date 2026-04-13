@@ -81,6 +81,40 @@ export class CashService {
     });
   }
 
+  /**
+   * Registra el ingreso de dinero por una venta dentro de una transacción operativa.
+   */
+  async registerSaleIncome(
+    manager: EntityManager,
+    drawerId: string,
+    amount: number,
+    saleId: string
+  ): Promise<void> {
+    const drawer = await manager.findOne(CashDrawer, {
+        where: { id: drawerId },
+        lock: { mode: 'pessimistic_write' }
+    });
+
+    if (!drawer || drawer.status !== CashDrawerStatus.OPEN) {
+        throw new BadRequestException('La caja debe estar abierta para registrar ingresos de venta');
+    }
+
+    // 1. Crear movimiento de caja
+    const movement = manager.create(CashMovement, {
+      drawerId,
+      amount,
+      type: CashMovementType.SALE_INCOME,
+      saleId,
+      note: `Venta #${saleId.substring(0, 8)}`,
+    });
+    await manager.save(CashMovement, movement);
+
+    // 2. Actualizar balance de caja
+    await manager.update(CashDrawer, drawerId, {
+      currentBalance: Number(drawer.currentBalance) + Number(amount),
+    });
+  }
+
   async closeDrawer(businessId: string): Promise<CashDrawer> {
     const drawer = await this.getCurrentDrawer(businessId);
     if (!drawer) {

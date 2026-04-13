@@ -4,8 +4,10 @@ import { BusinessAccessGuard } from '../../businesses/guards/business-access.gua
 import { CashService } from '../services/cash.service';
 import { RetailProductsService } from '../services/retail-products.service';
 import { InventoryEngineService } from '../services/inventory-engine.service';
+import { SalesService } from '../services/sales.service';
 import { OpenDrawerDto, ManualMovementDto } from '../dto/cash.dto';
 import { CreateRetailProductDto, UpdateRetailProductDto, StockAdjustmentDto } from '../dto/product.dto';
+import { ProcessSaleDto } from '../dto/sale.dto';
 
 @Controller('retail')
 @UseGuards(AuthGuard('jwt'), BusinessAccessGuard)
@@ -14,6 +16,7 @@ export class RetailController {
     private readonly cashService: CashService,
     private readonly productsService: RetailProductsService,
     private readonly inventoryEngine: InventoryEngineService,
+    private readonly salesService: SalesService,
   ) {}
 
   @Get('drawer/current/:businessId')
@@ -61,5 +64,16 @@ export class RetailController {
   ) {
     await this.productsService.findOne(businessId, productId);
     return this.inventoryEngine.adjustStock(productId, dto.amount, dto.type, dto.note);
+  }
+
+  // --- SALES ---
+  @Get('sales/:businessId')
+  async getSales(@Param('businessId') businessId: string) {
+    return this.salesService.findAll(businessId);
+  }
+
+  @Post('sales/:businessId')
+  async processSale(@Param('businessId') businessId: string, @Body() dto: ProcessSaleDto) {
+    return this.salesService.processSale(businessId, dto);
   }
 }
