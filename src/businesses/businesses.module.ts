@@ -24,6 +24,7 @@ import { AuditModule } from '../audit/audit.module';
 import { BusinessInvitation } from './entities/business-invitation.entity';
 import { BusinessInvitationsService } from './business-invitations.service';
 import { BusinessInvitationsController } from './business-invitations.controller';
+import { BusinessCapabilityGuard } from './guards/business-capability.guard';
 
 @Module({
     imports: [
@@ -55,13 +56,15 @@ import { BusinessInvitationsController } from './business-invitations.controller
         BusinessInvitationsService,
         BusinessStrategyProvider, 
         PlanUsageService, 
-        BillingService
+        BillingService,
+        BusinessCapabilityGuard
     ],
     exports: [
         BusinessesService, 
         BusinessInvitationsService,
         PlanUsageService, 
         BillingService,
+        BusinessCapabilityGuard,
         TypeOrmModule
     ],
 })

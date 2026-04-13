@@ -64,6 +64,9 @@ export class Business {
     @Column({ type: 'jsonb', name: 'capabilities_override', nullable: true })
     capabilitiesOverride: any;
 
+    @Column({ type: 'jsonb', default: [] })
+    capabilities: string[];
+
     @Column({ name: 'admin_notes', type: 'text', nullable: true })
     adminNotes: string;
 

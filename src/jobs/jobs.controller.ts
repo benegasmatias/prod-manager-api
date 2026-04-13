@@ -3,9 +3,12 @@ import { JobsService } from './jobs.service';
 import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
 import { ProductionJobStatus as JobStatus } from '../common/enums';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
+import { BusinessCapabilityGuard } from '../businesses/guards/business-capability.guard';
+import { RequireCapability } from '../businesses/decorators/require-capability.decorator';
 
 @Controller('jobs')
-@UseGuards(SupabaseAuthGuard)
+@UseGuards(SupabaseAuthGuard, BusinessCapabilityGuard)
+@RequireCapability('PRODUCTION_MANAGEMENT')
 export class JobsController {
     constructor(private readonly jobsService: JobsService) { }
 

@@ -134,7 +134,8 @@ export class BusinessesService {
                 category: templateKey,
                 status: 'DRAFT',
                 onboardingStep: 'BASIC_INFO',
-                plan: 'FREE'
+                plan: 'FREE',
+                capabilities: template?.defaultCapabilities || []
             });
             const businessToUse = await manager.save(Business, business);
 
@@ -417,6 +418,11 @@ export class BusinessesService {
             OrderStatus.OFFICIAL_ORDER
         ];
 
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const capabilities = business?.capabilities || [];
+        const hasProduction = capabilities.includes('PRODUCTION_MANAGEMENT');
+        const hasMachines = capabilities.includes('PRODUCTION_MACHINES');
+
         const [
             salesResult,
             activeOrdersWithItems,
@@ -426,29 +432,39 @@ export class BusinessesService {
             recentOrders,
             realOverdue
         ] = await Promise.all([
+            // Sales/Core (Everyone needs this for now)
             this.orderRepository.createQueryBuilder('order')
                 .select('SUM(order.totalPrice)', 'total')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
                 .getRawOne(),
+            
             this.orderRepository.find({
                 where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
                 relations: ['items', 'siteInfo']
             }),
-            this.machineRepository.count({
+
+            // Capability-Gated: Machines
+            hasMachines ? this.machineRepository.count({
                 where: { businessId, status: MachineStatus.PRINTING }
-            }),
-            this.orderRepository.count({
+            }) : Promise.resolve(0),
+
+            // Capability-Gated: Production
+            hasProduction ? this.orderRepository.count({
                 where: { businessId, status: In(PRODUCTION_STATUSES) }
-            }),
+            }) : Promise.resolve(0),
+
+            // Customers/Core
             this.customerRepository.count({
                 where: { businessId, createdAt: MoreThanOrEqual(thirtyDaysAgo) }
             }),
+
             this.orderRepository.find({
                 where: { businessId },
                 order: { updatedAt: 'DESC' },
                 take: 5
             }),
+
             this.orderRepository.createQueryBuilder('order')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
@@ -465,7 +481,6 @@ export class BusinessesService {
             return acc + (total - deposits - payments);
         }, 0);
 
-        const business = await this.businessRepository.findOneBy({ id: businessId });
         const strategy = this.strategyProvider.getStrategy(business?.category);
         const now = new Date();
         const context = {
@@ -501,6 +516,11 @@ export class BusinessesService {
         const business = await this.businessRepository.findOneBy({ id });
         if (!business) throw new NotFoundException('No encontrado');
         return business;
+    }
+
+    async hasCapability(userId: string, businessId: string, capability: string): Promise<boolean> {
+        const business = await this.findOne(userId, businessId);
+        return business.capabilities?.includes(capability) || false;
     }
 
     async update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business> {
