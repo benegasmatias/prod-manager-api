@@ -10,7 +10,9 @@ import { CashService } from './services/cash.service';
 import { RetailProductsService } from './services/retail-products.service';
 import { InventoryEngineService } from './services/inventory-engine.service';
 import { SalesService } from './services/sales.service';
+import { RetailReportsService } from './services/retail-reports.service';
 import { RetailController } from './controllers/retail.controller';
+import { RetailReportsController } from './controllers/retail-reports.controller';
 import { BusinessesModule } from '../businesses/businesses.module';
 
 @Module({
@@ -25,12 +27,13 @@ import { BusinessesModule } from '../businesses/businesses.module';
     ]),
     BusinessesModule,
   ],
-  controllers: [RetailController],
+  controllers: [RetailController, RetailReportsController],
   providers: [
     CashService, 
     RetailProductsService, 
     InventoryEngineService,
-    SalesService
+    SalesService,
+    RetailReportsService
   ],
   exports: [
     CashService, 
