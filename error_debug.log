@@ -7855,3 +7855,197 @@ Stack: NotFoundException: Cannot GET /retail/suppliers/8ebd0b26-9445-4c00-9ae6-0
     at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
     at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T11:58:16.983Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T11:58:26.765Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T12:01:27.435Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T12:01:40.187Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T12:05:34.856Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 500
+Message: "Property \"responsable\" was not found in \"ProductionJob\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "responsable" was not found in "ProductionJob". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:4057:26)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:08:32.768Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 400
+Message: {"message":["property businessId should not exist","property customerId should not exist","property priority should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:25:43.950Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 400
+Message: {"message":["property businessId should not exist","property customerId should not exist","property priority should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:28:31.176Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:28:41.934Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:28:51.349Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T14:41:21.829Z
+Path: /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+Status: 404
+Message: {"message":"Cannot DELETE /orders/f050119b-fe12-426d-a52b-79b53c01db9e","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot DELETE /orders/f050119b-fe12-426d-a52b-79b53c01db9e
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T16:22:59.050Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, ParseUUIDPipe, UseGuards, Query, Request, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseGuards, Query, Request, UseInterceptors } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto, UpdateOrderStatusDto, UpdateProgressDto, FindOrdersDto, FindVisitsDto, FindQuotationsDto } from './dto/order.dto';
 import { CreatePaymentDto } from '../payments/dto/payment.dto';
@@ -23,6 +23,22 @@ export class OrdersController {
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async getSummary(@Query('businessId') businessId: string) {
         return this.ordersService.getSummaryStats(businessId);
+    }
+
+    @Get('workload')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
+    async getWorkload(
+        @Query('businessId') businessId: string,
+        @Query('startDate') startDate: string,
+        @Query('endDate') endDate: string,
+    ) {
+        return this.ordersService.getWorkload(
+            businessId, 
+            startDate ? new Date(startDate) : undefined, 
+            endDate ? new Date(endDate) : undefined
+        );
     }
 
     @Get('budget-summary')
@@ -68,6 +84,14 @@ export class OrdersController {
         return this.ordersService.findOne(id);
     }
 
+    @Delete(':id')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
+    async remove(@Param('id', ParseUUIDPipe) id: string) {
+        return this.ordersService.remove(id);
+    }
+
     @Post()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
@@ -97,6 +121,18 @@ export class OrdersController {
         @Body() createPaymentDto: CreatePaymentDto,
     ) {
         return this.ordersService.addPayment(id, createPaymentDto);
+    }
+
+    @Patch(':id')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
+    async update(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body() updateOrderDto: UpdateOrderStatusDto,
+        @Request() req: any,
+    ) {
+        return this.ordersService.update(id, updateOrderDto, req.user.id);
     }
 
     @Patch(':id/status')
