@@ -9,8 +9,12 @@ export class RetailReportsController {
   constructor(private readonly reportsService: RetailReportsService) {}
 
   @Get(':businessId/daily-summary')
-  async getDailySummary(@Param('businessId') businessId: string) {
-    return this.reportsService.getDailySummary(businessId);
+  async getDailySummary(
+    @Param('businessId') businessId: string,
+    @Query('startDate') startDate?: string,
+    @Query('endDate') endDate?: string
+  ) {
+    return this.reportsService.getDailySummary(businessId, startDate, endDate);
   }
 
   @Get(':businessId/top-products')
@@ -23,10 +27,9 @@ export class RetailReportsController {
 
   @Get(':businessId/low-stock')
   async getLowStock(
-    @Param('businessId') businessId: string,
-    @Query('threshold') threshold: number
+    @Param('businessId') businessId: string
   ) {
-    return this.reportsService.getLowStock(businessId, threshold);
+    return this.reportsService.getLowStock(businessId);
   }
 
   @Get(':businessId/movements')

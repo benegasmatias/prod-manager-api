@@ -14,5 +14,6 @@ export enum RetailStockMovementType {
   INVENTORY_IN = 'INVENTORY_IN',
   INVENTORY_OUT = 'INVENTORY_OUT',
   ADJUST = 'ADJUST',
+  PURCHASE = 'PURCHASE',
 }
 

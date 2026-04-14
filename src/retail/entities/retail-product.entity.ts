@@ -33,6 +33,9 @@ export class RetailProduct {
   @Column({ type: 'decimal', precision: 12, scale: 3, default: 0 })
   stock: number; // Snapshot
 
+  @Column({ name: 'min_stock', type: 'decimal', precision: 12, scale: 3, default: 5 })
+  minStock: number;
+
   @Column({ default: true })
   active: boolean;
 

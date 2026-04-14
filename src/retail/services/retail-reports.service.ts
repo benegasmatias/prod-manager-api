@@ -23,11 +23,12 @@ export class RetailReportsService {
     private readonly productRepo: Repository<RetailProduct>,
   ) {}
 
-  async getDailySummary(businessId: string) {
-    const todayStart = new Date();
-    todayStart.setHours(0, 0, 0, 0);
-    const todayEnd = new Date();
-    todayEnd.setHours(23, 59, 59, 999);
+  async getDailySummary(businessId: string, startDate?: string, endDate?: string) {
+    const rangeStart = startDate ? new Date(startDate) : new Date();
+    if (!startDate) rangeStart.setHours(0, 0, 0, 0);
+
+    const rangeEnd = endDate ? new Date(endDate) : new Date();
+    if (!endDate) rangeEnd.setHours(23, 59, 59, 999);
 
     // 1. Drawer Stats
     const latestDrawer = await this.drawerRepo.findOne({
@@ -56,7 +57,7 @@ export class RetailReportsService {
 
     // 2. Sales Summary
     const salesToday = await this.saleRepo.find({
-      where: { businessId, createdAt: Between(todayStart, todayEnd) }
+      where: { businessId, createdAt: Between(rangeStart, rangeEnd) }
     });
 
     const salesSummary = {
@@ -85,14 +86,14 @@ export class RetailReportsService {
       .getRawMany();
   }
 
-  async getLowStock(businessId: string, threshold: number = 5) {
-    return this.productRepo.find({
-      where: { 
-        businessId, 
-        stock: Between(-99999, threshold) // Using negative to be safe if allows negative
-      },
-      order: { stock: 'ASC' }
-    });
+  async getLowStock(businessId: string) {
+    // Return products where stock <= minStock
+    return this.productRepo.createQueryBuilder('product')
+      .where('product.businessId = :businessId', { businessId })
+      .andWhere('product.active = true')
+      .andWhere('product.stock <= product.minStock')
+      .orderBy('product.stock', 'ASC')
+      .getMany();
   }
 
   async getCashMovements(businessId: string, drawerId?: string) {

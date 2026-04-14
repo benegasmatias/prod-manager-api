@@ -6,6 +6,9 @@ import { RetailProduct } from './entities/retail-product.entity';
 import { RetailStockMovement } from './entities/retail-stock-movement.entity';
 import { Sale } from './entities/sale.entity';
 import { SaleItem } from './entities/sale-item.entity';
+import { Supplier } from './entities/supplier.entity';
+import { Purchase } from './entities/purchase.entity';
+import { PurchaseItem } from './entities/purchase-item.entity';
 import { CashService } from './services/cash.service';
 import { RetailProductsService } from './services/retail-products.service';
 import { InventoryEngineService } from './services/inventory-engine.service';
@@ -23,7 +26,10 @@ import { BusinessesModule } from '../businesses/businesses.module';
       RetailProduct, 
       RetailStockMovement,
       Sale,
-      SaleItem
+      SaleItem,
+      Supplier,
+      Purchase,
+      PurchaseItem
     ]),
     BusinessesModule,
   ],
