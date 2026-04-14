@@ -23,6 +23,7 @@ export class RetailController {
     private readonly salesService: SalesService,
     private readonly suppliersService: RetailSuppliersService,
     private readonly purchasesService: PurchasesService,
+    private readonly expensesService: RetailExpensesService,
   ) {}
 
   @Get('drawer/current/:businessId')
@@ -108,5 +109,20 @@ export class RetailController {
   @Post('purchases/:businessId')
   async registerPurchase(@Param('businessId') businessId: string, @Body() dto: RegisterPurchaseDto, @Request() req: any) {
     return this.purchasesService.registerPurchase(businessId, dto, req.user.id);
+  }
+
+  // --- EXPENSES ---
+  @Get('expenses/:businessId')
+  async getExpenses(@Param('businessId') businessId: string) {
+    return this.expensesService.getExpenses(businessId);
+  }
+
+  @Post('expenses/:businessId')
+  async registerExpense(
+    @Param('businessId') businessId: string, 
+    @Body() dto: any, 
+    @Request() req: any
+  ) {
+    return this.expensesService.registerExpense(businessId, req.user.id, dto);
   }
 }

@@ -17,6 +17,7 @@ import { SalesService } from './services/sales.service';
 import { RetailReportsService } from './services/retail-reports.service';
 import { RetailSuppliersService } from './services/retail-suppliers.service';
 import { PurchasesService } from './services/purchases.service';
+import { RetailExpensesService } from './services/retail-expenses.service';
 import { RetailController } from './controllers/retail.controller';
 import { RetailReportsController } from './controllers/retail-reports.controller';
 import { BusinessesModule } from '../businesses/businesses.module';
@@ -45,14 +46,17 @@ import { BusinessesModule } from '../businesses/businesses.module';
     SalesService,
     RetailReportsService,
     RetailSuppliersService,
-    PurchasesService
+    PurchasesService,
+    RetailExpensesService
   ],
   exports: [
     CashService, 
     RetailProductsService, 
     InventoryEngineService,
     SalesService,
-    PurchasesService
+    PurchasesService,
+    RetailSuppliersService,
+    RetailExpensesService
   ],
 })
 export class RetailModule {}
