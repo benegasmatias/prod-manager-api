@@ -4,7 +4,7 @@ import { Repository, DataSource } from 'typeorm';
 import { RetailExpense } from '../entities/retail-expense.entity';
 import { CashDrawer } from '../entities/cash-drawer.entity';
 import { CashMovement } from '../entities/cash-movement.entity';
-import { RetailExpenseCategory, CashMovementType } from '../retail.enums';
+import { RetailExpenseCategory, CashMovementType, CashDrawerStatus } from '../retail.enums';
 
 @Injectable()
 export class RetailExpensesService {
@@ -32,7 +32,7 @@ export class RetailExpensesService {
     try {
       // 1. Validar caja abierta
       const drawer = await queryRunner.manager.findOne(CashDrawer, {
-        where: { businessId, status: 'OPEN' },
+        where: { businessId, status: CashDrawerStatus.OPEN },
         lock: { mode: 'pessimistic_write' },
       });
 

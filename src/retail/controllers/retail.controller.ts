@@ -12,6 +12,7 @@ import { RegisterPurchaseDto } from '../dto/purchase.dto';
 import { ProcessSaleDto } from '../dto/sale.dto';
 import { RetailSuppliersService } from '../services/retail-suppliers.service';
 import { PurchasesService } from '../services/purchases.service';
+import { RetailExpensesService } from '../services/retail-expenses.service';
 
 @Controller('retail')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard)
