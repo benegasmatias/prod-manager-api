@@ -8,8 +8,10 @@ import { SalesService } from '../services/sales.service';
 import { OpenDrawerDto, ManualMovementDto } from '../dto/cash.dto';
 import { CreateRetailProductDto, UpdateRetailProductDto, StockAdjustmentDto } from '../dto/product.dto';
 import { CreateSupplierDto, UpdateSupplierDto } from '../dto/supplier.dto';
+import { RegisterPurchaseDto } from '../dto/purchase.dto';
 import { ProcessSaleDto } from '../dto/sale.dto';
 import { RetailSuppliersService } from '../services/retail-suppliers.service';
+import { PurchasesService } from '../services/purchases.service';
 
 @Controller('retail')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard)
@@ -20,6 +22,7 @@ export class RetailController {
     private readonly inventoryEngine: InventoryEngineService,
     private readonly salesService: SalesService,
     private readonly suppliersService: RetailSuppliersService,
+    private readonly purchasesService: PurchasesService,
   ) {}
 
   @Get('drawer/current/:businessId')
@@ -94,5 +97,11 @@ export class RetailController {
   @Post('suppliers/:businessId/:id')
   async updateSupplier(@Param('businessId') businessId: string, @Param('id') id: string, @Body() dto: UpdateSupplierDto) {
     return this.suppliersService.update(businessId, id, dto);
+  }
+
+  // --- PURCHASES ---
+  @Post('purchases/:businessId')
+  async registerPurchase(@Param('businessId') businessId: string, @Body() dto: RegisterPurchaseDto, @Request() req: any) {
+    return this.purchasesService.registerPurchase(businessId, dto, req.user.id);
   }
 }
