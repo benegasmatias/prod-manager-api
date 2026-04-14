@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
@@ -58,13 +58,13 @@ export class AdminService {
             {
                 id: 'pro',
                 name: 'Pro',
-                price: 7990,
+                price: 10990,
                 currency: 'ARS',
                 description: 'Para talleres en crecimiento que necesitan más.',
-                features: ['50 pedidos por mes', 'Hasta 3 negocios', '10 máquinas', '5 usuarios', 'Dashboard completo', 'Gestión de clientes', 'Control de materiales', 'Soporte por email'],
+                features: ['50 pedidos por mes', '1 negocio (máx.)', '10 máquinas', '5 usuarios', 'Dashboard completo', 'Gestión de clientes', 'Control de materiales', 'Soporte por email'],
                 maxUsers: 5,
                 maxOrdersPerMonth: 50,
-                maxBusinesses: 3,
+                maxBusinesses: 1,
                 maxMachines: 10,
                 isRecommended: true,
                 ctaText: 'Probar 14 días gratis',
@@ -77,13 +77,13 @@ export class AdminService {
             {
                 id: 'business',
                 name: 'Business',
-                price: 19990,
+                price: 22990,
                 currency: 'ARS',
                 description: 'Para talleres grandes con necesidades avanzadas.',
-                features: ['Pedidos ilimitados', 'Negocios ilimitados', 'Máquinas ilimitadas', 'Usuarios ilimitados', 'Dashboard completo', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Integraciones'],
+                features: ['Pedidos ilimitados', '1 negocio (máx.)', 'Máquinas ilimitadas', 'Usuarios ilimitados', 'Dashboard completo', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Integraciones'],
                 maxUsers: 0,
                 maxOrdersPerMonth: 0,
-                maxBusinesses: 0,
+                maxBusinesses: 1,
                 maxMachines: 0,
                 isRecommended: false,
                 ctaText: 'Contactar ventas',
@@ -202,9 +202,47 @@ export class AdminService {
         });
     }
 
-    async updateUserStatus(id: string, active: boolean): Promise<User> {
-        await this.userRepository.update(id, { active });
+    async approveUser(id: string, adminId: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'ACTIVE',
+            active: true,
+            approvedAt: new Date(),
+            approvedBy: adminId
+        });
         const user = await this.userRepository.findOneBy({ id });
+        if (!user) throw new NotFoundException('Usuario no encontrado');
+        return user;
+    }
+
+    async blockUser(id: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'BLOCKED',
+            active: false
+        });
+        const user = await this.userRepository.findOneBy({ id });
+        if (!user) throw new NotFoundException('Usuario no encontrado');
+        return user;
+    }
+
+    async bootstrapAdmin(userId: string): Promise<User> {
+        // Strict check: only allow if NO super admins exist in the entire platform
+        const superAdminCount = await this.userRepository.count({
+            where: { globalRole: 'SUPER_ADMIN' }
+        });
+
+        if (superAdminCount > 0) {
+            throw new ForbiddenException('La plataforma ya ha sido inicializada. Contacte al administrador actual.');
+        }
+
+        await this.userRepository.update(userId, { 
+            globalRole: 'SUPER_ADMIN',
+            status: 'ACTIVE',
+            active: true,
+            approvedAt: new Date(),
+            approvedBy: 'SYSTEM_BOOTSTRAP'
+        });
+
+        const user = await this.userRepository.findOneBy({ id: userId });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
     }

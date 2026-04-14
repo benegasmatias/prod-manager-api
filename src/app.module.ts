@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { APP_GUARD } from '@nestjs/core';
 import { CustomersModule } from './customers/customers.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
@@ -17,6 +18,7 @@ import { FilesModule } from './files/files.module';
 import { AuditModule } from './audit/audit.module';
 import { MailModule } from './common/mail/mail.module';
 import { RetailModule } from './retail/retail.module';
+import { UserStatusGuard } from './users/guards/user-status.guard';
 
 @Module({
   imports: [
@@ -56,6 +58,12 @@ import { RetailModule } from './retail/retail.module';
     FilesModule,
     MailModule,
     RetailModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: UserStatusGuard,
+    },
   ],
 })
 export class AppModule { }
