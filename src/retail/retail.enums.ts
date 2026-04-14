@@ -17,3 +17,11 @@ export enum RetailStockMovementType {
   PURCHASE = 'PURCHASE',
 }
 
+export enum RetailExpenseCategory {
+  RENT = 'RENT',
+  UTILITIES = 'UTILITIES',
+  TAXES = 'TAXES',
+  CLEANING = 'CLEANING',
+  OTHER = 'OTHER',
+}
+

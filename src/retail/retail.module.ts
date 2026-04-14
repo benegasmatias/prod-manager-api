@@ -9,6 +9,7 @@ import { SaleItem } from './entities/sale-item.entity';
 import { Supplier } from './entities/supplier.entity';
 import { Purchase } from './entities/purchase.entity';
 import { PurchaseItem } from './entities/purchase-item.entity';
+import { RetailExpense } from './entities/retail-expense.entity';
 import { CashService } from './services/cash.service';
 import { RetailProductsService } from './services/retail-products.service';
 import { InventoryEngineService } from './services/inventory-engine.service';
@@ -31,7 +32,8 @@ import { BusinessesModule } from '../businesses/businesses.module';
       SaleItem,
       Supplier,
       Purchase,
-      PurchaseItem
+      PurchaseItem,
+      RetailExpense
     ]),
     BusinessesModule,
   ],
