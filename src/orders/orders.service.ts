@@ -353,7 +353,7 @@ export class OrdersService {
             where: { id },
             relations: [
                 'items', 'customer', 'responsableGeneral',
-                'jobs', 'jobs.responsable', 'business',
+                'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
                 'failures', 'failures.material', 'payments', 'siteInfo'
             ],
@@ -579,7 +579,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],
@@ -590,6 +590,10 @@ export class OrdersService {
     /**
      * Actualizar estado manual del pedido (para compatibilidad o extras)
      */
+    async update(id: string, updateDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
+        return this.updateStatus(id, updateDto, userId);
+    }
+
     async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
         const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items } = updateStatusDto;
 
@@ -665,7 +669,7 @@ export class OrdersService {
                 where: { id },
                 relations: [
                     'items', 'customer', 'responsableGeneral',
-                    'jobs', 'jobs.responsable', 'business',
+                    'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
                     'failures', 'failures.material', 'payments'
                 ],
@@ -688,5 +692,29 @@ export class OrdersService {
         await this.paymentRepository.save(payment);
 
         return this.findOne(id);
+    }
+    async getWorkload(businessId: string, startDate?: Date, endDate?: Date): Promise<any[]> {
+        const qb = this.orderRepository.createQueryBuilder('order')
+            .select("DATE(order.dueDate)", "date")
+            .addSelect("COUNT(order.id)", "count")
+            .where("order.businessId = :businessId", { businessId })
+            .andWhere("order.dueDate IS NOT NULL")
+            .andWhere("order.status NOT IN (:...excludedStatuses)", { excludedStatuses: [OrderStatus.CANCELLED] });
+
+        if (startDate) {
+            qb.andWhere("order.dueDate >= :startDate", { startDate });
+        }
+        if (endDate) {
+            qb.andWhere("order.dueDate <= :endDate", { endDate });
+        }
+
+        qb.groupBy("DATE(order.dueDate)")
+          .orderBy("date", "ASC");
+
+        return qb.getRawMany();
+    }
+    async remove(id: string): Promise<void> {
+        const order = await this.findOne(id);
+        await this.orderRepository.remove(order);
     }
 }

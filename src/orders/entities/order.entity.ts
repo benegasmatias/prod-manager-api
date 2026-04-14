@@ -92,7 +92,7 @@ export class Order {
     @Column({ name: 'responsable_general_id', nullable: true })
     responsableGeneralId: string;
 
-    @ManyToOne(() => Employee, { nullable: true })
+    @ManyToOne(() => Employee, { nullable: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'responsable_general_id' })
     responsableGeneral: Employee;
 

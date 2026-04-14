@@ -2,11 +2,14 @@ import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, ParseUUIDP
 import { ProductionJobService } from './production-job.service';
 import { CreateProductionJobsDto, AssignResourcesDto, UpdateJobStatusDto, UpdateJobPriorityDto, UpdateJobStageDto, AssignMaterialDto } from './dto/production-job.dto';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
+import { BusinessCapabilityGuard } from '../businesses/guards/business-capability.guard';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { RequireCapability } from '../businesses/decorators/require-capability.decorator';
 import { BusinessRole } from '../common/enums';
 
 @Controller('businesses/:businessId/production-jobs')
-@UseGuards(BusinessRoleGuard)
+@UseGuards(BusinessRoleGuard, BusinessCapabilityGuard)
+@RequireCapability('PRODUCTION_MANAGEMENT')
 export class ProductionJobsController {
     constructor(private readonly jobService: ProductionJobService) { }
 

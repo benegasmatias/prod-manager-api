@@ -134,6 +134,18 @@ export class AdminController {
         this.checkGlobalAdmin(req);
         return this.adminService.updateUserGlobalRole(id, body.role);
     }
+
+    @Post('capabilities-init')
+    async initializeCapabilities(@Request() req) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.initializeCapabilities();
+    }
+
+    @Post('templates/seed-retail')
+    async seedRetailTemplate(@Request() req) {
+        this.checkGlobalAdmin(req);
+        return this.adminService.seedRetailTemplate();
+    }
 }
 
 /**

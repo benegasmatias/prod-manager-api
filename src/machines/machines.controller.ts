@@ -7,11 +7,14 @@ import { UpdateMachineDto } from './dto/update-machine.dto';
 import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
 import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
+import { BusinessCapabilityGuard } from '../businesses/guards/business-capability.guard';
 import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { RequireCapability } from '../businesses/decorators/require-capability.decorator';
 
 @Controller('machines')
-@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard, BusinessCapabilityGuard)
+@RequireCapability('PRODUCTION_MACHINES')
 export class MachinesController {
     constructor(private readonly printersService: MachinesService) { }
 

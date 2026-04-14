@@ -4,6 +4,7 @@ import { AdminService } from './admin.service';
 import { AdminController, PlansPublicController } from './admin.controller';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
+import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 import { GlobalRoleConfig } from './entities/global-role-config.entity';
 import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { UsersModule } from '../users/users.module';
@@ -13,7 +14,7 @@ import { SubscriptionReminderService } from './tasks/subscription-reminder.servi
 @Module({
 
     imports: [
-        TypeOrmModule.forFeature([Business, User, GlobalRoleConfig, SubscriptionPlan]),
+        TypeOrmModule.forFeature([Business, User, GlobalRoleConfig, SubscriptionPlan, BusinessTemplate]),
         UsersModule, // For guards/supabase dependencies
         NotificationsModule,
     ],

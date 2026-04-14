@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DataSource } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
+import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 
 import { GlobalRoleConfig } from './entities/global-role-config.entity';
 import { SubscriptionPlan } from './entities/subscription-plan.entity';
@@ -13,6 +14,7 @@ import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 @Injectable()
 export class AdminService {
     constructor(
+        private readonly dataSource: DataSource,
         @InjectRepository(Business)
         private readonly businessRepository: Repository<Business>,
         @InjectRepository(User)
@@ -212,5 +214,60 @@ export class AdminService {
         const user = await this.userRepository.findOneBy({ id });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
+    }
+
+    async initializeCapabilities(): Promise<any> {
+        const businesses = await this.businessRepository.find();
+        let updated = 0;
+        for (const b of businesses) {
+            if (!b.capabilities || b.capabilities.length === 0) {
+                // Initialize based on existing category
+                if (['IMPRESION_3D', 'METALURGICA', 'CARPINTERIA', 'GENERICO'].includes(b.category)) {
+                    b.capabilities = [
+                        'PRODUCTION_MANAGEMENT', 
+                        'PRODUCTION_MACHINES', 
+                        'INVENTORY_RAW', 
+                        'SALES_BASIC'
+                    ];
+                } else {
+                    b.capabilities = ['SALES_BASIC'];
+                }
+                await this.businessRepository.save(b);
+                updated++;
+            }
+        }
+        return { total: businesses.length, updated };
+    }
+
+    async seedRetailTemplate(): Promise<any> {
+        const repo = this.dataSource.getRepository(BusinessTemplate);
+        let template = await repo.findOneBy({ key: 'RETAIL_KIOSCO' });
+
+        if (!template) {
+            template = repo.create({
+                key: 'RETAIL_KIOSCO',
+                name: 'Kiosco / Punto de Venta',
+                description: 'Ideal para ventas retail rápidas, control de caja única y stock simple.',
+                imageKey: 'kiosk-template',
+                requiredPlan: 'FREE',
+                isAvailable: true,
+                isEnabled: true,
+                defaultCapabilities: ['SALES_BASIC', 'INVENTORY_RETAIL', 'FINANCE_CASH_DRAWER'],
+                config: {
+                    type: 'RETAIL',
+                    primaryColor: '#7C3AED',
+                    features: {
+                        hasNozzle: false,
+                        hasMaxFilaments: false,
+                        hasVisits: true, // Para delivery opcional
+                        hasQuotes: false, 
+                        hasMaterials: false
+                    }
+                }
+            });
+            await repo.save(template);
+            return { message: 'Retail template seeded successfully', template };
+        }
+        return { message: 'Retail template already exists', template };
     }
 }

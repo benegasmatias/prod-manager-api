@@ -8,6 +8,7 @@ import { BusinessSubscription } from './entities/business-subscription.entity';
 import { BusinessRole } from '../common/enums';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from './entities/business-template.entity';
+import { BusinessInvitation } from './entities/business-invitation.entity';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
 import { Order } from '../orders/entities/order.entity';
 import { Customer } from '../customers/entities/customer.entity';
@@ -72,7 +73,7 @@ export class BusinessesService {
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
         const templates = await this.templateRepository.find({
-            where: { isEnabled: true, key: 'IMPRESION_3D' as any }
+            where: { isEnabled: true, key: In(['IMPRESION_3D', 'KIOSCO']) as any }
         });
 
         let userPlan = 'FREE';
@@ -117,9 +118,9 @@ export class BusinessesService {
 
         const { templateKey, name } = createDto;
         
-        // Hard restriction: Only IMPRESION_3D allowed for now
-        if (templateKey !== 'IMPRESION_3D') {
-            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D`);
+        // Restricción: Permitimos IMPRESION_3D y KIOSCO por ahora
+        if (!['IMPRESION_3D', 'KIOSCO'].includes(templateKey)) {
+            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D o Kiosco`);
         }
 
         const template = await this.templateRepository.findOneBy({ key: templateKey as any });
@@ -129,12 +130,23 @@ export class BusinessesService {
         }
 
         return await this.dataSource.transaction(async (manager) => {
+            // Fallback de capacidades si el template en DB no las tiene cargadas todavía
+            let defaultCaps = template?.defaultCapabilities || [];
+            if (defaultCaps.length === 0) {
+                if (templateKey === 'IMPRESION_3D') {
+                    defaultCaps = ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'];
+                } else if (templateKey === 'KIOSCO') {
+                    defaultCaps = ['SALES_MANAGEMENT', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC'];
+                }
+            }
+
             const business = manager.create(Business, {
                 name: name || (template ? `${template.name} - Mi Espacio` : 'Mi Negocio'),
                 category: templateKey,
-                status: 'DRAFT',
-                onboardingStep: 'BASIC_INFO',
-                plan: 'FREE'
+                status: 'ACTIVE',
+                onboardingStep: 'COMPLETED',
+                plan: 'FREE',
+                capabilities: defaultCaps
             });
             const businessToUse = await manager.save(Business, business);
 
@@ -417,6 +429,11 @@ export class BusinessesService {
             OrderStatus.OFFICIAL_ORDER
         ];
 
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        const capabilities = business?.capabilities || [];
+        const hasProduction = capabilities.includes('PRODUCTION_MANAGEMENT');
+        const hasMachines = capabilities.includes('PRODUCTION_MACHINES');
+
         const [
             salesResult,
             activeOrdersWithItems,
@@ -426,29 +443,39 @@ export class BusinessesService {
             recentOrders,
             realOverdue
         ] = await Promise.all([
+            // Sales/Core (Everyone needs this for now)
             this.orderRepository.createQueryBuilder('order')
                 .select('SUM(order.totalPrice)', 'total')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
                 .getRawOne(),
+            
             this.orderRepository.find({
                 where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
                 relations: ['items', 'siteInfo']
             }),
-            this.machineRepository.count({
+
+            // Capability-Gated: Machines
+            hasMachines ? this.machineRepository.count({
                 where: { businessId, status: MachineStatus.PRINTING }
-            }),
-            this.orderRepository.count({
+            }) : Promise.resolve(0),
+
+            // Capability-Gated: Production
+            hasProduction ? this.orderRepository.count({
                 where: { businessId, status: In(PRODUCTION_STATUSES) }
-            }),
+            }) : Promise.resolve(0),
+
+            // Customers/Core
             this.customerRepository.count({
                 where: { businessId, createdAt: MoreThanOrEqual(thirtyDaysAgo) }
             }),
+
             this.orderRepository.find({
                 where: { businessId },
                 order: { updatedAt: 'DESC' },
                 take: 5
             }),
+
             this.orderRepository.createQueryBuilder('order')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.status NOT IN (:...finalStatuses)', { finalStatuses: [OrderStatus.DELIVERED, OrderStatus.CANCELLED] })
@@ -465,7 +492,6 @@ export class BusinessesService {
             return acc + (total - deposits - payments);
         }, 0);
 
-        const business = await this.businessRepository.findOneBy({ id: businessId });
         const strategy = this.strategyProvider.getStrategy(business?.category);
         const now = new Date();
         const context = {
@@ -501,6 +527,11 @@ export class BusinessesService {
         const business = await this.businessRepository.findOneBy({ id });
         if (!business) throw new NotFoundException('No encontrado');
         return business;
+    }
+
+    async hasCapability(userId: string, businessId: string, capability: string): Promise<boolean> {
+        const business = await this.findOne(userId, businessId);
+        return business.capabilities?.includes(capability) || false;
     }
 
     async update(userId: string, id: string, updateDto: UpdateBusinessDto): Promise<Business> {
@@ -544,6 +575,7 @@ export class BusinessesService {
             // Delete associated data in order
             await manager.delete(Employee, { businessId });
             await manager.delete(BusinessSubscription, { businessId });
+            await manager.delete(BusinessInvitation, { businessId });
             await manager.delete(BusinessMembership, { businessId });
             await manager.delete(Business, { id: businessId });
             return { businessId, deleted: true };

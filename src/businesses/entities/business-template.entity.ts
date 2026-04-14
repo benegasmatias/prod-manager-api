@@ -20,6 +20,9 @@ export class BusinessTemplate {
     @Column({ type: 'jsonb', nullable: true })
     config: any;
 
+    @Column({ type: 'jsonb', name: 'default_capabilities', nullable: true })
+    defaultCapabilities: string[];
+
     @Column({ name: 'is_enabled', default: true })
     isEnabled: boolean;
 

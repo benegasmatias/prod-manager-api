@@ -5,12 +5,15 @@ import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
 import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
+import { BusinessCapabilityGuard } from '../businesses/guards/business-capability.guard';
 import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { RequireCapability } from '../businesses/decorators/require-capability.decorator';
 import { BusinessStatus, BusinessRole } from '../common/enums';
 
 @Controller('materials')
-@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard, BusinessCapabilityGuard)
+@RequireCapability('INVENTORY_RAW')
 export class MaterialsController {
     constructor(private readonly materialsService: MaterialsService) { }
 

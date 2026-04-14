@@ -52,7 +52,7 @@ export class ProductionJob {
     @Column({ name: 'operator_id', nullable: true })
     operatorId: string;
 
-    @ManyToOne(() => Employee, { nullable: true })
+    @ManyToOne(() => Employee, { nullable: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'operator_id' })
     operator: Employee;
 
@@ -103,7 +103,7 @@ export class ProductionJob {
     @Column({ name: 'material_id', nullable: true })
     materialId: string;
 
-    @ManyToOne('Material', { nullable: true })
+    @ManyToOne('Material', { nullable: true, onDelete: 'SET NULL' })
     @JoinColumn({ name: 'material_id' })
     material: any;
 
