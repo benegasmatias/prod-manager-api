@@ -7093,3 +7093,117 @@ Stack: ForbiddenException: El negocio se encuentra en proceso de creación (Borr
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T21:28:19.407Z
+Path: /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+Status: 404
+Message: {"message":"Cannot GET /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T21:28:19.420Z
+Path: /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+Status: 404
+Message: {"message":"Cannot GET /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T21:28:38.904Z
+Path: /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+Status: 404
+Message: {"message":"Cannot GET /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /retail/drawer/current/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-13T21:28:42.200Z
+Path: /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+Status: 404
+Message: {"message":"Cannot GET /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /retail/products/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T01:00:29.256Z
+Path: /me/default-business
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T01:00:29.288Z
+Path: /businesses/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb/dashboard-summary
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-14T01:00:29.433Z
+Path: /notifications?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------

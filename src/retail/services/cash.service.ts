@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository, DataSource, EntityManager } from 'typeorm';
 import { CashDrawer } from '../entities/cash-drawer.entity';
 import { CashMovement } from '../entities/cash-movement.entity';
 import { CashDrawerStatus, CashMovementType } from '../retail.enums';

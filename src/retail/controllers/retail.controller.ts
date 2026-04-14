@@ -1,5 +1,5 @@
 import { Controller, Post, Get, Body, UseGuards, Request, Param } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { SupabaseAuthGuard } from '../../users/guards/supabase-auth.guard';
 import { BusinessAccessGuard } from '../../businesses/guards/business-access.guard';
 import { CashService } from '../services/cash.service';
 import { RetailProductsService } from '../services/retail-products.service';
@@ -10,7 +10,7 @@ import { CreateRetailProductDto, UpdateRetailProductDto, StockAdjustmentDto } fr
 import { ProcessSaleDto } from '../dto/sale.dto';
 
 @Controller('retail')
-@UseGuards(AuthGuard('jwt'), BusinessAccessGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard)
 export class RetailController {
   constructor(
     private readonly cashService: CashService,
