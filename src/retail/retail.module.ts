@@ -14,6 +14,7 @@ import { RetailProductsService } from './services/retail-products.service';
 import { InventoryEngineService } from './services/inventory-engine.service';
 import { SalesService } from './services/sales.service';
 import { RetailReportsService } from './services/retail-reports.service';
+import { RetailSuppliersService } from './services/retail-suppliers.service';
 import { RetailController } from './controllers/retail.controller';
 import { RetailReportsController } from './controllers/retail-reports.controller';
 import { BusinessesModule } from '../businesses/businesses.module';
@@ -39,7 +40,8 @@ import { BusinessesModule } from '../businesses/businesses.module';
     RetailProductsService, 
     InventoryEngineService,
     SalesService,
-    RetailReportsService
+    RetailReportsService,
+    RetailSuppliersService
   ],
   exports: [
     CashService, 

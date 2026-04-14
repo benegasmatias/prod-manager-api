@@ -7,7 +7,9 @@ import { InventoryEngineService } from '../services/inventory-engine.service';
 import { SalesService } from '../services/sales.service';
 import { OpenDrawerDto, ManualMovementDto } from '../dto/cash.dto';
 import { CreateRetailProductDto, UpdateRetailProductDto, StockAdjustmentDto } from '../dto/product.dto';
+import { CreateSupplierDto, UpdateSupplierDto } from '../dto/supplier.dto';
 import { ProcessSaleDto } from '../dto/sale.dto';
+import { RetailSuppliersService } from '../services/retail-suppliers.service';
 
 @Controller('retail')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard)
@@ -17,6 +19,7 @@ export class RetailController {
     private readonly productsService: RetailProductsService,
     private readonly inventoryEngine: InventoryEngineService,
     private readonly salesService: SalesService,
+    private readonly suppliersService: RetailSuppliersService,
   ) {}
 
   @Get('drawer/current/:businessId')
@@ -75,5 +78,21 @@ export class RetailController {
   @Post('sales/:businessId')
   async processSale(@Param('businessId') businessId: string, @Body() dto: ProcessSaleDto) {
     return this.salesService.processSale(businessId, dto);
+  }
+
+  // --- SUPPLIERS ---
+  @Get('suppliers/:businessId')
+  async getSuppliers(@Param('businessId') businessId: string) {
+    return this.suppliersService.findAll(businessId);
+  }
+
+  @Post('suppliers/:businessId')
+  async createSupplier(@Param('businessId') businessId: string, @Body() dto: CreateSupplierDto) {
+    return this.suppliersService.create(businessId, dto);
+  }
+
+  @Post('suppliers/:businessId/:id')
+  async updateSupplier(@Param('businessId') businessId: string, @Param('id') id: string, @Body() dto: UpdateSupplierDto) {
+    return this.suppliersService.update(businessId, id, dto);
   }
 }
