@@ -20,6 +20,14 @@ export class PurchasesService {
     private readonly inventoryEngine: InventoryEngineService,
   ) {}
 
+  async findAll(businessId: string): Promise<Purchase[]> {
+    return this.dataSource.getRepository(Purchase).find({
+      where: { businessId },
+      relations: ['supplier', 'items', 'items.product'],
+      order: { createdAt: 'DESC' }
+    });
+  }
+
   async registerPurchase(businessId: string, dto: RegisterPurchaseDto, operatorId?: string) {
     if (!dto.items || dto.items.length === 0) {
       throw new BadRequestException('La compra debe tener al menos un ítem');

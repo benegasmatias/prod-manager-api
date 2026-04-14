@@ -100,6 +100,11 @@ export class RetailController {
   }
 
   // --- PURCHASES ---
+  @Get('purchases/:businessId')
+  async getPurchases(@Param('businessId') businessId: string) {
+    return this.purchasesService.findAll(businessId);
+  }
+
   @Post('purchases/:businessId')
   async registerPurchase(@Param('businessId') businessId: string, @Body() dto: RegisterPurchaseDto, @Request() req: any) {
     return this.purchasesService.registerPurchase(businessId, dto, req.user.id);
