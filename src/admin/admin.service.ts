@@ -308,4 +308,27 @@ export class AdminService {
         }
         return { message: 'Retail template already exists', template };
     }
+
+    async getPlatformStats(): Promise<any> {
+        const [userCount, businessCount] = await Promise.all([
+            this.userRepository.count(),
+            this.businessRepository.count(),
+        ]);
+
+        const categories = await this.businessRepository
+            .createQueryBuilder('business')
+            .select('business.category', 'category')
+            .addSelect('COUNT(business.id)', 'count')
+            .groupBy('business.category')
+            .getRawMany();
+
+        return {
+            users: userCount,
+            businesses: businessCount,
+            categories: categories.map(c => ({
+                label: c.category,
+                count: parseInt(c.count, 10),
+            })),
+        };
+    }
 }

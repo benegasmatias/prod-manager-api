@@ -90,8 +90,11 @@ export enum UserRole {
 
 export enum BusinessRole {
     OWNER = 'OWNER',
-    ADMIN = 'ADMIN',
-    OPERATOR = 'OPERATOR'
+    ADMIN = 'ADMIN', // Keeping for legacy/internal use
+    BUSINESS_ADMIN = 'BUSINESS_ADMIN',
+    SALES = 'SALES',
+    OPERATOR = 'OPERATOR',
+    VIEWER = 'VIEWER'
 }
 
 export enum SubscriptionStatus {

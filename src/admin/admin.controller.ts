@@ -148,6 +148,12 @@ export class AdminController {
     async seedRetailTemplate(@Request() req) {
         return this.adminService.seedRetailTemplate();
     }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('stats')
+    async getStats(@Request() req) {
+        return this.adminService.getPlatformStats();
+    }
 }
 
 /**

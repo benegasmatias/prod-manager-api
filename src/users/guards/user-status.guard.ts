@@ -38,7 +38,7 @@ export class UserStatusGuard implements CanActivate {
             throw new ForbiddenException('Su cuenta ha sido bloqueada. Contacte a soporte.');
         }
 
-        if (user.status === UserStatus.PENDING) {
+        if (user.status === UserStatus.PENDING && user.globalRole !== 'SUPER_ADMIN') {
             throw new ForbiddenException('PLATFORM_PENDING_APPROVAL');
         }
 

@@ -12,6 +12,7 @@ export class GlobalAdminGuard implements CanActivate {
             return true;
         }
 
+        const user = request.user;
         if (!user || user.globalRole !== UserRole.SUPER_ADMIN) {
             throw new ForbiddenException('No tienes permisos de administrador de plataforma.');
         }
