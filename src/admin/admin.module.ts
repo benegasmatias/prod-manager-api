@@ -10,11 +10,12 @@ import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { UsersModule } from '../users/users.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { SubscriptionReminderService } from './tasks/subscription-reminder.service';
+import { AdminAuditLog } from './entities/admin-audit-log.entity';
 
 @Module({
 
     imports: [
-        TypeOrmModule.forFeature([Business, User, GlobalRoleConfig, SubscriptionPlan, BusinessTemplate]),
+        TypeOrmModule.forFeature([Business, User, GlobalRoleConfig, SubscriptionPlan, BusinessTemplate, AdminAuditLog]),
         UsersModule, // For guards/supabase dependencies
         NotificationsModule,
     ],

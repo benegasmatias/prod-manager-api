@@ -92,7 +92,7 @@ export class AdminController {
     @UseGuards(GlobalAdminGuard)
     @Patch('businesses/:id/status')
     async updateBusinessStatus(@Request() req, @Param('id') id: string, @Body() body: { status: string }) {
-        return this.adminService.updateBusinessStatus(id, body.status);
+        return this.adminService.updateBusinessStatus(id, body.status, req.user.id);
     }
 
     @UseGuards(GlobalAdminGuard)
@@ -102,13 +102,13 @@ export class AdminController {
         @Param('id') id: string,
         @Body() body: { planId: string, expiresAt: string }
     ) {
-        return this.adminService.updateBusinessSubscription(id, body.planId, new Date(body.expiresAt));
+        return this.adminService.updateBusinessSubscription(id, body.planId, new Date(body.expiresAt), req.user.id);
     }
 
     @UseGuards(GlobalAdminGuard)
     @Patch('businesses/:id/payment')
     async registerPayment(@Request() req, @Param('id') id: string, @Body() body: { months: number }) {
-        return this.adminService.registerPayment(id, body.months || 1);
+        return this.adminService.registerPayment(id, body.months || 1, req.user.id);
     }
 
 
@@ -128,13 +128,13 @@ export class AdminController {
     @UseGuards(GlobalAdminGuard)
     @Patch('users/:id/block')
     async blockUser(@Request() req, @Param('id') id: string) {
-        return this.adminService.blockUser(id);
+        return this.adminService.blockUser(id, req.user.id);
     }
 
     @UseGuards(GlobalAdminGuard)
     @Patch('users/:id/role')
     async updateUserRole(@Request() req, @Param('id') id: string, @Body() body: { role: string }) {
-        return this.adminService.updateUserGlobalRole(id, body.role);
+        return this.adminService.updateUserGlobalRole(id, body.role, req.user.id);
     }
 
     @UseGuards(GlobalAdminGuard)

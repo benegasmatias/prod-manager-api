@@ -9,6 +9,7 @@ import { GlobalRoleConfig } from './entities/global-role-config.entity';
 import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { NotificationsService } from '../notifications/notifications.service';
 import { Notification } from '../notifications/entities/notification.entity';
+import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 
 @Injectable()
@@ -23,10 +24,22 @@ export class AdminService {
         private readonly roleConfigRepository: Repository<GlobalRoleConfig>,
         @InjectRepository(SubscriptionPlan)
         private readonly planRepository: Repository<SubscriptionPlan>,
+        @InjectRepository(AdminAuditLog)
+        private readonly auditLogRepository: Repository<AdminAuditLog>,
         private readonly notificationsService: NotificationsService,
     ) {
         // Seed default plans on startup if none exist
         this.seedDefaultPlans();
+    }
+
+    private async logAction(operatorId: string, action: string, targetId: string, details?: any) {
+        const log = this.auditLogRepository.create({
+            operatorId,
+            action,
+            targetId,
+            details,
+        });
+        await this.auditLogRepository.save(log);
     }
 
     // ──────────────── Plans CRUD ────────────────
@@ -167,21 +180,23 @@ export class AdminService {
         return business;
     }
 
-    async updateBusinessStatus(id: string, status: string): Promise<Business> {
+    async updateBusinessStatus(id: string, status: string, adminId: string): Promise<Business> {
         await this.businessRepository.update(id, { status });
+        await this.logAction(adminId, 'BUSINESS_STATUS_UPDATE', id, { status });
         return this.findBusinessById(id);
     }
 
-    async updateBusinessSubscription(id: string, planId: string, expiresAt: Date): Promise<Business> {
+    async updateBusinessSubscription(id: string, planId: string, expiresAt: Date, adminId: string): Promise<Business> {
         await this.businessRepository.update(id, {
             planId,
             subscriptionExpiresAt: expiresAt,
             status: 'ACTIVE'
         });
+        await this.logAction(adminId, 'BUSINESS_SUBSCRIPTION_UPDATE', id, { planId, expiresAt });
         return this.findBusinessById(id);
     }
 
-    async registerPayment(id: string, months: number): Promise<Business> {
+    async registerPayment(id: string, months: number, adminId: string): Promise<Business> {
         const business = await this.findBusinessById(id);
         const currentExpires = business.subscriptionExpiresAt || new Date();
         const newExpires = new Date(currentExpires);
@@ -191,6 +206,7 @@ export class AdminService {
             subscriptionExpiresAt: newExpires,
             status: 'ACTIVE'
         });
+        await this.logAction(adminId, 'BUSINESS_PAYMENT_REGISTERED', id, { months, newExpires });
         return this.findBusinessById(id);
     }
 
@@ -209,16 +225,18 @@ export class AdminService {
             approvedAt: new Date(),
             approvedBy: adminId
         });
+        await this.logAction(adminId, 'USER_APPROVED', id);
         const user = await this.userRepository.findOneBy({ id });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
     }
 
-    async blockUser(id: string): Promise<User> {
+    async blockUser(id: string, adminId: string): Promise<User> {
         await this.userRepository.update(id, { 
             status: 'BLOCKED',
             active: false
         });
+        await this.logAction(adminId, 'USER_BLOCKED', id);
         const user = await this.userRepository.findOneBy({ id });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
@@ -247,8 +265,9 @@ export class AdminService {
         return user;
     }
 
-    async updateUserGlobalRole(id: string, role: string): Promise<User> {
+    async updateUserGlobalRole(id: string, role: string, adminId: string): Promise<User> {
         await this.userRepository.update(id, { globalRole: role });
+        await this.logAction(adminId, 'USER_ROLE_UPDATED', id, { role });
         const user = await this.userRepository.findOneBy({ id });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
