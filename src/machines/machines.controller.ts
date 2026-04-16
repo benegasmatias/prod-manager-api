@@ -51,7 +51,7 @@ export class MachinesController {
         return this.printersService.findOne(id, businessId);
     }
 
-    @Put(':id')
+    @Patch(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)

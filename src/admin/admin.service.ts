@@ -29,6 +29,8 @@ export class AdminService {
         private readonly auditLogRepository: Repository<AdminAuditLog>,
         @InjectRepository(BusinessInvitation)
         private readonly invitationRepository: Repository<BusinessInvitation>,
+        @InjectRepository(BusinessTemplate)
+        private readonly templateRepository: Repository<BusinessTemplate>,
         private readonly notificationsService: NotificationsService,
     ) {
         // Seed default plans on startup if none exist
@@ -434,59 +436,170 @@ export class AdminService {
         return user;
     }
 
-    async initializeCapabilities(): Promise<any> {
+    async auditCapabilitiesAlignment(): Promise<any[]> {
         const businesses = await this.businessRepository.find();
-        let updated = 0;
+        const templates = await this.templateRepository.find();
+        const templateMap = new Map(templates.map(t => [t.key, t]));
+
+        const results = [];
         for (const b of businesses) {
-            if (!b.capabilities || b.capabilities.length === 0) {
-                // Initialize based on existing category
-                if (['IMPRESION_3D', 'METALURGICA', 'CARPINTERIA', 'GENERICO'].includes(b.category)) {
-                    b.capabilities = [
-                        'PRODUCTION_MANAGEMENT', 
-                        'PRODUCTION_MACHINES', 
-                        'INVENTORY_RAW', 
-                        'SALES_BASIC'
-                    ];
-                } else {
-                    b.capabilities = ['SALES_BASIC'];
-                }
-                await this.businessRepository.save(b);
-                updated++;
+            const audit = await this.calculateAlignment(b, templateMap.get(b.category));
+            if (audit.missing.length > 0) {
+                results.push({
+                    businessId: b.id,
+                    name: b.name,
+                    category: b.category,
+                    current: audit.current,
+                    expected: audit.expected,
+                    missing: audit.missing
+                });
             }
         }
-        return { total: businesses.length, updated };
+        return results;
     }
 
-    async seedRetailTemplate(): Promise<any> {
-        const repo = this.dataSource.getRepository(BusinessTemplate);
-        let template = await repo.findOneBy({ key: 'RETAIL_KIOSCO' });
-
-        if (!template) {
-            template = repo.create({
-                key: 'RETAIL_KIOSCO',
-                name: 'Kiosco / Punto de Venta',
-                description: 'Ideal para ventas retail rápidas, control de caja única y stock simple.',
-                imageKey: 'kiosk-template',
-                requiredPlan: 'FREE',
-                isAvailable: true,
-                isEnabled: true,
-                defaultCapabilities: ['SALES_BASIC', 'INVENTORY_RETAIL', 'FINANCE_CASH_DRAWER'],
-                config: {
-                    type: 'RETAIL',
-                    primaryColor: '#7C3AED',
-                    features: {
-                        hasNozzle: false,
-                        hasMaxFilaments: false,
-                        hasVisits: true, // Para delivery opcional
-                        hasQuotes: false, 
-                        hasMaterials: false
-                    }
-                }
-            });
-            await repo.save(template);
-            return { message: 'Retail template seeded successfully', template };
+    async repairCapabilitiesAlignment(options: { businessIds?: string[], dryRun?: boolean }, adminId: string): Promise<any> {
+        const query = this.businessRepository.createQueryBuilder('business');
+        if (options.businessIds && options.businessIds.length > 0) {
+            query.where('business.id IN (:...ids)', { ids: options.businessIds });
         }
-        return { message: 'Retail template already exists', template };
+        
+        const businesses = await query.getMany();
+        const templates = await this.templateRepository.find();
+        const templateMap = new Map(templates.map(t => [t.key, t]));
+
+        const repairs = [];
+        for (const b of businesses) {
+            const audit = await this.calculateAlignment(b, templateMap.get(b.category));
+            if (audit.missing.length > 0) {
+                // Formula: repair => actual + missing
+                const updatedCaps = Array.from(new Set([...audit.current, ...audit.missing]));
+                
+                if (!options.dryRun) {
+                    b.capabilities = updatedCaps;
+                    await this.businessRepository.save(b);
+                    await this.logAction(adminId, 'CAPABILITIES_REPAIRED', b.id, { 
+                        added: audit.missing,
+                        newTotal: updatedCaps.length 
+                    });
+                }
+
+                repairs.push({
+                    businessId: b.id,
+                    name: b.name,
+                    added: audit.missing,
+                    status: options.dryRun ? 'DRY_RUN_PENDING' : 'REPAIRED'
+                });
+            }
+        }
+
+        return {
+            processed: businesses.length,
+            repairsCount: repairs.length,
+            repairs,
+            dryRun: !!options.dryRun
+        };
+    }
+
+    /**
+     * Used for new business creation flow.
+     * Ensures the business starts with the correct baseline capabilities.
+     */
+    async initializeCapabilitiesForNewBusiness(business: Business): Promise<void> {
+        const templates = await this.templateRepository.find();
+        const template = templates.find(t => t.key === business.category);
+        
+        const audit = await this.calculateAlignment(business, template);
+        if (audit.expected.length > 0) {
+            business.capabilities = audit.expected;
+            await this.businessRepository.save(business);
+            await this.logAction('SYSTEM', 'CAPABILITIES_INITIALIZED', business.id, {
+                capabilities: audit.expected
+            });
+        }
+    }
+
+    private async calculateAlignment(business: Business, template?: BusinessTemplate) {
+        const actual = business.capabilities || [];
+        
+        // expected = union(systemDefaults, templateDefaultCapabilities, capabilities_override)
+        const systemDefaults = ['SALES_BASIC'];
+        const templateCaps = template?.defaultCapabilities || [];
+        const overrides = Array.isArray(business.capabilitiesOverride) ? business.capabilitiesOverride : [];
+
+        const expected = Array.from(new Set([
+            ...systemDefaults,
+            ...templateCaps,
+            ...overrides
+        ]));
+
+        // missing = expected - actual
+        const missing = expected.filter(cap => !actual.includes(cap));
+
+        return { current: actual, expected, missing };
+    }
+
+    // --- Templates Management ---
+    async findAllTemplates(): Promise<BusinessTemplate[]> {
+        return this.templateRepository.find({ order: { name: 'ASC' } });
+    }
+
+    async updateTemplate(key: string, data: Partial<BusinessTemplate>): Promise<BusinessTemplate> {
+        const template = await this.templateRepository.findOneBy({ key: key as any });
+        if (!template) throw new NotFoundException('Template no encontrado');
+        
+        Object.assign(template, data);
+        return this.templateRepository.save(template);
+    }
+
+    async seedAllTemplates(): Promise<any> {
+        const repo = this.dataSource.getRepository(BusinessTemplate);
+        const results = [];
+
+        const templatesToSeed = [
+            {
+                key: 'IMPRESION_3D',
+                name: 'Impresión 3D',
+                description: 'Gestión de granjas de impresión, filamentos y servicios de diseño STL.',
+                imageKey: '3d-printing-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT']
+            },
+            {
+                key: 'METALURGICA',
+                name: 'Herrería y Metalúrgica',
+                description: 'Estructuras metálicas, visitas a obra y presupuestos detallados.',
+                imageKey: 'metalwork-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT', 'VISITS_MANAGEMENT']
+            },
+            {
+                key: 'CARPINTERIA',
+                name: 'Carpintería',
+                description: 'Amoblamientos a medida, corte de placas y armado en taller.',
+                imageKey: 'carpentry-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'INVENTORY_RAW', 'SALES_MANAGEMENT']
+            },
+            {
+                key: 'KIOSCO',
+                name: 'Kiosco / Punto de Venta',
+                description: 'Ventas retail, control de caja y stock simple.',
+                imageKey: 'kiosk-template',
+                defaultCapabilities: ['SALES_BASIC', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC']
+            }
+        ];
+
+        for (const t of templatesToSeed) {
+            let temp = await repo.findOneBy({ key: t.key as any });
+            if (!temp) {
+                temp = repo.create({ ...t, key: t.key as any });
+                results.push(`${t.key} created`);
+            } else {
+                temp.defaultCapabilities = t.defaultCapabilities;
+                results.push(`${t.key} updated`);
+            }
+            await repo.save(temp);
+        }
+
+        return { message: 'Templates synchronized with base standards', results };
     }
 
     async getPlatformStats(): Promise<any> {

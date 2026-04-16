@@ -19,6 +19,10 @@ export class UpdateBusinessDto {
 
     @IsString()
     @IsOptional()
+    email?: string;
+
+    @IsString()
+    @IsOptional()
     currency?: string;
 
     @IsString()

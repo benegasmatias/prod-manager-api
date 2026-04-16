@@ -8257,3 +8257,345 @@ Stack: NotFoundException: Cannot GET /admin/config/metadata
     at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
     at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:18:56.269Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:19:35.379Z
+Path: /machines
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:20:16.859Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:20:23.054Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:25:51.382Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:26:23.807Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:26:31.501Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:40:44.060Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:41:43.767Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:18:54.993Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 404
+Message: {"message":"Cannot PATCH /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot PATCH /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:11.971Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:12.562Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.289Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.672Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.726Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:15.242Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:15.507Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:16.394Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:16.762Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:20.406Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:57:17.197Z
+Path: /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 404
+Message: {"message":"Cannot PATCH /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot PATCH /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------

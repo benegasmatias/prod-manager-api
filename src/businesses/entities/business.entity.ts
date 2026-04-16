@@ -19,6 +19,9 @@ export class Business {
     @Column({ nullable: true })
     phone: string;
 
+    @Column({ nullable: true })
+    email: string;
+
     @Column({ default: 'GENERICO' })
     category: string; // Rubro (IMPRESION_3D, METALURGICA, etc)
 

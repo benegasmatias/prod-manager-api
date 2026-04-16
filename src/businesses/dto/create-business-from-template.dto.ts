@@ -8,4 +8,12 @@ export class CreateBusinessFromTemplateDto {
     @IsOptional()
     @IsString()
     name?: string;
+
+    @IsOptional()
+    @IsString()
+    phone?: string;
+
+    @IsOptional()
+    @IsString()
+    email?: string;
 }

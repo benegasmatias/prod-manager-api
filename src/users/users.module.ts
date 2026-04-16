@@ -1,4 +1,4 @@
-import { Module, Global } from '@nestjs/common';
+import { Module, Global, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -15,7 +15,7 @@ import { UserStatusGuard } from './guards/user-status.guard';
 @Module({
     imports: [
         TypeOrmModule.forFeature([User]),
-        BusinessesModule,
+        forwardRef(() => BusinessesModule),
     ],
     controllers: [UsersController, UsersManagementController],
     providers: [UsersService, SupabaseService, GlobalAdminGuard, UserStatusGuard],

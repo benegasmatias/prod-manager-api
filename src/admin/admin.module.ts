@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminService } from './admin.service';
 import { AdminController, PlansPublicController } from './admin.controller';
@@ -25,7 +25,7 @@ import { BusinessInvitation } from '../businesses/entities/business-invitation.e
             AdminAuditLog,
             BusinessInvitation
         ]),
-        UsersModule, // For guards/supabase dependencies
+        forwardRef(() => UsersModule), // For guards/supabase dependencies
         NotificationsModule,
     ],
 

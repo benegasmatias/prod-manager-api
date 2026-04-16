@@ -24,6 +24,7 @@ import { BillingService } from './billing.service';
 import { PLAN_LIMITS } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
+import { AdminService } from '../admin/admin.service';
 
 const DEFAULT_BASE_CONFIG = {
     sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
@@ -67,6 +68,7 @@ export class BusinessesService {
         private readonly planUsageService: PlanUsageService,
         private readonly auditService: AuditService,
         private readonly billingService: BillingService,
+        private readonly adminService: AdminService,
         private readonly dataSource: DataSource,
         private readonly strategyProvider: BusinessStrategyProvider,
     ) { }
@@ -116,7 +118,7 @@ export class BusinessesService {
     async createFromTemplate(userId: string, createDto: CreateBusinessFromTemplateDto): Promise<any> {
         await this.planUsageService.ensureBusinessCreationAllowed(userId);
 
-        const { templateKey, name } = createDto;
+        const { templateKey, name, phone, email } = createDto;
         
         // Restricción: Permitimos IMPRESION_3D y KIOSCO por ahora
         if (!['IMPRESION_3D', 'KIOSCO'].includes(templateKey)) {
@@ -146,9 +148,15 @@ export class BusinessesService {
                 status: 'ACTIVE',
                 onboardingStep: 'COMPLETED',
                 plan: 'FREE',
-                capabilities: defaultCaps
+                capabilities: [], // Will be initialized by AdminService below
+                phone,
+                email
             });
             const businessToUse = await manager.save(Business, business);
+
+            // Centrally initialize capabilities from template + system defaults
+            // This avoids hardcoding capabilities here in the creation flow
+            await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse);
 
             // Fase 5.2: Suscripción por defecto (Atómica)
             const initialPlan = template?.requiredPlan || 'FREE';

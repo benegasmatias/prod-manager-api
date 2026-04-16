@@ -187,15 +187,33 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
-    @Post('capabilities-init')
-    async initializeCapabilities(@Request() req) {
-        return this.adminService.initializeCapabilities();
+    @Get('capabilities/audit')
+    async auditCapabilities(@Request() req) {
+        return this.adminService.auditCapabilitiesAlignment();
     }
 
     @UseGuards(GlobalAdminGuard)
-    @Post('templates/seed-retail')
-    async seedRetailTemplate(@Request() req) {
-        return this.adminService.seedRetailTemplate();
+    @Post('capabilities/repair')
+    async repairCapabilities(@Request() req, @Body() body: { businessIds?: string[], dryRun?: boolean }) {
+        return this.adminService.repairCapabilitiesAlignment(body, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('templates')
+    async getTemplates(@Request() req) {
+        return this.adminService.findAllTemplates();
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('templates/:key')
+    async updateTemplate(@Request() req, @Param('key') key: string, @Body() body: any) {
+        return this.adminService.updateTemplate(key, body);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Post('templates/seed')
+    async seedTemplates(@Request() req) {
+        return this.adminService.seedAllTemplates();
     }
 
     @UseGuards(GlobalAdminGuard)
