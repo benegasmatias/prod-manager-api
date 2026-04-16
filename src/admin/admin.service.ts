@@ -212,10 +212,23 @@ export class AdminService {
 
 
     // Usuarios locales (del ecosistema)
-    async findAllUsers(): Promise<User[]> {
-        return this.userRepository.find({
+    async findAllUsers(page: number = 1, limit: number = 10): Promise<{ items: User[], meta: any }> {
+        const [items, totalItems] = await this.userRepository.findAndCount({
             order: { createdAt: 'DESC' },
+            skip: (page - 1) * limit,
+            take: limit,
         });
+
+        return {
+            items,
+            meta: {
+                totalItems,
+                itemCount: items.length,
+                itemsPerPage: limit,
+                totalPages: Math.ceil(totalItems / limit),
+                currentPage: page,
+            },
+        };
     }
 
     async approveUser(id: string, adminId: string): Promise<User> {

@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException, Post, Delete } from '@nestjs/common';
+import { Controller, Get, Patch, Body, Param, UseGuards, Request, ForbiddenException, Post, Delete, Query } from '@nestjs/common';
 
 import { AdminService } from './admin.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -115,8 +115,12 @@ export class AdminController {
     // Usuarios
     @UseGuards(GlobalAdminGuard)
     @Get('users')
-    async getAllUsers(@Request() req) {
-        return this.adminService.findAllUsers();
+    async getAllUsers(
+        @Request() req,
+        @Query('page') page: string = '1',
+        @Query('limit') limit: string = '10'
+    ) {
+        return this.adminService.findAllUsers(Number(page), Number(limit));
     }
 
     @UseGuards(GlobalAdminGuard)
