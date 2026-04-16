@@ -10,6 +10,7 @@ import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { NotificationsService } from '../notifications/notifications.service';
 import { Notification } from '../notifications/entities/notification.entity';
 import { AdminAuditLog } from './entities/admin-audit-log.entity';
+import { BusinessInvitation, InvitationStatus } from '../businesses/entities/business-invitation.entity';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 
 @Injectable()
@@ -26,6 +27,8 @@ export class AdminService {
         private readonly planRepository: Repository<SubscriptionPlan>,
         @InjectRepository(AdminAuditLog)
         private readonly auditLogRepository: Repository<AdminAuditLog>,
+        @InjectRepository(BusinessInvitation)
+        private readonly invitationRepository: Repository<BusinessInvitation>,
         private readonly notificationsService: NotificationsService,
     ) {
         // Seed default plans on startup if none exist
@@ -212,12 +215,30 @@ export class AdminService {
 
 
     // Usuarios locales (del ecosistema)
-    async findAllUsers(page: number = 1, limit: number = 10): Promise<{ items: User[], meta: any }> {
-        const [items, totalItems] = await this.userRepository.findAndCount({
-            order: { createdAt: 'DESC' },
-            skip: (page - 1) * limit,
-            take: limit,
-        });
+    async findAllUsers(
+        page: number = 1, 
+        limit: number = 10, 
+        filters?: { search?: string, status?: string, plan?: string }
+    ): Promise<{ items: User[], meta: any }> {
+        const query = this.userRepository.createQueryBuilder('user');
+        
+        if (filters?.search) {
+            query.andWhere('(user.email ILIKE :search OR user.fullName ILIKE :search)', { search: `%${filters.search}%` });
+        }
+        
+        if (filters?.status) {
+            query.andWhere('user.status = :status', { status: filters.status });
+        }
+        
+        if (filters?.plan) {
+            query.andWhere('user.plan = :plan', { plan: filters.plan });
+        }
+
+        query.orderBy('user.createdAt', 'DESC')
+             .skip((page - 1) * limit)
+             .take(limit);
+
+        const [items, totalItems] = await query.getManyAndCount();
 
         return {
             items,
@@ -231,6 +252,22 @@ export class AdminService {
         };
     }
 
+    async findUserById(id: string): Promise<User> {
+        const user = await this.userRepository.findOne({
+            where: { id },
+            relations: ['memberships', 'memberships.business'],
+        });
+        if (!user) throw new NotFoundException('Usuario no encontrado');
+        
+        // Add invitations associated with this user's email
+        (user as any).invitations = await this.invitationRepository.find({
+            where: { email: user.email },
+            relations: ['business', 'invitedByUser'],
+        });
+        
+        return user;
+    }
+
     async approveUser(id: string, adminId: string): Promise<User> {
         await this.userRepository.update(id, { 
             status: 'ACTIVE',
@@ -239,9 +276,7 @@ export class AdminService {
             approvedBy: adminId
         });
         await this.logAction(adminId, 'USER_APPROVED', id);
-        const user = await this.userRepository.findOneBy({ id });
-        if (!user) throw new NotFoundException('Usuario no encontrado');
-        return user;
+        return this.findUserById(id);
     }
 
     async blockUser(id: string, adminId: string): Promise<User> {
@@ -250,9 +285,108 @@ export class AdminService {
             active: false
         });
         await this.logAction(adminId, 'USER_BLOCKED', id);
-        const user = await this.userRepository.findOneBy({ id });
-        if (!user) throw new NotFoundException('Usuario no encontrado');
-        return user;
+        return this.findUserById(id);
+    }
+
+    async unblockUser(id: string, adminId: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'ACTIVE',
+            active: true
+        });
+        await this.logAction(adminId, 'USER_UNBLOCKED', id);
+        return this.findUserById(id);
+    }
+
+    async suspendUser(id: string, adminId: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'SUSPENDED',
+            active: false
+        });
+        await this.logAction(adminId, 'USER_SUSPENDED', id);
+        return this.findUserById(id);
+    }
+
+    async reactivateUser(id: string, adminId: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'ACTIVE',
+            active: true
+        });
+        await this.logAction(adminId, 'USER_REACTIVATED', id);
+        return this.findUserById(id);
+    }
+
+    async softDeleteUser(id: string, adminId: string): Promise<User> {
+        await this.userRepository.update(id, { 
+            status: 'DELETED',
+            active: false
+        });
+        await this.logAction(adminId, 'USER_DELETED', id);
+        return this.findUserById(id);
+    }
+
+    // Invitaciones
+    async findAllInvitations(
+        page: number = 1, 
+        limit: number = 10, 
+        filters?: { search?: string, status?: string }
+    ): Promise<{ items: BusinessInvitation[], meta: any }> {
+        const query = this.invitationRepository.createQueryBuilder('invitation')
+            .leftJoinAndSelect('invitation.business', 'business')
+            .leftJoinAndSelect('invitation.invitedByUser', 'invitedBy');
+        
+        if (filters?.search) {
+            query.andWhere('invitation.email ILIKE :search', { search: `%${filters.search}%` });
+        }
+        
+        if (filters?.status) {
+            query.andWhere('invitation.status = :status', { status: filters.status });
+        }
+
+        query.orderBy('invitation.createdAt', 'DESC')
+             .skip((page - 1) * limit)
+             .take(limit);
+
+        const [items, totalItems] = await query.getManyAndCount();
+
+        return {
+            items,
+            meta: {
+                totalItems,
+                itemCount: items.length,
+                itemsPerPage: limit,
+                totalPages: Math.ceil(totalItems / limit),
+                currentPage: page,
+            },
+        };
+    }
+
+    async resendInvitation(id: string, adminId: string): Promise<BusinessInvitation> {
+        const invitation = await this.invitationRepository.findOneBy({ id });
+        if (!invitation) throw new NotFoundException('Invitación no encontrada');
+        
+        // Reset expiration and increase count
+        const newExpires = new Date();
+        newExpires.setDate(newExpires.getDate() + 7); // 7 more days
+        
+        invitation.expiresAt = newExpires;
+        invitation.resendCount += 1;
+        invitation.lastResentAt = new Date();
+        
+        await this.invitationRepository.save(invitation);
+        await this.logAction(adminId, 'INVITATION_RESENT', id, { email: invitation.email });
+        
+        return invitation;
+    }
+
+    async cancelInvitation(id: string, adminId: string): Promise<BusinessInvitation> {
+        const invitation = await this.invitationRepository.findOneBy({ id });
+        if (!invitation) throw new NotFoundException('Invitación no encontrada');
+        
+        invitation.status = InvitationStatus.CANCELLED;
+        await this.invitationRepository.save(invitation);
+        await this.logAction(adminId, 'INVITATION_CANCELLED', id, { email: invitation.email });
+        
+        return invitation;
     }
 
     async bootstrapAdmin(userId: string): Promise<User> {
@@ -276,6 +410,20 @@ export class AdminService {
         const user = await this.userRepository.findOneBy({ id: userId });
         if (!user) throw new NotFoundException('Usuario no encontrado');
         return user;
+    }
+
+    async getUserAuditLogs(id: string): Promise<AdminAuditLog[]> {
+        return this.auditLogRepository.find({
+            where: { targetId: id },
+            order: { createdAt: 'DESC' },
+            take: 50,
+        });
+    }
+
+    async updateUser(id: string, data: Partial<User>, adminId: string): Promise<User> {
+        await this.userRepository.update(id, data);
+        await this.logAction(adminId, 'USER_UPDATED', id, data);
+        return this.findUserById(id);
     }
 
     async updateUserGlobalRole(id: string, role: string, adminId: string): Promise<User> {
@@ -342,9 +490,15 @@ export class AdminService {
     }
 
     async getPlatformStats(): Promise<any> {
-        const [userCount, businessCount] = await Promise.all([
+        const [userCount, businessCount, userStatusBreakdown] = await Promise.all([
             this.userRepository.count(),
             this.businessRepository.count(),
+            this.userRepository
+                .createQueryBuilder('user')
+                .select('user.status', 'status')
+                .addSelect('COUNT(user.id)', 'count')
+                .groupBy('user.status')
+                .getRawMany(),
         ]);
 
         const categories = await this.businessRepository
@@ -355,12 +509,29 @@ export class AdminService {
             .getRawMany();
 
         return {
-            users: userCount,
+            users: {
+                total: userCount,
+                breakdown: userStatusBreakdown.map(s => ({
+                    status: s.status,
+                    count: parseInt(s.count, 10),
+                })),
+            },
             businesses: businessCount,
             categories: categories.map(c => ({
                 label: c.category,
                 count: parseInt(c.count, 10),
             })),
+        };
+    async getMetadata() {
+        // Source of truth for roles is the DB
+        const roles = await this.roleConfigRepository.find();
+        
+        return {
+            userStatuses: ['PENDING', 'ACTIVE', 'BLOCKED', 'SUSPENDED', 'DELETED'],
+            invitationStatuses: ['PENDING', 'ACCEPTED', 'REJECTED', 'EXPIRED', 'CANCELLED'],
+            businessStatuses: ['DRAFT', 'ACTIVE', 'SUSPENDED', 'ARCHIVED'],
+            globalRoles: roles.map(r => ({ id: r.role, label: r.role.replace('_', ' ') })),
+            plans: await this.planRepository.find({ select: ['id', 'name'] })
         };
     }
 }

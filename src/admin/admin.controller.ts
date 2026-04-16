@@ -118,9 +118,24 @@ export class AdminController {
     async getAllUsers(
         @Request() req,
         @Query('page') page: string = '1',
-        @Query('limit') limit: string = '10'
+        @Query('limit') limit: string = '10',
+        @Query('search') search?: string,
+        @Query('status') status?: string,
+        @Query('plan') plan?: string
     ) {
-        return this.adminService.findAllUsers(Number(page), Number(limit));
+        return this.adminService.findAllUsers(Number(page), Number(limit), { search, status, plan });
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('users/:id')
+    async getUserDetail(@Request() req, @Param('id') id: string) {
+        return this.adminService.findUserById(id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('users/:id/logs')
+    async getUserLogs(@Request() req, @Param('id') id: string) {
+        return this.adminService.getUserAuditLogs(id);
     }
 
     @UseGuards(GlobalAdminGuard)
@@ -133,6 +148,36 @@ export class AdminController {
     @Patch('users/:id/block')
     async blockUser(@Request() req, @Param('id') id: string) {
         return this.adminService.blockUser(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('users/:id/unblock')
+    async unblockUser(@Request() req, @Param('id') id: string) {
+        return this.adminService.unblockUser(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('users/:id/suspend')
+    async suspendUser(@Request() req, @Param('id') id: string) {
+        return this.adminService.suspendUser(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('users/:id/reactivate')
+    async reactivateUser(@Request() req, @Param('id') id: string) {
+        return this.adminService.reactivateUser(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Delete('users/:id')
+    async deleteUser(@Request() req, @Param('id') id: string) {
+        return this.adminService.softDeleteUser(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('users/:id')
+    async updateUser(@Request() req, @Param('id') id: string, @Body() body: any) {
+        return this.adminService.updateUser(id, body, req.user.id);
     }
 
     @UseGuards(GlobalAdminGuard)
@@ -154,9 +199,39 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Get('invitations')
+    async getAllInvitations(
+        @Request() req,
+        @Query('page') page: string = '1',
+        @Query('limit') limit: string = '10',
+        @Query('search') search?: string,
+        @Query('status') status?: string
+    ) {
+        return this.adminService.findAllInvitations(Number(page), Number(limit), { search, status });
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Post('invitations/:id/resend')
+    async resendInvitation(@Request() req, @Param('id') id: string) {
+        return this.adminService.resendInvitation(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Post('invitations/:id/cancel')
+    async cancelInvitation(@Request() req, @Param('id') id: string) {
+        return this.adminService.cancelInvitation(id, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Get('stats')
     async getStats(@Request() req) {
         return this.adminService.getPlatformStats();
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('config/metadata')
+    async getMetadata(@Request() req) {
+        return this.adminService.getMetadata();
     }
 }
 
