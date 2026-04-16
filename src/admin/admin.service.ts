@@ -415,7 +415,7 @@ export class AdminService {
     async getUserAuditLogs(id: string): Promise<AdminAuditLog[]> {
         return this.auditLogRepository.find({
             where: { targetId: id },
-            order: { createdAt: 'DESC' },
+            order: { timestamp: 'DESC' },
             take: 50,
         });
     }
@@ -522,6 +522,8 @@ export class AdminService {
                 count: parseInt(c.count, 10),
             })),
         };
+    }
+
     async getMetadata() {
         // Source of truth for roles is the DB
         const roles = await this.roleConfigRepository.find();
