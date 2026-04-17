@@ -147,16 +147,16 @@ export class OrdersController {
         return this.ordersService.updateStatus(id, updateStatusDto, req.user.id);
     }
 
-    @Patch(':orderId/items/:itemId/progress')
+    @Patch(':orderId/items/:itemId/status')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
-    async updateProgress(
+    async updateItemStatus(
         @Param('orderId', ParseUUIDPipe) orderId: string,
         @Param('itemId', ParseUUIDPipe) itemId: string,
-        @Body() updateProgressDto: UpdateProgressDto,
+        @Body('status') status: any,
         @Request() req: any,
     ) {
-        return this.ordersService.updateProgress(orderId, itemId, updateProgressDto, req.user.id);
+        return this.ordersService.updateItemStatus(orderId, itemId, status, req.user.id);
     }
 }
