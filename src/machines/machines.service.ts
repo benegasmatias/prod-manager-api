@@ -83,16 +83,34 @@ export class MachinesService {
         // 1. Marcar impresora como ocupada
         await this.machineRepository.update(machineId, { status: MachineStatus.PRINTING });
 
-        // 2. Crear trabajo de producción para el item seleccionado
-        await this.jobsService.create({
-            orderId: order.id,
-            businessId: businessId || order.businessId,
-            orderItemId: targetItem.id,
-            machineId: machineId,
-            materialId: materialId,
-            metadata: metadata,
-            totalUnits: targetItem.qty
-        });
+        // 2. Crear o reutilizar trabajo de producción para el item seleccionado
+        const existingJob = order.jobs?.find(j => j.orderItemId === targetItem.id);
+
+        const estimatedWeight = metadata?.estimatedGrams || targetItem.weightGrams || 0;
+
+        if (existingJob) {
+            await this.jobsService.update(existingJob.id, {
+                machineId: machineId,
+                materialId: materialId,
+                metadata: metadata,
+                estimatedMinutes: targetItem.estimatedMinutes,
+                estimatedWeightGTotal: estimatedWeight,
+                status: JobStatus.QUEUED as any,
+                notes: 'Re-asignado desde gestión de piezas'
+            });
+        } else {
+            await this.jobsService.create({
+                orderId: order.id,
+                businessId: businessId || order.businessId,
+                orderItemId: targetItem.id,
+                machineId: machineId,
+                materialId: materialId,
+                metadata: metadata,
+                estimatedMinutes: targetItem.estimatedMinutes,
+                estimatedWeightGTotal: estimatedWeight,
+                totalUnits: targetItem.qty
+            });
+        }
 
         // 3. Sincronizar estado del item (esto disparará la agregación del pedido)
         await this.ordersService.syncOrderItemProgress(targetItem.id);

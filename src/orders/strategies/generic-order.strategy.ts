@@ -1,6 +1,6 @@
 import { OrderBusinessStrategy } from './order-strategy.interface';
 import { CreateOrderItemDto, ReportFailureDto } from '../dto/order.dto';
-import { OrderStatus, ProductionJobStatus as JobStatus } from '../../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus, OrderItemStatus } from '../../common/enums';
 import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/order-item.entity';
 import { EntityManager } from 'typeorm';
@@ -25,8 +25,14 @@ export class GenericOrderStrategy implements OrderBusinessStrategy {
         manager: EntityManager, 
         userId: string
     ): Promise<OrderStatus> {
-        // Comportamiento por defecto: seguir el flag del DTO
-        return dto.moveToReprint ? OrderStatus.REPRINT_PENDING : OrderStatus.FAILED;
+        // Actualizar estado del ítem si se proporcionó
+        if (dto.itemId) {
+            const status = dto.action === 'KEEP' ? OrderItemStatus.IN_PROGRESS : 
+                          (dto.action === 'DISCARD' ? OrderItemStatus.CANCELLED : OrderItemStatus.PENDING);
+            await manager.update(OrderItem, dto.itemId, { status });
+        }
+        
+        return order.status;
     }
 
     async releaseResources(

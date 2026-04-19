@@ -37,6 +37,8 @@ export class JobsService {
             priority: createJobDto.priority as any,
             operatorId: createJobDto.operatorId,
             metadata: createJobDto.metadata,
+            estimatedMinutes: createJobDto.estimatedMinutes,
+            estimatedWeightGTotal: createJobDto.estimatedWeightGTotal,
             status: JobStatus.QUEUED as any,
         });
 

@@ -1,6 +1,6 @@
 import { OrderBusinessStrategy } from './order-strategy.interface';
 import { CreateOrderItemDto, ReportFailureDto } from '../dto/order.dto';
-import { OrderStatus, ProductionJobStatus, MachineStatus } from '../../common/enums';
+import { OrderStatus, ProductionJobStatus, MachineStatus, OrderItemStatus } from '../../common/enums';
 import { Order } from '../entities/order.entity';
 import { OrderItem } from '../entities/order-item.entity';
 import { EntityManager, In } from 'typeorm';
@@ -63,8 +63,24 @@ export class Print3DOrderStrategy implements OrderBusinessStrategy {
             }
         }
 
-        // 2. Retornar estado de destino (según flag del DTO)
-        return dto.moveToReprint ? OrderStatus.REPRINT_PENDING : OrderStatus.FAILED;
+        // 2. Actualizar estado del ÍTEM (si se pasó un itemId)
+        if (dto.itemId) {
+            const status = dto.action === 'KEEP' ? OrderItemStatus.IN_PROGRESS : 
+                          (dto.action === 'DISCARD' ? OrderItemStatus.CANCELLED : OrderItemStatus.PENDING);
+            
+            await manager.update(OrderItem, dto.itemId, { status });
+
+            // 3. Liberar recursos (Máquina/Trabajo)
+            if (dto.action !== 'KEEP') {
+                await this.releaseResources(order, manager, { 
+                    itemId: dto.itemId, 
+                    targetStatus: ProductionJobStatus.CANCELLED 
+                });
+            }
+        }
+
+        // 4. Retornar el estado actual del pedido para que OrdersService no lo pise con un valor incorrecto
+        return order.status;
     }
 
     async releaseResources(

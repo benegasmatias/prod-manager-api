@@ -98,16 +98,8 @@ export class OrdersService {
             .leftJoinAndSelect('order.items', 'items')
             .leftJoinAndSelect('order.payments', 'payments')
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
-            .select([
-                'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority', 
-                'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice', 
-                'order.code', 'order.responsableGeneralId', 'order.customerId', 'order.totalSenias',
-                'customer.id', 'customer.name', 'customer.phone',
-                'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
-                'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit', 'items.status', 'items.doneQty',
-                'payments.id', 'payments.amount',
-                'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
-            ]);
+            .leftJoinAndSelect('items.productionJob', 'job')
+            .leftJoinAndSelect('job.machine', 'machine');
 
         if (businessId) {
             qb.andWhere('order.businessId = :businessId', { businessId });
@@ -695,8 +687,8 @@ export class OrdersService {
             });
             await manager.save(OrderStatusHistory, history);
 
-            // 4. Actualizar estado final
-            await manager.update(Order, id, { status: targetStatus });
+            // 4. Agregación (El estado del pedido derivará de sus ítems automáticamente)
+            await this.aggregateStatus(id, manager, userId);
 
             return await manager.findOne(Order, {
                 where: { id },
