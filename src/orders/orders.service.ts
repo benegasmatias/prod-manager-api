@@ -344,7 +344,8 @@ export class OrdersService {
         const order = await this.orderRepository.findOne({
             where: { id },
             relations: [
-                'items', 'customer', 'responsableGeneral',
+                'items', 'items.productionJob', 'items.productionJob.machine',
+                'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
                 'failures', 'failures.material', 'payments', 'siteInfo'
