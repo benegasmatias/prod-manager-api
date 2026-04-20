@@ -2,6 +2,7 @@ export interface PlanLimits {
     maxBusinessesPerUser: number;
     maxMachinesPerBusiness: number;
     maxEmployeesPerBusiness: number;
+    maxOrdersPerMonth: number;
     features: {
         hasMaterials: boolean;
         hasVisits: boolean;
@@ -13,7 +14,8 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
     FREE: {
         maxBusinessesPerUser: 1,
         maxMachinesPerBusiness: 3,
-        maxEmployeesPerBusiness: 2,
+        maxEmployeesPerBusiness: 1,
+        maxOrdersPerMonth: 15,
         features: {
             hasMaterials: false,
             hasVisits: false,
@@ -21,9 +23,10 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
         }
     },
     PRO: {
-        maxBusinessesPerUser: 5,
-        maxMachinesPerBusiness: 20,
-        maxEmployeesPerBusiness: 15,
+        maxBusinessesPerUser: 1,
+        maxMachinesPerBusiness: 10,
+        maxEmployeesPerBusiness: 3,
+        maxOrdersPerMonth: 50,
         features: {
             hasMaterials: true,
             hasVisits: true,
@@ -31,9 +34,10 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
         }
     },
     ENTERPRISE: {
-        maxBusinessesPerUser: 999, // "Unlimited"
-        maxMachinesPerBusiness: 999,
-        maxEmployeesPerBusiness: 999,
+        maxBusinessesPerUser: 1,
+        maxMachinesPerBusiness: 50,
+        maxEmployeesPerBusiness: 7,
+        maxOrdersPerMonth: 500,
         features: {
             hasMaterials: true,
             hasVisits: true,

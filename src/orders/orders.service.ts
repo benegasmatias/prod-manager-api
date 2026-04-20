@@ -16,6 +16,7 @@ import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { OrderStrategyProvider } from './order-strategy.provider';
 import { OrderWorkflowService } from './order-workflow.service';
 import { OrderFinancialService } from './order-financial.service';
+import { PlanUsageService } from '../businesses/plan-usage.service';
 
 @Injectable()
 export class OrdersService {
@@ -37,6 +38,7 @@ export class OrdersService {
         private readonly strategyProvider: OrderStrategyProvider,
         private readonly workflowService: OrderWorkflowService,
         private readonly financialService: OrderFinancialService,
+        private readonly planUsageService: PlanUsageService,
     ) { }
 
     /**
@@ -363,6 +365,9 @@ export class OrdersService {
      */
     async create(createOrderDto: CreateOrderDto): Promise<Order> {
         const { items, ...orderData } = createOrderDto;
+
+        // Validar límites del plan (Cuota de Pedidos Mensual)
+        await this.planUsageService.ensureOrderCreationAllowed(orderData.businessId);
 
         // Generar un código único simple si no viene uno
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
