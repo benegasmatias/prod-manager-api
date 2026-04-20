@@ -9,6 +9,7 @@ import { PLAN_LIMITS, PlanLimits } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
 import { BusinessSubscription } from './entities/business-subscription.entity';
+import { Order } from '../orders/entities/order.entity';
 
 @Injectable()
 export class PlanUsageService {
@@ -23,6 +24,8 @@ export class PlanUsageService {
         private readonly employeeRepository: Repository<Employee>,
         @InjectRepository(BusinessSubscription)
         private readonly subscriptionRepository: Repository<BusinessSubscription>,
+        @InjectRepository(Order)
+        private readonly orderRepository: Repository<Order>,
         private readonly auditService: AuditService,
     ) { }
 
@@ -73,6 +76,30 @@ export class PlanUsageService {
         }
     }
 
+    async ensureOrderCreationAllowed(businessId: string): Promise<void> {
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const limits = PLAN_LIMITS[plan];
+
+        // Count orders created this month
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const orderCount = await this.orderRepository.createQueryBuilder('order')
+            .where('order.businessId = :businessId', { businessId })
+            .andWhere('order.createdAt >= :startOfMonth', { startOfMonth })
+            .getCount();
+
+        if (orderCount >= limits.maxOrdersPerMonth) {
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'ORDERS', usage: orderCount, limit: limits.maxOrdersPerMonth, plan });
+            this.throwQuotaException('ORDERS', plan, limits.maxOrdersPerMonth, orderCount);
+        }
+    }
+
     async getBusinessUsage(businessId: string): Promise<any> {
         const business = await this.businessRepository.findOne({
             where: { id: businessId },
@@ -82,9 +109,17 @@ export class PlanUsageService {
         const status = business?.subscription?.status || 'ACTIVE';
         const limits = PLAN_LIMITS[plan];
 
-        const [machines, employees] = await Promise.all([
+        const startOfMonth = new Date();
+        startOfMonth.setDate(1);
+        startOfMonth.setHours(0, 0, 0, 0);
+
+        const [machines, employees, orders] = await Promise.all([
             this.machineRepository.countBy({ businessId, active: true }),
             this.employeeRepository.countBy({ businessId, active: true }),
+            this.orderRepository.createQueryBuilder('order')
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.createdAt >= :startOfMonth', { startOfMonth })
+                .getCount()
         ]);
 
         return {
@@ -94,10 +129,12 @@ export class PlanUsageService {
             usage: {
                 MACHINES: machines,
                 EMPLOYEES: employees,
+                ORDERS: orders,
             },
             remaining: {
-                MACHINES: limits.maxMachinesPerBusiness - machines,
-                EMPLOYEES: limits.maxEmployeesPerBusiness - employees,
+                MACHINES: Math.max(0, limits.maxMachinesPerBusiness - machines),
+                EMPLOYEES: Math.max(0, limits.maxEmployeesPerBusiness - employees),
+                ORDERS: Math.max(0, limits.maxOrdersPerMonth - orders),
             }
         };
     }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminService } from './admin.service';
 import { AdminController, PlansPublicController } from './admin.controller';
@@ -10,12 +10,22 @@ import { SubscriptionPlan } from './entities/subscription-plan.entity';
 import { UsersModule } from '../users/users.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { SubscriptionReminderService } from './tasks/subscription-reminder.service';
+import { AdminAuditLog } from './entities/admin-audit-log.entity';
+import { BusinessInvitation } from '../businesses/entities/business-invitation.entity';
 
 @Module({
 
     imports: [
-        TypeOrmModule.forFeature([Business, User, GlobalRoleConfig, SubscriptionPlan, BusinessTemplate]),
-        UsersModule, // For guards/supabase dependencies
+        TypeOrmModule.forFeature([
+            Business, 
+            User, 
+            GlobalRoleConfig, 
+            SubscriptionPlan, 
+            BusinessTemplate, 
+            AdminAuditLog,
+            BusinessInvitation
+        ]),
+        forwardRef(() => UsersModule), // For guards/supabase dependencies
         NotificationsModule,
     ],
 

@@ -37,6 +37,8 @@ export class JobsService {
             priority: createJobDto.priority as any,
             operatorId: createJobDto.operatorId,
             metadata: createJobDto.metadata,
+            estimatedMinutes: createJobDto.estimatedMinutes,
+            estimatedWeightGTotal: createJobDto.estimatedWeightGTotal,
             status: JobStatus.QUEUED as any,
         });
 
@@ -54,9 +56,9 @@ export class JobsService {
         const fullJob = await this.findOne(savedJob.id);
         const order = fullJob.order;
 
-        // Automatically transition order to IN_PROGRESS if it was CONFIRMED or DRAFT
-        if (order.status === OrderStatus.DRAFT || order.status === OrderStatus.CONFIRMED) {
-            await this.ordersService.updateStatus(order.id, { status: OrderStatus.IN_PROGRESS, notes: 'Production jobs started.' }, userId);
+        // Al crear un trabajo, sincronizamos el item (esto disparará la agregación del pedido)
+        if (savedJob.orderItemId) {
+            await this.ordersService.syncOrderItemProgress(savedJob.orderItemId);
         }
 
         return fullJob;
@@ -126,7 +128,13 @@ export class JobsService {
                 await this.deductMaterialWeight(job, unitsPending);
             }
 
-            await this.ordersService.checkAndSetReadyStatus(job.orderId);
+            // Ya no llamamos directamente a checkAndSetReadyStatus, syncOrderItemProgress se encarga de todo
+            // await this.ordersService.checkAndSetReadyStatus(job.orderId);
+        }
+
+        // Sincronizar estado del item y agregar estado del pedido
+        if (job.orderItemId) {
+            await this.ordersService.syncOrderItemProgress(job.orderItemId);
         }
 
         return this.findOne(id);

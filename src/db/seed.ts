@@ -53,8 +53,9 @@ async function seed() {
                 name: 'Impresión 3D',
                 description: 'Gestión de granjas de impresión, filamentos y servicios de diseño STL.',
                 imageKey: '3d-printing-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
                 config: {
-                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/personal', '/maquinas', '/materiales', '/reportes', '/ajustes'],
+                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/produccion/calendario', '/clientes', '/personal', '/maquinas', '/materiales', '/reportes', '/ajustes'],
                     labels: { produccion: 'Producción', items: 'Modelos a Imprimir', maquinas: 'Impresoras', materiales: 'Filamentos', unidadName: 'Nombre de Impresora', unidadModel: 'Modelo / Marca' },
                     icons: { pedidos: 'Box', produccion: 'Cpu', maquinas: 'Printer', materiales: 'Layers' },
                     stats: [
@@ -102,6 +103,7 @@ async function seed() {
                 name: 'Herrería y Metalúrgica',
                 description: 'Estructuras metálicas, visitas a obra y presupuestos detallados.',
                 imageKey: 'metalwork-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT', 'VISITS_MANAGEMENT'],
                 config: {
                     sidebarItems: ['/dashboard', '/visitas', '/presupuestos', '/pedidos', '/stock', '/clientes', '/personal', '/materiales', '/maquinas', '/reportes', '/ajustes'],
                     labels: { produccion: 'Monitor de Taller', items: 'Planos y Estructuras', maquinas: 'Puestos de Trabajo', materiales: 'Materiales', unidadName: 'Nombre del Puesto / Operario', unidadModel: 'Especialidad / Equipo' },
@@ -164,6 +166,7 @@ async function seed() {
                 name: 'Carpintería',
                 description: 'Amoblamientos a medida, corte de placas y armado en taller.',
                 imageKey: 'carpentry-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
                 config: {
                     sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/personal', '/produccion', '/reportes', '/ajustes'],
                     labels: { produccion: 'Estado de Armado', items: 'Muebles y Componentes', maquinas: 'Bancos / Operarios', materiales: 'Maderas', unidadName: 'Nombre del Banco / Operario', unidadModel: 'Especialidad / Herramientas' },
@@ -208,8 +211,9 @@ async function seed() {
                 name: 'Kiosco y Almacén',
                 description: 'Venta minorista rápida, control de stock por unidad y gestión de caja.',
                 imageKey: 'kiosk-template',
+                defaultCapabilities: ['SALES_BASIC', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC'],
                 config: {
-                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/reportes', '/ajustes'],
+                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/produccion/calendario', '/clientes', '/reportes', '/ajustes'],
                     labels: { produccion: 'Status de Venta', items: 'Artículos de Venta', maquinas: 'Puestos / Caja', materiales: 'Mercadería', unidadName: 'Nombre de Caja', unidadModel: 'Ubicación' },
                     icons: { pedidos: 'ShoppingCart', produccion: 'Zap', maquinas: 'Monitor', materiales: 'Package' },
                     stats: [

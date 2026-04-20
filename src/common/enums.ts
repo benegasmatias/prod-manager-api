@@ -71,26 +71,30 @@ export enum PaymentMethod {
 }
 
 export enum BusinessStatus {
-    DRAFT = 'DRAFT',
     ACTIVE = 'ACTIVE',
     SUSPENDED = 'SUSPENDED',
     ARCHIVED = 'ARCHIVED',
+    DRAFT = 'DRAFT',
+}
+
+export enum UserStatus {
+    PENDING = 'PENDING',
+    ACTIVE = 'ACTIVE',
+    BLOCKED = 'BLOCKED'
+}
+
+export enum UserRole {
+    SUPER_ADMIN = 'SUPER_ADMIN',
+    USER = 'USER'
 }
 
 export enum BusinessRole {
     OWNER = 'OWNER',
+    ADMIN = 'ADMIN', // Keeping for legacy/internal use
     BUSINESS_ADMIN = 'BUSINESS_ADMIN',
     SALES = 'SALES',
     OPERATOR = 'OPERATOR',
-    VIEWER = 'VIEWER',
-}
-
-export enum UserRole {
-    OWNER = 'OWNER',
-    BUSINESS_ADMIN = 'BUSINESS_ADMIN',
-    SALES = 'SALES',
-    OPERATOR = 'OPERATOR',
-    VIEWER = 'VIEWER',
+    VIEWER = 'VIEWER'
 }
 
 export enum SubscriptionStatus {
@@ -116,6 +120,7 @@ export enum OrderItemStatus {
     DONE = 'DONE', // Entregado final
     FAILED = 'FAILED',
     CANCELLED = 'CANCELLED',
+    IN_STOCK = 'IN_STOCK',
 }
 
 export enum ProductionJobStatus {

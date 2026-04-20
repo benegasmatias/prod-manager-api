@@ -8049,3 +8049,1583 @@ Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requeri
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-15T02:02:39.077Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/dashboard-summary
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-15T22:37:23.233Z
+Path: /admin/businesses
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T02:44:24.519Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T02:44:50.910Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T02:45:43.944Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T02:45:49.493Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:25:20.444Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:25:37.497Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:25:44.154Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:26:06.877Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:26:19.872Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T03:26:43.571Z
+Path: /admin/config/metadata
+Status: 404
+Message: {"message":"Cannot GET /admin/config/metadata","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/config/metadata
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:18:56.269Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:19:35.379Z
+Path: /machines
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:20:16.859Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:20:23.054Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"cdf7b24c-1c47-4003-bc87-a41b0332f325"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:25:51.382Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:26:23.807Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:26:31.501Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:40:44.060Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T13:41:43.767Z
+Path: /admin/templates
+Status: 404
+Message: {"message":"Cannot GET /admin/templates","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /admin/templates
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:18:54.993Z
+Path: /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 404
+Message: {"message":"Cannot PATCH /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot PATCH /machines/ecb177f9-c883-433b-8bd3-d09fd70aff07?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:11.971Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:12.562Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.289Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.672Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:13.726Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:15.242Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:15.507Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:16.394Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:16.762Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:20:20.406Z
+Path: /machines/8540f6f4-18f1-4c9c-9734-bd182fc34bf2/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/jobs/jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/machines/machines.service.ts:65:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-16T16:57:17.197Z
+Path: /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 404
+Message: {"message":"Cannot PATCH /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot PATCH /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T10:59:50.274Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T11:25:26.895Z
+Path: /api
+Status: 404
+Message: {"message":"Cannot GET /api","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /api
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T11:25:26.919Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T11:25:38.856Z
+Path: /docs
+Status: 404
+Message: {"message":"Cannot GET /docs","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /docs
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T12:15:51.208Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T13:51:15.852Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/c6dd9aec-17e2-4bda-8b9a-47b7aedfded2/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T13:51:31.572Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/c6dd9aec-17e2-4bda-8b9a-47b7aedfded2/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T13:52:48.315Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/c6dd9aec-17e2-4bda-8b9a-47b7aedfded2/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T14:56:59.094Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T16:03:20.221Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e/payments
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T17:53:36.862Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/ff61d69a-5626-4d52-8220-76e6c1ca9997/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:537:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:528:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T17:53:54.171Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/ff61d69a-5626-4d52-8220-76e6c1ca9997/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:537:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:528:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T18:20:29.625Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/ff61d69a-5626-4d52-8220-76e6c1ca9997/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:537:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:528:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T18:25:35.081Z
+Path: /orders/98901b86-9e15-4c60-a44d-e55b510ff83f/items/ff61d69a-5626-4d52-8220-76e6c1ca9997/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:537:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:528:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T19:54:09.250Z
+Path: /machines/ca423af8-3dde-44d4-91c9-9760eeed73c3/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:87:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T20:03:21.386Z
+Path: /machines/ca423af8-3dde-44d4-91c9-9760eeed73c3/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:87:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T20:04:14.740Z
+Path: /machines/ca423af8-3dde-44d4-91c9-9760eeed73c3/assign-order
+Status: 500
+Message: "duplicate key value violates unique constraint \"UQ_330d51bb19a4c35a8549a2d09f0\""
+Stack: QueryFailedError: duplicate key value violates unique constraint "UQ_330d51bb19a4c35a8549a2d09f0"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async JobsService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\jobs\jobs.service.ts:43:23)
+    at async MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:87:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T20:05:45.282Z
+Path: /orders
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T20:05:45.351Z
+Path: /orders
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T20:05:45.371Z
+Path: /orders
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T21:27:33.809Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T21:27:33.812Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T21:27:44.434Z
+Path: /machines?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=50
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-17T21:49:35.526Z
+Path: /orders/c00ff67e-e655-423c-b3c0-cd57b3a56e1e
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:26.043Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:26.079Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:26.289Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:38.320Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:38.328Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:05:38.331Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:08:55.277Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:08:55.280Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T01:08:55.284Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 500
+Message: "Relation with property path job in entity was not found."
+Stack: TypeORMError: Relation with property path job in entity was not found.
+    at JoinAttribute.getValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:187:23)
+    at JoinAttribute.get relation (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:191:53)
+    at JoinAttribute.get metadata (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\JoinAttribute.ts:203:18)
+    at SelectQueryBuilder.join (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:2100:53)
+    at SelectQueryBuilder.leftJoin (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:468:14)
+    at OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:101:14)
+    at OrdersController.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.controller.ts:56:35)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:13.682Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:13.706Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:14.006Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:27.277Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:27.297Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:39:27.318Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&statuses=DELIVERED,CANCELLED&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:43:58.047Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:44:01.823Z
+Path: /orders/listing?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325&page=1&pageSize=5&excludeStatuses=IN_STOCK,DELIVERED,CANCELLED,SITE_VISIT,SITE_VISIT_DONE,VISITA_REPROGRAMADA,VISITA_CANCELADA,QUOTATION,BUDGET_GENERATED,BUDGET_REJECTED,SURVEY_DESIGN&type=CLIENT
+Status: 500
+Message: "column machine.metadata does not exist"
+Stack: QueryFailedError: column machine.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getManyAndCount (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1874:36)
+    at async OrdersService.findListing (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:152:31)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:57:46.726Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa/items/38a47161-953c-42e8-b798-8cc2bea4a86d/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:58:04.300Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa/items/38a47161-953c-42e8-b798-8cc2bea4a86d/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:58:39.308Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa/items/38a47161-953c-42e8-b798-8cc2bea4a86d/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T15:59:09.343Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa/items/38a47161-953c-42e8-b798-8cc2bea4a86d/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T16:05:52.751Z
+Path: /orders/452af830-d502-4db2-9480-655f38480dfa/items/38a47161-953c-42e8-b798-8cc2bea4a86d/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T16:22:40.255Z
+Path: /orders/61682772-743e-4cd9-aa5f-6f87efa0a8b0
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T17:05:00.714Z
+Path: /orders/61682772-743e-4cd9-aa5f-6f87efa0a8b0
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-18T17:13:25.541Z
+Path: /orders/61682772-743e-4cd9-aa5f-6f87efa0a8b0
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-19T01:15:12.547Z
+Path: /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-19T01:15:39.074Z
+Path: /machines/ec1eb6aa-716b-432b-8ea2-7be37f5a0dac?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-19T02:49:36.854Z
+Path: /orders/a28ec6dd-1175-4b8e-ad7c-ca07dc587f76/items/b1dfe0c7-b261-4d4f-b14f-5d950621a86e/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-19T02:49:59.486Z
+Path: /orders/a28ec6dd-1175-4b8e-ad7c-ca07dc587f76/items/4736581d-975b-49ce-b22f-82bf37446aa5/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-19T02:50:47.386Z
+Path: /orders/a28ec6dd-1175-4b8e-ad7c-ca07dc587f76/items/db3dac27-9703-42b2-925f-d1237c37d7ef/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:23:12.344Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:23:23.331Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:29:26.901Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T19:08:21.597Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:24:13.119Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:24:32.733Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:33:51.740Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:33:55.106Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:45:19.313Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:45:22.459Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:41:44.377Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:41:46.969Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:56:07.309Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:03:13.494Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/901d3745-2775-44ba-a0a2-0ac87f6d1324/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:12:13.441Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:20:19.771Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:21:34.044Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:28:17.411Z
+Path: /orders/63b2f5a0-1888-488e-afad-ee67bd8703d3/items/f1c68b45-ee71-42e9-b76c-120d6d793f40/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------

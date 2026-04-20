@@ -4,7 +4,7 @@ import { Repository, In, ILike, Not, Between, MoreThanOrEqual, LessThanOrEqual }
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderSiteInfo } from './entities/order-site-info.entity';
-import { OrderStatus, ProductionJobStatus as JobStatus, MachineStatus } from '../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus, MachineStatus, OrderItemStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
 import { Machine } from '../machines/entities/machine.entity';
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';
@@ -16,6 +16,7 @@ import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { OrderStrategyProvider } from './order-strategy.provider';
 import { OrderWorkflowService } from './order-workflow.service';
 import { OrderFinancialService } from './order-financial.service';
+import { PlanUsageService } from '../businesses/plan-usage.service';
 
 @Injectable()
 export class OrdersService {
@@ -37,6 +38,7 @@ export class OrdersService {
         private readonly strategyProvider: OrderStrategyProvider,
         private readonly workflowService: OrderWorkflowService,
         private readonly financialService: OrderFinancialService,
+        private readonly planUsageService: PlanUsageService,
     ) { }
 
     /**
@@ -98,16 +100,8 @@ export class OrdersService {
             .leftJoinAndSelect('order.items', 'items')
             .leftJoinAndSelect('order.payments', 'payments')
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
-            .select([
-                'order.id', 'order.businessId', 'order.clientName', 'order.dueDate', 'order.priority', 
-                'order.status', 'order.type', 'order.createdAt', 'order.updatedAt', 'order.totalPrice', 
-                'order.code', 'order.responsableGeneralId', 'order.customerId', 'order.totalSenias',
-                'customer.id', 'customer.name', 'customer.phone',
-                'responsableGeneral.id', 'responsableGeneral.firstName', 'responsableGeneral.lastName',
-                'items.id', 'items.name', 'items.price', 'items.qty', 'items.deposit',
-                'payments.id', 'payments.amount',
-                'siteInfo.id', 'siteInfo.address', 'siteInfo.visitDate', 'siteInfo.visitTime'
-            ]);
+            .leftJoinAndSelect('items.productionJob', 'job')
+            .leftJoinAndSelect('job.machine', 'machine');
 
         if (businessId) {
             qb.andWhere('order.businessId = :businessId', { businessId });
@@ -352,7 +346,8 @@ export class OrdersService {
         const order = await this.orderRepository.findOne({
             where: { id },
             relations: [
-                'items', 'customer', 'responsableGeneral',
+                'items', 'items.productionJob', 'items.productionJob.machine',
+                'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
                 'failures', 'failures.material', 'payments', 'siteInfo'
@@ -370,6 +365,9 @@ export class OrdersService {
      */
     async create(createOrderDto: CreateOrderDto): Promise<Order> {
         const { items, ...orderData } = createOrderDto;
+
+        // Validar límites del plan (Cuota de Pedidos Mensual)
+        await this.planUsageService.ensureOrderCreationAllowed(orderData.businessId);
 
         // Generar un código único simple si no viene uno
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;
@@ -425,25 +423,170 @@ export class OrdersService {
     }
 
     /**
-     * Sincroniza la cantidad producida (done_qty) de un ítem basándose en sus trabajos de producción.
+     * Sincroniza la cantidad producida (done_qty) y el ESTADO de un ítem 
+     * basándose en sus trabajos de producción.
      */
-    async syncOrderItemProgress(orderItemId: string) {
-        const jobs = await this.jobRepository.find({
+    async syncOrderItemProgress(orderItemId: string, manager?: any) {
+        const repo = manager ? manager.getRepository(ProductionJob) : this.jobRepository;
+        const itemRepo = manager ? manager.getRepository(OrderItem) : this.orderItemRepository;
+
+        const jobs = await repo.find({
             where: { orderItemId },
             relations: ['progress']
         });
 
-        const totalDone = jobs.reduce((sum, job) => {
-            const jobDone = job.progress?.reduce((innerSum, p) => innerSum + p.unitsDone, 0) || 0;
+        const totalDone = jobs.reduce((sum: number, job: any) => {
+            const jobDone = job.progress?.reduce((innerSum: number, p: any) => innerSum + p.unitsDone, 0) || 0;
             return sum + jobDone;
         }, 0);
 
-        await this.orderItemRepository.update(orderItemId, { doneQty: totalDone });
+        // Mapeo Job -> Item Status
+        let newItemStatus = OrderItemStatus.PENDING;
+        
+        const hasActiveJob = jobs.some((j: any) => 
+            [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(j.status as any)
+        );
+        const allDone = jobs.length > 0 && jobs.every((j: any) => j.status === JobStatus.DONE);
+        const hasDone = jobs.some((j: any) => j.status === JobStatus.DONE);
 
-        const item = await this.orderItemRepository.findOne({ where: { id: orderItemId } });
-        if (item) {
-            await this.checkAndSetReadyStatus(item.orderId);
+        if (allDone) {
+            newItemStatus = OrderItemStatus.DONE;
+        } else if (hasActiveJob || (hasDone && !allDone)) {
+            newItemStatus = OrderItemStatus.IN_PROGRESS;
         }
+
+        await itemRepo.update(orderItemId, { 
+            doneQty: totalDone,
+            status: newItemStatus
+        });
+
+        const item = await itemRepo.findOne({ where: { id: orderItemId } });
+        if (item) {
+            await this.aggregateStatus(item.orderId, manager);
+        }
+    }
+
+    /**
+     * Calcula el estado global del pedido basado en el estado de sus items.
+     * Reglas de Agregación:
+     * - DONE: Todos los items están DONE.
+     * - IN_PROGRESS: Al menos un item está IN_PROGRESS o DONE (pero no todos DONE).
+     * - CANCELLED: Todos los items están CANCELLED.
+     * - PENDING: Todos los items están PENDING (o no hay items).
+     */
+    async aggregateStatus(orderId: string, manager?: any, userId?: string) {
+        const itemRepo = manager ? manager.getRepository(OrderItem) : this.orderItemRepository;
+        const orderRepo = manager ? manager.getRepository(Order) : this.orderRepository;
+        const historyRepo = manager ? manager.getRepository(OrderStatusHistory) : this.statusHistoryRepository;
+
+        const items = await itemRepo.find({ where: { orderId } });
+        const order = await orderRepo.findOne({ where: { id: orderId } });
+
+        if (!order || items.length === 0) return;
+
+        let targetStatus = order.status;
+
+        const allInStock = items.every(i => i.status === OrderItemStatus.IN_STOCK || i.status === OrderItemStatus.CANCELLED);
+        const allDoneOrStock = items.every(i => 
+            i.status === OrderItemStatus.DONE || 
+            i.status === OrderItemStatus.IN_STOCK || 
+            i.status === OrderItemStatus.CANCELLED
+        );
+        const allReadyDoneOrStock = items.every(i => 
+            i.status === OrderItemStatus.READY || 
+            i.status === OrderItemStatus.DONE || 
+            i.status === OrderItemStatus.IN_STOCK ||
+            i.status === OrderItemStatus.CANCELLED
+        );
+        const anyActive = items.some(i => 
+            [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY].includes(i.status as any)
+        );
+        const allCancelled = items.every(i => i.status === OrderItemStatus.CANCELLED);
+
+        if (allCancelled) {
+            targetStatus = OrderStatus.CANCELLED;
+        } else if (allInStock) {
+            targetStatus = OrderStatus.IN_STOCK;
+        } else if (allDoneOrStock) {
+            targetStatus = OrderStatus.DONE;
+        } else if (allReadyDoneOrStock) {
+            targetStatus = OrderStatus.READY;
+        } else if (anyActive) {
+            targetStatus = OrderStatus.IN_PROGRESS;
+        } else {
+            targetStatus = OrderStatus.PENDING;
+        }
+
+        if (targetStatus !== order.status) {
+            await orderRepo.update(orderId, { status: targetStatus });
+            const history = historyRepo.create({
+                orderId,
+                fromStatus: order.status,
+                toStatus: targetStatus,
+                note: 'Actualización automática por cambio en ítems',
+                performedById: userId
+            });
+            await historyRepo.save(history);
+        }
+    }
+
+    /**
+     * Actualiza manualmente el estado de un ítem y dispara la agregación.
+     * Solo permite transiciones simples: PENDING -> READY, PENDING -> CANCELLED, CANCELLED -> PENDING.
+     */
+    async updateItemStatus(orderId: string, itemId: string, payload: any, userId?: string) {
+        const { status, force } = payload;
+        
+        return await this.orderRepository.manager.transaction(async manager => {
+            const item = await manager.findOne(OrderItem, { 
+                where: { id: itemId, orderId },
+                relations: ['productionJob']
+            });
+            if (!item) throw new NotFoundException('Ítem no encontrado');
+
+            // 1. Validar conflictos con trabajos activos
+            if (item.productionJob && [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(item.productionJob.status as any)) {
+                if (force) {
+                    // Forzamos la liberación: Cancelamos el trabajo en máquina
+                    await manager.update(ProductionJob, item.productionJob.id, { 
+                        status: JobStatus.CANCELLED,
+                        metadata: { ...item.productionJob.metadata, forcedReleaseBy: userId, releaseDate: new Date() }
+                    });
+                } else {
+                    throw new BadRequestException('El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.');
+                }
+            }
+
+            const oldStatus = item.status;
+            
+            // 2. Aplicar el cambio
+            const updateData: Partial<OrderItem> = { status };
+            if (status === OrderItemStatus.READY || status === OrderItemStatus.DONE || status === OrderItemStatus.IN_STOCK) {
+                updateData.doneQty = item.qty;
+            } else if (status === OrderItemStatus.PENDING) {
+                updateData.doneQty = 0;
+            }
+
+            await manager.update(OrderItem, itemId, updateData);
+
+            // 3. Auditoría básica en el pedido
+            const order = await manager.findOne(Order, { where: { id: orderId } });
+            if (order) {
+                const history = manager.create(OrderStatusHistory, {
+                    orderId,
+                    fromStatus: order.status,
+                    toStatus: order.status,
+                    note: `[ITEM] "${item.name}": ${oldStatus} -> ${status}`,
+                    performedById: userId
+                });
+                await manager.save(OrderStatusHistory, history);
+            }
+
+            // 4. Agregación
+            await this.aggregateStatus(orderId, manager, userId);
+
+            return await manager.findOne(OrderItem, { where: { id: itemId } });
+        });
     }
 
     /**
@@ -572,8 +715,8 @@ export class OrdersService {
             });
             await manager.save(OrderStatusHistory, history);
 
-            // 4. Actualizar estado final
-            await manager.update(Order, id, { status: targetStatus });
+            // 4. Agregación (El estado del pedido derivará de sus ítems automáticamente)
+            await this.aggregateStatus(id, manager, userId);
 
             return await manager.findOne(Order, {
                 where: { id },

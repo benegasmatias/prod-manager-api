@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Machine } from './entities/machine.entity';
-import { MachineStatus, ProductionJobStatus as JobStatus, OrderStatus } from '../common/enums';
+import { MachineStatus, ProductionJobStatus as JobStatus, OrderStatus, OrderItemStatus } from '../common/enums';
 import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
@@ -23,7 +23,7 @@ export class MachinesService {
         private readonly auditService: AuditService,
     ) { }
 
-    async assignOrder(machineId: string, orderId: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
+    async assignOrder(machineId: string, orderId: string, orderItemId?: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
         const machine = await this.findOne(machineId, businessId);
         const order = await this.ordersService.findOne(orderId);
 
@@ -31,21 +31,50 @@ export class MachinesService {
             throw new NotFoundException('El pedido no tiene ítems para producir');
         }
 
-        // Si el pedido ya estaba en otra impresora, liberarla
-        if (order.jobs && order.jobs.length > 0) {
-            const activeJobs = order.jobs.filter(j =>
-                j.machineId &&
-                [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(j.status as any)
+        // Determinar item a producir
+        let targetItem: any;
+
+        if (orderItemId) {
+            targetItem = order.items.find(i => i.id === orderItemId);
+            if (!targetItem) {
+                throw new NotFoundException(`El ítem ${orderItemId} no pertenece al pedido ${orderId}`);
+            }
+        } else {
+            // Lógica de selección automática (estricta)
+            const eligibleItems = order.items.filter(i => 
+                ![OrderItemStatus.DONE, OrderItemStatus.CANCELLED].includes(i.status as any)
             );
 
-            for (const job of activeJobs) {
+            if (eligibleItems.length === 0) {
+                throw new BadRequestException('No hay ítems pendientes de producción en este pedido');
+            }
+
+            if (eligibleItems.length > 1) {
+                throw new BadRequestException('El pedido tiene múltiples ítems pendientes. Debe especificar cuál asignar.');
+            }
+
+            targetItem = eligibleItems[0];
+        }
+
+        if (targetItem.status === OrderItemStatus.DONE) {
+            throw new BadRequestException('El ítem seleccionado ya está completado');
+        }
+
+        // Si el ítem ya tenía un trabajo activo en otra impresora, liberarla
+        const previousJobs = order.jobs?.filter(j => 
+            j.orderItemId === targetItem.id &&
+            [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(j.status as any)
+        );
+
+        if (previousJobs && previousJobs.length > 0) {
+            for (const job of previousJobs) {
                 if (job.machineId !== machineId) {
                     // Liberar la otra impresora
                     await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
                     // Cancelar el trabajo anterior
-                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Pedido movido a otra impresora');
+                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignado a otra impresora');
                 } else {
-                    // Si es la misma impresora, cancelamos el anterior para que el nuevo tome el control con metadatos frescos
+                    // Si es la misma impresora, cancelamos el anterior para refrescar metadatos
                     await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
                 }
             }
@@ -54,23 +83,37 @@ export class MachinesService {
         // 1. Marcar impresora como ocupada
         await this.machineRepository.update(machineId, { status: MachineStatus.PRINTING });
 
-        // 2. Marcar pedido como en producción (si no lo estaba)
-        if (order.status !== OrderStatus.IN_PROGRESS) {
-            await this.ordersService.updateStatus(orderId, { status: OrderStatus.IN_PROGRESS });
+        // 2. Crear o reutilizar trabajo de producción para el item seleccionado
+        const existingJob = order.jobs?.find(j => j.orderItemId === targetItem.id);
+
+        const estimatedWeight = metadata?.estimatedGrams || targetItem.weightGrams || 0;
+
+        if (existingJob) {
+            await this.jobsService.update(existingJob.id, {
+                machineId: machineId,
+                materialId: materialId,
+                metadata: metadata,
+                estimatedMinutes: targetItem.estimatedMinutes,
+                estimatedWeightGTotal: estimatedWeight,
+                status: JobStatus.QUEUED as any,
+                notes: 'Re-asignado desde gestión de piezas'
+            });
+        } else {
+            await this.jobsService.create({
+                orderId: order.id,
+                businessId: businessId || order.businessId,
+                orderItemId: targetItem.id,
+                machineId: machineId,
+                materialId: materialId,
+                metadata: metadata,
+                estimatedMinutes: targetItem.estimatedMinutes,
+                estimatedWeightGTotal: estimatedWeight,
+                totalUnits: targetItem.qty
+            });
         }
 
-        // 3. Crear un trabajo de producción para el primer ítem disponible (simplificación)
-        const firstItem = order.items[0];
-
-        await this.jobsService.create({
-            orderId: order.id,
-            businessId: businessId || order.businessId,
-            orderItemId: firstItem.id,
-            machineId: machineId,
-            materialId: materialId,
-            metadata: metadata,
-            totalUnits: firstItem.qty
-        });
+        // 3. Sincronizar estado del item (esto disparará la agregación del pedido)
+        await this.ordersService.syncOrderItemProgress(targetItem.id);
 
         return this.findOne(machineId, businessId);
     }

@@ -25,6 +25,8 @@ import { BusinessInvitation } from './entities/business-invitation.entity';
 import { BusinessInvitationsService } from './business-invitations.service';
 import { BusinessInvitationsController } from './business-invitations.controller';
 import { BusinessCapabilityGuard } from './guards/business-capability.guard';
+import { AdminModule } from '../admin/admin.module';
+import { forwardRef } from '@nestjs/common';
 
 @Module({
     imports: [
@@ -42,7 +44,8 @@ import { BusinessCapabilityGuard } from './guards/business-capability.guard';
             Material,
             Employee
         ]),
-        AuditModule
+        AuditModule,
+        forwardRef(() => AdminModule)
     ],
     controllers: [
         BusinessesController, 

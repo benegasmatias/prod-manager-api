@@ -15,10 +15,19 @@ export class User {
     defaultBusinessId: string;
 
     @Column({ name: 'global_role', default: 'USER' })
-    globalRole: string; // SUPER_ADMIN, ADMIN, SUPPORT, USER
+    globalRole: string; // From UserRole enum: SUPER_ADMIN, USER
 
-    @Column({ default: true })
-    active: boolean;
+    @Column({ default: 'PENDING' })
+    status: string; // From UserStatus enum: PENDING, ACTIVE, BLOCKED
+
+    @Column({ type: 'timestamp', name: 'approved_at', nullable: true })
+    approvedAt: Date;
+
+    @Column({ name: 'approved_by', nullable: true, type: 'uuid' })
+    approvedBy: string;
+
+    @Column({ name: 'active', default: true })
+    active: boolean; // Keep for legacy/soft delete if needed
 
     @Column({ default: 'FREE' })
     plan: string;

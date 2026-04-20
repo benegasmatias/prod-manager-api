@@ -185,6 +185,10 @@ export class UpdateProgressDto {
 }
 
 export class UpdateOrderStatusDto {
+    @IsString()
+    @IsOptional()
+    businessId?: string;
+
     @IsEnum(OrderStatus)
     @IsOptional()
     status?: OrderStatus;
@@ -306,16 +310,33 @@ export class ReportFailureDto {
     reason: string;
 
     @IsNumber()
+    @IsOptional()
     @Min(0)
-    wastedGrams: number;
+    wastedGrams?: number;
 
     @IsString()
     @IsOptional()
     materialId?: string;
 
-    @IsBoolean()
+    @IsArray()
     @IsOptional()
-    moveToReprint?: boolean;
+    materialWastes?: { materialId: string, grams: number }[];
+
+    @IsString()
+    @IsOptional()
+    action?: 'REDO' | 'DISCARD' | 'KEEP';
+
+    @IsString()
+    @IsOptional()
+    itemId?: string;
+
+    @IsString()
+    @IsOptional()
+    businessId?: string;
+
+    @IsString()
+    @IsOptional()
+    targetStatus?: string;
 
     @IsOptional()
     metadata?: any;

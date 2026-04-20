@@ -51,7 +51,7 @@ export class MachinesController {
         return this.printersService.findOne(id, businessId);
     }
 
-    @Put(':id')
+    @Patch(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
@@ -82,11 +82,12 @@ export class MachinesController {
     async assignOrder(
         @Param('id', ParseUUIDPipe) id: string,
         @Body('orderId', ParseUUIDPipe) orderId: string,
+        @Body('orderItemId') orderItemId?: string,
         @Body('materialId') materialId?: string,
         @Body('metadata') metadata?: any,
         @Query('businessId') businessId?: string,
     ) {
-        return this.printersService.assignOrder(id, orderId, materialId, businessId, metadata);
+        return this.printersService.assignOrder(id, orderId, orderItemId, materialId, businessId, metadata);
     }
 
     @Post(':id/release')
