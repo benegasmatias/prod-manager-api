@@ -154,9 +154,9 @@ export class OrdersController {
     async updateItemStatus(
         @Param('orderId', ParseUUIDPipe) orderId: string,
         @Param('itemId', ParseUUIDPipe) itemId: string,
-        @Body('status') status: any,
+        @Body() body: any,
         @Request() req: any,
     ) {
-        return this.ordersService.updateItemStatus(orderId, itemId, status, req.user.id);
+        return this.ordersService.updateItemStatus(orderId, itemId, body, req.user.id);
     }
 }

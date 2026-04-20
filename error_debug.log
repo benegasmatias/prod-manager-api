@@ -9437,3 +9437,195 @@ Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "
     at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
     at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T19:08:21.597Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:24:13.119Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:24:32.733Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:33:51.740Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:33:55.106Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:45:19.313Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T20:45:22.459Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:41:44.377Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:41:46.969Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T21:56:07.309Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/3cb4a662-2109-4556-9701-c8518b415c53/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:03:13.494Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12/items/901d3745-2775-44ba-a0a2-0ac87f6d1324/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:12:13.441Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:20:19.771Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:21:34.044Z
+Path: /orders/12c02339-8b0a-4e19-8db3-4fa64a422c12
+Status: 400
+Message: {"message":["property responsableId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T22:28:17.411Z
+Path: /orders/63b2f5a0-1888-488e-afad-ee67bd8703d3/items/f1c68b45-ee71-42e9-b76c-120d6d793f40/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:529:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
+-------------

@@ -55,7 +55,7 @@ async function seed() {
                 imageKey: '3d-printing-template',
                 defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
                 config: {
-                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/personal', '/maquinas', '/materiales', '/reportes', '/ajustes'],
+                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/produccion/calendario', '/clientes', '/personal', '/maquinas', '/materiales', '/reportes', '/ajustes'],
                     labels: { produccion: 'Producción', items: 'Modelos a Imprimir', maquinas: 'Impresoras', materiales: 'Filamentos', unidadName: 'Nombre de Impresora', unidadModel: 'Modelo / Marca' },
                     icons: { pedidos: 'Box', produccion: 'Cpu', maquinas: 'Printer', materiales: 'Layers' },
                     stats: [
@@ -213,7 +213,7 @@ async function seed() {
                 imageKey: 'kiosk-template',
                 defaultCapabilities: ['SALES_BASIC', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC'],
                 config: {
-                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/reportes', '/ajustes'],
+                    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/produccion/calendario', '/clientes', '/reportes', '/ajustes'],
                     labels: { produccion: 'Status de Venta', items: 'Artículos de Venta', maquinas: 'Puestos / Caja', materiales: 'Mercadería', unidadName: 'Nombre de Caja', unidadModel: 'Ubicación' },
                     icons: { pedidos: 'ShoppingCart', produccion: 'Zap', maquinas: 'Monitor', materiales: 'Package' },
                     stats: [

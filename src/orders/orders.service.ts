@@ -481,13 +481,26 @@ export class OrdersService {
 
         let targetStatus = order.status;
 
-        const allInStock = items.every(i => i.status === OrderItemStatus.IN_STOCK);
-        const allDoneOrStock = items.every(i => i.status === OrderItemStatus.DONE || i.status === OrderItemStatus.IN_STOCK);
-        const allReadyDoneOrStock = items.every(i => i.status === OrderItemStatus.READY || i.status === OrderItemStatus.DONE || i.status === OrderItemStatus.IN_STOCK);
-        const anyActive = items.some(i => [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY, OrderItemStatus.DONE, OrderItemStatus.IN_STOCK].includes(i.status as any));
+        const allInStock = items.every(i => i.status === OrderItemStatus.IN_STOCK || i.status === OrderItemStatus.CANCELLED);
+        const allDoneOrStock = items.every(i => 
+            i.status === OrderItemStatus.DONE || 
+            i.status === OrderItemStatus.IN_STOCK || 
+            i.status === OrderItemStatus.CANCELLED
+        );
+        const allReadyDoneOrStock = items.every(i => 
+            i.status === OrderItemStatus.READY || 
+            i.status === OrderItemStatus.DONE || 
+            i.status === OrderItemStatus.IN_STOCK ||
+            i.status === OrderItemStatus.CANCELLED
+        );
+        const anyActive = items.some(i => 
+            [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY].includes(i.status as any)
+        );
         const allCancelled = items.every(i => i.status === OrderItemStatus.CANCELLED);
 
-        if (allInStock && order.type === 'STOCK') {
+        if (allCancelled) {
+            targetStatus = OrderStatus.CANCELLED;
+        } else if (allInStock) {
             targetStatus = OrderStatus.IN_STOCK;
         } else if (allDoneOrStock) {
             targetStatus = OrderStatus.DONE;
@@ -495,8 +508,6 @@ export class OrdersService {
             targetStatus = OrderStatus.READY;
         } else if (anyActive) {
             targetStatus = OrderStatus.IN_PROGRESS;
-        } else if (allCancelled) {
-            targetStatus = OrderStatus.CANCELLED;
         } else {
             targetStatus = OrderStatus.PENDING;
         }
@@ -518,7 +529,9 @@ export class OrdersService {
      * Actualiza manualmente el estado de un ítem y dispara la agregación.
      * Solo permite transiciones simples: PENDING -> READY, PENDING -> CANCELLED, CANCELLED -> PENDING.
      */
-    async updateItemStatus(orderId: string, itemId: string, status: OrderItemStatus, userId?: string) {
+    async updateItemStatus(orderId: string, itemId: string, payload: any, userId?: string) {
+        const { status, force } = payload;
+        
         return await this.orderRepository.manager.transaction(async manager => {
             const item = await manager.findOne(OrderItem, { 
                 where: { id: itemId, orderId },
@@ -528,7 +541,15 @@ export class OrdersService {
 
             // 1. Validar conflictos con trabajos activos
             if (item.productionJob && [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(item.productionJob.status as any)) {
-                throw new BadRequestException('El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.');
+                if (force) {
+                    // Forzamos la liberación: Cancelamos el trabajo en máquina
+                    await manager.update(ProductionJob, item.productionJob.id, { 
+                        status: JobStatus.CANCELLED,
+                        metadata: { ...item.productionJob.metadata, forcedReleaseBy: userId, releaseDate: new Date() }
+                    });
+                } else {
+                    throw new BadRequestException('El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.');
+                }
             }
 
             const oldStatus = item.status;

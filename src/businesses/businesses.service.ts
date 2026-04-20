@@ -513,6 +513,38 @@ export class BusinessesService {
         const pipelineSummary = strategy.getPipelineSummary(context);
         const calendarEvents = strategy.getCalendarEvents(context);
 
+        const alerts: any[] = [];
+        const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
+        const limitDate = new Date(now.getTime() + TWO_DAYS_MS);
+
+        // 1. Alerta de pedidos próximos a vencer (48hs)
+        const upcomingCount = activeOrdersWithItems.filter(o => {
+            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            const d = new Date(o.dueDate);
+            return d > now && d <= limitDate;
+        }).length;
+
+        if (upcomingCount > 0) {
+            alerts.push({
+                type: 'warning',
+                title: 'Entregas Próximas',
+                message: `Tenés ${upcomingCount} pedidos para entregar en los próximos 2 días.`,
+                actionLabel: 'Ver Pedidos',
+                actionLink: '/pedidos'
+            });
+        }
+
+        // 2. Alerta de pedidos vencidos
+        if (realOverdue.length > 0) {
+            alerts.push({
+                type: 'error',
+                title: 'Pedidos Vencidos',
+                message: `Hay ${realOverdue.length} pedidos con fecha de entrega cumplida sin entregar.`,
+                actionLabel: 'Revisar Mora',
+                actionLink: '/pedidos'
+            });
+        }
+
         return {
             totalSales: Number(salesResult?.total) || 0,
             pendingBalance,
@@ -521,7 +553,7 @@ export class BusinessesService {
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
-            alerts: [], 
+            alerts, 
             trends: null,
             operationalCounters,
             pipelineSummary,
