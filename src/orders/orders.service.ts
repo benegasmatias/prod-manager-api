@@ -481,18 +481,19 @@ export class OrdersService {
 
         let targetStatus = order.status;
 
-        const allDone = items.every(i => i.status === OrderItemStatus.DONE);
-        const anyInProgressOrDone = items.some(i => 
-            [OrderItemStatus.IN_PROGRESS, OrderItemStatus.DONE].includes(i.status)
-        );
+        const allInStock = items.every(i => i.status === OrderItemStatus.IN_STOCK);
+        const allDoneOrStock = items.every(i => i.status === OrderItemStatus.DONE || i.status === OrderItemStatus.IN_STOCK);
+        const allReadyDoneOrStock = items.every(i => i.status === OrderItemStatus.READY || i.status === OrderItemStatus.DONE || i.status === OrderItemStatus.IN_STOCK);
+        const anyActive = items.some(i => [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY, OrderItemStatus.DONE, OrderItemStatus.IN_STOCK].includes(i.status as any));
         const allCancelled = items.every(i => i.status === OrderItemStatus.CANCELLED);
-        const allPending = items.every(i => i.status === OrderItemStatus.PENDING);
 
-        if (allDone) {
+        if (allInStock && order.type === 'STOCK') {
+            targetStatus = OrderStatus.IN_STOCK;
+        } else if (allDoneOrStock) {
             targetStatus = OrderStatus.DONE;
-        } else if (items.every(i => i.status === OrderItemStatus.READY || i.status === OrderItemStatus.DONE)) {
+        } else if (allReadyDoneOrStock) {
             targetStatus = OrderStatus.READY;
-        } else if (items.some(i => [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY, OrderItemStatus.DONE].includes(i.status as any))) {
+        } else if (anyActive) {
             targetStatus = OrderStatus.IN_PROGRESS;
         } else if (allCancelled) {
             targetStatus = OrderStatus.CANCELLED;
@@ -534,7 +535,7 @@ export class OrdersService {
             
             // 2. Aplicar el cambio
             const updateData: Partial<OrderItem> = { status };
-            if (status === OrderItemStatus.READY || status === OrderItemStatus.DONE) {
+            if (status === OrderItemStatus.READY || status === OrderItemStatus.DONE || status === OrderItemStatus.IN_STOCK) {
                 updateData.doneQty = item.qty;
             } else if (status === OrderItemStatus.PENDING) {
                 updateData.doneQty = 0;

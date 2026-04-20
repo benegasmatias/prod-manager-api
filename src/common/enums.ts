@@ -120,6 +120,7 @@ export enum OrderItemStatus {
     DONE = 'DONE', // Entregado final
     FAILED = 'FAILED',
     CANCELLED = 'CANCELLED',
+    IN_STOCK = 'IN_STOCK',
 }
 
 export enum ProductionJobStatus {

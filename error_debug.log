@@ -9395,3 +9395,45 @@ Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe l
     at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
     at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:520:16)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:23:12.344Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:23:23.331Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-20T16:29:26.901Z
+Path: /orders/83fa9045-58f5-4a95-87af-5ea4407c4a2b/items/889a7fe6-68ce-4884-892f-4b54be98a011/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"IN_STOCK\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "IN_STOCK"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:543:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:521:16)
+-------------
