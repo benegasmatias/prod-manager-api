@@ -18,6 +18,7 @@ import { FilesModule } from './files/files.module';
 import { AuditModule } from './audit/audit.module';
 import { MailModule } from './common/mail/mail.module';
 import { RetailModule } from './retail/retail.module';
+import { CalibrationsModule } from './calibrations/calibrations.module';
 import { UserStatusGuard } from './users/guards/user-status.guard';
 
 @Module({
@@ -58,6 +59,7 @@ import { UserStatusGuard } from './users/guards/user-status.guard';
     FilesModule,
     MailModule,
     RetailModule,
+    CalibrationsModule,
   ],
   providers: [
     {

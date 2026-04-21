@@ -514,27 +514,48 @@ export class BusinessesService {
         const calendarEvents = strategy.getCalendarEvents(context);
 
         const alerts: any[] = [];
-        const TWO_DAYS_MS = 2 * 24 * 60 * 60 * 1000;
-        const limitDate = new Date(now.getTime() + TWO_DAYS_MS);
+        const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+        const ONE_DAY_MS = 1 * 24 * 60 * 60 * 1000;
+        
+        const limitThreeDays = new Date(now.getTime() + THREE_DAYS_MS);
+        const limitOneDay = new Date(now.getTime() + ONE_DAY_MS);
 
-        // 1. Alerta de pedidos próximos a vencer (48hs)
-        const upcomingCount = activeOrdersWithItems.filter(o => {
+        // 1. Alerta de pedidos CRÍTICOS (Hoy o Mañana)
+        const criticalOrders = activeOrdersWithItems.filter(o => {
             if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
             const d = new Date(o.dueDate);
-            return d > now && d <= limitDate;
-        }).length;
+            return d > now && d <= limitOneDay;
+        });
 
-        if (upcomingCount > 0) {
+        if (criticalOrders.length > 0) {
             alerts.push({
-                type: 'warning',
-                title: 'Entregas Próximas',
-                message: `Tenés ${upcomingCount} pedidos para entregar en los próximos 2 días.`,
-                actionLabel: 'Ver Pedidos',
+                type: 'critical',
+                title: 'Entregas Inminentes',
+                message: `¡Atención! Tenés ${criticalOrders.length} pedidos que vencen HOY o MAÑANA.`,
+                actionLabel: 'Priorizar Ahora',
                 actionLink: '/pedidos'
             });
         }
 
-        // 2. Alerta de pedidos vencidos
+        // 2. Alerta de pedidos próximos a vencer (3 días)
+        const upcomingOrders = activeOrdersWithItems.filter(o => {
+            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            const d = new Date(o.dueDate);
+            // Solo los que no están ya en el balde de "críticos"
+            return d > limitOneDay && d <= limitThreeDays;
+        });
+
+        if (upcomingOrders.length > 0) {
+            alerts.push({
+                type: 'warning',
+                title: 'Próximos Vencimientos',
+                message: `Tenés ${upcomingOrders.length} pedidos para entregar en los próximos 3 días.`,
+                actionLabel: 'Ver Agenda',
+                actionLink: '/pedidos'
+            });
+        }
+
+        // 3. Alerta de pedidos vencidos
         if (realOverdue.length > 0) {
             alerts.push({
                 type: 'error',
