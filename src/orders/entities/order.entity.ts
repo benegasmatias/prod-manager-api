@@ -35,6 +35,7 @@ export class Order {
     @Column({
         type: 'enum',
         enum: OrderStatus,
+        enumName: 'orders_status_enum',
         default: OrderStatus.PENDING
     })
     status: OrderStatus;

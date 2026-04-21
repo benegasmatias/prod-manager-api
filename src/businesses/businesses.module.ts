@@ -27,6 +27,7 @@ import { BusinessInvitationsController } from './business-invitations.controller
 import { BusinessCapabilityGuard } from './guards/business-capability.guard';
 import { AdminModule } from '../admin/admin.module';
 import { forwardRef } from '@nestjs/common';
+import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
 
 @Module({
     imports: [
@@ -42,7 +43,8 @@ import { forwardRef } from '@nestjs/common';
             Customer, 
             Machine, 
             Material,
-            Employee
+            Employee,
+            SubscriptionPlan
         ]),
         AuditModule,
         forwardRef(() => AdminModule)

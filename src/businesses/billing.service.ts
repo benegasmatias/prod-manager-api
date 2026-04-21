@@ -9,6 +9,7 @@ import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
 import { SubscriptionStatus, BusinessStatus, WebhookStatus } from '../common/enums';
 import { WebhookEvent } from './entities/webhook-event.entity';
+import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
 
 @Injectable()
 export class BillingService {
@@ -19,21 +20,67 @@ export class BillingService {
         private readonly businessRepository: Repository<Business>,
         @InjectRepository(WebhookEvent)
         private readonly webhookRepository: Repository<WebhookEvent>,
+        @InjectRepository(SubscriptionPlan)
+        private readonly planRepository: Repository<SubscriptionPlan>,
         private readonly planUsageService: PlanUsageService,
         private readonly auditService: AuditService,
     ) { }
 
-    async createDefaultSubscription(businessId: string, plan: string = 'FREE', manager?: EntityManager): Promise<BusinessSubscription> {
-        const repo = manager ? manager.getRepository(BusinessSubscription) : this.subscriptionRepository;
+    async createDefaultSubscription(businessId: string, manager?: EntityManager): Promise<BusinessSubscription> {
+        const businessRepo = manager ? manager.getRepository(Business) : this.businessRepository;
+        const business = await businessRepo.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Business not found');
+
+        const planRepo = manager ? manager.getRepository(SubscriptionPlan) : this.planRepository;
         
+        // Buscar el plan gratuito para esta categoría específica
+        let freePlan = await planRepo.findOne({ 
+            where: { 
+                category: business.category, 
+                price: 0,
+                active: true 
+            },
+            order: { sortOrder: 'ASC' }
+        });
+
+        // Fallback al plan gratuito global si no hay uno específico
+        if (!freePlan) {
+            freePlan = await planRepo.findOne({ 
+                where: { 
+                    category: null, 
+                    price: 0,
+                    active: true 
+                },
+                order: { sortOrder: 'ASC' }
+            });
+        }
+
+        const planId = freePlan?.id || 'FREE';
+        const hasTrial = freePlan?.hasTrial || false;
+        const trialDays = freePlan?.trialDays || 0;
+        
+        let trialEndAt: Date | null = null;
+        if (hasTrial) {
+            trialEndAt = new Date();
+            trialEndAt.setDate(trialEndAt.getDate() + trialDays);
+        }
+
+        const repo = manager ? manager.getRepository(BusinessSubscription) : this.subscriptionRepository;
         const subscription = repo.create({
             businessId,
-            plan,
-            status: SubscriptionStatus.ACTIVE,
+            plan: planId,
+            status: hasTrial ? SubscriptionStatus.TRIALING : SubscriptionStatus.ACTIVE,
             currentPeriodStart: new Date(),
+            trialEndAt: trialEndAt,
         });
 
         const saved = await repo.save(subscription);
+
+        // Actualizar datos en la entidad Business
+        await businessRepo.update(businessId, { 
+            subscriptionExpiresAt: trialEndAt, // null si es de por vida
+            plan: planId 
+        });
 
         await this.auditService.log(
             AuditAction.RESOURCE_CREATED, 
@@ -41,7 +88,7 @@ export class BillingService {
             businessId, 
             businessId, 
             null, 
-            { plan, status: SubscriptionStatus.ACTIVE }
+            { plan: planId, status: hasTrial ? SubscriptionStatus.TRIALING : SubscriptionStatus.ACTIVE, trialEndAt }
         );
 
         return saved;
@@ -49,18 +96,17 @@ export class BillingService {
 
     async preflightCheck(businessId: string, targetPlan: string): Promise<any> {
         const usage = await this.planUsageService.getBusinessUsage(businessId);
-        const targetLimits = PLAN_LIMITS[targetPlan];
+        const targetLimits = await this.planUsageService.getLimitsForPlan(targetPlan);
 
         if (!targetLimits) throw new BadRequestException(`Plan ${targetPlan} no reconocido`);
 
         const violations: string[] = [];
-        const isAllowed = true;
 
-        if (usage.usage.MACHINES > targetLimits.maxMachinesPerBusiness) {
+        if (targetLimits.maxMachinesPerBusiness !== 0 && usage.usage.MACHINES > targetLimits.maxMachinesPerBusiness) {
             violations.push(`Exceso de máquinas: ${usage.usage.MACHINES}/${targetLimits.maxMachinesPerBusiness}`);
         }
 
-        if (usage.usage.EMPLOYEES > targetLimits.maxEmployeesPerBusiness) {
+        if (targetLimits.maxEmployeesPerBusiness !== 0 && usage.usage.EMPLOYEES > targetLimits.maxEmployeesPerBusiness) {
             violations.push(`Exceso de empleados: ${usage.usage.EMPLOYEES}/${targetLimits.maxEmployeesPerBusiness}`);
         }
 

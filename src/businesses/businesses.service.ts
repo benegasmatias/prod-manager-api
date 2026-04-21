@@ -159,8 +159,7 @@ export class BusinessesService {
             await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse);
 
             // Fase 5.2: Suscripción por defecto (Atómica)
-            const initialPlan = template?.requiredPlan || 'FREE';
-            await this.billingService.createDefaultSubscription(businessToUse.id, initialPlan, manager);
+            await this.billingService.createDefaultSubscription(businessToUse.id, manager);
 
             await manager.save(BusinessMembership, manager.create(BusinessMembership, {
                 userId,
@@ -326,7 +325,7 @@ export class BusinessesService {
         // SaaS Gating (Subscription Source of Truth)
         const plan = business?.subscription?.plan || business?.plan || 'FREE';
         const subscriptionStatus = business?.subscription?.status || 'ACTIVE';
-        const limits = PLAN_LIMITS[plan];
+        const limits = await this.planUsageService.getLimitsForPlan(plan);
         if (config.features) {
             config.features.hasMaterials = limits.features.hasMaterials;
         }
@@ -346,7 +345,8 @@ export class BusinessesService {
             userRole,
             userPermissions,
             subscription: {
-                plan,
+                planId: plan,
+                planName: limits.name || plan,
                 status: subscriptionStatus,
                 currentPeriodEnd: business?.subscription?.currentPeriodEnd,
                 trialEndAt: business?.subscription?.trialEndAt,

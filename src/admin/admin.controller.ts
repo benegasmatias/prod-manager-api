@@ -26,8 +26,8 @@ export class AdminController {
 
     @UseGuards(GlobalAdminGuard)
     @Get('plans')
-    async getPlans(@Request() req) {
-        return this.adminService.findAllPlans();
+    async getPlans(@Request() req, @Query('category') category?: string) {
+        return this.adminService.findAllPlans(category);
     }
 
     @UseGuards(GlobalAdminGuard)
@@ -52,6 +52,14 @@ export class AdminController {
     @Delete('plans/:id')
     async deletePlan(@Request() req, @Param('id') id: string) {
         return this.adminService.deletePlan(id);
+    }
+
+
+    @UseGuards(GlobalAdminGuard)
+    @Post('plans/seed')
+    async seedPlans(@Request() req) {
+        await this.adminService.seedDefaultPlans();
+        return { message: 'Subscription plans seeded successfully' };
     }
 
 
@@ -261,7 +269,7 @@ export class PlansPublicController {
     constructor(private readonly adminService: AdminService) { }
 
     @Get()
-    async getActivePlans() {
-        return this.adminService.findActivePlans();
+    async getActivePlans(@Query('category') category?: string) {
+        return this.adminService.findActivePlans(category);
     }
 }

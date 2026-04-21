@@ -5,6 +5,9 @@ export class SubscriptionPlan {
     @PrimaryColumn()
     id: string; // 'free', 'pro', 'business'
 
+    @Column({ nullable: true })
+    category: string; // 'IMPRESION_3D', 'METALURGICA', etc. (null = global)
+
     @Column()
     name: string;
 
