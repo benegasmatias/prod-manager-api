@@ -32,32 +32,51 @@ export class PlanUsageService {
         private readonly auditService: AuditService,
     ) { }
 
-    public async getLimitsForPlan(planId: string): Promise<any> {
-        // First try to find the plan in the database
-        const dbPlan = await this.planRepository.findOneBy({ id: planId });
+    public async getLimitsForPlan(planId: string, category: string = 'IMPRESION_3D'): Promise<any> {
+        // 1. Try exact match (e.g. 'free-3d')
+        let dbPlan = await this.planRepository.findOneBy({ id: planId });
+        
+        // 2. If not found and is a generic name, try to map it based on category
+        if (!dbPlan && (['FREE', 'PRO', 'BUSINESS'].includes(planId.toUpperCase()))) {
+            const suffix = category === 'METALURGICA' ? 'metal' : '3d';
+            const mappedId = `${planId.toLowerCase()}-${suffix}`;
+            dbPlan = await this.planRepository.findOneBy({ id: mappedId });
+        }
+
+        // 3. Last fallback: search for ANY plan of that category with price 0 if seeking FREE
+        if (!dbPlan && (planId.toUpperCase() === 'FREE')) {
+            dbPlan = await this.planRepository.findOne({
+                where: { category, price: 0, active: true },
+                order: { sortOrder: 'ASC' }
+            });
+        }
         
         if (dbPlan) {
             // Map Entity fields to the "limits" structure used by the service
-            // Note: We merge with PLAN_LIMITS to preserve feature flags which are not in the DB yet
-            const baseLimits = PLAN_LIMITS[planId] || PLAN_LIMITS['FREE'];
+            // We use the first entry of the hardcoded limits as a template for features/defaults
+            const baseLimits = PLAN_LIMITS['FREE']; 
+            
             return {
                 ...baseLimits,
+                id: dbPlan.id,
                 name: dbPlan.name,
-                maxBusinessesPerUser: dbPlan.maxBusinesses || baseLimits.maxBusinessesPerUser,
-                maxMachinesPerBusiness: dbPlan.maxMachines || baseLimits.maxMachinesPerBusiness,
-                maxEmployeesPerBusiness: dbPlan.maxUsers || baseLimits.maxEmployeesPerBusiness,
-                maxOrdersPerMonth: dbPlan.maxOrdersPerMonth || baseLimits.maxOrdersPerMonth,
+                maxBusinessesPerUser: dbPlan.maxBusinesses ?? baseLimits.maxBusinessesPerUser,
+                maxMachinesPerBusiness: dbPlan.maxMachines ?? baseLimits.maxMachinesPerBusiness,
+                maxEmployeesPerBusiness: dbPlan.maxUsers ?? baseLimits.maxEmployeesPerBusiness,
+                maxOrdersPerMonth: dbPlan.maxOrdersPerMonth ?? baseLimits.maxOrdersPerMonth,
             };
         }
 
-        // Fallback to hardcoded config if not found in DB
+        // Fallback to hardcoded config ONLY if everything else fails (should not happen if seeded)
         return PLAN_LIMITS[planId] || PLAN_LIMITS['FREE'];
     }
 
     async ensureBusinessCreationAllowed(userId: string): Promise<void> {
         const user = await this.userRepository.findOneBy({ id: userId });
         const userPlan = user?.plan || 'FREE';
-        const limits = await this.getLimitsForPlan(userPlan);
+        // Users don't have a defined rubro/category themselves in the entity, 
+        // they belong to businesses. For business creation limit, we can use a generic default or check their first business.
+        const limits = await this.getLimitsForPlan(userPlan, 'IMPRESION_3D'); 
 
         const businessCount = await this.businessRepository.countBy({ 
             memberships: { userId } as any
@@ -65,49 +84,62 @@ export class PlanUsageService {
 
         if (limits.maxBusinessesPerUser !== 0 && businessCount >= limits.maxBusinessesPerUser) {
             await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'USER', userId, null, userId, { resource: 'BUSINESSES', usage: businessCount, limit: limits.maxBusinessesPerUser, plan: userPlan });
-            this.throwQuotaException('BUSINESSES', userPlan, limits.maxBusinessesPerUser, businessCount);
+            this.throwQuotaException('NEGOCIOS', userPlan, limits.maxBusinessesPerUser, businessCount, 'PLAN_BUSINESS_LIMIT_REACHED');
         }
     }
 
-    async ensureMachineCreationAllowed(businessId: string): Promise<void> {
+    async ensureMachineCreationAllowed(businessId: string, context?: { ip?: string, userAgent?: string }): Promise<void> {
         const business = await this.businessRepository.findOne({
             where: { id: businessId },
             relations: ['subscription']
         });
         const plan = business?.subscription?.plan || business?.plan || 'FREE';
-        const limits = await this.getLimitsForPlan(plan);
-
+        const limits = await this.getLimitsForPlan(plan, business.category);
         const machineCount = await this.machineRepository.countBy({ businessId, active: true });
 
         if (limits.maxMachinesPerBusiness !== 0 && machineCount >= limits.maxMachinesPerBusiness) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'MACHINES', usage: machineCount, limit: limits.maxMachinesPerBusiness, plan });
-            this.throwQuotaException('MACHINES', plan, limits.maxMachinesPerBusiness, machineCount);
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+                { resource: 'MACHINES', usage: machineCount, limit: limits.maxMachinesPerBusiness, plan },
+                context
+            );
+            this.throwQuotaException('MACHINES', plan, limits.maxMachinesPerBusiness, machineCount, 'PLAN_MACHINE_LIMIT_REACHED');
         }
     }
 
-    async ensureEmployeeCreationAllowed(businessId: string): Promise<void> {
+    async ensureEmployeeCreationAllowed(businessId: string, context?: { ip?: string, userAgent?: string }): Promise<void> {
         const business = await this.businessRepository.findOne({
             where: { id: businessId },
             relations: ['subscription']
         });
         const plan = business?.subscription?.plan || business?.plan || 'FREE';
-        const limits = await this.getLimitsForPlan(plan);
+        const limits = await this.getLimitsForPlan(plan, business.category);
 
-        const employeeCount = await this.employeeRepository.countBy({ businessId, active: true });
+        // Count both active employees and pending invitations
+        const [employeeCount, invitationCount] = await Promise.all([
+            this.employeeRepository.countBy({ businessId, active: true }),
+            this.subscriptionRepository.manager.getRepository('BusinessInvitation').count({
+                where: { businessId, status: 'PENDING' }
+            })
+        ]);
 
-        if (limits.maxEmployeesPerBusiness !== 0 && employeeCount >= limits.maxEmployeesPerBusiness) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'EMPLOYEES', usage: employeeCount, limit: limits.maxEmployeesPerBusiness, plan });
-            this.throwQuotaException('EMPLOYEES', plan, limits.maxEmployeesPerBusiness, employeeCount);
+        const totalUsage = employeeCount + invitationCount;
+
+        if (limits.maxEmployeesPerBusiness !== 0 && totalUsage >= limits.maxEmployeesPerBusiness) {
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+                { resource: 'EMPLOYEES', usage: totalUsage, limit: limits.maxEmployeesPerBusiness, plan },
+                context
+            );
+            this.throwQuotaException('INTEGRANTES', plan, limits.maxEmployeesPerBusiness, totalUsage, 'PLAN_USER_LIMIT_REACHED');
         }
     }
 
-    async ensureOrderCreationAllowed(businessId: string): Promise<void> {
+    async ensureOrderCreationAllowed(businessId: string, context?: { ip?: string, userAgent?: string }): Promise<void> {
         const business = await this.businessRepository.findOne({
             where: { id: businessId },
             relations: ['subscription']
         });
         const plan = business?.subscription?.plan || business?.plan || 'FREE';
-        const limits = await this.getLimitsForPlan(plan);
+        const limits = await this.getLimitsForPlan(plan, business.category);
 
         // Count orders created this month
         const startOfMonth = new Date();
@@ -120,8 +152,11 @@ export class PlanUsageService {
             .getCount();
 
         if (limits.maxOrdersPerMonth !== 0 && orderCount >= limits.maxOrdersPerMonth) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, { resource: 'ORDERS', usage: orderCount, limit: limits.maxOrdersPerMonth, plan });
-            this.throwQuotaException('ORDERS', plan, limits.maxOrdersPerMonth, orderCount);
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+                { resource: 'ORDERS', usage: orderCount, limit: limits.maxOrdersPerMonth, plan },
+                context
+            );
+            this.throwQuotaException('ORDERS', plan, limits.maxOrdersPerMonth, orderCount, 'PLAN_MONTHLY_ORDER_LIMIT_REACHED');
         }
     }
 
@@ -130,9 +165,11 @@ export class PlanUsageService {
             where: { id: businessId },
             relations: ['subscription']
         });
-        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        if (!business) throw new ForbiddenException('Negocio no encontrado');
+
+        const planId = business?.subscription?.plan || business?.plan || 'FREE';
         const status = business?.subscription?.status || 'ACTIVE';
-        const limits = await this.getLimitsForPlan(plan);
+        const limits = await this.getLimitsForPlan(planId, business.category);
 
         const startOfMonth = new Date();
         startOfMonth.setDate(1);
@@ -147,30 +184,41 @@ export class PlanUsageService {
                 .getCount()
         ]);
 
+        const usage = {
+            users: employees,
+            machines: machines,
+            ordersThisMonth: orders,
+        };
+
+        const max = {
+            users: limits.maxEmployeesPerBusiness,
+            machines: limits.maxMachinesPerBusiness,
+            orders: limits.maxOrdersPerMonth
+        };
+
         return {
-            plan,
-            status,
-            limits,
-            usage: {
-                MACHINES: machines,
-                EMPLOYEES: employees,
-                ORDERS: orders,
+            plan: {
+                id: limits.id || planId,
+                name: limits.name,
+                category: business.category
             },
-            remaining: {
-                MACHINES: limits.maxMachinesPerBusiness === 0 ? Infinity : Math.max(0, limits.maxMachinesPerBusiness - machines),
-                EMPLOYEES: limits.maxEmployeesPerBusiness === 0 ? Infinity : Math.max(0, limits.maxEmployeesPerBusiness - employees),
-                ORDERS: limits.maxOrdersPerMonth === 0 ? Infinity : Math.max(0, limits.maxOrdersPerMonth - orders),
+            limits: max,
+            usage,
+            canCreate: {
+                users: max.users === 0 || usage.users < max.users,
+                machines: max.machines === 0 || usage.machines < max.machines,
+                orders: max.orders === 0 || usage.ordersThisMonth < max.orders
             }
         };
     }
 
-    private throwQuotaException(resource: string, plan: string, limit: number, usage: number) {
+    private throwQuotaException(resource: string, plan: string, limit: number, usage: number, errorCode: string) {
         const suggestedPlan = plan === 'FREE' ? 'PRO' : 'ENTERPRISE';
 
         throw new ForbiddenException({
             statusCode: 403,
-            message: `Límite excedido para ${resource} en plan ${plan}. (${usage}/${limit})`,
-            errorCode: 'QUOTA_EXCEEDED',
+            message: `Has alcanzado el límite de tu plan para ${resource}. (${usage}/${limit})`,
+            errorCode,
             metadata: {
                 resource,
                 plan,

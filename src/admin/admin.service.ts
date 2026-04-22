@@ -60,7 +60,7 @@ export class AdminService implements OnModuleInit {
                 price: 0,
                 currency: 'ARS',
                 description: 'Ideal para hobbistas y makers solitarios.',
-                features: ['30 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes'],
+                features: ['30 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes', 'Reportes basicos'],
                 maxUsers: 1,
                 maxOrdersPerMonth: 30,
                 maxBusinesses: 1,
@@ -115,21 +115,19 @@ export class AdminService implements OnModuleInit {
             },
         ];
 
-        for (const plan of defaults) {
+        for (const planData of defaults) {
             try {
-                const existing = await this.planRepository.findOneBy({ id: plan.id });
+                const existing = await this.planRepository.findOneBy({ id: planData.id });
                 if (!existing) {
-                    await this.planRepository.save(this.planRepository.create(plan));
-                    console.log(`[SEED] Created plan: ${plan.id}`);
-                } else {
-                    await this.planRepository.save({ ...existing, ...plan });
-                    console.log(`[SEED] Updated plan: ${plan.id}`);
+                    await this.planRepository.save(this.planRepository.create(planData));
+                    console.log(`[SEED] Created new plan: ${planData.id}`);
                 }
+                // We REMOVED the update logic so manual changes in DB persist!
             } catch (err) {
-                console.error(`[SEED] Error in plan ${plan.id}:`, err.message);
+                console.error(`[SEED] Error in plan ${planData.id}:`, err.message);
             }
         }
-        console.log('Default subscription plans seeding process finished');
+        console.log('Default subscription plans initialization finished (Idempotent)');
     }
 
     async findAllPlans(category?: string): Promise<SubscriptionPlan[]> {
@@ -247,27 +245,27 @@ export class AdminService implements OnModuleInit {
     }
 
     async findAllUsers(
-        page: number = 1, 
-        limit: number = 10, 
+        page: number = 1,
+        limit: number = 10,
         filters?: { search?: string, status?: string, plan?: string }
     ): Promise<{ items: User[], meta: any }> {
         const query = this.userRepository.createQueryBuilder('user');
-        
+
         if (filters?.search) {
             query.andWhere('(user.email ILIKE :search OR user.fullName ILIKE :search)', { search: `%${filters.search}%` });
         }
-        
+
         if (filters?.status) {
             query.andWhere('user.status = :status', { status: filters.status });
         }
-        
+
         if (filters?.plan) {
             query.andWhere('user.plan = :plan', { plan: filters.plan });
         }
 
         query.orderBy('user.createdAt', 'DESC')
-             .skip((page - 1) * limit)
-             .take(limit);
+            .skip((page - 1) * limit)
+            .take(limit);
 
         const [items, totalItems] = await query.getManyAndCount();
 
@@ -300,7 +298,7 @@ export class AdminService implements OnModuleInit {
     }
 
     async approveUser(id: string, adminId: string): Promise<User> {
-        await this.userRepository.update(id, { 
+        await this.userRepository.update(id, {
             status: 'ACTIVE',
             active: true
         });
@@ -362,8 +360,8 @@ export class AdminService implements OnModuleInit {
     }
 
     async findAllInvitations(
-        page: number = 1, 
-        limit: number = 10, 
+        page: number = 1,
+        limit: number = 10,
         filters?: { search?: string, status?: string }
     ): Promise<{ items: BusinessInvitation[], meta: any }> {
         const query = this.invitationRepository.createQueryBuilder('invitation');
@@ -412,7 +410,7 @@ export class AdminService implements OnModuleInit {
         if (options.businessIds && options.businessIds.length > 0) {
             query.where('business.id IN (:...ids)', { ids: options.businessIds });
         }
-        
+
         const businesses = await query.getMany();
         const templates = await this.templateRepository.find();
         const templateMap = new Map(templates.map(t => [t.key, t]));
@@ -422,13 +420,13 @@ export class AdminService implements OnModuleInit {
             const audit = await this.calculateAlignment(b, templateMap.get(b.category));
             if (audit.missing.length > 0) {
                 const updatedCaps = Array.from(new Set([...audit.current, ...audit.missing]));
-                
+
                 if (!options.dryRun) {
                     b.capabilities = updatedCaps;
                     await this.businessRepository.save(b);
-                    await this.logAction(adminId, 'CAPABILITIES_REPAIRED', b.id, { 
+                    await this.logAction(adminId, 'CAPABILITIES_REPAIRED', b.id, {
                         added: audit.missing,
-                        newTotal: updatedCaps.length 
+                        newTotal: updatedCaps.length
                     });
                 }
 
@@ -452,7 +450,7 @@ export class AdminService implements OnModuleInit {
     async initializeCapabilitiesForNewBusiness(business: Business): Promise<void> {
         const templates = await this.templateRepository.find();
         const template = templates.find(t => t.key === business.category);
-        
+
         const audit = await this.calculateAlignment(business, template);
         if (audit.expected.length > 0) {
             business.capabilities = audit.expected;
@@ -487,7 +485,7 @@ export class AdminService implements OnModuleInit {
     async updateTemplate(key: string, data: Partial<BusinessTemplate>): Promise<BusinessTemplate> {
         const template = await this.templateRepository.findOneBy({ key: key as any });
         if (!template) throw new NotFoundException('Template no encontrado');
-        
+
         Object.assign(template, data);
         return this.templateRepository.save(template);
     }
@@ -523,7 +521,7 @@ export class AdminService implements OnModuleInit {
 
     async getMetadata() {
         const roles = await this.roleConfigRepository.find();
-        
+
         return {
             userStatuses: ['PENDING', 'ACTIVE', 'BLOCKED', 'SUSPENDED', 'DELETED'],
             invitationStatuses: ['PENDING', 'ACCEPTED', 'REJECTED', 'EXPIRED', 'CANCELLED'],

@@ -363,11 +363,11 @@ export class OrdersService {
     /**
      * Crear pedido completo con sus ítems
      */
-    async create(createOrderDto: CreateOrderDto): Promise<Order> {
+    async create(createOrderDto: CreateOrderDto, context?: { ip?: string, userAgent?: string }): Promise<Order> {
         const { items, ...orderData } = createOrderDto;
 
         // Validar límites del plan (Cuota de Pedidos Mensual)
-        await this.planUsageService.ensureOrderCreationAllowed(orderData.businessId);
+        await this.planUsageService.ensureOrderCreationAllowed(orderData.businessId, context);
 
         // Generar un código único simple si no viene uno
         const code = `ORD-${Date.now().toString().slice(-6)}-${Math.floor(Math.random() * 100)}`;

@@ -33,6 +33,12 @@ export class AuditLog {
     @Column({ type: 'jsonb', default: {} })
     metadata: any;
 
+    @Column({ name: 'ip_address', nullable: true })
+    ipAddress: string;
+
+    @Column({ name: 'user_agent', nullable: true, type: 'text' })
+    userAgent: string;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 }

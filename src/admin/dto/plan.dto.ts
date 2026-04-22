@@ -1,5 +1,6 @@
-import { IsString, IsNumber, IsOptional, IsBoolean, IsArray } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsBoolean, IsArray, Allow } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreatePlanDto {
     @IsString()
@@ -10,7 +11,8 @@ export class CreatePlanDto {
 
     @IsOptional()
     @IsString()
-    category?: string;
+    @Allow()
+    category?: string | null;
 
     @Type(() => Number)
     @IsNumber()
@@ -86,7 +88,8 @@ export class UpdatePlanDto {
 
     @IsOptional()
     @IsString()
-    category?: string;
+    @Allow()
+    category?: string | null;
 
     @IsOptional()
     @Type(() => Number)

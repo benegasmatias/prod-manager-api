@@ -133,8 +133,8 @@ export class MachinesService {
         return this.findOne(machineId, businessId);
     }
 
-    async create(createDto: CreateMachineDto): Promise<Machine> {
-        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId);
+    async create(createDto: CreateMachineDto, context?: { ip?: string, userAgent?: string }): Promise<Machine> {
+        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId, context);
         const machine = this.machineRepository.create(createDto);
         const saved = await this.machineRepository.save(machine);
         
