@@ -9994,3 +9994,371 @@ Stack: BadRequestException: Bad Request Exception
     at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:28.986Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:30.408Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:45.056Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:46.756Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:39.384Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:41.585Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:47.008Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:48.198Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:05.641Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:06.219Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:20.448Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 400
+Message: {"message":["property attributes should not exist","property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:53:00.898Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:54:00.167Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:11.084Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:13.127Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:37.794Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:03:46.327Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:05:17.574Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:06:51.471Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:08:59.688Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:09:05.165Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:10:00.302Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:12:03.478Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:15:58.878Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:17:59.380Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------

@@ -42,8 +42,14 @@ export class Material {
     @Column({ nullable: true })
     unit: string;
 
+    @Column({ name: 'cost_per_kg', type: 'float', default: 0 })
+    costPerKg: number;
+
     @Column({ default: true })
     active: boolean;
+
+    @Column({ type: 'jsonb', nullable: true, default: {} })
+    attributes?: Record<string, string | number | boolean | null>;
 
     @OneToMany(() => ProductionJobMaterial, (jm) => jm.material)
     jobMaterials: Array<ProductionJobMaterial>;

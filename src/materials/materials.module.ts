@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MaterialsService } from './materials.service';
 import { MaterialsController } from './materials.controller';
 import { Material } from './entities/material.entity';
+import { MaterialMovement } from './entities/material-movement.entity';
 import { BusinessesModule } from '../businesses/businesses.module';
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Material]), BusinessesModule],
+    imports: [TypeOrmModule.forFeature([Material, MaterialMovement]), BusinessesModule],
     controllers: [MaterialsController],
     providers: [MaterialsService],
     exports: [MaterialsService],
