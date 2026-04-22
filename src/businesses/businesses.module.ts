@@ -25,6 +25,7 @@ import { BusinessInvitation } from './entities/business-invitation.entity';
 import { BusinessInvitationsService } from './business-invitations.service';
 import { BusinessInvitationsController } from './business-invitations.controller';
 import { BusinessCapabilityGuard } from './guards/business-capability.guard';
+import { MercadoPagoService } from './mercado-pago.service';
 import { AdminModule } from '../admin/admin.module';
 import { forwardRef } from '@nestjs/common';
 import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
@@ -62,7 +63,8 @@ import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
         BusinessStrategyProvider, 
         PlanUsageService, 
         BillingService,
-        BusinessCapabilityGuard
+        BusinessCapabilityGuard,
+        MercadoPagoService
     ],
     exports: [
         BusinessesService, 
@@ -70,6 +72,7 @@ import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
         PlanUsageService, 
         BillingService,
         BusinessCapabilityGuard,
+        MercadoPagoService,
         TypeOrmModule
     ],
 })

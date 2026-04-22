@@ -10,6 +10,7 @@ import { AuditAction } from '../audit/entities/audit-log.entity';
 import { SubscriptionStatus, BusinessStatus, WebhookStatus } from '../common/enums';
 import { WebhookEvent } from './entities/webhook-event.entity';
 import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
+import { MercadoPagoService } from './mercado-pago.service';
 
 @Injectable()
 export class BillingService {
@@ -24,6 +25,7 @@ export class BillingService {
         private readonly planRepository: Repository<SubscriptionPlan>,
         private readonly planUsageService: PlanUsageService,
         private readonly auditService: AuditService,
+        private readonly mpService: MercadoPagoService,
     ) { }
 
     async createDefaultSubscription(businessId: string, manager?: EntityManager): Promise<BusinessSubscription> {
@@ -149,7 +151,7 @@ export class BillingService {
         await this.businessRepository.update(businessId, { plan: newPlan });
 
         await this.auditService.log(
-            AuditAction.BUSINESS_STATUS_CHANGED, // Usaremos uno genérico o crearemos nuevos
+            AuditAction.BUSINESS_STATUS_CHANGED, 
             'SUBSCRIPTION', 
             businessId, 
             businessId, 
@@ -203,7 +205,7 @@ export class BillingService {
             businessStatus = BusinessStatus.SUSPENDED;
             acceptingOrders = false;
         } else if (status === SubscriptionStatus.PAST_DUE) {
-            // PAST_DUE permite seguir operando hasta que expire el período de gracia (Fase 5.3)
+            // PAST_DUE permite seguir operando hasta que expire el período de gracia
             if (isGracePeriodOver) {
                 businessStatus = BusinessStatus.SUSPENDED;
                 acceptingOrders = false;
@@ -222,10 +224,57 @@ export class BillingService {
         });
     }
 
-    // --- Webhook Resilience Layer (Fase 5.3) ---
+    private async handleMercadoPagoEvent(event: WebhookEvent): Promise<void> {
+        const payload = event.payload;
+        
+        const resourceId = payload.data?.id || payload.id;
+        const topic = payload.type || payload.topic;
+
+        if (topic === 'payment' || payload.action?.includes('payment')) {
+            const payment = await this.mpService.getPayment(resourceId);
+            
+            if (payment.status === 'approved') {
+                const businessId = payment.metadata?.business_id || payment.metadata?.businessId;
+                const planId = payment.metadata?.plan_id || payment.metadata?.planId;
+
+                if (!businessId) throw new Error('BusinessId no encontrado en metadata de MP');
+
+                // 1. Actualizar Suscripción
+                const subscription = await this.subscriptionRepository.findOneBy({ businessId });
+                if (subscription) {
+                    subscription.status = SubscriptionStatus.ACTIVE;
+                    subscription.plan = planId || subscription.plan;
+                    subscription.externalPaymentId = payment.id.toString();
+                    subscription.lastPaymentAt = new Date();
+                    
+                    // Extender período (ej: 30 días si es mensual)
+                    const nextPeriod = new Date();
+                    nextPeriod.setDate(nextPeriod.getDate() + 30);
+                    subscription.currentPeriodEnd = nextPeriod;
+                    subscription.gracePeriodEndAt = null;
+
+                    await this.subscriptionRepository.save(subscription);
+                    
+                    // 2. Sincronizar estado del negocio
+                    await this.syncBusinessStatusFromSubscription(businessId, SubscriptionStatus.ACTIVE);
+
+                    // 3. Audit
+                    await this.auditService.log(
+                        AuditAction.RESOURCE_UPDATED, 
+                        'SUBSCRIPTION', 
+                        businessId, 
+                        businessId, 
+                        null, 
+                        { event: 'MP_PAYMENT_APPROVED', paymentId: payment.id, planId }
+                    );
+                }
+            }
+        }
+    }
+
+    // --- Webhook Resilience Layer ---
 
     async recordWebhookEvent(provider: string, eventId: string, type: string, payload: any, businessId?: string): Promise<WebhookEvent> {
-        // Verificar si ya existe para evitar duplicados (Idempotencia)
         const existing = await this.webhookRepository.findOneBy({ provider, providerEventId: eventId });
         if (existing) return existing;
 
@@ -246,17 +295,20 @@ export class BillingService {
         if (!event || event.status === WebhookStatus.PROCESSED) return;
 
         try {
-            // Lógica de Despacho según evento
-            // Nota: En producción, aquí resolvemos el businessId por el providerCustomerId/SubID si no viene en Metadata
+            if (event.provider === 'MERCADOPAGO') {
+                await this.handleMercadoPagoEvent(event);
+                event.status = WebhookStatus.PROCESSED;
+                event.processedAt = new Date();
+                await this.webhookRepository.save(event);
+                return;
+            }
+
             const businessId = event.businessId;
             if (!businessId) throw new Error('BusinessId no resuelto para el evento');
-
-            const payload = event.payload;
 
             switch (event.eventType) {
                 case 'invoice.paid':
                     await this.updateSubscriptionStatus(businessId, SubscriptionStatus.ACTIVE);
-                    // Limpiar fechas de gracia
                     await this.subscriptionRepository.update(businessId, { gracePeriodEndAt: null });
                     break;
                 case 'invoice.payment_failed':
@@ -287,7 +339,6 @@ export class BillingService {
         const subscription = await this.subscriptionRepository.findOneBy({ businessId });
         if (!subscription) return;
 
-        // Configurar Período de Gracia (ej: 5 días)
         const gracePeriod = new Date();
         gracePeriod.setDate(gracePeriod.getDate() + 5);
 
