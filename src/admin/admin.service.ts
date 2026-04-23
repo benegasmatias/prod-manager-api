@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository, DataSource, IsNull } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
@@ -131,16 +131,18 @@ export class AdminService implements OnModuleInit {
     }
 
     async findAllPlans(category?: string): Promise<SubscriptionPlan[]> {
-        const where: any = {};
-        if (category) where.category = category;
-        return this.planRepository.find({ where, order: { sortOrder: 'ASC' } });
+        return this.planRepository.find({
+            where: category ? [{ category }, { category: IsNull() }] : {},
+            order: { sortOrder: 'ASC' }
+        });
     }
 
     async findActivePlans(category?: string): Promise<SubscriptionPlan[]> {
-        const where: any = { active: true };
-        if (category) where.category = category;
         return this.planRepository.find({
-            where,
+            where: category ? [
+                { active: true, category },
+                { active: true, category: IsNull() }
+            ] : { active: true },
             order: { sortOrder: 'ASC' },
         });
     }
