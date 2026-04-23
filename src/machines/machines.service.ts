@@ -184,8 +184,14 @@ export class MachinesService {
         return machine;
     }
 
-    async update(id: string, updateDto: UpdateMachineDto, businessId?: string): Promise<Machine> {
-        await this.findOne(id, businessId); // Check ownership
+    async update(id: string, updateDto: UpdateMachineDto, businessId?: string, context?: { ip?: string, userAgent?: string }): Promise<Machine> {
+        const machine = await this.findOne(id, businessId); // Check ownership
+        
+        // Si se está reactivando, validar límites del plan
+        if (updateDto.active === true && machine.active === false) {
+            await this.planUsageService.ensureMachineCreationAllowed(machine.businessId, context);
+        }
+
         await this.machineRepository.update(id, updateDto);
         return this.findOne(id, businessId);
     }

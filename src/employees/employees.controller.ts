@@ -5,16 +5,22 @@ import { BusinessAccessGuard } from '../businesses/guards/business-access.guard'
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
 import { BusinessRole } from '../common/enums';
+import { Request } from '@nestjs/common';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('employees')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
 export class EmployeesController {
-    constructor(private readonly employeesService: EmployeesService) { }
+    constructor(
+        private readonly employeesService: EmployeesService,
+        private readonly auditService: AuditService
+    ) { }
 
     @Post()
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
-    create(@Query('businessId') businessId: string, @Body() data: any) {
-        return this.employeesService.create(businessId, data);
+    create(@Query('businessId') businessId: string, @Body() data: any, @Request() req: any) {
+        const context = this.auditService.extractContext(req);
+        return this.employeesService.create(businessId, data, context);
     }
 
     @Get()
@@ -35,8 +41,14 @@ export class EmployeesController {
 
     @Patch(':id')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
-    update(@Param('id', ParseUUIDPipe) id: string, @Query('businessId') businessId: string, @Body() data: any) {
-        return this.employeesService.update(id, businessId, data);
+    update(
+        @Param('id', ParseUUIDPipe) id: string, 
+        @Query('businessId') businessId: string, 
+        @Body() data: any,
+        @Request() req: any
+    ) {
+        const context = this.auditService.extractContext(req);
+        return this.employeesService.update(id, businessId, data, context);
     }
 
     @Delete(':id')

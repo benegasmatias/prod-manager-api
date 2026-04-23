@@ -63,9 +63,11 @@ export class MachinesController {
     async update(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateDto: UpdateMachineDto,
+        @Request() req: any,
         @Query('businessId') businessId?: string,
     ) {
-        return this.printersService.update(id, updateDto, businessId);
+        const context = this.auditService.extractContext(req);
+        return this.printersService.update(id, updateDto, businessId, context);
     }
 
     @Patch(':id/status')
