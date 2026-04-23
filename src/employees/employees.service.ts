@@ -126,6 +126,7 @@ export class EmployeesService {
         }
 
         await this.employeeRepository.update(id, data);
+        await this.planUsageService.reconcileQuota(businessId);
         return this.findOne(id, businessId);
     }
 
@@ -133,5 +134,6 @@ export class EmployeesService {
         const employee = await this.findOne(id, businessId);
         employee.active = false;
         await this.employeeRepository.save(employee);
+        await this.planUsageService.reconcileQuota(businessId);
     }
 }

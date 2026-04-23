@@ -122,25 +122,26 @@ export class BillingService {
     }
 
     async changePlan(businessId: string, newPlan: string, actorUserId: string): Promise<BusinessSubscription> {
+        const subscription = await this.subscriptionRepository.findOneBy({ businessId });
+        if (!subscription) throw new NotFoundException('Suscripción no encontrada');
+
         const preflight = await this.preflightCheck(businessId, newPlan);
-        
-        if (!preflight.isAllowed) {
+        const isDowngrade = this.isDowngrade(subscription.plan, newPlan);
+
+        if (!preflight.isAllowed && !isDowngrade) {
             await this.auditService.log(
                 AuditAction.QUOTA_EXCEEDED, 
                 'BUSINESS', 
                 businessId, 
                 businessId, 
                 actorUserId, 
-                { action: 'DOWNGRADE_BLOCKED', targetPlan: newPlan, violations: preflight.violations }
+                { action: 'UPGRADE_BLOCKED', targetPlan: newPlan, violations: preflight.violations }
             );
             throw new BadRequestException({
                 message: 'No puedes cambiar al plan seleccionado por exceder límites actuales.',
                 violations: preflight.violations
             });
         }
-
-        const subscription = await this.subscriptionRepository.findOneBy({ businessId });
-        if (!subscription) throw new NotFoundException('Suscripción no encontrada');
 
         const previousPlan = subscription.plan;
         subscription.plan = newPlan;
@@ -149,6 +150,9 @@ export class BillingService {
 
         // Actualización transaccional del fallback legacy opcionalmente
         await this.businessRepository.update(businessId, { plan: newPlan });
+
+        // RECONCILIACIÓN DE CUOTA: Bloquear lo que sobre
+        await this.planUsageService.reconcileQuota(businessId);
 
         await this.auditService.log(
             AuditAction.BUSINESS_STATUS_CHANGED, 
@@ -160,6 +164,18 @@ export class BillingService {
         );
 
         return saved;
+    }
+
+    private isDowngrade(currentPlan: string, newPlan: string): boolean {
+        const levels: Record<string, number> = { 'FREE': 0, 'PRO': 1, 'ENTERPRISE': 2, 'BUSINESS': 2 };
+        
+        // Normalize names (free-3d -> FREE)
+        const normalize = (p: string) => p.split('-')[0].toUpperCase();
+        
+        const curr = levels[normalize(currentPlan)] ?? 0;
+        const next = levels[normalize(newPlan)] ?? 0;
+        
+        return next < curr;
     }
 
     async updateSubscriptionStatus(businessId: string, newStatus: SubscriptionStatus, actorUserId?: string): Promise<BusinessSubscription> {

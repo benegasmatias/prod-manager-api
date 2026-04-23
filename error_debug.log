@@ -10900,3 +10900,33 @@ Stack: QueryFailedError: column User.terms_accepted does not exist
     at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
     at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T14:37:10.538Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Employee.blocked_by_quota does not exist"
+Stack: QueryFailedError: column Employee.blocked_by_quota does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeCountQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3101:25)
+    at async SelectQueryBuilder.getCount (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1786:29)
+    at async Promise.all (index 1)
+    at async PlanUsageService.getBusinessUsage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:178:82)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T14:37:34.824Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Employee.blocked_by_quota does not exist"
+Stack: QueryFailedError: column Employee.blocked_by_quota does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeCountQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3101:25)
+    at async SelectQueryBuilder.getCount (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1786:29)
+    at async Promise.all (index 4)
+    at async PlanUsageService.getBusinessUsage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:178:82)
+-------------

@@ -25,6 +25,11 @@ export class MachinesService {
 
     async assignOrder(machineId: string, orderId: string, orderItemId?: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
         const machine = await this.findOne(machineId, businessId);
+        
+        if (machine.blockedByQuota) {
+            throw new BadRequestException('Esta unidad de producción está bloqueada por los límites de tu plan actual. Mejora tu plan para usarla.');
+        }
+
         const order = await this.ordersService.findOne(orderId);
 
         if (!order.items || order.items.length === 0) {
@@ -193,17 +198,20 @@ export class MachinesService {
         }
 
         await this.machineRepository.update(id, updateDto);
+        await this.planUsageService.reconcileQuota(machine.businessId);
         return this.findOne(id, businessId);
     }
 
     async updateStatus(id: string, status: MachineStatus, businessId?: string): Promise<Machine> {
         await this.findOne(id, businessId); // Check ownership
         await this.machineRepository.update(id, { status });
+        await this.planUsageService.reconcileQuota(businessId);
         return this.findOne(id, businessId);
     }
 
     async deactivate(id: string, businessId?: string): Promise<void> {
-        await this.findOne(id, businessId); // Check ownership
+        const machine = await this.findOne(id, businessId); // Check ownership
         await this.machineRepository.update(id, { active: false });
+        await this.planUsageService.reconcileQuota(machine.businessId);
     }
 }

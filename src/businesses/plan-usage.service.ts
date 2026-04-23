@@ -95,7 +95,7 @@ export class PlanUsageService {
         });
         const plan = business?.subscription?.plan || business?.plan || 'FREE';
         const limits = await this.getLimitsForPlan(plan, business.category);
-        const machineCount = await this.machineRepository.countBy({ businessId, active: true });
+        const machineCount = await this.machineRepository.countBy({ businessId, active: true, blockedByQuota: false });
 
         if (limits.maxMachinesPerBusiness !== 0 && machineCount >= limits.maxMachinesPerBusiness) {
             await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
@@ -116,7 +116,7 @@ export class PlanUsageService {
 
         // Count both active employees and pending invitations
         const [employeeCount, invitationCount] = await Promise.all([
-            this.employeeRepository.countBy({ businessId, active: true }),
+            this.employeeRepository.countBy({ businessId, active: true, blockedByQuota: false }),
             this.subscriptionRepository.manager.getRepository('BusinessInvitation').count({
                 where: { businessId, status: 'PENDING' }
             })
@@ -175,19 +175,23 @@ export class PlanUsageService {
         startOfMonth.setDate(1);
         startOfMonth.setHours(0, 0, 0, 0);
 
-        const [machines, employees, orders] = await Promise.all([
-            this.machineRepository.countBy({ businessId, active: true }),
-            this.employeeRepository.countBy({ businessId, active: true }),
+        const [machines, employees, orders, blockedMachines, blockedEmployees] = await Promise.all([
+            this.machineRepository.countBy({ businessId, active: true, blockedByQuota: false }),
+            this.employeeRepository.countBy({ businessId, active: true, blockedByQuota: false }),
             this.orderRepository.createQueryBuilder('order')
                 .where('order.businessId = :businessId', { businessId })
                 .andWhere('order.createdAt >= :startOfMonth', { startOfMonth })
-                .getCount()
+                .getCount(),
+            this.machineRepository.countBy({ businessId, active: true, blockedByQuota: true }),
+            this.employeeRepository.countBy({ businessId, active: true, blockedByQuota: true }),
         ]);
 
         const usage = {
             users: employees,
             machines: machines,
             ordersThisMonth: orders,
+            blockedUsers: blockedEmployees,
+            blockedMachines: blockedMachines,
         };
 
         const max = {
@@ -210,6 +214,71 @@ export class PlanUsageService {
                 orders: max.orders === 0 || usage.ordersThisMonth < max.orders
             }
         };
+    }
+
+    async reconcileQuota(businessId: string): Promise<void> {
+        const business = await this.businessRepository.findOne({
+            where: { id: businessId },
+            relations: ['subscription']
+        });
+        if (!business) return;
+
+        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const limits = await this.getLimitsForPlan(plan, business.category);
+
+        // 1. Reconcile Machines
+        const machines = await this.machineRepository.find({
+            where: { businessId, active: true },
+            order: { createdAt: 'ASC' }
+        });
+
+        const maxMachines = Number(limits.maxMachinesPerBusiness);
+        for (let i = 0; i < machines.length; i++) {
+            const shouldBeBlocked = maxMachines !== 0 && i >= maxMachines;
+            if (machines[i].blockedByQuota !== shouldBeBlocked) {
+                machines[i].blockedByQuota = shouldBeBlocked;
+                await this.machineRepository.save(machines[i]);
+            }
+        }
+
+        // 2. Reconcile Employees
+        const employees = await this.employeeRepository.find({
+            where: { businessId, active: true },
+            order: { createdAt: 'ASC' }
+        });
+
+        const maxEmployees = Number(limits.maxEmployeesPerBusiness);
+        let activeNonOwnerCount = 0;
+        for (let i = 0; i < employees.length; i++) {
+            // The owner should NEVER be blocked by quota
+            if (employees[i].role === 'OWNER') {
+                if (employees[i].blockedByQuota) {
+                    employees[i].blockedByQuota = false;
+                    await this.employeeRepository.save(employees[i]);
+                }
+                continue;
+            }
+
+            activeNonOwnerCount++;
+            // Note: maxEmployees includes the owner, so we check total humans
+            // But if maxEmployees is 1, it only allows the owner.
+            const totalHumansAllowed = maxEmployees !== 0 ? maxEmployees : 9999;
+            const shouldBeBlocked = (i + 1) > totalHumansAllowed;
+            
+            if (employees[i].blockedByQuota !== shouldBeBlocked) {
+                employees[i].blockedByQuota = shouldBeBlocked;
+                await this.employeeRepository.save(employees[i]);
+            }
+        }
+
+        await this.auditService.log(
+            AuditAction.RESOURCE_UPDATED, 
+            'BUSINESS', 
+            businessId, 
+            businessId, 
+            null, 
+            { event: 'QUOTA_RECONCILED', plan, maxMachines, maxEmployees }
+        );
     }
 
     private throwQuotaException(resource: string, plan: string, limit: number, usage: number, errorCode: string) {
