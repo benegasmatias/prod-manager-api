@@ -10930,3 +10930,35 @@ Stack: QueryFailedError: column Employee.blocked_by_quota does not exist
     at async Promise.all (index 4)
     at async PlanUsageService.getBusinessUsage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:178:82)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:44:44.728Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "items.0.unit_price must be a number"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:44:53.935Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "items.0.unit_price must be a number"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:50:03.306Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T03:04:44.180Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------

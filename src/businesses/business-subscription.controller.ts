@@ -24,13 +24,12 @@ export class BusinessSubscriptionController {
         @Param('id', ParseUUIDPipe) id: string,
         @Body('plan') planId: string,
         @Body('price') price: number,
-        @Body('description') description: string
+        @Body('description') description: string,
+        @Body('email') email: string
     ) {
         if (!planId || !price) throw new BadRequestException('Plan y precio son requeridos');
         
-        // Opcional: Validar aquí que el precio coincida con el plan en la DB
-        
-        return this.mpService.createSubscriptionPreference(id, planId, price, description);
+        return this.mpService.createSubscriptionPreference(id, planId, price, description, email);
     }
 
     @Get()

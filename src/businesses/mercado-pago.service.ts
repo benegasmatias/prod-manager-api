@@ -26,7 +26,8 @@ export class MercadoPagoService {
         businessId: string, 
         planId: string, 
         price: number,
-        description: string
+        description: string,
+        email: string
     ) {
         try {
             const preference = new Preference(this.client);
@@ -37,22 +38,25 @@ export class MercadoPagoService {
                             id: planId,
                             title: description,
                             quantity: 1,
-                            unit_price: price,
+                            unit_price: Number(price),
                             currency_id: 'ARS'
                         }
                     ],
+                    payer: {
+                        email: email
+                    },
                     metadata: {
                         businessId,
                         planId,
                         subscriptionType: 'NEW'
                     },
                     back_urls: {
-                        success: `${this.configService.get('FRONTEND_URL') || 'http://localhost:4200'}/billing/success`,
-                        failure: `${this.configService.get('FRONTEND_URL') || 'http://localhost:4200'}/billing/failure`,
-                        pending: `${this.configService.get('FRONTEND_URL') || 'http://localhost:4200'}/billing/pending`,
+                        success: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/success',
+                        failure: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/failure',
+                        pending: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/pending',
                     },
                     auto_return: 'approved',
-                    notification_url: `${this.configService.get('BACKEND_URL') || 'http://localhost:3030'}/webhooks/mercadopago`,
+                    notification_url: (this.configService.get('BACKEND_URL') || 'http://localhost:3030').replace(/\/$/, '') + '/webhooks/mercadopago',
                 }
             });
 
