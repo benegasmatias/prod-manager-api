@@ -7,13 +7,30 @@ import { BusinessRoleGuard } from './guards/business-role.guard';
 import { RequireBusinessRole } from './decorators/require-business-role.decorator';
 import { BusinessRole } from '../common/enums';
 
+import { MercadoPagoService } from './mercado-pago.service';
+
 @Controller('businesses/:id/subscription')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
 export class BusinessSubscriptionController {
     constructor(
         private readonly billingService: BillingService,
-        private readonly planUsageService: PlanUsageService
+        private readonly planUsageService: PlanUsageService,
+        private readonly mpService: MercadoPagoService
     ) { }
+
+    @Post('checkout')
+    @RequireBusinessRole(BusinessRole.OWNER)
+    async createCheckout(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Body('plan') planId: string,
+        @Body('price') price: number,
+        @Body('description') description: string,
+        @Body('email') email: string
+    ) {
+        if (!planId || !price) throw new BadRequestException('Plan y precio son requeridos');
+        
+        return this.mpService.createSubscriptionPreference(id, planId, price, description, email);
+    }
 
     @Get()
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)

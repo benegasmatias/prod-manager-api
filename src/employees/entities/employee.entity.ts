@@ -22,6 +22,9 @@ export class Employee {
     @Column({ default: true })
     active: boolean;
 
+    @Column({ name: 'blocked_by_quota', default: false })
+    blockedByQuota: boolean;
+
     @Column({ nullable: true })
     phone: string;
 

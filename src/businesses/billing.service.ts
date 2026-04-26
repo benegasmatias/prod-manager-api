@@ -9,6 +9,8 @@ import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
 import { SubscriptionStatus, BusinessStatus, WebhookStatus } from '../common/enums';
 import { WebhookEvent } from './entities/webhook-event.entity';
+import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
+import { MercadoPagoService } from './mercado-pago.service';
 
 @Injectable()
 export class BillingService {
@@ -19,21 +21,68 @@ export class BillingService {
         private readonly businessRepository: Repository<Business>,
         @InjectRepository(WebhookEvent)
         private readonly webhookRepository: Repository<WebhookEvent>,
+        @InjectRepository(SubscriptionPlan)
+        private readonly planRepository: Repository<SubscriptionPlan>,
         private readonly planUsageService: PlanUsageService,
         private readonly auditService: AuditService,
+        private readonly mpService: MercadoPagoService,
     ) { }
 
-    async createDefaultSubscription(businessId: string, plan: string = 'FREE', manager?: EntityManager): Promise<BusinessSubscription> {
-        const repo = manager ? manager.getRepository(BusinessSubscription) : this.subscriptionRepository;
+    async createDefaultSubscription(businessId: string, manager?: EntityManager): Promise<BusinessSubscription> {
+        const businessRepo = manager ? manager.getRepository(Business) : this.businessRepository;
+        const business = await businessRepo.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Business not found');
+
+        const planRepo = manager ? manager.getRepository(SubscriptionPlan) : this.planRepository;
         
+        // Buscar el plan gratuito para esta categoría específica
+        let freePlan = await planRepo.findOne({ 
+            where: { 
+                category: business.category, 
+                price: 0,
+                active: true 
+            },
+            order: { sortOrder: 'ASC' }
+        });
+
+        // Fallback al plan gratuito global si no hay uno específico
+        if (!freePlan) {
+            freePlan = await planRepo.findOne({ 
+                where: { 
+                    category: null, 
+                    price: 0,
+                    active: true 
+                },
+                order: { sortOrder: 'ASC' }
+            });
+        }
+
+        const planId = freePlan?.id || 'FREE';
+        const hasTrial = freePlan?.hasTrial || false;
+        const trialDays = freePlan?.trialDays || 0;
+        
+        let trialEndAt: Date | null = null;
+        if (hasTrial) {
+            trialEndAt = new Date();
+            trialEndAt.setDate(trialEndAt.getDate() + trialDays);
+        }
+
+        const repo = manager ? manager.getRepository(BusinessSubscription) : this.subscriptionRepository;
         const subscription = repo.create({
             businessId,
-            plan,
-            status: SubscriptionStatus.ACTIVE,
+            plan: planId,
+            status: hasTrial ? SubscriptionStatus.TRIALING : SubscriptionStatus.ACTIVE,
             currentPeriodStart: new Date(),
+            trialEndAt: trialEndAt,
         });
 
         const saved = await repo.save(subscription);
+
+        // Actualizar datos en la entidad Business
+        await businessRepo.update(businessId, { 
+            subscriptionExpiresAt: trialEndAt, // null si es de por vida
+            plan: planId 
+        });
 
         await this.auditService.log(
             AuditAction.RESOURCE_CREATED, 
@@ -41,7 +90,7 @@ export class BillingService {
             businessId, 
             businessId, 
             null, 
-            { plan, status: SubscriptionStatus.ACTIVE }
+            { plan: planId, status: hasTrial ? SubscriptionStatus.TRIALING : SubscriptionStatus.ACTIVE, trialEndAt }
         );
 
         return saved;
@@ -49,18 +98,17 @@ export class BillingService {
 
     async preflightCheck(businessId: string, targetPlan: string): Promise<any> {
         const usage = await this.planUsageService.getBusinessUsage(businessId);
-        const targetLimits = PLAN_LIMITS[targetPlan];
+        const targetLimits = await this.planUsageService.getLimitsForPlan(targetPlan);
 
         if (!targetLimits) throw new BadRequestException(`Plan ${targetPlan} no reconocido`);
 
         const violations: string[] = [];
-        const isAllowed = true;
 
-        if (usage.usage.MACHINES > targetLimits.maxMachinesPerBusiness) {
+        if (targetLimits.maxMachinesPerBusiness !== 0 && usage.usage.MACHINES > targetLimits.maxMachinesPerBusiness) {
             violations.push(`Exceso de máquinas: ${usage.usage.MACHINES}/${targetLimits.maxMachinesPerBusiness}`);
         }
 
-        if (usage.usage.EMPLOYEES > targetLimits.maxEmployeesPerBusiness) {
+        if (targetLimits.maxEmployeesPerBusiness !== 0 && usage.usage.EMPLOYEES > targetLimits.maxEmployeesPerBusiness) {
             violations.push(`Exceso de empleados: ${usage.usage.EMPLOYEES}/${targetLimits.maxEmployeesPerBusiness}`);
         }
 
@@ -74,25 +122,26 @@ export class BillingService {
     }
 
     async changePlan(businessId: string, newPlan: string, actorUserId: string): Promise<BusinessSubscription> {
+        const subscription = await this.subscriptionRepository.findOneBy({ businessId });
+        if (!subscription) throw new NotFoundException('Suscripción no encontrada');
+
         const preflight = await this.preflightCheck(businessId, newPlan);
-        
-        if (!preflight.isAllowed) {
+        const isDowngrade = this.isDowngrade(subscription.plan, newPlan);
+
+        if (!preflight.isAllowed && !isDowngrade) {
             await this.auditService.log(
                 AuditAction.QUOTA_EXCEEDED, 
                 'BUSINESS', 
                 businessId, 
                 businessId, 
                 actorUserId, 
-                { action: 'DOWNGRADE_BLOCKED', targetPlan: newPlan, violations: preflight.violations }
+                { action: 'UPGRADE_BLOCKED', targetPlan: newPlan, violations: preflight.violations }
             );
             throw new BadRequestException({
                 message: 'No puedes cambiar al plan seleccionado por exceder límites actuales.',
                 violations: preflight.violations
             });
         }
-
-        const subscription = await this.subscriptionRepository.findOneBy({ businessId });
-        if (!subscription) throw new NotFoundException('Suscripción no encontrada');
 
         const previousPlan = subscription.plan;
         subscription.plan = newPlan;
@@ -102,8 +151,11 @@ export class BillingService {
         // Actualización transaccional del fallback legacy opcionalmente
         await this.businessRepository.update(businessId, { plan: newPlan });
 
+        // RECONCILIACIÓN DE CUOTA: Bloquear lo que sobre
+        await this.planUsageService.reconcileQuota(businessId);
+
         await this.auditService.log(
-            AuditAction.BUSINESS_STATUS_CHANGED, // Usaremos uno genérico o crearemos nuevos
+            AuditAction.BUSINESS_STATUS_CHANGED, 
             'SUBSCRIPTION', 
             businessId, 
             businessId, 
@@ -112,6 +164,18 @@ export class BillingService {
         );
 
         return saved;
+    }
+
+    private isDowngrade(currentPlan: string, newPlan: string): boolean {
+        const levels: Record<string, number> = { 'FREE': 0, 'PRO': 1, 'ENTERPRISE': 2, 'BUSINESS': 2 };
+        
+        // Normalize names (free-3d -> FREE)
+        const normalize = (p: string) => p.split('-')[0].toUpperCase();
+        
+        const curr = levels[normalize(currentPlan)] ?? 0;
+        const next = levels[normalize(newPlan)] ?? 0;
+        
+        return next < curr;
     }
 
     async updateSubscriptionStatus(businessId: string, newStatus: SubscriptionStatus, actorUserId?: string): Promise<BusinessSubscription> {
@@ -157,7 +221,7 @@ export class BillingService {
             businessStatus = BusinessStatus.SUSPENDED;
             acceptingOrders = false;
         } else if (status === SubscriptionStatus.PAST_DUE) {
-            // PAST_DUE permite seguir operando hasta que expire el período de gracia (Fase 5.3)
+            // PAST_DUE permite seguir operando hasta que expire el período de gracia
             if (isGracePeriodOver) {
                 businessStatus = BusinessStatus.SUSPENDED;
                 acceptingOrders = false;
@@ -176,10 +240,57 @@ export class BillingService {
         });
     }
 
-    // --- Webhook Resilience Layer (Fase 5.3) ---
+    private async handleMercadoPagoEvent(event: WebhookEvent): Promise<void> {
+        const payload = event.payload;
+        
+        const resourceId = payload.data?.id || payload.id;
+        const topic = payload.type || payload.topic;
+
+        if (topic === 'payment' || payload.action?.includes('payment')) {
+            const payment = await this.mpService.getPayment(resourceId);
+            
+            if (payment.status === 'approved') {
+                const businessId = payment.metadata?.business_id || payment.metadata?.businessId;
+                const planId = payment.metadata?.plan_id || payment.metadata?.planId;
+
+                if (!businessId) throw new Error('BusinessId no encontrado en metadata de MP');
+
+                // 1. Actualizar Suscripción
+                const subscription = await this.subscriptionRepository.findOneBy({ businessId });
+                if (subscription) {
+                    subscription.status = SubscriptionStatus.ACTIVE;
+                    subscription.plan = planId || subscription.plan;
+                    subscription.externalPaymentId = payment.id.toString();
+                    subscription.lastPaymentAt = new Date();
+                    
+                    // Extender período (ej: 30 días si es mensual)
+                    const nextPeriod = new Date();
+                    nextPeriod.setDate(nextPeriod.getDate() + 30);
+                    subscription.currentPeriodEnd = nextPeriod;
+                    subscription.gracePeriodEndAt = null;
+
+                    await this.subscriptionRepository.save(subscription);
+                    
+                    // 2. Sincronizar estado del negocio
+                    await this.syncBusinessStatusFromSubscription(businessId, SubscriptionStatus.ACTIVE);
+
+                    // 3. Audit
+                    await this.auditService.log(
+                        AuditAction.RESOURCE_UPDATED, 
+                        'SUBSCRIPTION', 
+                        businessId, 
+                        businessId, 
+                        null, 
+                        { event: 'MP_PAYMENT_APPROVED', paymentId: payment.id, planId }
+                    );
+                }
+            }
+        }
+    }
+
+    // --- Webhook Resilience Layer ---
 
     async recordWebhookEvent(provider: string, eventId: string, type: string, payload: any, businessId?: string): Promise<WebhookEvent> {
-        // Verificar si ya existe para evitar duplicados (Idempotencia)
         const existing = await this.webhookRepository.findOneBy({ provider, providerEventId: eventId });
         if (existing) return existing;
 
@@ -200,17 +311,20 @@ export class BillingService {
         if (!event || event.status === WebhookStatus.PROCESSED) return;
 
         try {
-            // Lógica de Despacho según evento
-            // Nota: En producción, aquí resolvemos el businessId por el providerCustomerId/SubID si no viene en Metadata
+            if (event.provider === 'MERCADOPAGO') {
+                await this.handleMercadoPagoEvent(event);
+                event.status = WebhookStatus.PROCESSED;
+                event.processedAt = new Date();
+                await this.webhookRepository.save(event);
+                return;
+            }
+
             const businessId = event.businessId;
             if (!businessId) throw new Error('BusinessId no resuelto para el evento');
-
-            const payload = event.payload;
 
             switch (event.eventType) {
                 case 'invoice.paid':
                     await this.updateSubscriptionStatus(businessId, SubscriptionStatus.ACTIVE);
-                    // Limpiar fechas de gracia
                     await this.subscriptionRepository.update(businessId, { gracePeriodEndAt: null });
                     break;
                 case 'invoice.payment_failed':
@@ -241,7 +355,6 @@ export class BillingService {
         const subscription = await this.subscriptionRepository.findOneBy({ businessId });
         if (!subscription) return;
 
-        // Configurar Período de Gracia (ej: 5 días)
         const gracePeriod = new Date();
         gracePeriod.setDate(gracePeriod.getDate() + 5);
 

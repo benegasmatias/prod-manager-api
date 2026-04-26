@@ -25,6 +25,11 @@ export class MachinesService {
 
     async assignOrder(machineId: string, orderId: string, orderItemId?: string, materialId?: string, businessId?: string, metadata?: any): Promise<Machine> {
         const machine = await this.findOne(machineId, businessId);
+        
+        if (machine.blockedByQuota) {
+            throw new BadRequestException('Esta unidad de producción está bloqueada por los límites de tu plan actual. Mejora tu plan para usarla.');
+        }
+
         const order = await this.ordersService.findOne(orderId);
 
         if (!order.items || order.items.length === 0) {
@@ -133,8 +138,8 @@ export class MachinesService {
         return this.findOne(machineId, businessId);
     }
 
-    async create(createDto: CreateMachineDto): Promise<Machine> {
-        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId);
+    async create(createDto: CreateMachineDto, context?: { ip?: string, userAgent?: string }): Promise<Machine> {
+        await this.planUsageService.ensureMachineCreationAllowed(createDto.businessId, context);
         const machine = this.machineRepository.create(createDto);
         const saved = await this.machineRepository.save(machine);
         
@@ -184,20 +189,29 @@ export class MachinesService {
         return machine;
     }
 
-    async update(id: string, updateDto: UpdateMachineDto, businessId?: string): Promise<Machine> {
-        await this.findOne(id, businessId); // Check ownership
+    async update(id: string, updateDto: UpdateMachineDto, businessId?: string, context?: { ip?: string, userAgent?: string }): Promise<Machine> {
+        const machine = await this.findOne(id, businessId); // Check ownership
+        
+        // Si se está reactivando, validar límites del plan
+        if (updateDto.active === true && machine.active === false) {
+            await this.planUsageService.ensureMachineCreationAllowed(machine.businessId, context);
+        }
+
         await this.machineRepository.update(id, updateDto);
+        await this.planUsageService.reconcileQuota(machine.businessId);
         return this.findOne(id, businessId);
     }
 
     async updateStatus(id: string, status: MachineStatus, businessId?: string): Promise<Machine> {
         await this.findOne(id, businessId); // Check ownership
         await this.machineRepository.update(id, { status });
+        await this.planUsageService.reconcileQuota(businessId);
         return this.findOne(id, businessId);
     }
 
     async deactivate(id: string, businessId?: string): Promise<void> {
-        await this.findOne(id, businessId); // Check ownership
+        const machine = await this.findOne(id, businessId); // Check ownership
         await this.machineRepository.update(id, { active: false });
+        await this.planUsageService.reconcileQuota(machine.businessId);
     }
 }

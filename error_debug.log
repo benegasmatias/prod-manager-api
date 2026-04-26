@@ -9797,3 +9797,1215 @@ Stack: NotFoundException: Cannot GET /calibrations?businessId=cdf7b24c-1c47-4003
     at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
     at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T13:50:21.263Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T13:50:27.882Z
+Path: /admin/plans
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T14:08:48.412Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["price must be a number conforming to the specified constraints"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T14:09:31.316Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["price must be a number conforming to the specified constraints"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:26:21.160Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:26:28.171Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:26:55.994Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:32:53.712Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:33:36.107Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:38:23.681Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:43:30.186Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:43:38.106Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-21T22:44:25.673Z
+Path: /admin/plans/business-3d
+Status: 400
+Message: {"message":["property category should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:28.986Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:30.408Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:45.056Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:30:46.756Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:39.384Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:41.585Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:47.008Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:31:48.198Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:05.641Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:06.219Z
+Path: /materials/schema?rubro=IMPRESION_3D
+Status: 500
+Message: "invalid input syntax for type uuid: \"schema\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "schema"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async MaterialsService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:32:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:34:20.448Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 400
+Message: {"message":["property attributes should not exist","property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:53:00.898Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:54:00.167Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:11.084Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:13.127Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T13:57:37.794Z
+Path: /materials?businessId=cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "column Material.attributes does not exist"
+Stack: QueryFailedError: column Material.attributes does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:03:46.327Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:05:17.574Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:06:51.471Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:08:59.688Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:09:05.165Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:10:00.302Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:12:03.478Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:15:58.878Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T14:17:59.380Z
+Path: /materials/8c070fc9-7a04-4236-a454-0dc1fbfbc007
+Status: 500
+Message: "Property \"costPerKg\" was not found in \"Material\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "costPerKg" was not found in "Material". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:500:31)
+    at Array.forEach (<anonymous>)
+    at UpdateQueryBuilder.createUpdateExpression (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:493:68)
+    at UpdateQueryBuilder.getQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:53:21)
+    at UpdateQueryBuilder.getQueryAndParameters (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/QueryBuilder.ts:495:28)
+    at UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:142:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MaterialsService.update (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/materials/materials.service.ts:76:9)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T21:04:26.100Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column Business__Business_subscription.external_payment_id does not exist"
+Stack: QueryFailedError: column Business__Business_subscription.external_payment_id does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:307:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T21:04:27.276Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Business__Business_subscription.external_payment_id does not exist"
+Stack: QueryFailedError: column Business__Business_subscription.external_payment_id does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:164:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T21:05:09.618Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column Business__Business_subscription.external_payment_id does not exist"
+Stack: QueryFailedError: column Business__Business_subscription.external_payment_id does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:307:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T21:05:10.136Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Business__Business_subscription.external_payment_id does not exist"
+Stack: QueryFailedError: column Business__Business_subscription.external_payment_id does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:164:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-22T22:29:54.766Z
+Path: /orders/855458a7-3558-49af-83ae-ad1989275953/items/57ff6dc0-3fe0-4420-b76d-eb355a1c2c16/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:556:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:540:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:21.351Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:23.143Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:23.944Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:24.157Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:24.364Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:27.938Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:28.482Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:28.726Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:28.925Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:34.094Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:34.287Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:34.448Z
+Path: /me/accept-terms
+Status: 404
+Message: {"message":"Cannot POST /me/accept-terms","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /me/accept-terms
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:38:58.613Z
+Path: /me/accept-terms
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:40:18.931Z
+Path: /admin/plans
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:40:19.339Z
+Path: /admin/plans
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:40:20.573Z
+Path: /admin/plans
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:40:39.795Z
+Path: /admin/plans
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:40:40.787Z
+Path: /admin/plans
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:41:40.173Z
+Path: /me/accept-terms
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:41:58.727Z
+Path: /me/accept-terms
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:42:13.456Z
+Path: /non-existent
+Status: 404
+Message: {"message":"Cannot GET /non-existent","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /non-existent
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:42:18.149Z
+Path: /me/accept-terms
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:44:08.008Z
+Path: /perfil
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:44:13.475Z
+Path: /me
+Status: 404
+Message: {"message":"Cannot GET /me","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /me
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:44:28.420Z
+Path: /me
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:44:51.299Z
+Path: /me/accept-terms
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T11:47:18.828Z
+Path: /me
+Status: 500
+Message: "column User.terms_accepted does not exist"
+Stack: QueryFailedError: column User.terms_accepted does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1698:25)
+    at async UsersService.findOrCreate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/users.service.ts:29:20)
+    at async SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:33:25)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T14:37:10.538Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Employee.blocked_by_quota does not exist"
+Stack: QueryFailedError: column Employee.blocked_by_quota does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeCountQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3101:25)
+    at async SelectQueryBuilder.getCount (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1786:29)
+    at async Promise.all (index 1)
+    at async PlanUsageService.getBusinessUsage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:178:82)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-23T14:37:34.824Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column Employee.blocked_by_quota does not exist"
+Stack: QueryFailedError: column Employee.blocked_by_quota does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async SelectQueryBuilder.loadRawResults (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeCountQuery (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3101:25)
+    at async SelectQueryBuilder.getCount (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:1786:29)
+    at async Promise.all (index 4)
+    at async PlanUsageService.getBusinessUsage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/plan-usage.service.ts:178:82)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:44:44.728Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "items.0.unit_price must be a number"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:44:53.935Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "items.0.unit_price must be a number"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T02:50:03.306Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-24T03:04:44.180Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-26T00:15:28.691Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-26T00:32:11.801Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-26T00:32:18.641Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-26T00:38:51.558Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/subscription/checkout
+Status: 500
+Message: "auto_return invalid. back_url.success must be defined"
+Stack: undefined
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-26T00:48:57.162Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:520:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------

@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, UseGuards, Query, Request, UseInterceptors } from '@nestjs/common';
 import { OrdersService } from './orders.service';
+import { AuditService } from '../audit/audit.service';
 import { CreateOrderDto, UpdateOrderStatusDto, UpdateProgressDto, FindOrdersDto, FindVisitsDto, FindQuotationsDto } from './dto/order.dto';
 import { CreatePaymentDto } from '../payments/dto/payment.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -15,7 +16,10 @@ import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-pr
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
 @UseInterceptors(FinancialPrivacyInterceptor)
 export class OrdersController {
-    constructor(private readonly ordersService: OrdersService) { }
+    constructor(
+        private readonly ordersService: OrdersService,
+        private readonly auditService: AuditService
+    ) { }
 
     @Get('summary')
     @UseGuards(BusinessStatusGuard)
@@ -96,8 +100,9 @@ export class OrdersController {
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
-    async create(@Body() createOrderDto: CreateOrderDto) {
-        return this.ordersService.create(createOrderDto);
+    async create(@Body() createOrderDto: CreateOrderDto, @Request() req: any) {
+        const context = this.auditService.extractContext(req);
+        return this.ordersService.create(createOrderDto, context);
     }
 
     @Post(':id/fail')

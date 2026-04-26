@@ -25,8 +25,10 @@ import { BusinessInvitation } from './entities/business-invitation.entity';
 import { BusinessInvitationsService } from './business-invitations.service';
 import { BusinessInvitationsController } from './business-invitations.controller';
 import { BusinessCapabilityGuard } from './guards/business-capability.guard';
+import { MercadoPagoService } from './mercado-pago.service';
 import { AdminModule } from '../admin/admin.module';
 import { forwardRef } from '@nestjs/common';
+import { SubscriptionPlan } from '../admin/entities/subscription-plan.entity';
 
 @Module({
     imports: [
@@ -42,7 +44,8 @@ import { forwardRef } from '@nestjs/common';
             Customer, 
             Machine, 
             Material,
-            Employee
+            Employee,
+            SubscriptionPlan
         ]),
         AuditModule,
         forwardRef(() => AdminModule)
@@ -60,7 +63,8 @@ import { forwardRef } from '@nestjs/common';
         BusinessStrategyProvider, 
         PlanUsageService, 
         BillingService,
-        BusinessCapabilityGuard
+        BusinessCapabilityGuard,
+        MercadoPagoService
     ],
     exports: [
         BusinessesService, 
@@ -68,6 +72,7 @@ import { forwardRef } from '@nestjs/common';
         PlanUsageService, 
         BillingService,
         BusinessCapabilityGuard,
+        MercadoPagoService,
         TypeOrmModule
     ],
 })

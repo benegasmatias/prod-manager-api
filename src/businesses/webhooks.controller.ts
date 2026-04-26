@@ -52,8 +52,11 @@ export class WebhooksController {
     @Post('mercadopago')
     @HttpCode(HttpStatus.OK)
     async handleMP(@Body() payload: any) {
-        const eventId = payload.id || payload.data?.id;
-        const eventType = payload.type || payload.action;
+        // MP envíe a veces el ID en la raíz o en data.id según el tipo de notificación
+        const eventId = String(payload.id || payload.data?.id || '');
+        const eventType = payload.type || payload.action || 'payment.updated';
+
+        if (!eventId) return { received: false, message: 'No event ID' };
 
         const webhookRecord = await this.billingService.recordWebhookEvent(
             'MERCADOPAGO',
@@ -62,7 +65,13 @@ export class WebhooksController {
             payload
         );
 
-        // MercadoPago logic would go here
+        try {
+            // Mercado Pago requiere que consultemos el recurso para confirmar el estado
+            await this.billingService.processSubscriptionEvent(webhookRecord.id);
+        } catch (error) {
+            console.error('[Webhooks MP] Error processing event:', eventId, error.message);
+        }
+
         return { received: true };
     }
 }

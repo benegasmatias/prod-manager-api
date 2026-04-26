@@ -43,6 +43,9 @@ export class CreateMaterialDto {
     @IsOptional()
     @ValidateIf((o, v) => v !== null)
     nozzleTemperature?: number;
+
+    @IsOptional()
+    attributes?: Record<string, string | number | boolean | null>;
 }
 
 export class UpdateMaterialDto {
@@ -57,6 +60,10 @@ export class UpdateMaterialDto {
     @IsString()
     @IsOptional()
     brand?: string;
+
+    @IsUUID()
+    @IsOptional()
+    businessId?: string;
 
     @IsString()
     @IsOptional()
@@ -91,4 +98,17 @@ export class UpdateMaterialDto {
     @IsOptional()
     @ValidateIf((o, v) => v !== null)
     nozzleTemperature?: number;
+
+    @IsOptional()
+    attributes?: Record<string, string | number | boolean | null>;
+}
+
+export interface MaterialFormFieldSchema {
+    key: string;
+    label: string;
+    type: 'text' | 'number' | 'select' | 'color' | 'checkbox';
+    required: boolean;
+    placeholder?: string;
+    options?: { label: string, value: any }[];
+    industry?: string;
 }

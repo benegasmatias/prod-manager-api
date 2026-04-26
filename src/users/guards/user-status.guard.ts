@@ -18,6 +18,7 @@ export class UserStatusGuard implements CanActivate {
 
         // 1. Basic path allowlist
         const allowedPaths = [
+            '/me',
             '/users/me',
             '/auth/logout',
             '/auth/refresh',

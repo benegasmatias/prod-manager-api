@@ -43,8 +43,8 @@ export class EmployeesService {
         return employee;
     }
 
-    async create(businessId: string, data: any): Promise<Employee> {
-        await this.planUsageService.ensureEmployeeCreationAllowed(businessId);
+    async create(businessId: string, data: any, context?: { ip?: string, userAgent?: string }): Promise<Employee> {
+        await this.planUsageService.ensureEmployeeCreationAllowed(businessId, context);
         
         const { email, firstName, lastName, role } = data;
         const supabase = this.supabaseService.getClient();
@@ -109,9 +109,14 @@ export class EmployeesService {
         return savedEmployee;
     }
 
-    async update(id: string, businessId: string, data: any): Promise<Employee> {
+    async update(id: string, businessId: string, data: any, context?: { ip?: string, userAgent?: string }): Promise<Employee> {
         const employee = await this.findOne(id, businessId);
         
+        // Si se está reactivando, validar límites del plan
+        if (data.active === true && employee.active === false) {
+            await this.planUsageService.ensureEmployeeCreationAllowed(businessId, context);
+        }
+
         // Si el rol cambia y el empleado está vinculado a un email, actualizar la membresía
         if (data.role && data.role !== employee.role && employee.email) {
             const user = await this.usersService.findByEmail(employee.email);
@@ -121,6 +126,7 @@ export class EmployeesService {
         }
 
         await this.employeeRepository.update(id, data);
+        await this.planUsageService.reconcileQuota(businessId);
         return this.findOne(id, businessId);
     }
 
@@ -128,5 +134,6 @@ export class EmployeesService {
         const employee = await this.findOne(id, businessId);
         employee.active = false;
         await this.employeeRepository.save(employee);
+        await this.planUsageService.reconcileQuota(businessId);
     }
 }

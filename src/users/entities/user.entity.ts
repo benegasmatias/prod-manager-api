@@ -35,6 +35,12 @@ export class User {
     @Column({ name: 'must_change_password', default: false })
     mustChangePassword: boolean;
 
+    @Column({ name: 'terms_accepted', default: false })
+    termsAccepted: boolean;
+
+    @Column({ type: 'timestamp', name: 'terms_accepted_at', nullable: true })
+    termsAcceptedAt: Date;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

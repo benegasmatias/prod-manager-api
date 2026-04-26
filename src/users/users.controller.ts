@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Put, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Put, Body, UseGuards, Request } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SetDefaultBusinessDto } from './dto/set-default-business.dto';
@@ -22,5 +22,10 @@ export class UsersController {
     @Put('default-business')
     async updateDefaultBusiness(@Request() req, @Body() setDefaultBusinessDto: SetDefaultBusinessDto) {
         return this.usersService.setDefaultBusiness(req.user.id, setDefaultBusinessDto.businessId);
+    }
+
+    @Post('accept-terms')
+    async acceptTerms(@Request() req) {
+        return this.usersService.acceptTerms(req.user.id);
     }
 }

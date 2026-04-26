@@ -46,6 +46,15 @@ export class BusinessSubscription {
     @Column({ name: 'provider_customer_id', type: 'varchar', length: 255, nullable: true })
     providerCustomerId: string;
 
+    @Column({ name: 'external_payment_id', type: 'varchar', length: 255, nullable: true })
+    externalPaymentId: string;
+
+    @Column({ name: 'last_payment_at', type: 'timestamp', nullable: true })
+    lastPaymentAt: Date;
+
+    @Column({ name: 'payment_method', type: 'varchar', length: 50, nullable: true })
+    paymentMethod: string;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

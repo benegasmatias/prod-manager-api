@@ -1,4 +1,6 @@
-import { IsString, IsNumber, IsOptional, IsBoolean, IsArray } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsBoolean, IsArray, Allow } from 'class-validator';
+import { Type } from 'class-transformer';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreatePlanDto {
     @IsString()
@@ -7,6 +9,12 @@ export class CreatePlanDto {
     @IsString()
     name: string;
 
+    @IsOptional()
+    @IsString()
+    @Allow()
+    category?: string | null;
+
+    @Type(() => Number)
     @IsNumber()
     price: number;
 
@@ -23,18 +31,22 @@ export class CreatePlanDto {
     features?: string[];
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxUsers?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxOrdersPerMonth?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxBusinesses?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxMachines?: number;
 
@@ -51,6 +63,7 @@ export class CreatePlanDto {
     ctaLink?: string;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     sortOrder?: number;
 
@@ -63,6 +76,7 @@ export class CreatePlanDto {
     hasTrial?: boolean;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     trialDays?: number;
 }
@@ -73,6 +87,12 @@ export class UpdatePlanDto {
     name?: string;
 
     @IsOptional()
+    @IsString()
+    @Allow()
+    category?: string | null;
+
+    @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     price?: number;
 
@@ -89,18 +109,22 @@ export class UpdatePlanDto {
     features?: string[];
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxUsers?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxOrdersPerMonth?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxBusinesses?: number;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     maxMachines?: number;
 
@@ -117,6 +141,7 @@ export class UpdatePlanDto {
     ctaLink?: string;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     sortOrder?: number;
 
@@ -129,6 +154,7 @@ export class UpdatePlanDto {
     hasTrial?: boolean;
 
     @IsOptional()
+    @Type(() => Number)
     @IsNumber()
     trialDays?: number;
 }

@@ -33,6 +33,9 @@ export class Machine {
     @Column({ default: true })
     active: boolean;
 
+    @Column({ name: 'blocked_by_quota', default: false })
+    blockedByQuota: boolean;
+
     @OneToMany(() => ProductionJob, (job) => job.machine)
     productionJobs: ProductionJob[];
 

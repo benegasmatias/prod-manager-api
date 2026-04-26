@@ -7,6 +7,8 @@ export enum AuditAction {
     BUSINESS_ARCHIVED = 'BUSINESS_ARCHIVED',
     QUOTA_EXCEEDED = 'QUOTA_EXCEEDED',
     RESOURCE_CREATED = 'RESOURCE_CREATED',
+    RESOURCE_UPDATED = 'RESOURCE_UPDATED',
+    RESOURCE_DELETED = 'RESOURCE_DELETED',
 }
 
 @Entity('audit_logs')
@@ -32,6 +34,12 @@ export class AuditLog {
 
     @Column({ type: 'jsonb', default: {} })
     metadata: any;
+
+    @Column({ name: 'ip_address', nullable: true })
+    ipAddress: string;
+
+    @Column({ name: 'user_agent', nullable: true, type: 'text' })
+    userAgent: string;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

@@ -7,6 +7,7 @@ import { BusinessMembership } from './entities/business-membership.entity';
 import { User } from '../users/entities/user.entity';
 import { MailService } from '../common/mail/mail.service';
 import { Employee } from '../employees/entities/employee.entity';
+import { PlanUsageService } from './plan-usage.service';
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
@@ -23,6 +24,7 @@ export class BusinessInvitationsService {
         @InjectRepository(Business)
         private businessRepo: Repository<Business>,
         private mailService: MailService,
+        private planUsageService: PlanUsageService,
         private dataSource: DataSource,
     ) {}
 
@@ -69,8 +71,12 @@ export class BusinessInvitationsService {
         email: string,
         role: string,
         invitedByUserId: string,
-        metadata?: { firstName?: string; lastName?: string; phone?: string; specialty?: string }
+        metadata?: { firstName?: string; lastName?: string; phone?: string; specialty?: string },
+        context?: { ip?: string, userAgent?: string }
     ): Promise<{ invitation: BusinessInvitation; userExists: boolean }> {
+        // Enforce plan limits (Users/Members)
+        await this.planUsageService.ensureEmployeeCreationAllowed(businessId, context);
+
         const emailLower = email.toLowerCase();
 
         const user = await this.userRepo.findOne({ where: { email: emailLower } });

@@ -64,4 +64,12 @@ export class UsersService {
             throw error;
         }
     }
+
+    async acceptTerms(userId: string): Promise<User> {
+        await this.userRepository.update(userId, {
+            termsAccepted: true,
+            termsAcceptedAt: new Date()
+        });
+        return this.findOne(userId);
+    }
 }

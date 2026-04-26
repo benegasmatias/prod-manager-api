@@ -17,6 +17,13 @@ import { BusinessStatus, BusinessRole } from '../common/enums';
 export class MaterialsController {
     constructor(private readonly materialsService: MaterialsService) { }
 
+    @Get('schema')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    getSchema(@Query('rubro') rubro: string, @Query('businessId') businessId: string) {
+        return this.materialsService.getSchema(rubro);
+    }
+
     @Post()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)

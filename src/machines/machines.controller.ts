@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Patch, Body, Param, ParseUUIDPipe, UseGuards, Query, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, ParseUUIDPipe, UseGuards, Query, Put, Delete, Request } from '@nestjs/common';
 import { MachinesService } from './machines.service';
+import { AuditService } from '../audit/audit.service';
 import { MachineStatus, BusinessStatus, BusinessRole } from '../common/enums';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { CreateMachineDto } from './dto/create-machine.dto';
@@ -16,14 +17,18 @@ import { RequireCapability } from '../businesses/decorators/require-capability.d
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard, BusinessCapabilityGuard)
 @RequireCapability('PRODUCTION_MACHINES')
 export class MachinesController {
-    constructor(private readonly printersService: MachinesService) { }
+    constructor(
+        private readonly printersService: MachinesService,
+        private readonly auditService: AuditService
+    ) { }
 
     @Post()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
-    async create(@Body() createDto: CreateMachineDto) {
-        return this.printersService.create(createDto);
+    async create(@Body() createDto: CreateMachineDto, @Request() req: any) {
+        const context = this.auditService.extractContext(req);
+        return this.printersService.create(createDto, context);
     }
 
     @Get()
@@ -58,9 +63,11 @@ export class MachinesController {
     async update(
         @Param('id', ParseUUIDPipe) id: string,
         @Body() updateDto: UpdateMachineDto,
+        @Request() req: any,
         @Query('businessId') businessId?: string,
     ) {
-        return this.printersService.update(id, updateDto, businessId);
+        const context = this.auditService.extractContext(req);
+        return this.printersService.update(id, updateDto, businessId, context);
     }
 
     @Patch(':id/status')

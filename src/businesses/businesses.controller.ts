@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Delete, Query, BadRequestException, UseInterceptors } from '@nestjs/common';
 import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-privacy.interceptor';
+import { AuditService } from '../audit/audit.service';
 import { BusinessesService } from './businesses.service';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { CreateBusinessFromTemplateDto } from './dto/create-business-from-template.dto';
@@ -19,7 +20,8 @@ export class BusinessesController {
     constructor(
         private readonly businessesService: BusinessesService,
         private readonly invitationsService: BusinessInvitationsService,
-        private readonly mailService: MailService
+        private readonly mailService: MailService,
+        private readonly auditService: AuditService
     ) { }
 
     @Get()
@@ -155,13 +157,14 @@ export class BusinessesController {
         @Body() body: { email: string, role?: string, firstName?: string, lastName?: string, phone?: string, specialty?: string }
     ) {
         const role = body.role || 'OPERATOR';
+        const context = this.auditService.extractContext(req);
 
         const { invitation, userExists } = await this.invitationsService.createInvitation(id, body.email, role, req.user.id, {
             firstName: body.firstName,
             lastName: body.lastName,
             phone: body.phone,
             specialty: body.specialty
-        });
+        }, context);
 
         // ENVÍO REAL DE EMAIL USANDO BREVO
         try {
