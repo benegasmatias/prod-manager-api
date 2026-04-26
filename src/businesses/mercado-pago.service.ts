@@ -50,12 +50,6 @@ export class MercadoPagoService {
                         planId,
                         subscriptionType: 'NEW'
                     },
-                    back_urls: {
-                        success: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/success',
-                        failure: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/failure',
-                        pending: (this.configService.get('FRONTEND_URL') || 'http://localhost:4200').replace(/\/$/, '') + '/billing/pending',
-                    },
-                    auto_return: 'approved',
                     notification_url: (this.configService.get('BACKEND_URL') || 'http://localhost:3030').replace(/\/$/, '') + '/webhooks/mercadopago',
                 }
             });
