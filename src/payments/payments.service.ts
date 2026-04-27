@@ -34,4 +34,13 @@ export class PaymentsService {
             order: { paidAt: 'DESC' },
         });
     }
+
+    async remove(orderId: string, paymentId: string) {
+        const payment = await this.paymentRepository.findOne({
+            where: { id: paymentId, orderId }
+        });
+        if (!payment) throw new NotFoundException('Pago no encontrado');
+
+        return this.paymentRepository.remove(payment);
+    }
 }

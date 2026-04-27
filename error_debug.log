@@ -11009,3 +11009,30 @@ Stack: Error: Connection terminated due to connection timeout
     at Socket.emit (node:events:520:35)
     at TCP.<anonymous> (node:net:346:12)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T12:17:03.179Z
+Path: /admin/plans/pro-3d
+Status: 400
+Message: {"message":["property promoPrice should not exist","property promoDurationMonths should not exist","property promoLabel should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.15.1_reflect-metadata@0.2.2_rxjs@7.8.2/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T12:17:46.239Z
+Path: /admin/plans/pro-3d
+Status: 500
+Message: "column \"promoPrice\" of relation \"subscription_plans\" does not exist"
+Stack: QueryFailedError: column "promoPrice" of relation "subscription_plans" does not exist
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async UpdateQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/UpdateQueryBuilder.ts:145:33)
+    at async AdminService.updatePlan (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:162:9)
+-------------

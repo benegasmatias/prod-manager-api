@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Delete } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { CreatePaymentDto } from './dto/payment.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -27,5 +27,12 @@ export class PaymentsController {
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
     findAll(@Param('id') orderId: string) {
         return this.paymentsService.findByOrder(orderId);
+    }
+
+    @Delete(':paymentId')
+    @UseGuards(BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    remove(@Param('id') orderId: string, @Param('paymentId') paymentId: string) {
+        return this.paymentsService.remove(orderId, paymentId);
     }
 }

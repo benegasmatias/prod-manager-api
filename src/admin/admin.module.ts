@@ -12,6 +12,7 @@ import { NotificationsModule } from '../notifications/notifications.module';
 import { SubscriptionReminderService } from './tasks/subscription-reminder.service';
 import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation } from '../businesses/entities/business-invitation.entity';
+import { BusinessesModule } from '../businesses/businesses.module';
 
 @Module({
 
@@ -26,6 +27,7 @@ import { BusinessInvitation } from '../businesses/entities/business-invitation.e
             BusinessInvitation
         ]),
         forwardRef(() => UsersModule), // For guards/supabase dependencies
+        forwardRef(() => BusinessesModule),
         NotificationsModule,
     ],
 

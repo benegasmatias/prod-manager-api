@@ -79,6 +79,21 @@ export class CreatePlanDto {
     @Type(() => Number)
     @IsNumber()
     trialDays?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoPrice?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoDurationMonths?: number;
+
+    @IsOptional()
+    @IsString()
+    promoLabel?: string;
+
 }
 
 export class UpdatePlanDto {
@@ -157,4 +172,19 @@ export class UpdatePlanDto {
     @Type(() => Number)
     @IsNumber()
     trialDays?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoPrice?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoDurationMonths?: number;
+
+    @IsOptional()
+    @IsString()
+    promoLabel?: string;
+
 }

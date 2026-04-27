@@ -56,6 +56,15 @@ export class SubscriptionPlan {
     @Column({ default: 0 })
     trialDays: number;
 
+    @Column('decimal', { precision: 12, scale: 2, nullable: true })
+    promoPrice: number;
+
+    @Column({ nullable: true })
+    promoDurationMonths: number;
+
+    @Column({ nullable: true })
+    promoLabel: string;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 
