@@ -65,6 +65,9 @@ export class SubscriptionPlan {
     @Column({ nullable: true })
     promoLabel: string;
 
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
+
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;
 

@@ -94,6 +94,9 @@ export class CreatePlanDto {
     @IsString()
     promoLabel?: string;
 
+    @IsOptional()
+    metadata?: any;
+
 }
 
 export class UpdatePlanDto {
@@ -186,5 +189,8 @@ export class UpdatePlanDto {
     @IsOptional()
     @IsString()
     promoLabel?: string;
+
+    @IsOptional()
+    metadata?: any;
 
 }

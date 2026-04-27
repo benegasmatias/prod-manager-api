@@ -98,7 +98,6 @@ export class AdminService implements OnModuleInit {
                 name: 'Granja Produccion',
                 category: 'IMPRESION_3D',
                 price: 24500,
-                currency: 'ARS',
                 description: 'Para granjas con alto volumen de produccion.',
                 features: ['Ilimitados pedidos', 'Ilimitadas impresoras', '10 usuarios', 'Full Dashboard', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario'],
                 maxUsers: 10,
@@ -112,7 +111,84 @@ export class AdminService implements OnModuleInit {
                 active: true,
                 hasTrial: true,
                 trialDays: 7,
+                metadata: {
+                    gestionMateriales: 'Avanzada',
+                    trazabilidadFallas: true,
+                    reportesEficiencia: true,
+                    apiWebhooks: true,
+                    soporte: 'Dedicado'
+                }
             },
+            // METALURGICA (Placeholders - Door open for future)
+            {
+                id: 'free-metal',
+                name: 'Taller Free',
+                category: 'METALURGICA',
+                price: 0,
+                currency: 'ARS',
+                description: 'Para pequeños talleres de herrería artesanal.',
+                features: ['20 pedidos / mes', '2 Máquinas', '1 Usuario', 'Gestión de Clientes'],
+                maxUsers: 1,
+                maxOrdersPerMonth: 20,
+                maxBusinesses: 1,
+                maxMachines: 2,
+                isRecommended: false,
+                ctaText: 'Comenzar gratis',
+                ctaLink: '/register',
+                sortOrder: 0,
+                active: true,
+                metadata: {
+                    gestionMateriales: 'Básica',
+                    trazabilidadFallas: false,
+                    reportesEficiencia: false,
+                    apiWebhooks: false,
+                    soporte: 'Manual'
+                }
+            },
+            {
+                id: 'pro-metal',
+                name: 'Taller Industrial',
+                category: 'METALURGICA',
+                price: 12500,
+                currency: 'ARS',
+                description: 'Control de producción y materiales para talleres medianos.',
+                features: ['Pedidos ilimitados', '5 Máquinas', '3 Usuarios', 'Dashboard Avanzado', 'Control de Materiales'],
+                maxUsers: 3,
+                maxOrdersPerMonth: 0,
+                maxBusinesses: 1,
+                maxMachines: 5,
+                sortOrder: 1,
+                active: true,
+                metadata: {
+                    gestionMateriales: 'Avanzada',
+                    trazabilidadFallas: true,
+                    reportesEficiencia: true,
+                    apiWebhooks: false,
+                    soporte: 'Prioritario'
+                }
+            },
+            {
+                id: 'enterprise-metal',
+                name: 'Fábrica Estructuras',
+                category: 'METALURGICA',
+                price: 35000,
+                currency: 'ARS',
+                description: 'Gestión industrial completa con trazabilidad de materiales.',
+                features: ['Pedidos ilimitados', '20 Máquinas', '10 Usuarios', 'Dashboard BI', 'Control Stock Crítico', 'API de Integración'],
+                maxUsers: 10,
+                maxOrdersPerMonth: 0,
+                maxBusinesses: 1,
+                maxMachines: 20,
+                sortOrder: 2,
+                active: true,
+                metadata: {
+                    gestionMateriales: 'Avanzada',
+                    trazabilidadFallas: true,
+                    reportesEficiencia: true,
+                    apiWebhooks: true,
+                    soporte: 'Dedicado'
+                }
+            }
         ];
 
         for (const planData of defaults) {
@@ -121,8 +197,10 @@ export class AdminService implements OnModuleInit {
                 if (!existing) {
                     await this.planRepository.save(this.planRepository.create(planData));
                     console.log(`[SEED] Created new plan: ${planData.id}`);
+                } else {
+                    // Update existing to sync new fields (like promoPrice, category, etc)
+                    await this.planRepository.save({ ...existing, ...planData });
                 }
-                // We REMOVED the update logic so manual changes in DB persist!
             } catch (err) {
                 console.error(`[SEED] Error in plan ${planData.id}:`, err.message);
             }
