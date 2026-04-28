@@ -11054,3 +11054,177 @@ Stack: NotFoundException: Cannot GET /favicon.ico
     at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/body-parser@2.2.2/node_modules/body-parser/lib/types/urlencoded.js:57:5)
     at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/router@2.2.0/node_modules/router/lib/layer.js:152:17)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:51:31.543Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:328:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:51:33.212Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:172:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:53:00.682Z
+Path: /admin/plans
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:53:16.126Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:172:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:53:16.269Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:328:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:53:17.453Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:172:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T18:53:17.658Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:328:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T19:11:00.433Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:328:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T19:11:01.621Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:172:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T19:12:25.542Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/config
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async BusinessesService.resolveBusinessConfig (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\businesses.service.ts:328:24)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-27T19:12:27.059Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325/plan-usage
+Status: 500
+Message: "column SubscriptionPlan.metadata does not exist"
+Stack: QueryFailedError: column SubscriptionPlan.metadata does not exist
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3614:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getOne (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1698:25)
+    at async PlanUsageService.getLimitsForPlan (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:37:22)
+    at async PlanUsageService.getBusinessUsage (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\plan-usage.service.ts:172:24)
+-------------

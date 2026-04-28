@@ -5,7 +5,7 @@ export class UpdateOrderSchemaV21772469614971 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "orders" DROP CONSTRAINT "FK_772d0ce0473ac2ccfa26060dbe9"`);
-        await queryRunner.query(`ALTER TABLE "orders" ALTER COLUMN "due_date" SET NOT NULL`);
+        await queryRunner.query(`ALTER TABLE "orders" ALTER COLUMN "due_date" DROP NOT NULL`);
         await queryRunner.query(`ALTER TABLE "orders" ALTER COLUMN "customer_id" DROP NOT NULL`);
         await queryRunner.query(`ALTER TABLE "orders" ADD CONSTRAINT "FK_772d0ce0473ac2ccfa26060dbe9" FOREIGN KEY ("customer_id") REFERENCES "customers"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     }

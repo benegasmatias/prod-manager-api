@@ -78,7 +78,7 @@ export class Order {
     @OneToOne(() => OrderSiteInfo, (si) => si.order, { cascade: true })
     siteInfo: OrderSiteInfo;
 
-    @Column({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ name: 'total_price', type: 'decimal', precision: 12, scale: 2, nullable: true })
     totalPrice: number;
 
     @Column({ name: 'total_senias', type: 'decimal', precision: 12, scale: 2, default: 0, nullable: true })
@@ -99,4 +99,8 @@ export class Order {
 
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
+
+    get isQuotePending(): boolean {
+        return this.items?.some(it => it.isPendingQuote) || this.totalPrice === null;
+    }
 }
