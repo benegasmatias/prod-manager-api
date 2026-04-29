@@ -521,17 +521,25 @@ export class BusinessesService {
         const limitOneDay = new Date(now.getTime() + ONE_DAY_MS);
 
         // 1. Alerta de pedidos CRÍTICOS (Hoy o Mañana)
+        // REGLA: Solo los que están en producción/pendiente (WIP)
+        const WIP_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, 
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.OFFICIAL_ORDER
+        ];
+
         const criticalOrders = activeOrdersWithItems.filter(o => {
-            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            if (!o.dueDate || !WIP_STATUSES.includes(o.status)) return false;
             const d = new Date(o.dueDate);
-            return d > now && d <= limitOneDay;
+            return d <= limitOneDay; // Incluye vencidos en producción y los de hoy/mañana
         });
 
         if (criticalOrders.length > 0) {
             alerts.push({
                 type: 'critical',
                 title: 'Entregas Inminentes',
-                message: `¡Atención! Tenés ${criticalOrders.length} pedidos que vencen HOY o MAÑANA.`,
+                message: `¡Atención! Tenés ${criticalOrders.length} pedidos en producción que vencen PRONTO o están REZAGADOS.`,
                 actionLabel: 'Priorizar Ahora',
                 actionLink: '/pedidos'
             });
@@ -539,7 +547,7 @@ export class BusinessesService {
 
         // 2. Alerta de pedidos próximos a vencer (3 días)
         const upcomingOrders = activeOrdersWithItems.filter(o => {
-            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            if (!o.dueDate || !WIP_STATUSES.includes(o.status)) return false;
             const d = new Date(o.dueDate);
             // Solo los que no están ya en el balde de "críticos"
             return d > limitOneDay && d <= limitThreeDays;
@@ -549,20 +557,24 @@ export class BusinessesService {
             alerts.push({
                 type: 'warning',
                 title: 'Próximos Vencimientos',
-                message: `Tenés ${upcomingOrders.length} pedidos para entregar en los próximos 3 días.`,
+                message: `Tenés ${upcomingOrders.length} pedidos en proceso para entregar en los próximos 3 días.`,
                 actionLabel: 'Ver Agenda',
                 actionLink: '/pedidos'
             });
         }
 
-        // 3. Alerta de pedidos vencidos
-        if (realOverdue.length > 0) {
+        // 3. Alerta de pedidos vencidos SIN ENTREGAR (Ya están listos pero no se entregaron)
+        const readyOverdue = realOverdue.filter(o => 
+            [OrderStatus.READY, OrderStatus.DONE, OrderStatus.READY_FOR_DELIVERY].includes(o.status)
+        );
+
+        if (readyOverdue.length > 0) {
             alerts.push({
                 type: 'error',
                 title: 'Pedidos Vencidos',
-                message: `Hay ${realOverdue.length} pedidos con fecha de entrega cumplida sin entregar.`,
-                actionLabel: 'Revisar Mora',
-                actionLink: '/pedidos'
+                message: `Hay ${readyOverdue.length} pedidos LISTOS con fecha cumplida sin entregar.`,
+                actionLabel: 'Llamar Cliente',
+                actionLink: '/pedidos?status=READY'
             });
         }
 

@@ -92,7 +92,7 @@ export class OrdersService {
      * Excluye campos pesados como metadatos y jobs.
      */
     async findListing(query: FindOrdersDto): Promise<{ data: Order[], total: number }> {
-        const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search, startDate, endDate, responsableId } = query;
+        const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search, startDate, endDate, responsableId, alertFilter } = query;
         
         const qb = this.orderRepository.createQueryBuilder('order')
             .leftJoinAndSelect('order.customer', 'customer')
@@ -137,6 +137,31 @@ export class OrdersService {
 
         if (search) {
             qb.andWhere('(order.clientName ILike :search OR order.code ILike :search)', { search: `%${search}%` });
+        }
+
+        // Operational Alerts / Urgency Filtering
+        let urgencyVal = query.urgency || alertFilter;
+        if (urgencyVal) {
+            const normalizedVal = urgencyVal.toString().toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const now = new Date();
+            // REGLA: Excluir estados finales o "listos" para las alertas de urgencia operativas
+            const excludedAlertStatuses = [OrderStatus.DELIVERED, OrderStatus.CANCELLED, OrderStatus.DONE, OrderStatus.READY];
+            
+            if (normalizedVal === 'VENCIDO' || normalizedVal === 'OVERDUE' || alertFilter === 'overdue') {
+                // Overdue: Due date strictly before now
+                qb.andWhere('order.dueDate < :now', { now });
+                qb.andWhere('order.status NOT IN (:...excludedAlertStatuses)', { excludedAlertStatuses });
+            } else if (normalizedVal === 'PROXIMO' || normalizedVal === 'DUE-SOON' || normalizedVal === 'PRÓXIMO' || alertFilter === 'due-soon') {
+                // Due soon: Today or Tomorrow (as requested by user)
+                const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
+                const endOfTomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 23, 59, 59, 999);
+                
+                qb.andWhere('order.dueDate BETWEEN :start AND :end', { 
+                    start: startOfToday, 
+                    end: endOfTomorrow 
+                });
+                qb.andWhere('order.status NOT IN (:...excludedAlertStatuses)', { excludedAlertStatuses });
+            }
         }
 
         const [data, total] = await qb

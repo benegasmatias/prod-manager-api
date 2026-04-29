@@ -285,6 +285,14 @@ export class FindOrdersDto {
     @IsOptional()
     search?: string;
 
+    @IsOptional()
+    @IsString()
+    urgency?: string;
+
+    @IsOptional()
+    @IsString()
+    alertFilter?: string;
+
     @IsDate()
     @IsOptional()
     @Type(() => Date)
