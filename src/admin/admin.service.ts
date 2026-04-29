@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, IsNull } from 'typeorm';
+import { Repository, DataSource, IsNull, EntityManager } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
@@ -527,14 +527,15 @@ export class AdminService implements OnModuleInit {
         };
     }
 
-    async initializeCapabilitiesForNewBusiness(business: Business): Promise<void> {
+    async initializeCapabilitiesForNewBusiness(business: Business, manager?: EntityManager): Promise<void> {
+        const repo = manager ? manager.getRepository(Business) : this.businessRepository;
         const templates = await this.templateRepository.find();
         const template = templates.find(t => t.key === business.category);
 
         const audit = await this.calculateAlignment(business, template);
         if (audit.expected.length > 0) {
             business.capabilities = audit.expected;
-            await this.businessRepository.save(business);
+            await repo.save(business);
             await this.logAction('SYSTEM', 'CAPABILITIES_INITIALIZED', business.id, {
                 capabilities: audit.expected
             });

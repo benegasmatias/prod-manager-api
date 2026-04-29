@@ -151,7 +151,7 @@ export class BusinessesService {
 
             // Centrally initialize capabilities from template + system defaults
             // This avoids hardcoding capabilities here in the creation flow
-            await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse);
+            await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse, manager);
 
             // Fase 5.2: Suscripción por defecto (Atómica)
             await this.billingService.createDefaultSubscription(businessToUse.id, manager);
