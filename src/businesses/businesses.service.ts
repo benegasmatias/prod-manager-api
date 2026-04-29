@@ -75,8 +75,9 @@ export class BusinessesService {
     ) { }
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
-        const templates = await this.templateRepository.find();
-        console.log('DEBUG ALL TEMPLATES:', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
+        const allTemplates = await this.adminService.findAllTemplates();
+        const templates = allTemplates.filter(t => t.isEnabled === true);
+        console.log('DEBUG TEMPLATES v2 (getTemplates via AdminService):', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
 
         let userPlan = 'FREE';
         if (userId) {
@@ -87,13 +88,7 @@ export class BusinessesService {
         return templates.map(t => {
             const { accessible, reason } = this.checkPlanAccessibility(userPlan, t.requiredPlan);
             return {
-                key: t.key,
-                name: t.name,
-                description: t.description,
-                imageKey: t.imageKey,
-                isAvailable: t.isAvailable,
-                isComingSoon: t.isComingSoon,
-                requiredPlan: t.requiredPlan,
+                ...t,
                 accessible,
                 accessReason: reason
             };
