@@ -10,7 +10,7 @@ export class Payment {
     @Column({ name: 'order_id' })
     orderId: string;
 
-    @ManyToOne(() => Order, (order) => order.payments)
+    @ManyToOne(() => Order, (order) => order.payments, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'order_id' })
     order: Order;
 

@@ -13133,3 +13133,49 @@ Stack: BadRequestException: Bad Request Exception
     at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/@nestjs+core@11.1.14_@nestjs+common@11.1.14_class-transformer@0.5.1_class-validator@0.1_2e93e8e554e157cdfe689246ab3d8ea8/node_modules/@nestjs/core/router/router-execution-context.js:37:30
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-29T16:16:02.113Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"orders\" violates foreign key constraint \"FK_b2f7b823a21562eeca20e72b006\" on table \"payments\""
+Stack: QueryFailedError: update or delete on table "orders" violates foreign key constraint "FK_b2f7b823a21562eeca20e72b006" on table "payments"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async DeleteQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:641:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async BusinessesService.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:635:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-29T16:18:43.062Z
+Path: /businesses/cdf7b24c-1c47-4003-bc87-a41b0332f325
+Status: 500
+Message: "update or delete on table \"orders\" violates foreign key constraint \"FK_b2f7b823a21562eeca20e72b006\" on table \"payments\""
+Stack: QueryFailedError: update or delete on table "orders" violates foreign key constraint "FK_b2f7b823a21562eeca20e72b006" on table "payments"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async DeleteQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/DeleteQueryBuilder.ts:77:33)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:641:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async BusinessesService.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:635:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-29T16:38:54.097Z
+Path: /businesses
+Status: 500
+Message: "canceling statement due to statement timeout"
+Stack: QueryFailedError: canceling statement due to statement timeout
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async AdminService.initializeCapabilitiesForNewBusiness (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:537:13)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:160:13)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/.pnpm/typeorm@0.3.28_pg@8.19.0_ts-node@10.9.2_@types+node@22.19.13_typescript@5.9.3_/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async BusinessesService.createFromTemplate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/businesses.service.ts:135:16)
+-------------

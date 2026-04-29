@@ -25,6 +25,7 @@ import { PLAN_LIMITS } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
 import { AdminService } from '../admin/admin.service';
+import { Payment } from '../payments/entities/payment.entity';
 
 const DEFAULT_BASE_CONFIG = {
     sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
@@ -645,12 +646,28 @@ export class BusinessesService {
 
     async delete(businessId: string): Promise<any> {
         return await this.dataSource.transaction(async (manager) => {
-            // Delete associated data in order
+            // Find orders to delete related data
+            const orders = await manager.find(Order, { where: { businessId } });
+            const orderIds = orders.map(o => o.id);
+
+            if (orderIds.length > 0) {
+                // Delete payments first (blocking order deletion)
+                await manager.delete(Payment, { orderId: In(orderIds) });
+            }
+
+            // Delete associated data
+            await manager.delete(Order, { businessId });
+            await manager.delete(Customer, { businessId });
+            await manager.delete(Machine, { businessId });
+            await manager.delete(Material, { businessId });
             await manager.delete(Employee, { businessId });
             await manager.delete(BusinessSubscription, { businessId });
             await manager.delete(BusinessInvitation, { businessId });
             await manager.delete(BusinessMembership, { businessId });
+            
+            // Finally delete the business
             await manager.delete(Business, { id: businessId });
+            
             return { businessId, deleted: true };
         });
     }
