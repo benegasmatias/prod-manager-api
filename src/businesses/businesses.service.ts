@@ -76,8 +76,9 @@ export class BusinessesService {
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
         const templates = await this.templateRepository.find({
-            where: { isEnabled: true, key: In(['IMPRESION_3D', 'KIOSCO']) as any }
+            where: { isEnabled: true }
         });
+        console.log('DEBUG TEMPLATES (getTemplates):', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
 
         let userPlan = 'FREE';
         if (userId) {
@@ -119,17 +120,16 @@ export class BusinessesService {
     async createFromTemplate(userId: string, createDto: CreateBusinessFromTemplateDto): Promise<any> {
         await this.planUsageService.ensureBusinessCreationAllowed(userId);
 
-        const { templateKey, name, phone, email } = createDto;
+        const { templateKey, name, phone, email, metadata } = createDto;
         
-        // Restricción: Permitimos IMPRESION_3D y KIOSCO por ahora
-        if (!['IMPRESION_3D', 'KIOSCO'].includes(templateKey)) {
-            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D o Kiosco`);
-        }
-
         const template = await this.templateRepository.findOneBy({ key: templateKey as any });
 
         if (!template) {
             throw new NotFoundException(`Template with key ${templateKey} not found`);
+        }
+
+        if (!template.isEnabled) {
+            throw new ForbiddenException(`Este rubro (${template.name}) no está disponible para creación en este momento.`);
         }
 
         return await this.dataSource.transaction(async (manager) => {
@@ -151,7 +151,8 @@ export class BusinessesService {
                 plan: 'FREE',
                 capabilities: [], // Will be initialized by AdminService below
                 phone,
-                email
+                email,
+                metadata
             });
             const businessToUse = await manager.save(Business, business);
 

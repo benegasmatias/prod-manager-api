@@ -16,4 +16,7 @@ export class CreateBusinessFromTemplateDto {
     @IsOptional()
     @IsString()
     email?: string;
+
+    @IsOptional()
+    metadata?: any;
 }

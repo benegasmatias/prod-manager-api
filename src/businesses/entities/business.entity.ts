@@ -70,6 +70,9 @@ export class Business {
     @Column({ type: 'jsonb', default: [] })
     capabilities: string[];
 
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
+
     @Column({ name: 'admin_notes', type: 'text', nullable: true })
     adminNotes: string;
 
