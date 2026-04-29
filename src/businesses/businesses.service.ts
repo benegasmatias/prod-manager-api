@@ -75,10 +75,8 @@ export class BusinessesService {
     ) { }
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
-        const templates = await this.templateRepository.find({
-            where: { isEnabled: true }
-        });
-        console.log('DEBUG TEMPLATES (getTemplates):', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
+        const templates = await this.templateRepository.find();
+        console.log('DEBUG ALL TEMPLATES:', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
 
         let userPlan = 'FREE';
         if (userId) {
