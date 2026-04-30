@@ -1,6 +1,7 @@
 export enum OrderType {
     CLIENT = 'CLIENT',
-    STOCK = 'STOCK'
+    STOCK = 'STOCK',
+    CUSTOM = 'CUSTOM'
 }
 
 export enum OrderStatus {
