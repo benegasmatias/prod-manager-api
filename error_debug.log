@@ -13468,3 +13468,27 @@ Stack: UnauthorizedException: Token inválido o expirado
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-04-30T20:08:25.648Z
+Path: /orders/0d3286f2-1c41-4af3-bfe5-a583f9d7f6bb/items/b27020e1-8828-4cac-a91a-a73cdb6140c1/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-04-30T20:47:39.253Z
+Path: /orders/0d3286f2-1c41-4af3-bfe5-a583f9d7f6bb/items/b27020e1-8828-4cac-a91a-a73cdb6140c1/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------

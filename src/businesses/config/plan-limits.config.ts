@@ -15,7 +15,7 @@ export const PLAN_LIMITS: Record<string, PlanLimits> = {
         maxBusinessesPerUser: 1,
         maxMachinesPerBusiness: 3,
         maxEmployeesPerBusiness: 1,
-        maxOrdersPerMonth: 15,
+        maxOrdersPerMonth: 10,
         features: {
             hasMaterials: false,
             hasVisits: false,

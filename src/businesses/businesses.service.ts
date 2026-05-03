@@ -432,6 +432,17 @@ export class BusinessesService {
             OrderStatus.OFFICIAL_ORDER
         ];
 
+        // Statuses that contribute to the financial pending balance (Accounts Receivable)
+        const FINANCIAL_PENDING_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED,
+            OrderStatus.READY, OrderStatus.DONE, OrderStatus.DESIGN,
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK,
+            OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER, OrderStatus.INSTALACION_OBRA,
+            OrderStatus.DELIVERED, OrderStatus.READY_FOR_DELIVERY, OrderStatus.SITE_VISIT_DONE
+        ];
+
         const business = await this.businessRepository.findOneBy({ id: businessId });
         const capabilities = business?.capabilities || [];
         const hasProduction = capabilities.includes('PRODUCTION_MANAGEMENT');
@@ -454,8 +465,8 @@ export class BusinessesService {
                 .getRawOne(),
             
             this.orderRepository.find({
-                where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
-                relations: ['items', 'siteInfo']
+                where: { businessId, status: In(FINANCIAL_PENDING_STATUSES) },
+                relations: ['items', 'siteInfo', 'payments']
             }),
 
             // Capability-Gated: Machines
@@ -489,10 +500,25 @@ export class BusinessesService {
         ]);
 
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
+            // We ignore STOCK orders for pending balance as they are internal/pre-paid
+            if (order.type === OrderType.STOCK) return acc;
+            
             const total = Number(order.totalPrice) || 0;
-            const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            
+            // Comprehensive paid calculation: Payments + Deposits (Items) + totalSenias (Order)
             const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
-            return acc + (total - deposits - payments);
+            const itemDeposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            const totalSenias = Number(order.totalSenias || 0);
+            
+            // To avoid double counting, we take the sum but we know some systems might store them in different places
+            // In this app, paid amount = max of (payments + itemDeposits) and totalSenias if they are redundant, 
+            // but standardizing to the sum of all tracked payments/senias is safer if they are distinct.
+            // Usually totalSenias is the sum of itemDeposits or a separate field.
+            // Re-checking OrderFinancialService logic: it uses order.payments + order.items.deposit.
+            const paid = payments + Math.max(itemDeposits, totalSenias);
+            
+            const balance = Math.max(0, total - paid);
+            return acc + balance;
         }, 0);
 
         const strategy = this.strategyProvider.getStrategy(business?.category);
