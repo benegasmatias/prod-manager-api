@@ -13563,3 +13563,251 @@ Stack: Error: Connection terminated due to connection timeout
     at Socket.emit (node:events:520:35)
     at TCP.<anonymous> (node:net:346:12)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:31:34.259Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:31:35.656Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:31:36.928Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:33:43.893Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:34:07.490Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:35:33.783Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:35:40.300Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:40:13.751Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:40:27.954Z
+Path: /admin/users/654bb45d-8137-487d-ad14-7f08b9d59db8
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:40:35.891Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:40:39.531Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminController.getUserDetail (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.controller.ts:150:34)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:42:16.341Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42/approve
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminService.approveUser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:354:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:42:31.945Z
+Path: /admin/users/9f002e76-e172-47f7-b830-592c024c1b42/approve
+Status: 500
+Message: "Property \"memberships\" was not found in \"User\". Make sure your query is correct."
+Stack: EntityPropertyNotFoundError: Property "memberships" was not found in "User". Make sure your query is correct.
+    at <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3995:23)
+    at Array.forEach (<anonymous>)
+    at SelectQueryBuilder.buildRelations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3987:32)
+    at SelectQueryBuilder.applyFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:3176:22)
+    at SelectQueryBuilder.setFindOptions (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/SelectQueryBuilder.ts:106:14)
+    at EntityManager.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:1225:14)
+    at Repository.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/repository/src/repository/Repository.ts:626:29)
+    at AdminService.findUserById (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:333:48)
+    at AdminService.approveUser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/admin/admin.service.ts:354:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:46:52.677Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------

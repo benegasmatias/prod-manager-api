@@ -13,6 +13,7 @@ import { SubscriptionReminderService } from './tasks/subscription-reminder.servi
 import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation } from '../businesses/entities/business-invitation.entity';
 import { BusinessesModule } from '../businesses/businesses.module';
+import { BusinessMembership } from '../businesses/entities/business-membership.entity';
 
 @Module({
 
@@ -20,6 +21,7 @@ import { BusinessesModule } from '../businesses/businesses.module';
         TypeOrmModule.forFeature([
             Business, 
             User, 
+            BusinessMembership,
             GlobalRoleConfig, 
             SubscriptionPlan, 
             BusinessTemplate, 

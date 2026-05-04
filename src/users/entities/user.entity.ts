@@ -1,4 +1,5 @@
-import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { BusinessMembership } from '../../businesses/entities/business-membership.entity';
 
 @Entity('users')
 export class User {
@@ -40,6 +41,9 @@ export class User {
 
     @Column({ type: 'timestamp', name: 'terms_accepted_at', nullable: true })
     termsAcceptedAt: Date;
+
+    @OneToMany(() => BusinessMembership, (membership) => membership.user)
+    memberships: BusinessMembership[];
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

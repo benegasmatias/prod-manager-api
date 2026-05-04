@@ -12,7 +12,7 @@ export class BusinessMembership {
     @Column({ name: 'user_id', type: 'uuid' })
     userId: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, (user) => user.memberships)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
