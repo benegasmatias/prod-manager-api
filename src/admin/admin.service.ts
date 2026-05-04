@@ -206,7 +206,7 @@ export class AdminService implements OnModuleInit {
     async findAllBusinesses(): Promise<any[]> {
         const businesses = await this.businessRepository.find({
             order: { createdAt: 'DESC' },
-            relations: ['memberships'],
+            relations: ['memberships', 'memberships.user'],
         });
 
         const orderRepo = this.dataSource.getRepository('Order');

@@ -13811,3 +13811,144 @@ Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requeri
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:48:52.609Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:54:40.928Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:55:23.046Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:55:24.887Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:56:55.437Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:02:27.208Z
+Path: /businesses/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb/dashboard-summary
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:10:14.059Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:10:20.329Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:13:11.803Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
