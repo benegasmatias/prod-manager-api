@@ -1,5 +1,5 @@
 import { Type, Transform } from 'class-transformer';
-import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean } from 'class-validator';
+import { IsArray, IsDate, IsEnum, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString, Min, ValidateNested, IsBoolean, ValidateIf } from 'class-validator';
 import { OrderStatus, OrderType } from '../../common/enums';
 
 export class OrderSiteInfoDto {
@@ -81,14 +81,21 @@ export class CreateOrderItemDto {
     @IsOptional()
     referenceImages?: any[];
 
+    @IsBoolean()
+    @IsOptional()
+    isPendingQuote?: boolean;
+
+    @ValidateIf(o => !o.isPendingQuote)
     @IsInt()
     @Min(0)
     estimatedMinutes: number;
 
+    @ValidateIf(o => !o.isPendingQuote)
     @IsNumber()
     @Min(0)
     weightGrams: number;
 
+    @ValidateIf(o => !o.isPendingQuote)
     @IsNumber()
     @Min(0)
     price: number;
@@ -277,6 +284,14 @@ export class FindOrdersDto {
     @IsString()
     @IsOptional()
     search?: string;
+
+    @IsOptional()
+    @IsString()
+    urgency?: string;
+
+    @IsOptional()
+    @IsString()
+    alertFilter?: string;
 
     @IsDate()
     @IsOptional()

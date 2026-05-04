@@ -31,6 +31,10 @@ export class CreatePlanDto {
     features?: string[];
 
     @IsOptional()
+    @IsArray()
+    sidebarItems?: string[];
+
+    @IsOptional()
     @Type(() => Number)
     @IsNumber()
     maxUsers?: number;
@@ -79,6 +83,24 @@ export class CreatePlanDto {
     @Type(() => Number)
     @IsNumber()
     trialDays?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoPrice?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoDurationMonths?: number;
+
+    @IsOptional()
+    @IsString()
+    promoLabel?: string;
+
+    @IsOptional()
+    metadata?: any;
+
 }
 
 export class UpdatePlanDto {
@@ -109,6 +131,10 @@ export class UpdatePlanDto {
     features?: string[];
 
     @IsOptional()
+    @IsArray()
+    sidebarItems?: string[];
+
+    @IsOptional()
     @Type(() => Number)
     @IsNumber()
     maxUsers?: number;
@@ -157,4 +183,22 @@ export class UpdatePlanDto {
     @Type(() => Number)
     @IsNumber()
     trialDays?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoPrice?: number;
+
+    @IsOptional()
+    @Type(() => Number)
+    @IsNumber()
+    promoDurationMonths?: number;
+
+    @IsOptional()
+    @IsString()
+    promoLabel?: string;
+
+    @IsOptional()
+    metadata?: any;
+
 }

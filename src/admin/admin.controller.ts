@@ -114,6 +114,16 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Patch('businesses/:id/capabilities')
+    async updateBusinessCapabilities(
+        @Request() req,
+        @Param('id') id: string,
+        @Body() body: { capabilities: string[] }
+    ) {
+        return this.adminService.updateBusinessCapabilities(id, body.capabilities, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Patch('businesses/:id/payment')
     async registerPayment(@Request() req, @Param('id') id: string, @Body() body: { months: number }) {
         return this.adminService.registerPayment(id, body.months || 1, req.user.id);
@@ -213,6 +223,12 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Post('templates')
+    async createTemplate(@Request() req, @Body() body: any) {
+        return this.adminService.createTemplate(body);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Patch('templates/:key')
     async updateTemplate(@Request() req, @Param('key') key: string, @Body() body: any) {
         return this.adminService.updateTemplate(key, body);
@@ -271,5 +287,10 @@ export class PlansPublicController {
     @Get()
     async getActivePlans(@Query('category') category?: string) {
         return this.adminService.findActivePlans(category);
+    }
+    @UseGuards(GlobalAdminGuard)
+    @Post('seed-debug')
+    async seedDebug(@Request() req, @Body('email') email: string) {
+        return this.adminService.seedDebugOrders(email || req.user.email);
     }
 }

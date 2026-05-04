@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, IsNull } from 'typeorm';
+import { Repository, DataSource, IsNull, EntityManager } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
@@ -55,14 +55,18 @@ export class AdminService implements OnModuleInit {
         const defaults: CreatePlanDto[] = [
             {
                 id: 'free-3d',
-                name: 'Free por Siempre',
+                name: 'FREE POR SIEMPRE',
                 category: 'IMPRESION_3D',
                 price: 0,
                 currency: 'ARS',
                 description: 'Ideal para hobbistas y makers solitarios.',
-                features: ['30 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes', 'Reportes basicos'],
+                features: ['10 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes'],
+                sidebarItems: [
+                    '/dashboard', '/pedidos', '/clientes',
+                    '/produccion', '/stock', '/maquinas', '/materiales', '/ajustes'
+                ],
                 maxUsers: 1,
-                maxOrdersPerMonth: 30,
+                maxOrdersPerMonth: 10,
                 maxBusinesses: 1,
                 maxMachines: 1,
                 isRecommended: false,
@@ -75,12 +79,20 @@ export class AdminService implements OnModuleInit {
             },
             {
                 id: 'pro-3d',
-                name: 'Taller Inicial',
+                name: 'TALLER INICIAL',
                 category: 'IMPRESION_3D',
-                price: 8900,
+                price: 19900,
+                promoPrice: 7900,
+                promoDurationMonths: 6,
+                promoLabel: 'OFERTA LANZAMIENTO',
                 currency: 'ARS',
                 description: 'Para pequeños talleres que empiezan a crecer.',
-                features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario'],
+                features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario', 'Calendario'],
+                sidebarItems: [
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes',
+                    '/produccion', '/produccion/calendario', '/stock',
+                    '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'
+                ],
                 maxUsers: 2,
                 maxOrdersPerMonth: 60,
                 maxBusinesses: 1,
@@ -95,16 +107,19 @@ export class AdminService implements OnModuleInit {
             },
             {
                 id: 'business-3d',
-                name: 'Granja Produccion',
+                name: 'GRANJA PRODUCCION',
                 category: 'IMPRESION_3D',
-                price: 24500,
+                price: 39900,
+                promoPrice: 15900,
+                promoDurationMonths: 6,
+                promoLabel: 'OFERTA LANZAMIENTO',
                 currency: 'ARS',
                 description: 'Para granjas con alto volumen de produccion.',
-                features: ['Ilimitados pedidos', 'Ilimitadas impresoras', '10 usuarios', 'Full Dashboard', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario'],
-                maxUsers: 10,
-                maxOrdersPerMonth: 0,
+                features: ['120 pedidos', '5 impresoras', '5 usuarios', 'Full Dashboard', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Calendario'],
+                maxUsers: 5,
+                maxOrdersPerMonth: 120,
                 maxBusinesses: 1,
-                maxMachines: 0,
+                maxMachines: 5,
                 isRecommended: false,
                 ctaText: 'Mejorar ahora',
                 ctaLink: '/register',
@@ -112,7 +127,14 @@ export class AdminService implements OnModuleInit {
                 active: true,
                 hasTrial: true,
                 trialDays: 7,
-            },
+                metadata: {
+                    gestionMateriales: 'Avanzada',
+                    trazabilidadFallas: true,
+                    reportesEficiencia: true,
+                    apiWebhooks: true,
+                    soporte: 'Dedicado'
+                }
+            }
         ];
 
         for (const planData of defaults) {
@@ -122,7 +144,7 @@ export class AdminService implements OnModuleInit {
                     await this.planRepository.save(this.planRepository.create(planData));
                     console.log(`[SEED] Created new plan: ${planData.id}`);
                 }
-                // We REMOVED the update logic so manual changes in DB persist!
+                // No overwriting existing plans to preserve manual edits
             } catch (err) {
                 console.error(`[SEED] Error in plan ${planData.id}:`, err.message);
             }
@@ -181,11 +203,29 @@ export class AdminService implements OnModuleInit {
         return this.notificationsService.create(data);
     }
 
-    async findAllBusinesses(): Promise<Business[]> {
-        return this.businessRepository.find({
+    async findAllBusinesses(): Promise<any[]> {
+        const businesses = await this.businessRepository.find({
             order: { createdAt: 'DESC' },
             relations: ['memberships'],
         });
+
+        const orderRepo = this.dataSource.getRepository('Order');
+        const materialRepo = this.dataSource.getRepository('Material');
+
+        return await Promise.all(businesses.map(async b => {
+            const [orderCount, materialCount] = await Promise.all([
+                orderRepo.countBy({ businessId: b.id }),
+                materialRepo.countBy({ businessId: b.id })
+            ]);
+
+            return {
+                ...b,
+                stats: {
+                    totalOrders: orderCount,
+                    totalMaterials: materialCount
+                }
+            };
+        }));
     }
 
     async findBusinessById(id: string): Promise<Business> {
@@ -220,6 +260,12 @@ export class AdminService implements OnModuleInit {
         }, ['businessId']);
 
         await this.logAction(adminId, 'BUSINESS_SUBSCRIPTION_UPDATE', id, { planId, expiresAt });
+        return this.findBusinessById(id);
+    }
+
+    async updateBusinessCapabilities(id: string, capabilities: string[], adminId: string): Promise<Business> {
+        await this.businessRepository.update(id, { capabilities });
+        await this.logAction(adminId, 'BUSINESS_CAPABILITIES_UPDATE', id, { capabilities });
         return this.findBusinessById(id);
     }
 
@@ -449,14 +495,15 @@ export class AdminService implements OnModuleInit {
         };
     }
 
-    async initializeCapabilitiesForNewBusiness(business: Business): Promise<void> {
+    async initializeCapabilitiesForNewBusiness(business: Business, manager?: EntityManager): Promise<void> {
+        const repo = manager ? manager.getRepository(Business) : this.businessRepository;
         const templates = await this.templateRepository.find();
         const template = templates.find(t => t.key === business.category);
 
         const audit = await this.calculateAlignment(business, template);
         if (audit.expected.length > 0) {
             business.capabilities = audit.expected;
-            await this.businessRepository.save(business);
+            await repo.save(business);
             await this.logAction('SYSTEM', 'CAPABILITIES_INITIALIZED', business.id, {
                 capabilities: audit.expected
             });
@@ -489,6 +536,11 @@ export class AdminService implements OnModuleInit {
         if (!template) throw new NotFoundException('Template no encontrado');
 
         Object.assign(template, data);
+        return this.templateRepository.save(template);
+    }
+
+    async createTemplate(data: Partial<BusinessTemplate>): Promise<BusinessTemplate> {
+        const template = this.templateRepository.create(data);
         return this.templateRepository.save(template);
     }
 
@@ -531,5 +583,82 @@ export class AdminService implements OnModuleInit {
             globalRoles: roles.map(r => ({ id: r.role, label: r.role.replace('_', ' ') })),
             plans: await this.planRepository.find({ select: ['id', 'name'] })
         };
+    }
+    async seedDebugOrders(email: string) {
+        const user = await this.userRepository.findOne({ where: { email } });
+        if (!user || !user.defaultBusinessId) {
+            throw new NotFoundException('Usuario o negocio por defecto no encontrado');
+        }
+
+        const businessId = user.defaultBusinessId;
+
+        // Usamos transaccion para asegurar integridad
+        return await this.dataSource.transaction(async (manager) => {
+            const Order = (await import('../orders/entities/order.entity')).Order;
+            const OrderItem = (await import('../orders/entities/order-item.entity')).OrderItem;
+            const OrderStatus = (await import('../common/enums')).OrderStatus;
+            const OrderType = (await import('../common/enums')).OrderType;
+
+            const ordersData = [
+                {
+                    clientName: 'Coleccionables San Juan',
+                    notes: 'Impresión en resina o PLA de alta calidad. Acabado mate.',
+                    items: [
+                        { name: 'Busto Batman 1:4 - Detalle Ultra', qty: 1, price: 15000, weightGrams: 450, estimatedMinutes: 1200 }
+                    ],
+                    status: OrderStatus.IN_PROGRESS,
+                    priority: 2,
+                    dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
+                },
+                {
+                    clientName: 'Industrias RB',
+                    notes: 'Repuestos mecánicos. Requiere 100% relleno.',
+                    items: [
+                        { name: 'Engranaje Helicoidal Z24 - Nylon CF', qty: 10, price: 2500, weightGrams: 45, estimatedMinutes: 180 }
+                    ],
+                    status: OrderStatus.PENDING,
+                    priority: 1,
+                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+                },
+                {
+                    clientName: 'Decoración Natural',
+                    notes: 'Serie de macetas para local comercial.',
+                    items: [
+                        { name: 'Maceta Autorregable Octo - PLA Wood', qty: 5, price: 4200, weightGrams: 180, estimatedMinutes: 360 }
+                    ],
+                    status: OrderStatus.DONE,
+                    priority: 3,
+                    dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)
+                }
+            ];
+
+            const createdOrders = [];
+
+            for (const data of ordersData) {
+                const { items, ...orderInfo } = data;
+
+                const order = manager.create(Order, {
+                    ...orderInfo,
+                    businessId,
+                    type: OrderType.CUSTOM,
+                    totalPrice: items.reduce((acc, i) => acc + (i.price * i.qty), 0),
+                    totalSenias: 0
+                });
+
+                const savedOrder = await manager.save(Order, order);
+
+                for (const itemData of items) {
+                    const item = manager.create(OrderItem, {
+                        ...itemData,
+                        orderId: savedOrder.id,
+                        businessId
+                    });
+                    await manager.save(OrderItem, item);
+                }
+                createdOrders.push(savedOrder);
+            }
+
+            return { message: 'Seed de ejemplos completado', count: createdOrders.length };
+        });
     }
 }

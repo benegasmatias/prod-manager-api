@@ -258,14 +258,20 @@ export class BillingService {
                 // 1. Actualizar Suscripción
                 const subscription = await this.subscriptionRepository.findOneBy({ businessId });
                 if (subscription) {
+                    const today = new Date();
+                    const currentEnd = subscription.currentPeriodEnd ? new Date(subscription.currentPeriodEnd) : today;
+                    
+                    // "Stacking" logic: Si paga antes de vencer, sumamos al vencimiento actual.
+                    // Si ya venció o no tenía, empezamos desde hoy.
+                    const startDate = currentEnd > today ? currentEnd : today;
+                    const nextPeriod = new Date(startDate);
+                    nextPeriod.setDate(nextPeriod.getDate() + 30);
+
                     subscription.status = SubscriptionStatus.ACTIVE;
                     subscription.plan = planId || subscription.plan;
                     subscription.externalPaymentId = payment.id.toString();
-                    subscription.lastPaymentAt = new Date();
-                    
-                    // Extender período (ej: 30 días si es mensual)
-                    const nextPeriod = new Date();
-                    nextPeriod.setDate(nextPeriod.getDate() + 30);
+                    subscription.lastPaymentAt = today;
+                    subscription.currentPeriodStart = startDate;
                     subscription.currentPeriodEnd = nextPeriod;
                     subscription.gracePeriodEndAt = null;
 
@@ -281,11 +287,72 @@ export class BillingService {
                         businessId, 
                         businessId, 
                         null, 
-                        { event: 'MP_PAYMENT_APPROVED', paymentId: payment.id, planId }
+                        { event: 'MP_PAYMENT_APPROVED', paymentId: payment.id, planId, newExpiry: nextPeriod }
                     );
                 }
             }
         }
+    }
+
+    /**
+     * Degrada un negocio al plan free correspondiente
+     */
+    async downgradeToFree(businessId: string, actorUserId?: string): Promise<BusinessSubscription> {
+        const subscription = await this.subscriptionRepository.findOneBy({ businessId });
+        if (!subscription) throw new NotFoundException('Suscripción no encontrada');
+
+        const business = await this.businessRepository.findOneBy({ id: businessId });
+        if (!business) throw new NotFoundException('Negocio no encontrado');
+
+        const previousPlan = subscription.plan;
+
+        // Buscar el plan gratuito para esta categoría
+        const freePlan = await this.planRepository.findOne({ 
+            where: { 
+                category: business.category, 
+                price: 0,
+                active: true 
+            },
+            order: { sortOrder: 'ASC' }
+        }) || await this.planRepository.findOne({ 
+            where: { 
+                category: null, 
+                price: 0,
+                active: true 
+            },
+            order: { sortOrder: 'ASC' }
+        });
+
+        const freePlanId = freePlan?.id || 'FREE';
+        
+        subscription.plan = freePlanId;
+        subscription.status = SubscriptionStatus.ACTIVE; // Activo pero en modo free
+        subscription.currentPeriodEnd = null;
+        subscription.gracePeriodEndAt = null;
+        
+        const saved = await this.subscriptionRepository.save(subscription);
+
+        // 1. Sincronizar campos legados
+        await this.businessRepository.update(businessId, { 
+            plan: freePlanId,
+            status: BusinessStatus.ACTIVE, // El negocio vuelve a estar activo bajo el plan free
+            acceptingOrders: true 
+        });
+
+        // 2. RECONCILIACIÓN DE CUOTA: Bloquear lo que sobre inmediatamente
+        await this.planUsageService.reconcileQuota(businessId);
+
+        // 3. Notificación Final
+        await this.auditService.log(
+            AuditAction.BUSINESS_STATUS_CHANGED, 
+            'SUBSCRIPTION', 
+            businessId, 
+            businessId, 
+            actorUserId || null, 
+            { event: 'AUTO_DOWNGRADE_TO_FREE', previousPlan, nextPlan: freePlanId }
+        );
+
+        return saved;
     }
 
     // --- Webhook Resilience Layer ---

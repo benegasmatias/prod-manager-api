@@ -25,9 +25,10 @@ import { PLAN_LIMITS } from './config/plan-limits.config';
 import { AuditService } from '../audit/audit.service';
 import { AuditAction } from '../audit/entities/audit-log.entity';
 import { AdminService } from '../admin/admin.service';
+import { Payment } from '../payments/entities/payment.entity';
 
 const DEFAULT_BASE_CONFIG = {
-    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
+    sidebarItems: ['/dashboard', '/pedidos', '/calculadora', '/stock', '/clientes', '/ajustes'],
     labels: { produccion: 'Producción', items: 'Trabajos' },
     icons: { pedidos: 'Box', produccion: 'Cpu' },
     stats: [
@@ -74,9 +75,9 @@ export class BusinessesService {
     ) { }
 
     async getTemplates(userId?: string): Promise<BusinessTemplateDto[]> {
-        const templates = await this.templateRepository.find({
-            where: { isEnabled: true, key: In(['IMPRESION_3D', 'KIOSCO']) as any }
-        });
+        const allTemplates = await this.adminService.findAllTemplates();
+        const templates = allTemplates.filter(t => t.isEnabled === true);
+        console.log('DEBUG TEMPLATES v2 (getTemplates via AdminService):', templates.map(t => ({ key: t.key, isEnabled: t.isEnabled })));
 
         let userPlan = 'FREE';
         if (userId) {
@@ -87,13 +88,7 @@ export class BusinessesService {
         return templates.map(t => {
             const { accessible, reason } = this.checkPlanAccessibility(userPlan, t.requiredPlan);
             return {
-                key: t.key,
-                name: t.name,
-                description: t.description,
-                imageKey: t.imageKey,
-                isAvailable: t.isAvailable,
-                isComingSoon: t.isComingSoon,
-                requiredPlan: t.requiredPlan,
+                ...t,
                 accessible,
                 accessReason: reason
             };
@@ -118,17 +113,16 @@ export class BusinessesService {
     async createFromTemplate(userId: string, createDto: CreateBusinessFromTemplateDto): Promise<any> {
         await this.planUsageService.ensureBusinessCreationAllowed(userId);
 
-        const { templateKey, name, phone, email } = createDto;
+        const { templateKey, name, phone, email, metadata } = createDto;
         
-        // Restricción: Permitimos IMPRESION_3D y KIOSCO por ahora
-        if (!['IMPRESION_3D', 'KIOSCO'].includes(templateKey)) {
-            throw new ForbiddenException(`Por el momento solo se permite crear negocios de Impresión 3D o Kiosco`);
-        }
-
         const template = await this.templateRepository.findOneBy({ key: templateKey as any });
 
         if (!template) {
             throw new NotFoundException(`Template with key ${templateKey} not found`);
+        }
+
+        if (!template.isEnabled) {
+            throw new ForbiddenException(`Este rubro (${template.name}) no está disponible para creación en este momento.`);
         }
 
         return await this.dataSource.transaction(async (manager) => {
@@ -150,13 +144,14 @@ export class BusinessesService {
                 plan: 'FREE',
                 capabilities: [], // Will be initialized by AdminService below
                 phone,
-                email
+                email,
+                metadata
             });
             const businessToUse = await manager.save(Business, business);
 
             // Centrally initialize capabilities from template + system defaults
             // This avoids hardcoding capabilities here in the creation flow
-            await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse);
+            await this.adminService.initializeCapabilitiesForNewBusiness(businessToUse, manager);
 
             // Fase 5.2: Suscripción por defecto (Atómica)
             await this.billingService.createDefaultSubscription(businessToUse.id, manager);
@@ -323,9 +318,22 @@ export class BusinessesService {
         }
 
         // SaaS Gating (Subscription Source of Truth)
-        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const planId = business?.subscription?.plan || business?.plan || 'FREE';
         const subscriptionStatus = business?.subscription?.status || 'ACTIVE';
-        const limits = await this.planUsageService.getLimitsForPlan(plan);
+        const limits = await this.planUsageService.getLimitsForPlan(planId);
+        
+        // --- Plan-Based Menu Enforcement ---
+        try {
+            const planConfig = await this.adminService.findPlanById(planId);
+            if (planConfig?.sidebarItems && planConfig.sidebarItems.length > 0) {
+                // If plan defines specific items, it takes precedence over the rubro defaults
+                config.sidebarItems = planConfig.sidebarItems;
+            }
+        } catch (e) {
+            console.error(`[BusinessesService] Error loading plan config for menu enforcement: ${planId}`, e.message);
+        }
+        // ------------------------------------
+
         if (config.features) {
             config.features.hasMaterials = limits.features.hasMaterials;
         }
@@ -345,8 +353,8 @@ export class BusinessesService {
             userRole,
             userPermissions,
             subscription: {
-                planId: plan,
-                planName: limits.name || plan,
+                planId: planId,
+                planName: limits.name || planId,
                 status: subscriptionStatus,
                 currentPeriodEnd: business?.subscription?.currentPeriodEnd,
                 trialEndAt: business?.subscription?.trialEndAt,
@@ -437,6 +445,17 @@ export class BusinessesService {
             OrderStatus.OFFICIAL_ORDER
         ];
 
+        // Statuses that contribute to the financial pending balance (Accounts Receivable)
+        const FINANCIAL_PENDING_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.CONFIRMED,
+            OrderStatus.READY, OrderStatus.DONE, OrderStatus.DESIGN,
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.IN_STOCK,
+            OrderStatus.APPROVED, OrderStatus.OFFICIAL_ORDER, OrderStatus.INSTALACION_OBRA,
+            OrderStatus.DELIVERED, OrderStatus.READY_FOR_DELIVERY, OrderStatus.SITE_VISIT_DONE
+        ];
+
         const business = await this.businessRepository.findOneBy({ id: businessId });
         const capabilities = business?.capabilities || [];
         const hasProduction = capabilities.includes('PRODUCTION_MANAGEMENT');
@@ -459,8 +478,8 @@ export class BusinessesService {
                 .getRawOne(),
             
             this.orderRepository.find({
-                where: { businessId, status: In(ACTIVE_WORKING_STATUSES) },
-                relations: ['items', 'siteInfo']
+                where: { businessId, status: In(FINANCIAL_PENDING_STATUSES) },
+                relations: ['items', 'siteInfo', 'payments']
             }),
 
             // Capability-Gated: Machines
@@ -494,10 +513,25 @@ export class BusinessesService {
         ]);
 
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
+            // We ignore STOCK orders for pending balance as they are internal/pre-paid
+            if (order.type === OrderType.STOCK) return acc;
+            
             const total = Number(order.totalPrice) || 0;
-            const deposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            
+            // Comprehensive paid calculation: Payments + Deposits (Items) + totalSenias (Order)
             const payments = order.payments?.reduce((iAcc, p) => iAcc + Number(p.amount || 0), 0) || 0;
-            return acc + (total - deposits - payments);
+            const itemDeposits = order.items?.reduce((iAcc, item) => iAcc + Number(item.deposit || 0), 0) || 0;
+            const totalSenias = Number(order.totalSenias || 0);
+            
+            // To avoid double counting, we take the sum but we know some systems might store them in different places
+            // In this app, paid amount = max of (payments + itemDeposits) and totalSenias if they are redundant, 
+            // but standardizing to the sum of all tracked payments/senias is safer if they are distinct.
+            // Usually totalSenias is the sum of itemDeposits or a separate field.
+            // Re-checking OrderFinancialService logic: it uses order.payments + order.items.deposit.
+            const paid = payments + Math.max(itemDeposits, totalSenias);
+            
+            const balance = Math.max(0, total - paid);
+            return acc + balance;
         }, 0);
 
         const strategy = this.strategyProvider.getStrategy(business?.category);
@@ -521,17 +555,25 @@ export class BusinessesService {
         const limitOneDay = new Date(now.getTime() + ONE_DAY_MS);
 
         // 1. Alerta de pedidos CRÍTICOS (Hoy o Mañana)
+        // REGLA: Solo los que están en producción/pendiente (WIP)
+        const WIP_STATUSES = [
+            OrderStatus.PENDING, OrderStatus.IN_PROGRESS, OrderStatus.DESIGN, 
+            OrderStatus.CUTTING, OrderStatus.WELDING, OrderStatus.ASSEMBLY,
+            OrderStatus.PAINTING, OrderStatus.BARNIZADO, OrderStatus.POST_PROCESS,
+            OrderStatus.REPRINT_PENDING, OrderStatus.RE_WORK, OrderStatus.OFFICIAL_ORDER
+        ];
+
         const criticalOrders = activeOrdersWithItems.filter(o => {
-            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            if (!o.dueDate || !WIP_STATUSES.includes(o.status)) return false;
             const d = new Date(o.dueDate);
-            return d > now && d <= limitOneDay;
+            return d <= limitOneDay; // Incluye vencidos en producción y los de hoy/mañana
         });
 
         if (criticalOrders.length > 0) {
             alerts.push({
                 type: 'critical',
                 title: 'Entregas Inminentes',
-                message: `¡Atención! Tenés ${criticalOrders.length} pedidos que vencen HOY o MAÑANA.`,
+                message: `¡Atención! Tenés ${criticalOrders.length} pedidos en producción que vencen PRONTO o están REZAGADOS.`,
                 actionLabel: 'Priorizar Ahora',
                 actionLink: '/pedidos'
             });
@@ -539,7 +581,7 @@ export class BusinessesService {
 
         // 2. Alerta de pedidos próximos a vencer (3 días)
         const upcomingOrders = activeOrdersWithItems.filter(o => {
-            if (!o.dueDate || o.status === OrderStatus.DELIVERED) return false;
+            if (!o.dueDate || !WIP_STATUSES.includes(o.status)) return false;
             const d = new Date(o.dueDate);
             // Solo los que no están ya en el balde de "críticos"
             return d > limitOneDay && d <= limitThreeDays;
@@ -549,20 +591,24 @@ export class BusinessesService {
             alerts.push({
                 type: 'warning',
                 title: 'Próximos Vencimientos',
-                message: `Tenés ${upcomingOrders.length} pedidos para entregar en los próximos 3 días.`,
+                message: `Tenés ${upcomingOrders.length} pedidos en proceso para entregar en los próximos 3 días.`,
                 actionLabel: 'Ver Agenda',
                 actionLink: '/pedidos'
             });
         }
 
-        // 3. Alerta de pedidos vencidos
-        if (realOverdue.length > 0) {
+        // 3. Alerta de pedidos vencidos SIN ENTREGAR (Ya están listos pero no se entregaron)
+        const readyOverdue = realOverdue.filter(o => 
+            [OrderStatus.READY, OrderStatus.DONE, OrderStatus.READY_FOR_DELIVERY].includes(o.status)
+        );
+
+        if (readyOverdue.length > 0) {
             alerts.push({
                 type: 'error',
                 title: 'Pedidos Vencidos',
-                message: `Hay ${realOverdue.length} pedidos con fecha de entrega cumplida sin entregar.`,
-                actionLabel: 'Revisar Mora',
-                actionLink: '/pedidos'
+                message: `Hay ${readyOverdue.length} pedidos LISTOS con fecha cumplida sin entregar.`,
+                actionLabel: 'Llamar Cliente',
+                actionLink: '/pedidos?status=READY'
             });
         }
 
@@ -633,12 +679,28 @@ export class BusinessesService {
 
     async delete(businessId: string): Promise<any> {
         return await this.dataSource.transaction(async (manager) => {
-            // Delete associated data in order
+            // Find orders to delete related data
+            const orders = await manager.find(Order, { where: { businessId } });
+            const orderIds = orders.map(o => o.id);
+
+            if (orderIds.length > 0) {
+                // Delete payments first (blocking order deletion)
+                await manager.delete(Payment, { orderId: In(orderIds) });
+            }
+
+            // Delete associated data
+            await manager.delete(Order, { businessId });
+            await manager.delete(Customer, { businessId });
+            await manager.delete(Machine, { businessId });
+            await manager.delete(Material, { businessId });
             await manager.delete(Employee, { businessId });
             await manager.delete(BusinessSubscription, { businessId });
             await manager.delete(BusinessInvitation, { businessId });
             await manager.delete(BusinessMembership, { businessId });
+            
+            // Finally delete the business
             await manager.delete(Business, { id: businessId });
+            
             return { businessId, deleted: true };
         });
     }

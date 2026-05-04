@@ -18,7 +18,12 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
 
   app.enableCors({
-    origin: '*',
+    origin: [
+      'http://localhost:4200',
+      'https://app.prodmanager.com.ar',
+      'https://www.prodmanager.com.ar',
+      'https://prodmanager.com.ar'
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: false,
     allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With',

@@ -12,6 +12,8 @@ import { NotificationsModule } from '../notifications/notifications.module';
 import { SubscriptionReminderService } from './tasks/subscription-reminder.service';
 import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation } from '../businesses/entities/business-invitation.entity';
+import { BusinessesModule } from '../businesses/businesses.module';
+import { BusinessMembership } from '../businesses/entities/business-membership.entity';
 
 @Module({
 
@@ -19,6 +21,7 @@ import { BusinessInvitation } from '../businesses/entities/business-invitation.e
         TypeOrmModule.forFeature([
             Business, 
             User, 
+            BusinessMembership,
             GlobalRoleConfig, 
             SubscriptionPlan, 
             BusinessTemplate, 
@@ -26,6 +29,7 @@ import { BusinessInvitation } from '../businesses/entities/business-invitation.e
             BusinessInvitation
         ]),
         forwardRef(() => UsersModule), // For guards/supabase dependencies
+        forwardRef(() => BusinessesModule),
         NotificationsModule,
     ],
 

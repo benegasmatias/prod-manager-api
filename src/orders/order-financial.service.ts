@@ -9,14 +9,21 @@ export class OrderFinancialService {
      * Calcula el precio total de un conjunto de ítems.
      * Incluye lógica de precio base (qty * price) + extras de metadatos (diseño).
      */
-    calculateItemsTotal(items: any[]): number {
+    calculateItemsTotal(items: any[]): number | null {
         if (!items || items.length === 0) return 0;
 
-        return items.reduce((acc, item) => {
+        let hasPending = false;
+        const total = items.reduce((acc, item) => {
+            if (item.isPendingQuote || item.price === null || item.price === undefined) {
+                hasPending = true;
+                return acc;
+            }
             const basePrice = (Number(item.price) || 0) * (item.qty || 1);
             const designPrice = Number(item.metadata?.precioDiseno) || 0;
             return acc + basePrice + designPrice;
         }, 0);
+
+        return hasPending ? null : total;
     }
 
     /** 

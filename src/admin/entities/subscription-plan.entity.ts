@@ -23,6 +23,9 @@ export class SubscriptionPlan {
     @Column('simple-json', { default: '[]' })
     features: string[];
 
+    @Column('simple-json', { default: '[]' })
+    sidebarItems: string[];
+
     @Column({ default: 0 })
     maxUsers: number; // 0 = unlimited
 
@@ -55,6 +58,18 @@ export class SubscriptionPlan {
 
     @Column({ default: 0 })
     trialDays: number;
+
+    @Column('decimal', { precision: 12, scale: 2, nullable: true })
+    promoPrice: number;
+
+    @Column({ nullable: true })
+    promoDurationMonths: number;
+
+    @Column({ nullable: true })
+    promoLabel: string;
+
+    @Column({ type: 'jsonb', nullable: true })
+    metadata: any;
 
     @CreateDateColumn({ name: 'created_at' })
     createdAt: Date;

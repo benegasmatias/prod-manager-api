@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsOptional, IsObject } from 'class-validator';
 
 export class CreateBusinessFromTemplateDto {
     @IsNotEmpty()
@@ -16,4 +16,8 @@ export class CreateBusinessFromTemplateDto {
     @IsOptional()
     @IsString()
     email?: string;
+
+    @IsOptional()
+    @IsObject()
+    metadata?: any;
 }

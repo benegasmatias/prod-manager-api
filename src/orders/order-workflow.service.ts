@@ -13,13 +13,19 @@ export class OrderWorkflowService {
      * delegando la definición de etapas a la estrategia del rubro.
      */
     async createWorkflow(
-        order: Order, 
-        item: OrderItem, 
-        strategy: OrderBusinessStrategy, 
+        order: Order,
+        item: OrderItem,
+        strategy: OrderBusinessStrategy,
         manager: EntityManager
     ): Promise<void> {
+        // SAFETY GUARD: No production jobs for items pending quote
+        if (item.isPendingQuote) {
+            console.log(`[Workflow] Skipping production for Item "${item.name}" (Pending Quote)`);
+            return;
+        }
+
         const stages = strategy.getProductionStages(item, order);
-        
+
         if (!stages || stages.length === 0) return;
 
         const jobs = stages.map(s => manager.create(ProductionJob, {
@@ -39,9 +45,9 @@ export class OrderWorkflowService {
      * Regla de Agregación Etapa 6.1.
      */
     async aggregateOrderStatus(orderId: string, manager: EntityManager): Promise<OrderStatus> {
-        const order = await manager.findOne(Order, { 
+        const order = await manager.findOne(Order, {
             where: { id: orderId },
-            relations: ['items'] 
+            relations: ['items']
         });
         if (!order) return;
 
@@ -68,7 +74,7 @@ export class OrderWorkflowService {
             targetStatus = OrderStatus.IN_PROGRESS;
         }
         // 5. Por defecto mantelar el estado previo (ej: CONFIRMED) si todo es PENDING
-        
+
         if (targetStatus !== order.status) {
             await manager.update(Order, orderId, { status: targetStatus });
             console.log(`[StatusAggregation] Order ${order.code} updated to ${targetStatus} based on Items.`);

@@ -17,6 +17,9 @@ export class OrderItem {
     })
     status: OrderItemStatus;
 
+    @Column({ name: 'is_pending_quote', type: 'boolean', default: false })
+    isPendingQuote: boolean;
+
     @Column({ name: 'order_id' })
     orderId: string;
 
@@ -36,13 +39,13 @@ export class OrderItem {
     @Column({ name: 'reference_images', type: 'jsonb', nullable: true })
     referenceImages: any[];
 
-    @Column({ name: 'estimated_minutes', type: 'int', default: 0 })
+    @Column({ name: 'estimated_minutes', type: 'int', nullable: true })
     estimatedMinutes: number;
 
-    @Column({ name: 'weight_grams', type: 'float', default: 0 })
+    @Column({ name: 'weight_grams', type: 'float', nullable: true })
     weightGrams: number;
 
-    @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
     price: number;
 
     @Column({ type: 'int', default: 1 })
@@ -63,10 +66,10 @@ export class OrderItem {
     @OneToOne(() => ProductionJob, (job) => job.orderItem)
     productionJob: ProductionJob;
 
-    @Column({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2, nullable: true })
     unitPrice: number;
 
-    @Column({ type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ type: 'decimal', precision: 12, scale: 2, nullable: true })
     subtotal: number;
 
     @Column({ type: 'text', nullable: true })
@@ -78,9 +81,9 @@ export class OrderItem {
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
 
-    @Column({ name: 'estimated_unit_cost', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ name: 'estimated_unit_cost', type: 'decimal', precision: 12, scale: 2, nullable: true })
     estimatedUnitCost: number;
 
-    @Column({ name: 'estimated_sale_unit_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
+    @Column({ name: 'estimated_sale_unit_price', type: 'decimal', precision: 12, scale: 2, nullable: true })
     estimatedSaleUnitPrice: number;
 }
