@@ -62,7 +62,7 @@ export class AdminService implements OnModuleInit {
                 description: 'Ideal para hobbistas y makers solitarios.',
                 features: ['30 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes', 'Reportes basicos'],
                 sidebarItems: [
-                    '/dashboard', '/calculadora', '/pedidos', '/clientes', 
+                    '/dashboard', '/pedidos', '/clientes',
                     '/produccion', '/stock', '/maquinas', '/materiales', '/ajustes'
                 ],
                 maxUsers: 1,
@@ -89,8 +89,8 @@ export class AdminService implements OnModuleInit {
                 description: 'Para pequeños talleres que empiezan a crecer.',
                 features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario'],
                 sidebarItems: [
-                    '/dashboard', '/calculadora', '/pedidos', '/clientes', 
-                    '/produccion', '/produccion/calendario', '/stock', 
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes',
+                    '/produccion', '/produccion/calendario', '/stock',
                     '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'
                 ],
                 maxUsers: 2,
@@ -134,76 +134,6 @@ export class AdminService implements OnModuleInit {
                     apiWebhooks: true,
                     soporte: 'Dedicado'
                 }
-            },
-            // METALURGICA (Placeholders - Door open for future)
-            {
-                id: 'free-metal',
-                name: 'Taller Free',
-                category: 'METALURGICA',
-                price: 0,
-                currency: 'ARS',
-                description: 'Para pequeños talleres de herrería artesanal.',
-                features: ['20 pedidos / mes', '2 Máquinas', '1 Usuario', 'Gestión de Clientes'],
-                maxUsers: 1,
-                maxOrdersPerMonth: 20,
-                maxBusinesses: 1,
-                maxMachines: 2,
-                isRecommended: false,
-                ctaText: 'Comenzar gratis',
-                ctaLink: '/register',
-                sortOrder: 0,
-                active: true,
-                metadata: {
-                    gestionMateriales: 'Básica',
-                    trazabilidadFallas: false,
-                    reportesEficiencia: false,
-                    apiWebhooks: false,
-                    soporte: 'Manual'
-                }
-            },
-            {
-                id: 'pro-metal',
-                name: 'Taller Industrial',
-                category: 'METALURGICA',
-                price: 12500,
-                currency: 'ARS',
-                description: 'Control de producción y materiales para talleres medianos.',
-                features: ['Pedidos ilimitados', '5 Máquinas', '3 Usuarios', 'Dashboard Avanzado', 'Control de Materiales'],
-                maxUsers: 3,
-                maxOrdersPerMonth: 0,
-                maxBusinesses: 1,
-                maxMachines: 5,
-                sortOrder: 1,
-                active: true,
-                metadata: {
-                    gestionMateriales: 'Avanzada',
-                    trazabilidadFallas: true,
-                    reportesEficiencia: true,
-                    apiWebhooks: false,
-                    soporte: 'Prioritario'
-                }
-            },
-            {
-                id: 'enterprise-metal',
-                name: 'Fábrica Estructuras',
-                category: 'METALURGICA',
-                price: 35000,
-                currency: 'ARS',
-                description: 'Gestión industrial completa con trazabilidad de materiales.',
-                features: ['Pedidos ilimitados', '20 Máquinas', '10 Usuarios', 'Dashboard BI', 'Control Stock Crítico', 'API de Integración'],
-                maxUsers: 10,
-                maxOrdersPerMonth: 0,
-                maxBusinesses: 1,
-                maxMachines: 20,
-                sortOrder: 2,
-                active: true,
-                metadata: {
-                    gestionMateriales: 'Avanzada',
-                    trazabilidadFallas: true,
-                    reportesEficiencia: true,
-                    apiWebhooks: true,
-                    soporte: 'Dedicado'
-                }
             }
         ];
 
@@ -213,10 +143,8 @@ export class AdminService implements OnModuleInit {
                 if (!existing) {
                     await this.planRepository.save(this.planRepository.create(planData));
                     console.log(`[SEED] Created new plan: ${planData.id}`);
-                } else {
-                    // Update existing to sync new fields (like promoPrice, category, etc)
-                    await this.planRepository.save({ ...existing, ...planData });
                 }
+                // No overwriting existing plans to preserve manual edits
             } catch (err) {
                 console.error(`[SEED] Error in plan ${planData.id}:`, err.message);
             }
@@ -275,11 +203,29 @@ export class AdminService implements OnModuleInit {
         return this.notificationsService.create(data);
     }
 
-    async findAllBusinesses(): Promise<Business[]> {
-        return this.businessRepository.find({
+    async findAllBusinesses(): Promise<any[]> {
+        const businesses = await this.businessRepository.find({
             order: { createdAt: 'DESC' },
             relations: ['memberships'],
         });
+
+        const orderRepo = this.dataSource.getRepository('Order');
+        const materialRepo = this.dataSource.getRepository('Material');
+
+        return await Promise.all(businesses.map(async b => {
+            const [orderCount, materialCount] = await Promise.all([
+                orderRepo.countBy({ businessId: b.id }),
+                materialRepo.countBy({ businessId: b.id })
+            ]);
+
+            return {
+                ...b,
+                stats: {
+                    totalOrders: orderCount,
+                    totalMaterials: materialCount
+                }
+            };
+        }));
     }
 
     async findBusinessById(id: string): Promise<Business> {
@@ -645,7 +591,7 @@ export class AdminService implements OnModuleInit {
         }
 
         const businessId = user.defaultBusinessId;
-        
+
         // Usamos transaccion para asegurar integridad
         return await this.dataSource.transaction(async (manager) => {
             const Order = (await import('../orders/entities/order.entity')).Order;
@@ -690,7 +636,7 @@ export class AdminService implements OnModuleInit {
 
             for (const data of ordersData) {
                 const { items, ...orderInfo } = data;
-                
+
                 const order = manager.create(Order, {
                     ...orderInfo,
                     businessId,
