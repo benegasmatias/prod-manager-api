@@ -76,7 +76,9 @@ export class ProductionJobService {
             .leftJoinAndSelect('job.machine', 'machine')
             .leftJoinAndSelect('job.operator', 'operator')
             .leftJoinAndSelect('job.order', 'order')
+            .leftJoinAndSelect('job.material', 'material')
             .leftJoinAndSelect('order.customer', 'customer')
+            .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
             .where('job.businessId = :businessId', { businessId });
 
         if (filters.status) query.andWhere('job.status = :status', { status: filters.status });
