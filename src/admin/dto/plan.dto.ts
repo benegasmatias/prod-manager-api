@@ -31,6 +31,10 @@ export class CreatePlanDto {
     features?: string[];
 
     @IsOptional()
+    @IsArray()
+    sidebarItems?: string[];
+
+    @IsOptional()
     @Type(() => Number)
     @IsNumber()
     maxUsers?: number;
@@ -125,6 +129,10 @@ export class UpdatePlanDto {
     @IsOptional()
     @IsArray()
     features?: string[];
+
+    @IsOptional()
+    @IsArray()
+    sidebarItems?: string[];
 
     @IsOptional()
     @Type(() => Number)

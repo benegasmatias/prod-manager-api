@@ -28,7 +28,7 @@ import { AdminService } from '../admin/admin.service';
 import { Payment } from '../payments/entities/payment.entity';
 
 const DEFAULT_BASE_CONFIG = {
-    sidebarItems: ['/dashboard', '/pedidos', '/stock', '/clientes', '/ajustes'],
+    sidebarItems: ['/dashboard', '/pedidos', '/calculadora', '/stock', '/clientes', '/ajustes'],
     labels: { produccion: 'Producción', items: 'Trabajos' },
     icons: { pedidos: 'Box', produccion: 'Cpu' },
     stats: [
@@ -318,9 +318,22 @@ export class BusinessesService {
         }
 
         // SaaS Gating (Subscription Source of Truth)
-        const plan = business?.subscription?.plan || business?.plan || 'FREE';
+        const planId = business?.subscription?.plan || business?.plan || 'FREE';
         const subscriptionStatus = business?.subscription?.status || 'ACTIVE';
-        const limits = await this.planUsageService.getLimitsForPlan(plan);
+        const limits = await this.planUsageService.getLimitsForPlan(planId);
+        
+        // --- Plan-Based Menu Enforcement ---
+        try {
+            const planConfig = await this.adminService.findPlanById(planId);
+            if (planConfig?.sidebarItems && planConfig.sidebarItems.length > 0) {
+                // If plan defines specific items, it takes precedence over the rubro defaults
+                config.sidebarItems = planConfig.sidebarItems;
+            }
+        } catch (e) {
+            console.error(`[BusinessesService] Error loading plan config for menu enforcement: ${planId}`, e.message);
+        }
+        // ------------------------------------
+
         if (config.features) {
             config.features.hasMaterials = limits.features.hasMaterials;
         }
@@ -340,8 +353,8 @@ export class BusinessesService {
             userRole,
             userPermissions,
             subscription: {
-                planId: plan,
-                planName: limits.name || plan,
+                planId: planId,
+                planName: limits.name || planId,
                 status: subscriptionStatus,
                 currentPeriodEnd: business?.subscription?.currentPeriodEnd,
                 trialEndAt: business?.subscription?.trialEndAt,

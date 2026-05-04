@@ -23,6 +23,9 @@ export class SubscriptionPlan {
     @Column('simple-json', { default: '[]' })
     features: string[];
 
+    @Column('simple-json', { default: '[]' })
+    sidebarItems: string[];
+
     @Column({ default: 0 })
     maxUsers: number; // 0 = unlimited
 

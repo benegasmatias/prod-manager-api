@@ -61,6 +61,10 @@ export class AdminService implements OnModuleInit {
                 currency: 'ARS',
                 description: 'Ideal para hobbistas y makers solitarios.',
                 features: ['30 pedidos / mes', '1 impresora', 'Solo propietario (1 usuario)', 'Smart Dashboard', 'Gestion de clientes', 'Reportes basicos'],
+                sidebarItems: [
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes', 
+                    '/produccion', '/stock', '/maquinas', '/materiales', '/ajustes'
+                ],
                 maxUsers: 1,
                 maxOrdersPerMonth: 30,
                 maxBusinesses: 1,
@@ -84,6 +88,11 @@ export class AdminService implements OnModuleInit {
                 currency: 'ARS',
                 description: 'Para pequeños talleres que empiezan a crecer.',
                 features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario'],
+                sidebarItems: [
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes', 
+                    '/produccion', '/produccion/calendario', '/stock', 
+                    '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'
+                ],
                 maxUsers: 2,
                 maxOrdersPerMonth: 60,
                 maxBusinesses: 1,
@@ -581,6 +590,11 @@ export class AdminService implements OnModuleInit {
         if (!template) throw new NotFoundException('Template no encontrado');
 
         Object.assign(template, data);
+        return this.templateRepository.save(template);
+    }
+
+    async createTemplate(data: Partial<BusinessTemplate>): Promise<BusinessTemplate> {
+        const template = this.templateRepository.create(data);
         return this.templateRepository.save(template);
     }
 

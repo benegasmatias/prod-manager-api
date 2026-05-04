@@ -223,6 +223,12 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Post('templates')
+    async createTemplate(@Request() req, @Body() body: any) {
+        return this.adminService.createTemplate(body);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Patch('templates/:key')
     async updateTemplate(@Request() req, @Param('key') key: string, @Body() body: any) {
         return this.adminService.updateTemplate(key, body);
