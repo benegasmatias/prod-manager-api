@@ -14262,3 +14262,316 @@ Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max
     at Readable.push (node:internal/streams/readable:392:5)
     at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:44.911Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:50.761Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:52.742Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:05.859Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:09.176Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:15.119Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:26:55.346Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:28:32.583Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:28:33.567Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:16:19.425Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:27:00.742Z
+Path: /orders/1155043f-09ec-44c6-8a43-4e6f661b0ffc/items/31c224ac-d9a5-4b53-a6c6-4b020656ff57/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:33:57.313Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"DESIGN\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "DESIGN"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async UpdateQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:595:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T21:37:15.361Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/plan-usage
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:224:27)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:06:44.193Z
+Path: /production-jobs/80f1eda7-0b43-4b63-bd1a-360679e8ddf5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:08:13.399Z
+Path: /orders/16ffd0aa-9b34-468f-aac1-59cb4c9d0c54/items/c45e01bb-b881-4ed6-b2ff-335329064890/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:13:38.161Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:16.887Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:32.746Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 404
+Message: {"message":"Cannot GET /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:32.854Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:23:39.345Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:23:45.577Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:28:27.317Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:35:17.656Z
+Path: /production-jobs/15b6abfe-f4f1-4f72-bd2a-2a8ebfca8cf7/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------

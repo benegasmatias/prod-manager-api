@@ -23,11 +23,11 @@ export class ManufacturingOrderStrategy implements OrderBusinessStrategy {
         if (isVisitOrQuote) return [];
 
         return [
-            { title: 'Diseño / Preparación', rank: 10 },
-            { title: 'Corte / Dimensionado', rank: 20 },
-            { title: 'Soldadura / Unión', rank: 30 },
-            { title: 'Armado / Ensamble', rank: 40 },
-            { title: 'Pintura / Acabado', rank: 50 }
+            { title: 'DESIGN', rank: 10 },
+            { title: 'CUTTING', rank: 20 },
+            { title: 'WELDING', rank: 30 },
+            { title: 'ASSEMBLY', rank: 40 },
+            { title: 'PAINTING', rank: 50 }
         ];
     }
 

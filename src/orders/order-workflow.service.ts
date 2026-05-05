@@ -45,14 +45,14 @@ export class OrderWorkflowService {
      * Regla de Agregación Etapa 6.1.
      */
     async aggregateOrderStatus(orderId: string, manager: EntityManager): Promise<OrderStatus> {
-        const order = await manager.findOne(Order, {
-            where: { id: orderId },
-            relations: ['items']
-        });
-        if (!order) return;
+        // 1. Get only the statuses of the items (much faster than loading full objects)
+        const items = await manager.createQueryBuilder(OrderItem, 'item')
+            .select('item.status')
+            .where('item.orderId = :orderId', { orderId })
+            .getMany();
 
-        const items = order.items;
-        if (items.length === 0) return order.status;
+        const order = await manager.findOne(Order, { where: { id: orderId } });
+        if (!order || items.length === 0) return order?.status;
 
         const statuses = items.map(i => i.status);
         let targetStatus: OrderStatus = order.status;
@@ -69,11 +69,10 @@ export class OrderWorkflowService {
         else if (statuses.every(s => s === OrderItemStatus.READY || s === OrderItemStatus.DONE)) {
             targetStatus = OrderStatus.READY;
         }
-        // 4. Si hay alguno en IN_PROGRESS o FAILED -> Order IN_PROGRESS
-        else if (statuses.some(s => s === OrderItemStatus.IN_PROGRESS || s === OrderItemStatus.FAILED || s === OrderItemStatus.READY)) {
+        // 4. Si hay alguno en IN_PROGRESS o FAILED o READY o DESIGN -> Order IN_PROGRESS
+        else if (statuses.some(s => s === OrderItemStatus.IN_PROGRESS || s === OrderItemStatus.FAILED || s === OrderItemStatus.READY || s === OrderItemStatus.DESIGN)) {
             targetStatus = OrderStatus.IN_PROGRESS;
         }
-        // 5. Por defecto mantelar el estado previo (ej: CONFIRMED) si todo es PENDING
 
         if (targetStatus !== order.status) {
             await manager.update(Order, orderId, { status: targetStatus });

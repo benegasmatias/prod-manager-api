@@ -477,10 +477,22 @@ export class BusinessesService {
                 .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
                 .getRawOne(),
             
-            this.orderRepository.find({
-                where: { businessId, status: In(FINANCIAL_PENDING_STATUSES) },
-                relations: ['items', 'siteInfo', 'payments']
-            }),
+            this.orderRepository.createQueryBuilder('order')
+                .leftJoinAndSelect('order.items', 'item')
+                .leftJoinAndSelect('order.payments', 'payment')
+                .select([
+                    'order.id', 
+                    'order.totalPrice', 
+                    'order.totalSenias', 
+                    'order.type',
+                    'item.id',
+                    'item.deposit',
+                    'payment.id',
+                    'payment.amount'
+                ])
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: FINANCIAL_PENDING_STATUSES })
+                .getMany(),
 
             // Capability-Gated: Machines
             hasMachines ? this.machineRepository.count({

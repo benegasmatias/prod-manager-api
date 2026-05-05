@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, ILike, Not, Between, MoreThanOrEqual, LessThanOrEqual } from 'typeorm';
+import { Repository, In, ILike, Not } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderSiteInfo } from './entities/order-site-info.entity';
-import { OrderStatus, ProductionJobStatus as JobStatus, MachineStatus, OrderItemStatus } from '../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus, OrderItemStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
-import { Machine } from '../machines/entities/machine.entity';
+
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
 import { OrderFailure } from './entities/order-failure.entity';
@@ -48,7 +48,7 @@ export class OrdersService {
         const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search } = query;
         const where: any = {};
         if (businessId) where.businessId = businessId;
-        
+
         if (status) {
             where.status = status;
         } else if (statuses) {
@@ -93,7 +93,7 @@ export class OrdersService {
      */
     async findListing(query: FindOrdersDto): Promise<{ data: Order[], total: number }> {
         const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search, startDate, endDate, responsableId, alertFilter } = query;
-        
+
         const qb = this.orderRepository.createQueryBuilder('order')
             .leftJoinAndSelect('order.customer', 'customer')
             .leftJoinAndSelect('order.responsableGeneral', 'responsableGeneral')
@@ -106,7 +106,7 @@ export class OrdersService {
         if (businessId) {
             qb.andWhere('order.businessId = :businessId', { businessId });
         }
-        
+
         if (status) {
             qb.andWhere('order.status = :status', { status });
         } else if (statuses) {
@@ -146,7 +146,7 @@ export class OrdersService {
             const now = new Date();
             // REGLA: Excluir estados finales o "listos" para las alertas de urgencia operativas
             const excludedAlertStatuses = [OrderStatus.DELIVERED, OrderStatus.CANCELLED, OrderStatus.DONE, OrderStatus.READY];
-            
+
             if (normalizedVal === 'VENCIDO' || normalizedVal === 'OVERDUE' || alertFilter === 'overdue') {
                 // Overdue: Due date strictly before now
                 qb.andWhere('order.dueDate < :now', { now });
@@ -155,10 +155,10 @@ export class OrdersService {
                 // Due soon: Today or Tomorrow (as requested by user)
                 const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0);
                 const endOfTomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 23, 59, 59, 999);
-                
-                qb.andWhere('order.dueDate BETWEEN :start AND :end', { 
-                    start: startOfToday, 
-                    end: endOfTomorrow 
+
+                qb.andWhere('order.dueDate BETWEEN :start AND :end', {
+                    start: startOfToday,
+                    end: endOfTomorrow
                 });
                 qb.andWhere('order.status NOT IN (:...excludedAlertStatuses)', { excludedAlertStatuses });
             }
@@ -227,7 +227,7 @@ export class OrdersService {
         // Todos los pedidos que alguna vez fueron presupuestos o lo son ahora
         // Simplificación: Pedidos en estados de presupuesto O pedidos que tienen historial de haber estado ahí
         // Por ahora, tomaremos presupuestos actuales + órdenes oficiales (que se asume vinieron de presupuesto)
-        
+
         const allRelevantOrders = await this.orderRepository.createQueryBuilder('order')
             .where('order.businessId = :businessId', { businessId })
             .andWhere('order.status NOT IN (:...exclude)', { exclude: [OrderStatus.CANCELLED, OrderStatus.SITE_VISIT, OrderStatus.SITE_VISIT_DONE] })
@@ -467,8 +467,8 @@ export class OrdersService {
 
         // Mapeo Job -> Item Status
         let newItemStatus = OrderItemStatus.PENDING;
-        
-        const hasActiveJob = jobs.some((j: any) => 
+
+        const hasActiveJob = jobs.some((j: any) =>
             [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(j.status as any)
         );
         const allDone = jobs.length > 0 && jobs.every((j: any) => j.status === JobStatus.DONE);
@@ -480,14 +480,21 @@ export class OrdersService {
             newItemStatus = OrderItemStatus.IN_PROGRESS;
         }
 
-        await itemRepo.update(orderItemId, { 
+        await itemRepo.update(orderItemId, {
             doneQty: totalDone,
             status: newItemStatus
         });
 
-        const item = await itemRepo.findOne({ where: { id: orderItemId } });
-        if (item) {
-            await this.aggregateStatus(item.orderId, manager);
+        // Optimization: Try to get orderId from first job to avoid extra findOne
+        let orderId = jobs.length > 0 ? jobs[0].orderId : null;
+
+        if (!orderId) {
+            const item = await itemRepo.findOne({ where: { id: orderItemId }, select: ['orderId'] });
+            orderId = item?.orderId;
+        }
+
+        if (orderId) {
+            await this.aggregateStatus(orderId, manager);
         }
     }
 
@@ -504,27 +511,30 @@ export class OrdersService {
         const orderRepo = manager ? manager.getRepository(Order) : this.orderRepository;
         const historyRepo = manager ? manager.getRepository(OrderStatusHistory) : this.statusHistoryRepository;
 
-        const items = await itemRepo.find({ where: { orderId } });
-        const order = await orderRepo.findOne({ where: { id: orderId } });
+        // Optimization: select only necessary fields and fetch in parallel
+        const [items, order] = await Promise.all([
+            itemRepo.find({ where: { orderId }, select: ['id', 'status', 'orderId'] }),
+            orderRepo.findOne({ where: { id: orderId }, select: ['id', 'status'] })
+        ]);
 
         if (!order || items.length === 0) return;
 
         let targetStatus = order.status;
 
         const allInStock = items.every(i => i.status === OrderItemStatus.IN_STOCK || i.status === OrderItemStatus.CANCELLED);
-        const allDoneOrStock = items.every(i => 
-            i.status === OrderItemStatus.DONE || 
-            i.status === OrderItemStatus.IN_STOCK || 
-            i.status === OrderItemStatus.CANCELLED
-        );
-        const allReadyDoneOrStock = items.every(i => 
-            i.status === OrderItemStatus.READY || 
-            i.status === OrderItemStatus.DONE || 
+        const allDoneOrStock = items.every(i =>
+            i.status === OrderItemStatus.DONE ||
             i.status === OrderItemStatus.IN_STOCK ||
             i.status === OrderItemStatus.CANCELLED
         );
-        const anyActive = items.some(i => 
-            [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY].includes(i.status as any)
+        const allReadyDoneOrStock = items.every(i =>
+            i.status === OrderItemStatus.READY ||
+            i.status === OrderItemStatus.DONE ||
+            i.status === OrderItemStatus.IN_STOCK ||
+            i.status === OrderItemStatus.CANCELLED
+        );
+        const anyActive = items.some(i =>
+            [OrderItemStatus.IN_PROGRESS, OrderItemStatus.READY, OrderItemStatus.DESIGN].includes(i.status as any)
         );
         const allCancelled = items.every(i => i.status === OrderItemStatus.CANCELLED);
 
@@ -561,9 +571,9 @@ export class OrdersService {
      */
     async updateItemStatus(orderId: string, itemId: string, payload: any, userId?: string) {
         const { status, force } = payload;
-        
+
         return await this.orderRepository.manager.transaction(async manager => {
-            const item = await manager.findOne(OrderItem, { 
+            const item = await manager.findOne(OrderItem, {
                 where: { id: itemId, orderId },
                 relations: ['productionJob']
             });
@@ -573,7 +583,7 @@ export class OrdersService {
             if (item.productionJob && [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(item.productionJob.status as any)) {
                 if (force) {
                     // Forzamos la liberación: Cancelamos el trabajo en máquina
-                    await manager.update(ProductionJob, item.productionJob.id, { 
+                    await manager.update(ProductionJob, item.productionJob.id, {
                         status: JobStatus.CANCELLED,
                         metadata: { ...item.productionJob.metadata, forcedReleaseBy: userId, releaseDate: new Date() }
                     });
@@ -583,7 +593,7 @@ export class OrdersService {
             }
 
             const oldStatus = item.status;
-            
+
             // 2. Aplicar el cambio
             const updateData: Partial<OrderItem> = { status };
             if (status === OrderItemStatus.READY || status === OrderItemStatus.DONE || status === OrderItemStatus.IN_STOCK) {
@@ -595,7 +605,10 @@ export class OrdersService {
             await manager.update(OrderItem, itemId, updateData);
 
             // 3. Auditoría básica en el pedido
-            const order = await manager.findOne(Order, { where: { id: orderId } });
+            const order = await manager.findOne(Order, {
+                where: { id: orderId },
+                relations: ['business']
+            });
             if (order) {
                 const history = manager.create(OrderStatusHistory, {
                     orderId,
@@ -605,6 +618,14 @@ export class OrdersService {
                     performedById: userId
                 });
                 await manager.save(OrderStatusHistory, history);
+
+                // AUTO-CREATE PRODUCTION JOB IF ENTERING DESIGN
+                if (status === OrderItemStatus.DESIGN && !item.productionJob) {
+                    const strategy = this.strategyProvider.getStrategy(order.business?.category);
+                    // Refresh item state with new status for workflow service
+                    item.status = status;
+                    await this.workflowService.createWorkflow(order, item, strategy, manager);
+                }
             }
 
             // 4. Agregación
@@ -670,7 +691,7 @@ export class OrdersService {
                     });
                     await manager.save(OrderStatusHistory, history);
                 }
-                
+
                 if (doneQty === item.qty) {
                     // Si este ítem específico se terminó, liberamos sus recursos
                     await strategy.releaseResources(order, manager, { itemId: itemId, targetStatus: JobStatus.DONE });
@@ -845,7 +866,7 @@ export class OrdersService {
         });
     }
 
-    
+
     /**
      * Registrar un pago para un pedido
      */
@@ -877,7 +898,7 @@ export class OrdersService {
         }
 
         qb.groupBy("DATE(order.dueDate)")
-          .orderBy("date", "ASC");
+            .orderBy("date", "ASC");
 
         return qb.getRawMany();
     }

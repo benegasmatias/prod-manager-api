@@ -25,6 +25,8 @@ export class ProductionJobService {
         private readonly jobMaterialRepository: Repository<ProductionJobMaterial>,
         @InjectRepository(Material)
         private readonly materialRepository: Repository<Material>,
+        @InjectRepository(Machine)
+        private readonly machineRepository: Repository<Machine>,
         private readonly workflowService: OrderWorkflowService,
         private readonly dataSource: DataSource,
     ) { }
@@ -102,12 +104,31 @@ export class ProductionJobService {
     }
 
     async assignResources(businessId: string, id: string, data: { operatorId?: string, machineId?: string }): Promise<ProductionJob> {
-        const job = await this.findOne(businessId, id);
+        const job = await this.jobRepository.findOne({
+            where: { id, businessId },
+            select: ['id', 'machineId', 'status', 'orderItemId']
+        });
+        if (!job) throw new NotFoundException('Trabajo de producción no encontrado');
+
+        const oldMachineId = job.machineId;
         
         if (data.operatorId !== undefined) job.operatorId = data.operatorId;
         if (data.machineId !== undefined) job.machineId = data.machineId;
 
-        return this.jobRepository.save(job);
+        const saved = await this.jobRepository.save(job);
+
+        // SYNC MACHINE STATUS
+        // 1. Release old machine if it was changed or removed
+        if (oldMachineId && oldMachineId !== data.machineId) {
+            await this.machineRepository.update(oldMachineId, { status: MachineStatus.IDLE });
+        }
+
+        // 2. Mark new machine as busy if assigned
+        if (data.machineId) {
+            await this.machineRepository.update(data.machineId, { status: MachineStatus.PRINTING });
+        }
+
+        return this.findOne(businessId, id);
     }
 
     async updatePriority(businessId: string, id: string, priority: ProductionJobPriority): Promise<ProductionJob> {
@@ -117,8 +138,14 @@ export class ProductionJobService {
     }
 
     async updateStatus(businessId: string, id: string, status: ProductionJobStatus): Promise<ProductionJob> {
-        const job = await this.findOne(businessId, id);
+        // Light load for validation and initial state
+        const job = await this.jobRepository.findOne({
+            where: { id, businessId },
+            select: ['id', 'status', 'lastStartedAt', 'startedAt', 'actualMinutes', 'orderItemId', 'orderId', 'machineId']
+        });
         
+        if (!job) throw new NotFoundException('Trabajo de producción no encontrado');
+
         if (!this.canTransitionStatus(job.status, status)) {
             throw new BadRequestException(`Transición de estado inválida: de ${job.status} a ${status}`);
         }
@@ -126,26 +153,45 @@ export class ProductionJobService {
         const oldStatus = job.status;
         job.status = status;
 
-        // Logic for Time Tracking (Stage 6.8)
         const now = new Date();
         
         // 1. Moving AWAY from IN_PROGRESS (Accumulate time)
         if (oldStatus === ProductionJobStatus.IN_PROGRESS && job.lastStartedAt) {
             const diffInMs = now.getTime() - new Date(job.lastStartedAt).getTime();
             const diffInMins = Math.round(diffInMs / 60000);
-            job.actualMinutes = (job.actualMinutes || 0) + Math.max(1, diffInMins); // At least 1 min if moved fast
+            job.actualMinutes = (job.actualMinutes || 0) + Math.max(1, diffInMins);
             job.lastStartedAt = null;
         }
 
         // 2. Moving TO IN_PROGRESS (Start/Resume timer)
         if (status === ProductionJobStatus.IN_PROGRESS) {
             job.lastStartedAt = now;
-            if (!job.startedAt) job.startedAt = now; // First time start
+            if (!job.startedAt) job.startedAt = now;
+            
+            // Sync Machine Status
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: MachineStatus.PRINTING });
+            }
         }
 
-        if (status === ProductionJobStatus.DONE) {
-            job.completedAt = now;
-            await this.consumeMaterials(job);
+        if (status === ProductionJobStatus.DONE || status === ProductionJobStatus.FAILED || status === ProductionJobStatus.CANCELLED) {
+            if (status === ProductionJobStatus.DONE) job.completedAt = now;
+            
+            // Sync Machine Status (Release)
+            if (job.machineId) {
+                await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
+            }
+
+            if (status === ProductionJobStatus.DONE) {
+                // Load materials ONLY when needed
+                const jobWithMaterials = await this.jobRepository.findOne({
+                    where: { id },
+                    relations: ['jobMaterials', 'jobMaterials.material']
+                });
+                if (jobWithMaterials) {
+                    await this.consumeMaterials(jobWithMaterials);
+                }
+            }
         }
 
         const saved = await this.jobRepository.save(job);
@@ -198,7 +244,7 @@ export class ProductionJobService {
     private async syncItemStatus(job: ProductionJob): Promise<void> {
         const item = await this.itemRepository.findOne({ 
             where: { id: job.orderItemId },
-            relations: ['order']
+            select: ['id', 'status', 'orderId']
         });
         if (!item) return;
 

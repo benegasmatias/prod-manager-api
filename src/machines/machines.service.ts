@@ -120,6 +120,7 @@ export class MachinesService {
         // 3. Sincronizar estado del item (esto disparará la agregación del pedido)
         await this.ordersService.syncOrderItemProgress(targetItem.id);
 
+        // Retornamos el objeto actualizado de forma eficiente
         return this.findOne(machineId, businessId);
     }
 
@@ -127,7 +128,7 @@ export class MachinesService {
         await this.findOne(machineId, businessId); // Check ownership
 
         // Encontrar trabajos activos para esta impresora y marcarlos como terminados
-        const jobs = await this.jobsService.getQueue();
+        const jobs = await this.jobsService.getQueue(businessId);
         const printerJobs = jobs.filter(j => j.machineId === machineId);
 
         for (const job of printerJobs) {
@@ -205,7 +206,6 @@ export class MachinesService {
     async updateStatus(id: string, status: MachineStatus, businessId?: string): Promise<Machine> {
         await this.findOne(id, businessId); // Check ownership
         await this.machineRepository.update(id, { status });
-        await this.planUsageService.reconcileQuota(businessId);
         return this.findOne(id, businessId);
     }
 

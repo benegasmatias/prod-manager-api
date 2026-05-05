@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique, OneToOne, Index } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus, OrderType } from '../../common/enums';
@@ -16,6 +16,7 @@ export class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Index()
     @Column({ name: 'business_id', nullable: true })
     businessId: string;
 
@@ -26,12 +27,14 @@ export class Order {
     @Column({ name: 'client_name', nullable: true })
     clientName: string;
 
+    @Index()
     @Column({ name: 'due_date', nullable: true })
     dueDate: Date;
 
     @Column({ type: 'int', default: 1 })
     priority: number;
 
+    @Index()
     @Column({
         type: 'enum',
         enum: OrderStatus,
