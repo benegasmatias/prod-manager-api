@@ -15321,3 +15321,56 @@ Stack: BadRequestException: Bad Request Exception
     at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:30:06.864Z
+Path: /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2
+Status: 404
+Message: {"message":"Cannot GET /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:30:21.749Z
+Path: /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 404
+Message: {"message":"Cannot GET /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:39:13.005Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/dashboard-summary
+Status: 500
+Message: "Max client connections reached"
+Stack: error: Max client connections reached
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------

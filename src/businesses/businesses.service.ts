@@ -512,7 +512,8 @@ export class BusinessesService {
             this.orderRepository.find({
                 where: { businessId },
                 order: { updatedAt: 'DESC' },
-                take: 5
+                take: 5,
+                relations: ['vehicle']
             }),
 
             this.orderRepository.createQueryBuilder('order')
@@ -631,7 +632,15 @@ export class BusinessesService {
             productionOrders: productionOrdersCount,
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
-            recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
+            recentOrders: recentOrders.map(o => ({ 
+                id: o.id, 
+                clientName: o.clientName, 
+                total: Number(o.totalPrice), 
+                status: o.status, 
+                dueDate: o.dueDate, 
+                type: o.type,
+                vehicle: o.vehicle
+            })),
             alerts, 
             trends: null,
             operationalCounters,

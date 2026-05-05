@@ -9,6 +9,7 @@ import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { OrderSiteInfo } from './order-site-info.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 
 @Entity('orders')
 @Unique(['code', 'businessId'])
@@ -106,9 +107,9 @@ export class Order {
     @Column({ name: 'vehicle_id', nullable: true })
     vehicleId: string;
 
-    @ManyToOne('Vehicle', { nullable: true })
+    @ManyToOne(() => Vehicle, { nullable: true })
     @JoinColumn({ name: 'vehicle_id' })
-    vehicle: any;
+    vehicle: Vehicle;
 
     get isQuotePending(): boolean {
         return this.items?.some(it => it.isPendingQuote) || this.totalPrice === null;

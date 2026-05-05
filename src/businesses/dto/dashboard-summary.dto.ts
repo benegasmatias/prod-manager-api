@@ -43,6 +43,7 @@ export class RecentOrderDto {
     status: string;
     dueDate: Date;
     type?: string;
+    vehicle?: any;
 }
 
 export class DashboardAlertDto {

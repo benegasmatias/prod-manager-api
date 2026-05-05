@@ -73,7 +73,7 @@ export class OrdersService {
 
         const [data, total] = await this.orderRepository.findAndCount({
             where: whereCondition,
-            relations: ['items', 'customer', 'responsableGeneral', 'payments'],
+            relations: ['items', 'customer', 'responsableGeneral', 'payments', 'vehicle'],
             order: {
                 updatedAt: 'DESC',
                 dueDate: 'ASC',
@@ -100,6 +100,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.items', 'items')
             .leftJoinAndSelect('order.payments', 'payments')
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
+            .leftJoinAndSelect('order.vehicle', 'vehicle')
             .leftJoinAndSelect('items.productionJob', 'job')
             .leftJoinAndSelect('job.machine', 'machine');
 
@@ -375,7 +376,7 @@ export class OrdersService {
                 'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
-                'failures', 'failures.material', 'payments', 'siteInfo'
+                'failures', 'failures.material', 'payments', 'siteInfo', 'vehicle'
             ],
         });
 
@@ -861,7 +862,7 @@ export class OrdersService {
                     'items', 'customer', 'responsableGeneral',
                     'jobs', 'jobs.operator', 'business',
                     'statusHistory', 'statusHistory.performedBy',
-                    'failures', 'failures.material', 'payments'
+                    'failures', 'failures.material', 'payments', 'vehicle'
                 ],
             });
         });
