@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body, Patch, Param, Query, UseGuards } from '@nestjs/common';
 import { VehiclesService } from './vehicles.service';
 import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
+import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 
 @Controller('vehicles')
-@UseGuards(BusinessAccessGuard)
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard)
 export class VehiclesController {
     constructor(private readonly vehiclesService: VehiclesService) {}
 

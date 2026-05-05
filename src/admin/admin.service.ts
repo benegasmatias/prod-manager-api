@@ -602,9 +602,27 @@ export class AdminService implements OnModuleInit {
                         { key: 'LISTO', label: 'Listo / Finalizado', color: 'bg-emerald-500' }
                     ],
                     itemFields: [
-                        { key: 'nombre', label: 'Descripción del Trabajo', tipo: 'text', required: true, placeholder: 'Ej: Cambio de aceite y filtros' },
-                        { key: 'modelo_vehiculo', label: 'Modelo / Versión', tipo: 'text', placeholder: 'Ej: Honda CB 250 Twister' },
-                        { key: 'kilometraje', label: 'Kilometraje Actual', tipo: 'number', placeholder: 'Ej: 15000' },
+                        { 
+                            key: 'nombreProducto', 
+                            label: 'Trabajo / Servicio', 
+                            tipo: 'select', 
+                            required: true, 
+                            options: [
+                                'Service General',
+                                'Cambio de Aceite y Filtros',
+                                'Frenos (Pastillas/Discos)',
+                                'Carburación / Inyección',
+                                'Transmisión (Cadena/Corona/Piñón)',
+                                'Suspensión / Barrales',
+                                'Electricidad / Batería',
+                                'Gomería / Cubiertas',
+                                'Motor (Ajuste/Reparación)',
+                                'Lavado y Lubricación',
+                                'Diagnóstico Computarizado',
+                                'Otro (Especificar en diagnóstico)'
+                            ]
+                        },
+                        { key: 'materiales_utilizados', label: 'Repuestos / Insumos', tipo: 'key-value-list' },
                         { key: 'reference_image', label: 'Foto del Estado / Recepción', tipo: 'text', placeholder: 'Evidencia fotográfica' },
                         { key: 'observaciones_diagnostico', label: 'Observaciones de Diagnóstico', tipo: 'textarea', placeholder: 'Detallar fallas encontradas...' },
                         { key: 'duracion_estimada_minutos', label: 'Tiempo Estimado de Trabajo', tipo: 'number', placeholder: '0' }

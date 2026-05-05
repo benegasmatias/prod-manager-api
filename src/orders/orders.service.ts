@@ -784,7 +784,7 @@ export class OrdersService {
     }
 
     async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
-        const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items } = updateStatusDto;
+        const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items, vehicleId } = updateStatusDto;
 
         const order = await this.findOne(id);
         const oldStatus = order.status;
@@ -801,6 +801,7 @@ export class OrdersService {
             if (responsableGeneralId !== undefined) updateData.responsableGeneralId = responsableGeneralId;
             if (notes !== undefined) updateData.notes = notes;
             if (updateStatusDto.metadata !== undefined) updateData.metadata = updateStatusDto.metadata;
+            if (vehicleId !== undefined) updateData.vehicleId = vehicleId;
 
             // Actualizar siteInfo si viene en el DTO
             if (updateStatusDto.siteInfo !== undefined) {
