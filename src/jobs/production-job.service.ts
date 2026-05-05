@@ -6,9 +6,10 @@ import { OrderItem } from '../orders/entities/order-item.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 import { OrderWorkflowService } from '../orders/order-workflow.service';
-import { ProductionJobStatus, ProductionJobPriority, OrderStatus, OrderItemStatus } from '../common/enums';
+import { ProductionJobStatus, ProductionJobPriority, OrderStatus, OrderItemStatus, MachineStatus } from '../common/enums';
 import { ProductionJobMaterial } from './entities/production-job-material.entity';
 import { Material } from '../materials/entities/material.entity';
+import { Machine } from '../machines/entities/machine.entity';
 
 @Injectable()
 export class ProductionJobService {
