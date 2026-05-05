@@ -20,6 +20,7 @@ import { MailModule } from './common/mail/mail.module';
 import { RetailModule } from './retail/retail.module';
 import { CalibrationsModule } from './calibrations/calibrations.module';
 import { UserStatusGuard } from './users/guards/user-status.guard';
+import { VehiclesModule } from './vehicles/vehicles.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { UserStatusGuard } from './users/guards/user-status.guard';
     MailModule,
     RetailModule,
     CalibrationsModule,
+    VehiclesModule,
   ],
   providers: [
     {

@@ -103,6 +103,13 @@ export class Order {
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
 
+    @Column({ name: 'vehicle_id', nullable: true })
+    vehicleId: string;
+
+    @ManyToOne('Vehicle', { nullable: true })
+    @JoinColumn({ name: 'vehicle_id' })
+    vehicle: any;
+
     get isQuotePending(): boolean {
         return this.items?.some(it => it.isPendingQuote) || this.totalPrice === null;
     }

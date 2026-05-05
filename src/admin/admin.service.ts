@@ -35,8 +35,9 @@ export class AdminService implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
-        // Seed default plans on startup
+        // Seed default plans and templates on startup
         await this.seedDefaultPlans();
+        await this.seedAllTemplates();
     }
 
     private async logAction(operatorId: string, action: string, targetId: string, details?: any) {
@@ -134,6 +135,29 @@ export class AdminService implements OnModuleInit {
                     apiWebhooks: true,
                     soporte: 'Dedicado'
                 }
+            },
+            {
+                id: 'taller-pro',
+                name: 'TALLER PRO',
+                category: 'MECHANIC_WORKSHOP',
+                price: 25000,
+                promoPrice: 12000,
+                promoDurationMonths: 6,
+                promoLabel: 'OFERTA TALLERES',
+                currency: 'ARS',
+                description: 'Ideal para talleres con hasta 3 rampas.',
+                features: ['Motos ilimitadas', '3 rampas / mecánicos', 'Historial por patente', 'Gestión de repuestos', 'Notificaciones WA'],
+                maxUsers: 5,
+                maxOrdersPerMonth: 500,
+                maxBusinesses: 1,
+                maxMachines: 3,
+                isRecommended: true,
+                ctaText: 'Empezar ahora',
+                ctaLink: '/register',
+                sortOrder: 3,
+                active: true,
+                hasTrial: true,
+                trialDays: 14,
             }
         ];
 
@@ -553,6 +577,39 @@ export class AdminService implements OnModuleInit {
                 description: 'Gestion de granjas de impresion, filamentos y servicios de diseño STL.',
                 imageKey: '3d-printing-template',
                 defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT']
+            },
+            {
+                key: 'MECHANIC_WORKSHOP',
+                name: 'Taller de Motos / Mecánica',
+                description: 'Gestión de reparaciones, service por kilometraje, historial por patente y rampa de trabajo.',
+                imageKey: 'mechanic-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT', 'VEHICLE_HISTORY'],
+                config: {
+                    sidebarItems: ['/dashboard', '/pedidos', '/vehiculos', '/clientes', '/produccion', '/stock', '/personal', '/reportes', '/ajustes'],
+                    labels: { 
+                        produccion: 'Rampas', 
+                        items: 'Trabajos', 
+                        pedidos: 'Servicios',
+                        nuevoPedido: 'NUEVO SERVICIO',
+                        finalizarPedido: 'Finalizar Servicio'
+                    },
+                    icons: { pedidos: 'Wrench', produccion: 'Hammer' },
+                    productionStages: [
+                        { key: 'DIAGNOSTICO', label: 'Diagnóstico', color: 'bg-blue-100' },
+                        { key: 'ESPERANDO_REPUESTOS', label: 'Esperando Repuestos', color: 'bg-amber-100' },
+                        { key: 'EN_RAMPA', label: 'En Rampa', color: 'bg-emerald-100' },
+                        { key: 'CONTROL_CALIDAD', label: 'Control de Calidad', color: 'bg-purple-100' },
+                        { key: 'LISTO', label: 'Listo / Finalizado', color: 'bg-emerald-500' }
+                    ],
+                    itemFields: [
+                        { key: 'nombre', label: 'Descripción del Trabajo', tipo: 'text', required: true, placeholder: 'Ej: Cambio de aceite y filtros' },
+                        { key: 'modelo_vehiculo', label: 'Modelo / Versión', tipo: 'text', placeholder: 'Ej: Honda CB 250 Twister' },
+                        { key: 'kilometraje', label: 'Kilometraje Actual', tipo: 'number', placeholder: 'Ej: 15000' },
+                        { key: 'reference_image', label: 'Foto del Estado / Recepción', tipo: 'text', placeholder: 'Evidencia fotográfica' },
+                        { key: 'observaciones_diagnostico', label: 'Observaciones de Diagnóstico', tipo: 'textarea', placeholder: 'Detallar fallas encontradas...' },
+                        { key: 'duracion_estimada_minutos', label: 'Tiempo Estimado de Trabajo', tipo: 'number', placeholder: '0' }
+                    ]
+                }
             }
         ];
 
@@ -562,6 +619,9 @@ export class AdminService implements OnModuleInit {
                 temp = repo.create({ ...t, key: t.key as any });
             } else {
                 temp.defaultCapabilities = t.defaultCapabilities;
+                temp.config = (t as any).config;
+                temp.name = t.name;
+                temp.description = t.description;
             }
             await repo.save(temp);
         }

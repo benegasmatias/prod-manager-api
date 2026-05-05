@@ -14603,3 +14603,18 @@ Stack: UnauthorizedException: Token inválido o expirado
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T02:12:01.409Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:508:28)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
