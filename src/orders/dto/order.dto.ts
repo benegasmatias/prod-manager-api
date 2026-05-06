@@ -261,6 +261,10 @@ export class FindOrdersDto {
 
     @IsString()
     @IsOptional()
+    vehicleId?: string;
+
+    @IsString()
+    @IsOptional()
     responsableId?: string;
 
     @IsEnum(OrderStatus)

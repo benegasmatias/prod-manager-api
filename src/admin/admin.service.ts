@@ -37,7 +37,7 @@ export class AdminService implements OnModuleInit {
     async onModuleInit() {
         // Seed default plans and templates on startup
         await this.seedDefaultPlans();
-        await this.seedAllTemplates();
+        // await this.seedAllTemplates();
     }
 
     private async logAction(operatorId: string, action: string, targetId: string, details?: any) {
@@ -586,9 +586,9 @@ export class AdminService implements OnModuleInit {
                 defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT', 'VEHICLE_HISTORY'],
                 config: {
                     sidebarItems: ['/dashboard', '/pedidos', '/vehiculos', '/clientes', '/produccion', '/stock', '/personal', '/reportes', '/ajustes'],
-                    labels: { 
-                        produccion: 'Rampas', 
-                        items: 'Trabajos', 
+                    labels: {
+                        produccion: 'Rampas',
+                        items: 'Trabajos',
                         pedidos: 'Servicios',
                         nuevoPedido: 'NUEVO SERVICIO',
                         finalizarPedido: 'Finalizar Servicio'
@@ -602,11 +602,11 @@ export class AdminService implements OnModuleInit {
                         { key: 'LISTO', label: 'Listo / Finalizado', color: 'bg-emerald-500' }
                     ],
                     itemFields: [
-                        { 
-                            key: 'nombreProducto', 
-                            label: 'Trabajo / Servicio', 
-                            tipo: 'select', 
-                            required: true, 
+                        {
+                            key: 'nombreProducto',
+                            label: 'Trabajo / Servicio',
+                            tipo: 'select',
+                            required: true,
                             options: [
                                 'Service General',
                                 'Cambio de Aceite y Filtros',
@@ -632,16 +632,12 @@ export class AdminService implements OnModuleInit {
         ];
 
         for (const t of templatesToSeed) {
-            let temp = await repo.findOneBy({ key: t.key as any });
-            if (!temp) {
-                temp = repo.create({ ...t, key: t.key as any });
-            } else {
-                temp.defaultCapabilities = t.defaultCapabilities;
-                temp.config = (t as any).config;
-                temp.name = t.name;
-                temp.description = t.description;
+            const existing = await repo.findOneBy({ key: t.key as any });
+            if (!existing) {
+                await repo.save(repo.create({ ...t, key: t.key as any }));
+                console.log(`[SEED] Created new template: ${t.key}`);
             }
-            await repo.save(temp);
+            // No overwriting existing templates to preserve manual edits
         }
 
         return { message: 'Templates synchronized' };

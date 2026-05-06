@@ -34,6 +34,9 @@ export class Vehicle {
     model: string;
 
     @Column({ nullable: true })
+    type: string; // AUTO, MOTO, PICKUP, etc.
+
+    @Column({ nullable: true })
     year: number;
 
     @Column({ nullable: true })

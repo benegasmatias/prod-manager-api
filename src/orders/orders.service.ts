@@ -92,7 +92,7 @@ export class OrdersService {
      * Excluye campos pesados como metadatos y jobs.
      */
     async findListing(query: FindOrdersDto): Promise<{ data: Order[], total: number }> {
-        const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search, startDate, endDate, responsableId, alertFilter } = query;
+        const { businessId, status, statuses, excludeStatuses, type, page = 1, pageSize = 50, search, startDate, endDate, responsableId, alertFilter, vehicleId } = query;
 
         const qb = this.orderRepository.createQueryBuilder('order')
             .leftJoinAndSelect('order.customer', 'customer')
@@ -138,6 +138,10 @@ export class OrdersService {
 
         if (search) {
             qb.andWhere('(order.clientName ILike :search OR order.code ILike :search)', { search: `%${search}%` });
+        }
+
+        if (vehicleId) {
+            qb.andWhere('order.vehicleId = :vehicleId', { vehicleId });
         }
 
         // Operational Alerts / Urgency Filtering
