@@ -6,6 +6,18 @@ export class CreateCustomerDto {
     name: string;
 
     @IsString()
+    @IsOptional()
+    firstName?: string;
+
+    @IsString()
+    @IsOptional()
+    lastName?: string;
+
+    @IsString()
+    @IsOptional()
+    dni?: string;
+
+    @IsString()
     @IsNotEmpty()
     businessId: string;
 
@@ -27,6 +39,18 @@ export class UpdateCustomerDto {
     @IsString()
     @IsOptional()
     name?: string;
+
+    @IsString()
+    @IsOptional()
+    firstName?: string;
+
+    @IsString()
+    @IsOptional()
+    lastName?: string;
+
+    @IsString()
+    @IsOptional()
+    dni?: string;
 
     @ValidateIf(o => o.email !== '' && o.email !== undefined && o.email !== null)
     @IsEmail()

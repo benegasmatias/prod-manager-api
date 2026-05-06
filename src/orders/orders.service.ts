@@ -137,11 +137,18 @@ export class OrdersService {
         }
 
         if (search) {
-            qb.andWhere('(order.clientName ILike :search OR order.code ILike :search)', { search: `%${search}%` });
+            qb.andWhere(
+                '(order.clientName ILike :search OR order.code ILike :search OR order.notes ILike :search OR vehicle.plate ILike :search OR vehicle.brand ILike :search OR vehicle.model ILike :search OR CAST(order.metadata ->> \'plate\' AS TEXT) ILike :search)',
+                { search: `%${search}%` }
+            );
         }
 
         if (vehicleId) {
             qb.andWhere('order.vehicleId = :vehicleId', { vehicleId });
+        }
+
+        if (query.customerId) {
+            qb.andWhere('order.customerId = :customerId', { customerId: query.customerId });
         }
 
         // Operational Alerts / Urgency Filtering

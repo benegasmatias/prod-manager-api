@@ -23,6 +23,11 @@ export class VehiclesController {
         return this.vehiclesService.findOne(businessId, id);
     }
 
+    @Get('plate/:plate')
+    findByPlate(@Query('businessId') businessId: string, @Param('plate') plate: string) {
+        return this.vehiclesService.findByPlate(businessId, plate);
+    }
+
     @Patch(':id')
     update(@Query('businessId') businessId: string, @Param('id') id: string, @Body() data: any) {
         return this.vehiclesService.update(businessId, id, data);

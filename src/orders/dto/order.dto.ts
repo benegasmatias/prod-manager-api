@@ -261,6 +261,10 @@ export class FindOrdersDto {
 
     @IsString()
     @IsOptional()
+    customerId?: string;
+
+    @IsString()
+    @IsOptional()
     vehicleId?: string;
 
     @IsString()
