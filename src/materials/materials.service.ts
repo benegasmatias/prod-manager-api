@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Material } from './entities/material.entity';
 import { MaterialMovement } from './entities/material-movement.entity';
 import { CreateMaterialDto, UpdateMaterialDto, MaterialFormFieldSchema } from './dto/material.dto';
 import { MaterialType } from '../common/enums';
+import { MaterialStrategyFactory } from './strategies/material-strategy.factory';
 
 @Injectable()
 export class MaterialsService {
@@ -13,22 +14,31 @@ export class MaterialsService {
         private readonly materialRepository: Repository<Material>,
         @InjectRepository(MaterialMovement)
         private readonly movementRepository: Repository<MaterialMovement>,
+        private readonly strategyFactory: MaterialStrategyFactory,
     ) { }
 
     async create(createDto: CreateMaterialDto): Promise<Material> {
+        // Resolve strategy for validation
+        const strategy = this.strategyFactory.getStrategy(createDto.type);
+        if (createDto.attributes) {
+            strategy.validateAttributes(createDto.attributes);
+        }
+
         const material = this.materialRepository.create({
             ...createDto,
             type: createDto.type as MaterialType,
+            attributes: createDto.attributes || {},
         });
         const saved = await this.materialRepository.save(material);
 
-        // Record initial stock if it's > 0
-        if (saved.remainingWeightGrams > 0) {
+        // Record initial stock if it's > 0 (using generic remainingWeightGrams for now as stock)
+        const initialStock = saved.remainingWeightGrams || 0;
+        if (initialStock > 0) {
             try {
                 await this.recordMovement(saved, {
                     type: 'IN',
-                    quantity: saved.remainingWeightGrams,
-                    newValue: saved.remainingWeightGrams,
+                    quantity: initialStock,
+                    newValue: initialStock,
                     oldValue: 0,
                     notes: 'Stock inicial en creación',
                     createdBy: 'SYSTEM'
@@ -41,20 +51,45 @@ export class MaterialsService {
         return saved;
     }
 
-    async findAll(businessId?: string): Promise<Material[]> {
-        const where = businessId ? { businessId, active: true } : { active: true };
-        return this.materialRepository.find({
-            where,
-            order: { name: 'ASC' },
-        });
-    }
-
     async findOne(id: string): Promise<Material> {
         const material = await this.materialRepository.findOneBy({ id });
         if (!material) {
             throw new NotFoundException(`Material con ID ${id} no encontrado`);
         }
+        
+        // Fallback mapping: If attributes is empty, map legacy columns
+        const strategy = this.strategyFactory.getStrategy(material.type);
+        material.attributes = strategy.mapLegacyToAttributes(material);
+        
         return material;
+    }
+
+    async findAll(businessId?: string, type?: string): Promise<Material[]> {
+        const where: any = { active: true };
+        if (businessId) where.businessId = businessId;
+        
+        if (type) {
+            if (type === 'FILAMENT') {
+                // For FILAMENT, we also want to include legacy 3D types
+                where.type = In(['FILAMENT', 'PLA', 'PETG', 'ABS', 'TPU', 'RESINA']);
+            } else {
+                where.type = type;
+            }
+        }
+
+        console.log('[MaterialsService] findAll where:', JSON.stringify(where));
+
+        const materials = await this.materialRepository.find({
+            where,
+            order: { name: 'ASC' },
+        });
+
+        // Apply fallback mapping for all items
+        return materials.map(m => {
+            const strategy = this.strategyFactory.getStrategy(m.type);
+            m.attributes = strategy.mapLegacyToAttributes(m);
+            return m;
+        });
     }
 
     async update(id: string, updateDto: UpdateMaterialDto): Promise<Material> {
@@ -66,7 +101,10 @@ export class MaterialsService {
         
         if (updateDto.type) updateData.type = updateDto.type as MaterialType;
 
+        const strategy = this.strategyFactory.getStrategy(updateData.type || current.type);
+
         if (updateDto.attributes) {
+            strategy.validateAttributes(updateDto.attributes);
             updateData.attributes = {
                 ...(current.attributes || {}),
                 ...updateDto.attributes

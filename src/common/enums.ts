@@ -163,6 +163,12 @@ export enum ProductionJobPriority {
 }
 
 export enum MaterialType {
+    // Polymorphic Types (New Architecture)
+    FILAMENT = 'FILAMENT',
+    BLANK = 'BLANK',
+    HARDWARE = 'HARDWARE',
+    
+    // Legacy Types (Keeping for compatibility during migration)
     PLA = 'PLA',
     PETG = 'PETG',
     ABS = 'ABS',

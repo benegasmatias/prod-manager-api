@@ -15548,3 +15548,18 @@ Stack: NotFoundException: Cliente no encontrado
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async CustomersService.remove (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/customers/customers.service.ts:88:26)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T13:04:05.886Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-pool/index.js:276:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------

@@ -35,8 +35,8 @@ export class MaterialsController {
     @Get()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    findAll(@Query('businessId') businessId?: string) {
-        return this.materialsService.findAll(businessId);
+    findAll(@Query('businessId') businessId?: string, @Query('type') type?: string) {
+        return this.materialsService.findAll(businessId, type);
     }
 
     @Get(':id')
