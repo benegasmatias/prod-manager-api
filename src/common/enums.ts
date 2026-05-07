@@ -192,3 +192,21 @@ export enum ProductFileRole {
     GCODE = 'GCODE',
     OTHER = 'OTHER'
 }
+
+export enum ProductStatus {
+    DRAFT = 'DRAFT',
+    ACTIVE = 'ACTIVE',
+    ARCHIVED = 'ARCHIVED'
+}
+
+export enum ProductVisibility {
+    PUBLIC = 'PUBLIC',
+    PRIVATE = 'PRIVATE'
+}
+
+export enum FulfillmentMode {
+    STOCK = 'STOCK',
+    MAKE_TO_ORDER = 'MAKE_TO_ORDER',
+    HYBRID = 'HYBRID'
+}
+
