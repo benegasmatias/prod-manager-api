@@ -15710,3 +15710,78 @@ Stack: UnauthorizedException: No se encontró el encabezado de autorización
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T19:48:01.191Z
+Path: /products
+Status: 400
+Message: {"message":["property id should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T19:51:19.232Z
+Path: /products
+Status: 400
+Message: {"message":["property id should not exist","property wholesalePrice should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T20:34:05.680Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T22:39:52.254Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T22:41:28.445Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------

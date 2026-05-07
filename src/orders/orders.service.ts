@@ -101,6 +101,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.payments', 'payments')
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .leftJoinAndSelect('order.vehicle', 'vehicle')
+            .leftJoinAndSelect('items.product', 'product')
             .leftJoinAndSelect('items.productionJob', 'job')
             .leftJoinAndSelect('job.machine', 'machine');
 
@@ -383,7 +384,7 @@ export class OrdersService {
         const order = await this.orderRepository.findOne({
             where: { id },
             relations: [
-                'items', 'items.productionJob', 'items.productionJob.machine',
+                'items', 'items.product', 'items.productionJob', 'items.productionJob.machine',
                 'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',

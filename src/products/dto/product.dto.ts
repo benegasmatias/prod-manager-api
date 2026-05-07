@@ -40,6 +40,11 @@ export class CreateProductDto {
     basePrice: number;
 
     @IsNumber()
+    @IsOptional()
+    @Min(0)
+    wholesalePrice?: number;
+
+    @IsNumber()
     @IsInt()
     @Type(() => Number)
     @IsOptional()
@@ -113,6 +118,11 @@ export class UpdateProductDto {
     @IsOptional()
     @Min(0)
     basePrice?: number;
+
+    @IsNumber()
+    @IsOptional()
+    @Min(0)
+    wholesalePrice?: number;
 
     @IsNumber()
     @IsInt()

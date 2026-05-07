@@ -69,7 +69,10 @@ export class MaterialsService {
         if (businessId) where.businessId = businessId;
         
         if (type) {
-            if (type === 'FILAMENT') {
+            const types = type.split(',');
+            if (types.length > 1) {
+                where.type = In(types);
+            } else if (type === 'FILAMENT') {
                 // For FILAMENT, we also want to include legacy 3D types
                 where.type = In(['FILAMENT', 'PLA', 'PETG', 'ABS', 'TPU', 'RESINA']);
             } else {

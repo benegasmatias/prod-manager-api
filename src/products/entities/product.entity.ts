@@ -60,6 +60,9 @@ export class Product {
     @Column({ name: 'base_price', type: 'decimal', precision: 12, scale: 2, default: 0 })
     basePrice: number;
 
+    @Column({ name: 'wholesale_price', type: 'decimal', precision: 12, scale: 2, nullable: true })
+    wholesalePrice: number;
+
     @Column({ type: 'int', default: 0 })
     stock: number;
 
