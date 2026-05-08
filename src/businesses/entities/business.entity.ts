@@ -10,6 +10,9 @@ export class Business {
     @Column()
     name: string;
 
+    @Column({ unique: true, nullable: true })
+    slug: string;
+
     @Column({ nullable: true })
     taxId: string; // CUIT/CUIL
 

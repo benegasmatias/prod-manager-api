@@ -210,3 +210,17 @@ export enum FulfillmentMode {
     HYBRID = 'HYBRID'
 }
 
+export enum CatalogRequestStatus {
+    REQUESTED = 'REQUESTED',
+    UNDER_REVIEW = 'UNDER_REVIEW',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+    CONVERTED_TO_ORDER = 'CONVERTED_TO_ORDER'
+}
+
+export enum DeliveryMethod {
+    PICKUP = 'PICKUP',
+    DELIVERY = 'DELIVERY',
+    TO_DEFINE = 'TO_DEFINE'
+}
+
