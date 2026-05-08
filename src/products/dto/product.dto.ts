@@ -36,11 +36,13 @@ export class CreateProductDto {
     fulfillmentMode?: FulfillmentMode;
 
     @IsNumber()
+    @Type(() => Number)
     @Min(0)
     basePrice: number;
 
     @IsNumber()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     wholesalePrice?: number;
 
@@ -71,6 +73,7 @@ export class CreateProductDto {
 
     @IsNumber()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     weightG?: number;
 
@@ -80,6 +83,10 @@ export class CreateProductDto {
 
     @IsOptional()
     attributes?: any;
+
+    @IsString()
+    @IsOptional()
+    externalUrl?: string;
 
     @IsOptional()
     metadata?: any;
@@ -116,17 +123,20 @@ export class UpdateProductDto {
 
     @IsNumber()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     basePrice?: number;
 
     @IsNumber()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     wholesalePrice?: number;
 
     @IsNumber()
     @IsInt()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     stock?: number;
 
@@ -137,17 +147,20 @@ export class UpdateProductDto {
     @IsNumber()
     @IsInt()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     leadTimeDays?: number;
 
     @IsNumber()
     @IsInt()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     estimatedProductionMinutes?: number;
 
     @IsNumber()
     @IsOptional()
+    @Type(() => Number)
     @Min(0)
     weightG?: number;
 
@@ -157,6 +170,10 @@ export class UpdateProductDto {
 
     @IsOptional()
     attributes?: any;
+
+    @IsString()
+    @IsOptional()
+    externalUrl?: string;
 
     @IsOptional()
     metadata?: any;

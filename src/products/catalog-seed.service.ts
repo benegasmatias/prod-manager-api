@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductCategory } from './entities/product-category.entity';
+import { Business } from '../businesses/entities/business.entity';
+import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 
 @Injectable()
 export class CatalogSeedService {
@@ -35,25 +37,55 @@ export class CatalogSeedService {
 
     constructor(
         @InjectRepository(ProductCategory)
-        private readonly categoryRepository: Repository<ProductCategory>
+        private readonly categoryRepository: Repository<ProductCategory>,
+        @InjectRepository(Business)
+        private readonly businessRepository: Repository<Business>,
+        @InjectRepository(BusinessTemplate)
+        private readonly templateRepository: Repository<BusinessTemplate>
     ) {}
 
     async seedForBusiness(businessId: string, industry: string = 'GENERICO') {
-        const categories = this.presets[industry] || this.presets['GENERICO'];
-        
         const existingCount = await this.categoryRepository.count({ where: { businessId } });
         if (existingCount > 0) {
             this.logger.log(`Business ${businessId} already has categories. Skipping seed.`);
             return [];
         }
 
+        let categories: any[] = [];
+
+        // 1. Try to find categories from the business template
+        try {
+            const business = await this.businessRepository.findOne({ where: { id: businessId } });
+            if (business && business.category) {
+                const template = await this.templateRepository.findOne({ where: { key: business.category } });
+                if (template && template.config?.catalogCategories?.length > 0) {
+                    this.logger.log(`Found template categories for ${business.category}: ${template.config.catalogCategories.length} items`);
+                    categories = template.config.catalogCategories.map((name: string, index: number) => ({
+                        name,
+                        slug: name.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, ''),
+                        icon: 'Package',
+                        color: '#3b82f6',
+                        sortOrder: index + 1
+                    }));
+                }
+            }
+        } catch (e) {
+            this.logger.error('Error fetching template categories:', e);
+        }
+
+        // 2. Fallback to hardcoded presets if no template categories found
+        if (categories.length === 0) {
+            this.logger.log(`Using fallback presets for industry: ${industry}`);
+            categories = this.presets[industry] || this.presets['GENERICO'];
+        }
+        
         const toCreate = categories.map(cat => ({
             ...cat,
             businessId
         }));
 
         const saved = await this.categoryRepository.save(toCreate);
-        this.logger.log(`Seeded ${saved.length} categories for business ${businessId} (Industry: ${industry})`);
+        this.logger.log(`Seeded ${saved.length} categories for business ${businessId}`);
         return saved;
     }
 }

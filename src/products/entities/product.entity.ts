@@ -81,6 +81,9 @@ export class Product {
     @Column({ name: 'thumbnail_url', nullable: true })
     thumbnailUrl: string;
 
+    @Column({ name: 'external_url', type: 'text', nullable: true })
+    externalUrl: string;
+
     @Column({ type: 'jsonb', nullable: true })
     attributes: any;
 

@@ -576,7 +576,16 @@ export class AdminService implements OnModuleInit {
                 name: 'Impresion 3D',
                 description: 'Gestion de granjas de impresion, filamentos y servicios de diseño STL.',
                 imageKey: '3d-printing-template',
-                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT']
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
+                config: {
+                    catalogCategories: [
+                        'REPUESTOS Y MECÁNICA',
+                        'FIGURAS Y COLECCIONABLES',
+                        'PROTOTIPOS INDUSTRIALES',
+                        'ARTICULADOS Y FLEXIS',
+                        'HOGAR Y DECORACIÓN'
+                    ]
+                }
             },
             {
                 key: 'MECHANIC_WORKSHOP',
