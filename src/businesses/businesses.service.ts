@@ -681,6 +681,40 @@ export class BusinessesService {
         }
 
         const memberships = await query.getMany();
+        
+        // Lazy-generate or clean up slugs for businesses
+        for (const m of memberships) {
+            let baseSlug = m.business.name
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+
+            // If slug is missing OR it has the UUID suffix but it might not be needed
+            const hasUuidSuffix = m.business.slug && m.business.slug.includes('-') && m.business.slug.length > baseSlug.length;
+            
+            if (!m.business.slug || hasUuidSuffix) {
+                // Check if the clean baseSlug is already taken by ANOTHER business
+                const existing = await this.businessRepository.findOne({
+                    where: { slug: baseSlug }
+                });
+
+                if (!existing || existing.id === m.business.id) {
+                    // We can use the clean one!
+                    if (m.business.slug !== baseSlug) {
+                        m.business.slug = baseSlug;
+                        await this.businessRepository.save(m.business);
+                    }
+                } else if (!m.business.slug) {
+                    // Only generate with suffix if it's currently missing
+                    const shortId = m.business.id.split('-')[0];
+                    m.business.slug = `${baseSlug}-${shortId}`;
+                    await this.businessRepository.save(m.business);
+                }
+            }
+        }
+
         return memberships.map(m => ({
             ...m.business,
             userRole: m.role

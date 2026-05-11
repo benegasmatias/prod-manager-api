@@ -23,29 +23,52 @@ export class PublicCatalogService {
     private readonly dataSource: DataSource,
   ) {}
 
-  async getCatalogData(slug: string) {
+  async getCatalogData(slug: string, query?: { page?: number; limit?: number; categoryId?: string; search?: string }) {
+    console.log(`[PublicCatalogService] Fetching catalog for slug: "${slug}"`, query);
     const business = await this.businessRepository.findOne({
       where: { slug, isEnabled: true },
     });
 
     if (!business) {
+      console.warn(`[PublicCatalogService] Business NOT FOUND for slug: "${slug}"`);
       throw new NotFoundException('Establecimiento no encontrado o no disponible');
     }
+    
+    console.log(`[PublicCatalogService] Business found: "${business.name}" (ID: ${business.id})`);
 
     const categories = await this.categoryRepository.find({
       where: { businessId: business.id },
       order: { sortOrder: 'ASC' },
     });
 
-    const products = await this.productRepository.find({
-      where: {
-        businessId: business.id,
-        visibility: ProductVisibility.PUBLIC,
-        status: ProductStatus.ACTIVE,
-      },
-      relations: ['category', 'productFiles', 'productFiles.fileAsset'],
-      order: { name: 'ASC' },
-    });
+    // Build product query
+    const page = Number(query?.page) || 1;
+    const limit = Number(query?.limit) || 12;
+    const skip = (page - 1) * limit;
+
+    const productQuery = this.productRepository.createQueryBuilder('product')
+      .leftJoinAndSelect('product.category', 'category')
+      .leftJoinAndSelect('product.productFiles', 'productFiles')
+      .leftJoinAndSelect('productFiles.fileAsset', 'fileAsset')
+      .where('product.businessId = :businessId', { businessId: business.id })
+      .andWhere('product.visibility = :visibility', { visibility: ProductVisibility.PUBLIC })
+      .andWhere('product.status = :status', { status: ProductStatus.ACTIVE });
+
+    if (query?.categoryId) {
+      productQuery.andWhere('product.categoryId = :categoryId', { categoryId: query.categoryId });
+    }
+
+    if (query?.search) {
+      productQuery.andWhere('(LOWER(product.name) LIKE :search OR LOWER(product.description) LIKE :search)', { 
+        search: `%${query.search.toLowerCase()}%` 
+      });
+    }
+
+    const products = await productQuery
+      .orderBy('product.name', 'ASC')
+      .skip(skip)
+      .take(limit)
+      .getMany();
 
     return {
       business: {

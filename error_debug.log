@@ -15800,3 +15800,53 @@ Stack: BadRequestException: Bad Request Exception
     at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:29:27.241Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:29:30.159Z
+Path: /public/catalog/null
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:32:38.455Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:40:08.592Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:44:00.482Z
+Path: /public/catalog/null
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------

@@ -23,7 +23,12 @@ export class CatalogRequestService {
   async findAll(businessId: string) {
     return this.requestRepository.find({
       where: { businessId },
-      relations: ['items'],
+      relations: [
+        'items',
+        'items.product',
+        'items.product.productFiles',
+        'items.product.productFiles.fileAsset'
+      ],
       order: { createdAt: 'DESC' },
     });
   }
@@ -31,9 +36,20 @@ export class CatalogRequestService {
   async findOne(id: string, businessId: string) {
     const request = await this.requestRepository.findOne({
       where: { id, businessId },
-      relations: ['items'],
+      relations: [
+        'items',
+        'items.product',
+        'items.product.productFiles',
+        'items.product.productFiles.fileAsset'
+      ],
     });
     if (!request) throw new NotFoundException('Solicitud no encontrada');
+    
+    console.log(`[CatalogRequestService] findOne(${id}) items:`, request.items.length);
+    request.items.forEach(item => {
+      console.log(` - Item: ${item.productNameSnapshot}, Product populated: ${!!item.product}, ExtURL: ${item.product?.externalUrl}`);
+    });
+
     return request;
   }
 

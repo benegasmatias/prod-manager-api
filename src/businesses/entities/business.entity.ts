@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, OneToOne, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { BusinessMembership } from './business-membership.entity';
 import { BusinessSubscription } from './business-subscription.entity';
 
@@ -90,4 +90,17 @@ export class Business {
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    generateSlug() {
+        if (this.name && !this.slug) {
+            this.slug = this.name
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+    }
 }
