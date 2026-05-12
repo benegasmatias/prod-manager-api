@@ -713,6 +713,7 @@ export class AdminService implements OnModuleInit {
                 imageKey: '3d-printing-template',
                 defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
                 config: {
+                    sidebarItems: ['/dashboard', '/calculadora', '/pedidos', '/clientes', '/produccion', '/stock', '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'],
                     catalogCategories: [
                         'REPUESTOS Y MECÁNICA',
                         'FIGURAS Y COLECCIONABLES',

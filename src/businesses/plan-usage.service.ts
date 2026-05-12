@@ -35,7 +35,7 @@ export class PlanUsageService {
     public async getLimitsForPlan(planId: string, category: string = 'IMPRESION_3D'): Promise<any> {
         // 1. Try exact match (e.g. 'free-3d')
         let dbPlan = await this.planRepository.findOneBy({ id: planId });
-        
+
         // 2. If not found and is a generic name, try to map it based on category
         if (!dbPlan && (['FREE', 'PRO', 'BUSINESS'].includes(planId.toUpperCase()))) {
             const suffix = category === 'METALURGICA' ? 'metal' : '3d';
@@ -50,12 +50,12 @@ export class PlanUsageService {
                 order: { sortOrder: 'ASC' }
             });
         }
-        
+
         if (dbPlan) {
             // Map Entity fields to the "limits" structure used by the service
             // We use the first entry of the hardcoded limits as a template for features/defaults
-            const baseLimits = PLAN_LIMITS['FREE']; 
-            
+            const baseLimits = PLAN_LIMITS['FREE'];
+
             return {
                 ...baseLimits,
                 id: dbPlan.id,
@@ -73,16 +73,16 @@ export class PlanUsageService {
 
     async ensureBusinessCreationAllowed(userId: string): Promise<void> {
         const user = await this.userRepository.findOneBy({ id: userId });
-        
+
         // SUPER_ADMINs can create unlimited businesses
         if (user?.globalRole === 'SUPER_ADMIN') {
             return;
         }
 
         const userPlan = user?.plan || 'FREE';
-        const limits = await this.getLimitsForPlan(userPlan, 'IMPRESION_3D'); 
+        const limits = await this.getLimitsForPlan(userPlan, 'IMPRESION_3D');
 
-        const businessCount = await this.businessRepository.countBy({ 
+        const businessCount = await this.businessRepository.countBy({
             memberships: { userId } as any
         });
 
@@ -102,7 +102,7 @@ export class PlanUsageService {
         const machineCount = await this.machineRepository.countBy({ businessId, active: true, blockedByQuota: false });
 
         if (limits.maxMachinesPerBusiness !== 0 && machineCount >= limits.maxMachinesPerBusiness) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null,
                 { resource: 'MACHINES', usage: machineCount, limit: limits.maxMachinesPerBusiness, plan },
                 context
             );
@@ -129,7 +129,7 @@ export class PlanUsageService {
         const totalUsage = employeeCount + invitationCount;
 
         if (limits.maxEmployeesPerBusiness !== 0 && totalUsage >= limits.maxEmployeesPerBusiness) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null,
                 { resource: 'EMPLOYEES', usage: totalUsage, limit: limits.maxEmployeesPerBusiness, plan },
                 context
             );
@@ -156,7 +156,7 @@ export class PlanUsageService {
             .getCount();
 
         if (limits.maxOrdersPerMonth !== 0 && orderCount >= limits.maxOrdersPerMonth) {
-            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null, 
+            await this.auditService.log(AuditAction.QUOTA_EXCEEDED, 'BUSINESS', businessId, businessId, null,
                 { resource: 'ORDERS', usage: orderCount, limit: limits.maxOrdersPerMonth, plan },
                 context
             );
@@ -173,15 +173,28 @@ export class PlanUsageService {
 
         const planId = business?.subscription?.plan || business?.plan || 'FREE';
         let status = business?.status === 'SUSPENDED' ? 'SUSPENDED' : (business?.subscription?.status || business?.status || 'ACTIVE');
-        
+
         // 1. Check for expiration
         const now = new Date();
-        const isSubscriptionExpired = business.subscriptionExpiresAt && new Date(business.subscriptionExpiresAt) < now;
-        const isTrialExpired = business.trialExpiresAt && new Date(business.trialExpiresAt) < now;
-        const isExpired = !!(isSubscriptionExpired || isTrialExpired);
+        
+        // Priority: Subscription Entity > Business Fields > Trial
+        let isExpired = false;
+        const subExpiresAt = business.subscription?.currentPeriodEnd || business.subscriptionExpiresAt;
+        const trialExpiresAt = business.subscription?.trialEndAt || business.trialExpiresAt;
+
+        if (subExpiresAt) {
+            isExpired = new Date(subExpiresAt) < now;
+        } else if (trialExpiresAt) {
+            isExpired = new Date(trialExpiresAt) < now;
+        }
 
         if (isExpired && status === 'ACTIVE') {
             status = 'EXPIRED';
+        } else if (!isExpired && status === 'EXPIRED') {
+            // Auto-restore to ACTIVE if date is now good (e.g. manual date update)
+            status = 'ACTIVE';
+            business.status = 'ACTIVE';
+            await this.businessRepository.save(business);
         }
 
         console.log(`[PlanUsage] Business: ${businessId}, Status: ${status}, Expired: ${isExpired}, SubExpires: ${business.subscriptionExpiresAt}`);
@@ -288,7 +301,7 @@ export class PlanUsageService {
             // But if maxEmployees is 1, it only allows the owner.
             const totalHumansAllowed = maxEmployees !== 0 ? maxEmployees : 9999;
             const shouldBeBlocked = (i + 1) > totalHumansAllowed;
-            
+
             if (employees[i].blockedByQuota !== shouldBeBlocked) {
                 employees[i].blockedByQuota = shouldBeBlocked;
                 await this.employeeRepository.save(employees[i]);
@@ -296,11 +309,11 @@ export class PlanUsageService {
         }
 
         await this.auditService.log(
-            AuditAction.RESOURCE_UPDATED, 
-            'BUSINESS', 
-            businessId, 
-            businessId, 
-            null, 
+            AuditAction.RESOURCE_UPDATED,
+            'BUSINESS',
+            businessId,
+            businessId,
+            null,
             { event: 'QUOTA_RECONCILED', plan, maxMachines, maxEmployees }
         );
     }
