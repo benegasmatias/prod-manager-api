@@ -172,7 +172,20 @@ export class PlanUsageService {
         if (!business) throw new ForbiddenException('Negocio no encontrado');
 
         const planId = business?.subscription?.plan || business?.plan || 'FREE';
-        const status = business?.subscription?.status || 'ACTIVE';
+        let status = business?.status === 'SUSPENDED' ? 'SUSPENDED' : (business?.subscription?.status || business?.status || 'ACTIVE');
+        
+        // 1. Check for expiration
+        const now = new Date();
+        const isSubscriptionExpired = business.subscriptionExpiresAt && new Date(business.subscriptionExpiresAt) < now;
+        const isTrialExpired = business.trialExpiresAt && new Date(business.trialExpiresAt) < now;
+        const isExpired = !!(isSubscriptionExpired || isTrialExpired);
+
+        if (isExpired && status === 'ACTIVE') {
+            status = 'EXPIRED';
+        }
+
+        console.log(`[PlanUsage] Business: ${businessId}, Status: ${status}, Expired: ${isExpired}, SubExpires: ${business.subscriptionExpiresAt}`);
+
         const limits = await this.getLimitsForPlan(planId, business.category);
 
         const startOfMonth = new Date();
@@ -204,18 +217,25 @@ export class PlanUsageService {
             orders: limits.maxOrdersPerMonth
         };
 
+        // If expired, creation is disabled regardless of limits
+        const canCreateResources = !isExpired && status !== 'SUSPENDED';
+
         return {
             plan: {
                 id: limits.id || planId,
                 name: limits.name,
-                category: business.category
+                category: business.category,
+                status,
+                isExpired,
+                subscriptionExpiresAt: business.subscriptionExpiresAt,
+                trialExpiresAt: business.trialExpiresAt
             },
             limits: max,
             usage,
             canCreate: {
-                users: max.users === 0 || usage.users < max.users,
-                machines: max.machines === 0 || usage.machines < max.machines,
-                orders: max.orders === 0 || usage.ordersThisMonth < max.orders
+                users: canCreateResources && (max.users === 0 || usage.users < max.users),
+                machines: canCreateResources && (max.machines === 0 || usage.machines < max.machines),
+                orders: canCreateResources && (max.orders === 0 || usage.ordersThisMonth < max.orders)
             }
         };
     }
