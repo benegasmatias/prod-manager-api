@@ -35,8 +35,9 @@ export class AdminService implements OnModuleInit {
     ) { }
 
     async onModuleInit() {
-        // Seed default plans on startup
+        // Seed default plans and templates on startup
         await this.seedDefaultPlans();
+        // await this.seedAllTemplates();
     }
 
     private async logAction(operatorId: string, action: string, targetId: string, details?: any) {
@@ -134,6 +135,164 @@ export class AdminService implements OnModuleInit {
                     apiWebhooks: true,
                     soporte: 'Dedicado'
                 }
+            },
+            {
+                id: 'taller-free',
+                name: 'TALLER FREE',
+                category: 'MECHANIC_WORKSHOP',
+                price: 0,
+                currency: 'ARS',
+                description: 'Gestión básica para talleres individuales.',
+                features: ['Hasta 5 servicios / mes', '1 rampa / mecánico', 'Gestión de Clientes Básica'],
+                sidebarItems: [
+                    '/dashboard', '/pedidos', '/clientes', '/ajustes'
+                ],
+                maxUsers: 1,
+                maxOrdersPerMonth: 5,
+                maxBusinesses: 1,
+                maxMachines: 1,
+                isRecommended: false,
+                ctaText: 'Empezar ahora',
+                ctaLink: '/register',
+                sortOrder: 3,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
+            },
+            {
+                id: 'taller-inicial',
+                name: 'TALLER INICIAL',
+                category: 'MECHANIC_WORKSHOP',
+                price: 25000,
+                currency: 'ARS',
+                description: 'Perfecto para talleres individuales o pequeños.',
+                features: ['Hasta 20 servicios / mes', '1 rampa / mecánico', 'Gestión de Clientes', 'Ficha de Vehículos', 'Reportes Básicos'],
+                sidebarItems: [
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/personal', '/reportes', '/ajustes'
+                ],
+                maxUsers: 2,
+                maxOrdersPerMonth: 20,
+                maxBusinesses: 1,
+                maxMachines: 1,
+                isRecommended: true,
+                ctaText: 'Empezar prueba gratis',
+                ctaLink: '/register',
+                sortOrder: 4,
+                active: true,
+                hasTrial: true,
+                trialDays: 30,
+            },
+            {
+                id: 'taller-profesional',
+                name: 'TALLER PROFESIONAL',
+                category: 'MECHANIC_WORKSHOP',
+                price: 45000,
+                currency: 'ARS',
+                description: 'Para talleres en crecimiento con más movimiento.',
+                features: ['Hasta 100 servicios / mes', '3 rampas / mecánicos', 'Gestión de Repuestos', 'Ficha de Vehículos Full', 'Soporte prioritario'],
+                sidebarItems: [
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/personal', '/reportes', '/ajustes'
+                ],
+                maxUsers: 5,
+                maxOrdersPerMonth: 100,
+                maxBusinesses: 1,
+                maxMachines: 3,
+                isRecommended: false,
+                ctaText: 'Mejorar ahora',
+                ctaLink: '/register',
+                sortOrder: 5,
+                active: true,
+                hasTrial: true,
+                trialDays: 14,
+            },
+            {
+                id: 'taller-premium',
+                name: 'TALLER PREMIUM',
+                category: 'MECHANIC_WORKSHOP',
+                price: 75000,
+                currency: 'ARS',
+                description: 'Gestión total para talleres de alto rendimiento.',
+                features: ['Servicios ilimitados', 'Rampas ilimitadas', 'Multi-usuario avanzado', 'Reportes Industriales', 'Personalización total'],
+                sidebarItems: [
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/personal', '/reportes', '/ajustes'
+                ],
+                maxUsers: 20,
+                maxOrdersPerMonth: 9999,
+                maxBusinesses: 1,
+                maxMachines: 10,
+                isRecommended: false,
+                ctaText: 'Contacto comercial',
+                ctaLink: '/register',
+                sortOrder: 6,
+                active: true,
+                hasTrial: true,
+                trialDays: 7,
+            },
+            {
+                id: 'metalurgica-free',
+                name: 'METALÚRGICA FREE',
+                category: 'METALURGICA',
+                price: 0,
+                currency: 'ARS',
+                description: 'Gestión esencial para pequeños talleres de herrería.',
+                features: ['5 trabajos / mes', '1 puesto de trabajo', 'Gestión de materiales básica'],
+                sidebarItems: ['/dashboard', '/pedidos', '/materiales', '/ajustes'],
+                maxUsers: 1,
+                maxOrdersPerMonth: 5,
+                maxBusinesses: 1,
+                maxMachines: 1,
+                isRecommended: false,
+                ctaText: 'Empezar ahora',
+                ctaLink: '/register',
+                sortOrder: 7,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
+            },
+            {
+                id: 'kiosco-free',
+                name: 'KIOSCO FREE',
+                category: 'KIOSCO',
+                price: 0,
+                currency: 'ARS',
+                description: 'Control básico para kioscos pequeños.',
+                features: ['5 ventas / mes', 'Caja básica', '1 usuario'],
+                sidebarItems: ['/dashboard', '/pedidos', '/stock', '/ajustes'],
+                maxUsers: 1,
+                maxOrdersPerMonth: 5,
+                maxBusinesses: 1,
+                maxMachines: 0,
+                isRecommended: false,
+                ctaText: 'Empezar ahora',
+                ctaLink: '/register',
+                sortOrder: 10,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
+            },
+            {
+                id: 'carpinteria-free',
+                name: 'CARPINTERIA FREE',
+                category: 'CARPINTERIA',
+                price: 0,
+                currency: 'ARS',
+                description: 'Gestión esencial para carpinteros solitarios.',
+                features: ['5 trabajos / mes', '1 banco de trabajo', 'Caja básica'],
+                sidebarItems: ['/dashboard', '/pedidos', '/materiales', '/ajustes'],
+                maxUsers: 1,
+                maxOrdersPerMonth: 5,
+                maxBusinesses: 1,
+                maxMachines: 1,
+                isRecommended: false,
+                ctaText: 'Empezar ahora',
+                ctaLink: '/register',
+                sortOrder: 20,
+                active: true,
+                hasTrial: false,
+                trialDays: 0,
             }
         ];
 
@@ -206,7 +365,7 @@ export class AdminService implements OnModuleInit {
     async findAllBusinesses(): Promise<any[]> {
         const businesses = await this.businessRepository.find({
             order: { createdAt: 'DESC' },
-            relations: ['memberships'],
+            relations: ['memberships', 'memberships.user'],
         });
 
         const orderRepo = this.dataSource.getRepository('Order');
@@ -552,18 +711,77 @@ export class AdminService implements OnModuleInit {
                 name: 'Impresion 3D',
                 description: 'Gestion de granjas de impresion, filamentos y servicios de diseño STL.',
                 imageKey: '3d-printing-template',
-                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT']
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
+                config: {
+                    catalogCategories: [
+                        'REPUESTOS Y MECÁNICA',
+                        'FIGURAS Y COLECCIONABLES',
+                        'PROTOTIPOS INDUSTRIALES',
+                        'ARTICULADOS Y FLEXIS',
+                        'HOGAR Y DECORACIÓN'
+                    ]
+                }
+            },
+            {
+                key: 'MECHANIC_WORKSHOP',
+                name: 'Taller de Motos / Mecánica',
+                description: 'Gestión de reparaciones, service por kilometraje, historial por patente y rampa de trabajo.',
+                imageKey: 'mechanic-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT', 'VEHICLE_HISTORY'],
+                config: {
+                    sidebarItems: ['/dashboard', '/pedidos', '/vehiculos', '/clientes', '/produccion', '/stock', '/personal', '/reportes', '/ajustes'],
+                    labels: {
+                        produccion: 'Rampas',
+                        items: 'Trabajos',
+                        pedidos: 'Servicios',
+                        nuevoPedido: 'NUEVO SERVICIO',
+                        finalizarPedido: 'Finalizar Servicio'
+                    },
+                    icons: { pedidos: 'Wrench', produccion: 'Hammer' },
+                    productionStages: [
+                        { key: 'DIAGNOSTICO', label: 'Diagnóstico', color: 'bg-blue-100' },
+                        { key: 'ESPERANDO_REPUESTOS', label: 'Esperando Repuestos', color: 'bg-amber-100' },
+                        { key: 'EN_RAMPA', label: 'En Rampa', color: 'bg-emerald-100' },
+                        { key: 'CONTROL_CALIDAD', label: 'Control de Calidad', color: 'bg-purple-100' },
+                        { key: 'LISTO', label: 'Listo / Finalizado', color: 'bg-emerald-500' }
+                    ],
+                    itemFields: [
+                        {
+                            key: 'nombreProducto',
+                            label: 'Trabajo / Servicio',
+                            tipo: 'select',
+                            required: true,
+                            options: [
+                                'Service General',
+                                'Cambio de Aceite y Filtros',
+                                'Frenos (Pastillas/Discos)',
+                                'Carburación / Inyección',
+                                'Transmisión (Cadena/Corona/Piñón)',
+                                'Suspensión / Barrales',
+                                'Electricidad / Batería',
+                                'Gomería / Cubiertas',
+                                'Motor (Ajuste/Reparación)',
+                                'Lavado y Lubricación',
+                                'Diagnóstico Computarizado',
+                                'Otro (Especificar en diagnóstico)'
+                            ]
+                        },
+                        { key: 'materiales_utilizados', label: 'Repuestos / Insumos', tipo: 'key-value-list' },
+                        { key: 'reference_image', label: 'Foto del Estado / Recepción', tipo: 'text', placeholder: 'Evidencia fotográfica' },
+                        { key: 'observaciones_diagnostico', label: 'Observaciones de Diagnóstico', tipo: 'textarea', placeholder: 'Detallar fallas encontradas...' },
+                        { key: 'duracion_estimada_minutos', label: 'Tiempo Estimado de Trabajo', tipo: 'number', placeholder: '0' }
+                    ]
+                }
             }
         ];
 
         for (const t of templatesToSeed) {
-            let temp = await repo.findOneBy({ key: t.key as any });
-            if (!temp) {
-                temp = repo.create({ ...t, key: t.key as any });
-            } else {
-                temp.defaultCapabilities = t.defaultCapabilities;
+            const existing = await repo.findOneBy({ key: t.key as any });
+            if (!existing) {
+                await repo.save(repo.create({ ...t, key: t.key as any }));
+                console.log(`[SEED] Created new template: ${t.key}`);
             }
-            await repo.save(temp);
+            // No overwriting existing templates to preserve manual edits
         }
 
         return { message: 'Templates synchronized' };

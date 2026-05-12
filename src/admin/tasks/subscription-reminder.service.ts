@@ -11,6 +11,7 @@ import { NotificationType, NotificationTargetType } from '../../notifications/en
 @Injectable()
 export class SubscriptionReminderService {
     private readonly logger = new Logger(SubscriptionReminderService.name);
+    private readonly SUBSCRIPTION_EXPIRATION_REMINDER_DAYS = 5;
 
     constructor(
         @InjectRepository(Business)
@@ -29,11 +30,8 @@ export class SubscriptionReminderService {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        const threeDaysFromNow = new Date(today);
-        threeDaysFromNow.setDate(today.getDate() + 3);
-
-        const oneDayFromNow = new Date(today);
-        oneDayFromNow.setDate(today.getDate() + 1);
+        const reminderDate = new Date(today);
+        reminderDate.setDate(today.getDate() + this.SUBSCRIPTION_EXPIRATION_REMINDER_DAYS);
 
         // 1. NOTIFICACIONES DE VENCIMIENTO PRÓXIMO
         const expiringSoon = await this.subscriptionRepository.createQueryBuilder('sub')
@@ -41,7 +39,7 @@ export class SubscriptionReminderService {
             .where('sub.currentPeriodEnd IS NOT NULL')
             .andWhere('sub.status = :active', { active: 'ACTIVE' })
             .andWhere('sub.currentPeriodEnd > :today', { today })
-            .andWhere('sub.currentPeriodEnd <= :threeDays', { threeDays: threeDaysFromNow })
+            .andWhere('sub.currentPeriodEnd <= :reminderDate', { reminderDate })
             .getMany();
 
         for (const sub of expiringSoon) {

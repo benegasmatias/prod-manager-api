@@ -73,9 +73,13 @@ export class PlanUsageService {
 
     async ensureBusinessCreationAllowed(userId: string): Promise<void> {
         const user = await this.userRepository.findOneBy({ id: userId });
+        
+        // SUPER_ADMINs can create unlimited businesses
+        if (user?.globalRole === 'SUPER_ADMIN') {
+            return;
+        }
+
         const userPlan = user?.plan || 'FREE';
-        // Users don't have a defined rubro/category themselves in the entity, 
-        // they belong to businesses. For business creation limit, we can use a generic default or check their first business.
         const limits = await this.getLimitsForPlan(userPlan, 'IMPRESION_3D'); 
 
         const businessCount = await this.businessRepository.countBy({ 

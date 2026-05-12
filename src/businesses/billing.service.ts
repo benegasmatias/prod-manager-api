@@ -1,6 +1,6 @@
 import { Injectable, ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, EntityManager } from 'typeorm';
+import { Repository, EntityManager, IsNull } from 'typeorm';
 import { BusinessSubscription } from './entities/business-subscription.entity';
 import { Business } from './entities/business.entity';
 import { PlanUsageService } from './plan-usage.service';
@@ -306,7 +306,6 @@ export class BillingService {
 
         const previousPlan = subscription.plan;
 
-        // Buscar el plan gratuito para esta categoría
         const freePlan = await this.planRepository.findOne({ 
             where: { 
                 category: business.category, 
@@ -316,43 +315,64 @@ export class BillingService {
             order: { sortOrder: 'ASC' }
         }) || await this.planRepository.findOne({ 
             where: { 
-                category: null, 
+                category: IsNull(), // Uso IsNull() de TypeORM para mayor seguridad
                 price: 0,
                 active: true 
             },
             order: { sortOrder: 'ASC' }
         });
 
-        const freePlanId = freePlan?.id || 'FREE';
-        
-        subscription.plan = freePlanId;
-        subscription.status = SubscriptionStatus.ACTIVE; // Activo pero en modo free
+        // CASO A: Existe Plan FREE -> Downgrade Normal
+        if (freePlan) {
+            const freePlanId = freePlan.id;
+            subscription.plan = freePlanId;
+            subscription.status = SubscriptionStatus.ACTIVE;
+            subscription.currentPeriodEnd = null;
+            subscription.gracePeriodEndAt = null;
+            
+            await this.subscriptionRepository.save(subscription);
+
+            await this.businessRepository.update(businessId, { 
+                plan: freePlanId,
+                status: BusinessStatus.ACTIVE,
+                acceptingOrders: true 
+            });
+
+            await this.planUsageService.reconcileQuota(businessId);
+
+            await this.auditService.log(
+                AuditAction.BUSINESS_STATUS_CHANGED, 
+                'SUBSCRIPTION', 
+                businessId, 
+                businessId, 
+                actorUserId || null, 
+                { event: 'AUTO_DOWNGRADE_TO_FREE', previousPlan, nextPlan: freePlanId }
+            );
+
+            return subscription;
+        } 
+
+        // CASO B: NO Existe Plan FREE -> SUSPENSIÓN TOTAL
+        subscription.status = SubscriptionStatus.SUSPENDED;
         subscription.currentPeriodEnd = null;
         subscription.gracePeriodEndAt = null;
-        
-        const saved = await this.subscriptionRepository.save(subscription);
+        await this.subscriptionRepository.save(subscription);
 
-        // 1. Sincronizar campos legados
         await this.businessRepository.update(businessId, { 
-            plan: freePlanId,
-            status: BusinessStatus.ACTIVE, // El negocio vuelve a estar activo bajo el plan free
-            acceptingOrders: true 
+            status: BusinessStatus.SUSPENDED,
+            acceptingOrders: false 
         });
 
-        // 2. RECONCILIACIÓN DE CUOTA: Bloquear lo que sobre inmediatamente
-        await this.planUsageService.reconcileQuota(businessId);
-
-        // 3. Notificación Final
         await this.auditService.log(
             AuditAction.BUSINESS_STATUS_CHANGED, 
             'SUBSCRIPTION', 
             businessId, 
             businessId, 
             actorUserId || null, 
-            { event: 'AUTO_DOWNGRADE_TO_FREE', previousPlan, nextPlan: freePlanId }
+            { event: 'SUBSCRIPTION_EXPIRED_NO_FREE_FALLBACK', previousPlan, finalStatus: BusinessStatus.SUSPENDED }
         );
 
-        return saved;
+        return subscription;
     }
 
     // --- Webhook Resilience Layer ---

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany, Unique, OneToOne, Index } from 'typeorm';
 import { Customer } from '../../customers/entities/customer.entity';
 import { OrderItem } from './order-item.entity';
 import { OrderStatus, OrderType } from '../../common/enums';
@@ -9,6 +9,7 @@ import { OrderFailure } from './order-failure.entity';
 import { Business } from '../../businesses/entities/business.entity';
 import { Employee } from '../../employees/entities/employee.entity';
 import { OrderSiteInfo } from './order-site-info.entity';
+import { Vehicle } from '../../vehicles/entities/vehicle.entity';
 
 @Entity('orders')
 @Unique(['code', 'businessId'])
@@ -16,6 +17,7 @@ export class Order {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Index()
     @Column({ name: 'business_id', nullable: true })
     businessId: string;
 
@@ -26,12 +28,14 @@ export class Order {
     @Column({ name: 'client_name', nullable: true })
     clientName: string;
 
+    @Index()
     @Column({ name: 'due_date', nullable: true })
     dueDate: Date;
 
     @Column({ type: 'int', default: 1 })
     priority: number;
 
+    @Index()
     @Column({
         type: 'enum',
         enum: OrderStatus,
@@ -99,6 +103,13 @@ export class Order {
 
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
+
+    @Column({ name: 'vehicle_id', nullable: true })
+    vehicleId: string;
+
+    @ManyToOne(() => Vehicle, { nullable: true })
+    @JoinColumn({ name: 'vehicle_id' })
+    vehicle: Vehicle;
 
     get isQuotePending(): boolean {
         return this.items?.some(it => it.isPendingQuote) || this.totalPrice === null;

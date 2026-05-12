@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, ForbiddenException, UnauthorizedException } from '@nestjs/common';
 import { BusinessesService } from '../../businesses/businesses.service';
 import { getBusinessIdFromRequest } from '../utils/business-request.utils';
 
@@ -12,6 +12,10 @@ export class BusinessAccessGuard implements CanActivate {
 
     if (!businessId) {
       return true;
+    }
+
+    if (!request.user) {
+      throw new UnauthorizedException('Usuario no autenticado en el contexto de negocio.');
     }
 
     const hasAccess = await this.businessesService.checkAccess(request.user.id, businessId);

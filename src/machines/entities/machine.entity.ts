@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { ProductionJob } from '../../jobs/entities/production-job.entity';
 import { MachineStatus } from '../../common/enums';
 import { Business } from '../../businesses/entities/business.entity';
@@ -12,6 +12,7 @@ export class Machine {
     @JoinColumn({ name: 'business_id' })
     business: Business;
 
+    @Index()
     @Column({ name: 'business_id', nullable: true })
     businessId: string;
 

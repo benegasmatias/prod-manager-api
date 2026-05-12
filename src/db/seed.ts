@@ -95,7 +95,13 @@ async function seed() {
                         { key: 'duracion_estimada_minutos', label: 'Duración (MIN)', tipo: 'number', section: 'ESPECIFICACIONES TÉCNICAS', placeholder: 'Ej. 120' }
                     ],
                     features: { hasNozzle: true, hasMaxFilaments: true, hasVisits: false, hasQuotes: false, hasMaterials: true },
-                    machineStatusLabels: { WORKING: 'Imprimiendo', MAINTENANCE: 'Mantenimiento / Calibración', IDLE: 'Lista para Imprimir' }
+                    machineStatusLabels: { WORKING: 'Imprimiendo', MAINTENANCE: 'Mantenimiento / Calibración', IDLE: 'Lista para Imprimir' },
+                    stockLabels: {
+                        'DONE': 'Modelo Terminado',
+                        'DELIVERED': 'Enviado a Depósito',
+                        'IN_STOCK': 'Disponible en Rack',
+                        'READY': 'Pendiente de Almacén'
+                    }
                 }
             },
             {
@@ -158,7 +164,13 @@ async function seed() {
                         { key: 'refuerzos_estructurales', label: 'Refuerzos Estructurales', tipo: 'boolean', section: 'OPCIONALES' }
                     ],
                     features: { hasNozzle: false, hasMaxFilaments: false, hasVisits: true, hasQuotes: true, hasMaterials: true },
-                    machineStatusLabels: { WORKING: 'En Producción', MAINTENANCE: 'Fuera de Servicio / Reparación', IDLE: 'Disponible / Espera' }
+                    machineStatusLabels: { WORKING: 'En Producción', MAINTENANCE: 'Fuera de Servicio / Reparación', IDLE: 'Disponible / Espera' },
+                    stockLabels: {
+                        'DONE': 'Pieza Fabricada',
+                        'DELIVERED': 'Enviado a Pañol',
+                        'IN_STOCK': 'Disponible p/ Obra',
+                        'READY': 'Pendiente de Pañol'
+                    }
                 }
             },
             {
@@ -203,7 +215,13 @@ async function seed() {
                         { key: 'herrajes', label: 'Detalle de Herrajes', tipo: 'textarea', section: 'ESPECIFICACIONES TÉCNICAS' }
                     ],
                     features: { hasNozzle: false, hasMaxFilaments: false, hasVisits: false, hasQuotes: false, hasMaterials: true },
-                    machineStatusLabels: { WORKING: 'En Armado', MAINTENANCE: 'Fuera de Servicio', IDLE: 'Banco Libre' }
+                    machineStatusLabels: { WORKING: 'En Armado', MAINTENANCE: 'Fuera de Servicio', IDLE: 'Banco Libre' },
+                    stockLabels: {
+                        'DONE': 'Mueble Terminado',
+                        'DELIVERED': 'Enviado a Showroom',
+                        'IN_STOCK': 'Disponible p/ Venta',
+                        'READY': 'Pendiente de Showroom'
+                    }
                 }
             },
             {
@@ -241,7 +259,13 @@ async function seed() {
                         { key: 'cantidad', label: 'Cantidad', tipo: 'number', section: 'GENERAL', required: true, placeholder: '1' }
                     ],
                     features: { hasNozzle: false, hasMaxFilaments: false, hasVisits: false, hasQuotes: false, hasMaterials: true },
-                    machineStatusLabels: { WORKING: 'Abierta', MAINTENANCE: 'Cerrada / Arqueo', IDLE: 'Lista' }
+                    machineStatusLabels: { WORKING: 'Abierta', MAINTENANCE: 'Cerrada / Arqueo', IDLE: 'Lista' },
+                    stockLabels: {
+                        'DONE': 'Venta Cerrada',
+                        'DELIVERED': 'Repuesto',
+                        'IN_STOCK': 'Disponible en Góndola',
+                        'READY': 'Pendiente Reposición'
+                    }
                 }
             }
         ];

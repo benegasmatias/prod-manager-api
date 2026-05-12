@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, Index } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
 import { PaymentMethod } from '../../common/enums';
 
@@ -7,6 +7,7 @@ export class Payment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Index()
     @Column({ name: 'order_id' })
     orderId: string;
 

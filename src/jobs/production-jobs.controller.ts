@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Body, Param, Query, UseGuards, ParseUUIDPipe, Request } from '@nestjs/common';
 import { ProductionJobService } from './production-job.service';
 import { CreateProductionJobsDto, AssignResourcesDto, UpdateJobStatusDto, UpdateJobPriorityDto, UpdateJobStageDto, AssignMaterialDto } from './dto/production-job.dto';
+import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { BusinessCapabilityGuard } from '../businesses/guards/business-capability.guard';
 import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
 import { RequireCapability } from '../businesses/decorators/require-capability.decorator';
 import { BusinessRole } from '../common/enums';
+import { BusinessAccessGuard } from '../businesses/guards/business-access.guard';
 
-@Controller('businesses/:businessId/production-jobs')
-@UseGuards(BusinessRoleGuard, BusinessCapabilityGuard)
+@Controller('production-jobs')
+@UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard, BusinessCapabilityGuard)
 @RequireCapability('PRODUCTION_MANAGEMENT')
 export class ProductionJobsController {
     constructor(private readonly jobService: ProductionJobService) { }
@@ -16,7 +18,7 @@ export class ProductionJobsController {
     @Post()
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES)
     async createJobs(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
+        @Query('businessId', ParseUUIDPipe) businessId: string, 
         @Body() createDto: CreateProductionJobsDto
     ) {
         return this.jobService.createJobsForOrder(businessId, createDto.orderId, createDto.itemIds);
@@ -25,7 +27,7 @@ export class ProductionJobsController {
     @Get()
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR, BusinessRole.VIEWER)
     async findAll(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
+        @Query('businessId', ParseUUIDPipe) businessId: string, 
         @Query() filters: any
     ) {
         return this.jobService.findAll(businessId, filters);
@@ -34,8 +36,8 @@ export class ProductionJobsController {
     @Get(':id')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR, BusinessRole.VIEWER)
     async findOne(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
-        @Param('id', ParseUUIDPipe) id: string
+        @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string
     ) {
         return this.jobService.findOne(businessId, id);
     }
@@ -43,8 +45,18 @@ export class ProductionJobsController {
     @Patch(':id/assign')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async assign(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
         @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
+        @Body() assignDto: AssignResourcesDto
+    ) {
+        return this.jobService.assignResources(businessId, id, assignDto);
+    }
+
+    @Patch(':id/resources')
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
+    async assignResources(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
         @Body() assignDto: AssignResourcesDto
     ) {
         return this.jobService.assignResources(businessId, id, assignDto);
@@ -53,8 +65,8 @@ export class ProductionJobsController {
     @Patch(':id/priority')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     async updatePriority(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
         @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
         @Body() priorityDto: UpdateJobPriorityDto
     ) {
         return this.jobService.updatePriority(businessId, id, priorityDto.priority);
@@ -63,8 +75,8 @@ export class ProductionJobsController {
     @Patch(':id/status')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async updateStatus(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
         @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
         @Body() statusDto: UpdateJobStatusDto
     ) {
         return this.jobService.updateStatus(businessId, id, statusDto.status);
@@ -73,8 +85,8 @@ export class ProductionJobsController {
     @Patch(':id/stage')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async updateStage(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
         @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
         @Body() stageDto: UpdateJobStageDto
     ) {
         return this.jobService.updateStage(businessId, id, stageDto.stage);
@@ -83,8 +95,8 @@ export class ProductionJobsController {
     @Post(':id/materials')
     @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async addMaterial(
-        @Param('businessId', ParseUUIDPipe) businessId: string, 
         @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId', ParseUUIDPipe) businessId: string,
         @Body() materialDto: AssignMaterialDto
     ) {
         return this.jobService.assignMaterial(businessId, id, materialDto);

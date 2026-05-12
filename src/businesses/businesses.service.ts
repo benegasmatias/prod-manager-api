@@ -313,7 +313,10 @@ export class BusinessesService {
             config = {
                 ...config,
                 ...template.config,
-                features: { ...config.features, ...(template.config.features || {}) }
+                labels: { ...config.labels, ...(template.config.labels || {}) },
+                icons: { ...config.icons, ...(template.config.icons || {}) },
+                features: { ...config.features, ...(template.config.features || {}) },
+                machineStatusLabels: { ...config.machineStatusLabels, ...(template.config.machineStatusLabels || {}) }
             };
         }
 
@@ -477,10 +480,22 @@ export class BusinessesService {
                 .andWhere('order.status IN (:...statuses)', { statuses: [OrderStatus.DELIVERED, OrderStatus.DONE] })
                 .getRawOne(),
             
-            this.orderRepository.find({
-                where: { businessId, status: In(FINANCIAL_PENDING_STATUSES) },
-                relations: ['items', 'siteInfo', 'payments']
-            }),
+            this.orderRepository.createQueryBuilder('order')
+                .leftJoinAndSelect('order.items', 'item')
+                .leftJoinAndSelect('order.payments', 'payment')
+                .select([
+                    'order.id', 
+                    'order.totalPrice', 
+                    'order.totalSenias', 
+                    'order.type',
+                    'item.id',
+                    'item.deposit',
+                    'payment.id',
+                    'payment.amount'
+                ])
+                .where('order.businessId = :businessId', { businessId })
+                .andWhere('order.status IN (:...statuses)', { statuses: FINANCIAL_PENDING_STATUSES })
+                .getMany(),
 
             // Capability-Gated: Machines
             hasMachines ? this.machineRepository.count({
@@ -500,7 +515,8 @@ export class BusinessesService {
             this.orderRepository.find({
                 where: { businessId },
                 order: { updatedAt: 'DESC' },
-                take: 5
+                take: 5,
+                relations: ['vehicle']
             }),
 
             this.orderRepository.createQueryBuilder('order')
@@ -619,7 +635,15 @@ export class BusinessesService {
             productionOrders: productionOrdersCount,
             activeMachines: activeMachinesCount,
             newCustomers: newCustomersCount,
-            recentOrders: recentOrders.map(o => ({ id: o.id, clientName: o.clientName, total: Number(o.totalPrice), status: o.status, dueDate: o.dueDate, type: o.type })),
+            recentOrders: recentOrders.map(o => ({ 
+                id: o.id, 
+                clientName: o.clientName, 
+                total: Number(o.totalPrice), 
+                status: o.status, 
+                dueDate: o.dueDate, 
+                type: o.type,
+                vehicle: o.vehicle
+            })),
             alerts, 
             trends: null,
             operationalCounters,
@@ -660,6 +684,40 @@ export class BusinessesService {
         }
 
         const memberships = await query.getMany();
+        
+        // Lazy-generate or clean up slugs for businesses
+        for (const m of memberships) {
+            let baseSlug = m.business.name
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+
+            // If slug is missing OR it has the UUID suffix but it might not be needed
+            const hasUuidSuffix = m.business.slug && m.business.slug.includes('-') && m.business.slug.length > baseSlug.length;
+            
+            if (!m.business.slug || hasUuidSuffix) {
+                // Check if the clean baseSlug is already taken by ANOTHER business
+                const existing = await this.businessRepository.findOne({
+                    where: { slug: baseSlug }
+                });
+
+                if (!existing || existing.id === m.business.id) {
+                    // We can use the clean one!
+                    if (m.business.slug !== baseSlug) {
+                        m.business.slug = baseSlug;
+                        await this.businessRepository.save(m.business);
+                    }
+                } else if (!m.business.slug) {
+                    // Only generate with suffix if it's currently missing
+                    const shortId = m.business.id.split('-')[0];
+                    m.business.slug = `${baseSlug}-${shortId}`;
+                    await this.businessRepository.save(m.business);
+                }
+            }
+        }
+
         return memberships.map(m => ({
             ...m.business,
             userRole: m.role

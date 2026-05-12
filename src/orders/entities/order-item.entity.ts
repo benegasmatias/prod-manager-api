@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, OneToOne, Index } from 'typeorm';
 import { Order } from './order.entity';
 import { Product } from '../../products/entities/product.entity';
 import { OrderItemStatus } from '../../common/enums';
@@ -20,6 +20,7 @@ export class OrderItem {
     @Column({ name: 'is_pending_quote', type: 'boolean', default: false })
     isPendingQuote: boolean;
 
+    @Index()
     @Column({ name: 'order_id' })
     orderId: string;
 

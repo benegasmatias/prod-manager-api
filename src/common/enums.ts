@@ -5,40 +5,39 @@ export enum OrderType {
 }
 
 export enum OrderStatus {
-    PENDING = 'PENDING',
-    IN_PROGRESS = 'IN_PROGRESS',
-    DONE = 'DONE',
     DRAFT = 'DRAFT',
+    PENDING = 'PENDING',
     CONFIRMED = 'CONFIRMED',
+    IN_PROGRESS = 'IN_PROGRESS',
     READY = 'READY',
     DELIVERED = 'DELIVERED',
     CANCELLED = 'CANCELLED',
-    // Granular stages for multi-industry
+    // Compatibility statuses
+    DONE = 'DONE',
+    IN_STOCK = 'IN_STOCK',
+    FAILED = 'FAILED',
     DESIGN = 'DESIGN',
+    // Industrial & Multi-industry statuses
+    QUOTATION = 'QUOTATION',
+    BUDGET_GENERATED = 'BUDGET_GENERATED',
+    BUDGET_REJECTED = 'BUDGET_REJECTED',
+    RE_WORK = 'RE_WORK',
+    REPRINT_PENDING = 'REPRINT_PENDING',
+    SITE_VISIT = 'SITE_VISIT',
+    SITE_VISIT_DONE = 'SITE_VISIT_DONE',
+    VISITA_REPROGRAMADA = 'VISITA_REPROGRAMADA',
+    VISITA_CANCELADA = 'VISITA_CANCELADA',
+    APPROVED = 'APPROVED',
+    OFFICIAL_ORDER = 'OFFICIAL_ORDER',
     CUTTING = 'CUTTING',
     WELDING = 'WELDING',
     ASSEMBLY = 'ASSEMBLY',
     PAINTING = 'PAINTING',
     BARNIZADO = 'BARNIZADO',
     POST_PROCESS = 'POST_PROCESS',
-    FAILED = 'FAILED',
-    REPRINT_PENDING = 'REPRINT_PENDING',
-    RE_WORK = 'RE_WORK',
-    IN_STOCK = 'IN_STOCK',
-    // Metalwork workflow
-    SITE_VISIT = 'SITE_VISIT',
-    SITE_VISIT_DONE = 'SITE_VISIT_DONE',
-    VISITA_REPROGRAMADA = 'VISITA_REPROGRAMADA',
-    VISITA_CANCELADA = 'VISITA_CANCELADA',
-    QUOTATION = 'QUOTATION',
-    BUDGET_GENERATED = 'BUDGET_GENERATED',
-    BUDGET_REJECTED = 'BUDGET_REJECTED',
     SURVEY_DESIGN = 'SURVEY_DESIGN',
-    APPROVED = 'APPROVED',
-    OFFICIAL_ORDER = 'OFFICIAL_ORDER',
     INSTALACION_OBRA = 'INSTALACION_OBRA',
-    ARMADO = 'ARMADO',
-    READY_FOR_DELIVERY = 'READY_FOR_DELIVERY',
+    READY_FOR_DELIVERY = 'READY_FOR_DELIVERY'
 }
 
 
@@ -123,6 +122,28 @@ export enum OrderItemStatus {
     FAILED = 'FAILED',
     CANCELLED = 'CANCELLED',
     IN_STOCK = 'IN_STOCK',
+    DESIGN = 'DESIGN',
+    // Industrial & Multi-industry statuses
+    QUOTATION = 'QUOTATION',
+    BUDGET_GENERATED = 'BUDGET_GENERATED',
+    BUDGET_REJECTED = 'BUDGET_REJECTED',
+    RE_WORK = 'RE_WORK',
+    REPRINT_PENDING = 'REPRINT_PENDING',
+    SITE_VISIT = 'SITE_VISIT',
+    SITE_VISIT_DONE = 'SITE_VISIT_DONE',
+    VISITA_REPROGRAMADA = 'VISITA_REPROGRAMADA',
+    VISITA_CANCELADA = 'VISITA_CANCELADA',
+    APPROVED = 'APPROVED',
+    OFFICIAL_ORDER = 'OFFICIAL_ORDER',
+    CUTTING = 'CUTTING',
+    WELDING = 'WELDING',
+    ASSEMBLY = 'ASSEMBLY',
+    PAINTING = 'PAINTING',
+    BARNIZADO = 'BARNIZADO',
+    POST_PROCESS = 'POST_PROCESS',
+    SURVEY_DESIGN = 'SURVEY_DESIGN',
+    INSTALACION_OBRA = 'INSTALACION_OBRA',
+    READY_FOR_DELIVERY = 'READY_FOR_DELIVERY'
 }
 
 export enum ProductionJobStatus {
@@ -142,6 +163,12 @@ export enum ProductionJobPriority {
 }
 
 export enum MaterialType {
+    // Polymorphic Types (New Architecture)
+    FILAMENT = 'FILAMENT',
+    BLANK = 'BLANK',
+    HARDWARE = 'HARDWARE',
+    
+    // Legacy Types (Keeping for compatibility during migration)
     PLA = 'PLA',
     PETG = 'PETG',
     ABS = 'ABS',
@@ -165,3 +192,35 @@ export enum ProductFileRole {
     GCODE = 'GCODE',
     OTHER = 'OTHER'
 }
+
+export enum ProductStatus {
+    DRAFT = 'DRAFT',
+    ACTIVE = 'ACTIVE',
+    ARCHIVED = 'ARCHIVED'
+}
+
+export enum ProductVisibility {
+    PUBLIC = 'PUBLIC',
+    PRIVATE = 'PRIVATE'
+}
+
+export enum FulfillmentMode {
+    STOCK = 'STOCK',
+    MAKE_TO_ORDER = 'MAKE_TO_ORDER',
+    HYBRID = 'HYBRID'
+}
+
+export enum CatalogRequestStatus {
+    REQUESTED = 'REQUESTED',
+    UNDER_REVIEW = 'UNDER_REVIEW',
+    APPROVED = 'APPROVED',
+    REJECTED = 'REJECTED',
+    CONVERTED_TO_ORDER = 'CONVERTED_TO_ORDER'
+}
+
+export enum DeliveryMethod {
+    PICKUP = 'PICKUP',
+    DELIVERY = 'DELIVERY',
+    TO_DEFINE = 'TO_DEFINE'
+}
+

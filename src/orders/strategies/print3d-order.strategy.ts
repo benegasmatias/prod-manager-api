@@ -26,7 +26,15 @@ export class Print3DOrderStrategy implements OrderBusinessStrategy {
     }
 
     getProductionStages(item: OrderItem, order: Order): ProductionStageTemplate[] {
-        return []; // 3D workflow es manual o se gestiona por archivo
+        const needsDesign = item.metadata?.seDiseñaSTL === true || 
+                           item.metadata?.seDiseñaSTL === 'true' ||
+                           item.status === OrderItemStatus.DESIGN;
+
+        if (needsDesign) {
+            return [{ title: 'DESIGN', rank: 10 }];
+        }
+
+        return []; 
     }
 
     async onAfterCreate(order: Order, manager: EntityManager): Promise<void> {

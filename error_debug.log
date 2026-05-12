@@ -13811,3 +13811,2042 @@ Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requeri
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:48:52.609Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:54:40.928Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:55:23.046Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:55:24.887Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T12:56:55.437Z
+Path: /machines?businessId=8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb&page=1&pageSize=50
+Status: 403
+Message: {"statusCode":403,"message":"Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES","errorCode":"CAPABILITY_NOT_ENABLED","requiredCapability":"PRODUCTION_MACHINES","businessId":"8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb"}
+Stack: ForbiddenException: Este negocio no tiene habilitada la capacidad requerida: PRODUCTION_MACHINES
+    at BusinessCapabilityGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-capability.guard.ts:42:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:02:27.208Z
+Path: /businesses/8ebd0b26-9445-4c00-9ae6-05eb50a7d4fb/dashboard-summary
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:10:14.059Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:10:20.329Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:13:11.803Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:39:14.234Z
+Path: /machines?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&page=1&pageSize=50
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:49:04.294Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:49:21.297Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:51:03.542Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:51:17.175Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:53:00.648Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:53:59.908Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:55:20.676Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:55:21.402Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T14:55:24.905Z
+Path: /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 404
+Message: {"message":"Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /production-jobs?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T15:57:49.750Z
+Path: /admin/businesses
+Status: 500
+Message: "Max client connections reached"
+Stack: error: Max client connections reached
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:33:08.985Z
+Path: /admin/businesses
+Status: 500
+Message: "Max client connections reached"
+Stack: error: Max client connections reached
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:33:19.987Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:33:54.665Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/resources
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:33:58.020Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/materials
+Status: 404
+Message: {"message":"Cannot POST /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/materials","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot POST /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/materials
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:42:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:38:56.443Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:39:06.256Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T16:45:32.333Z
+Path: /materials?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:44.911Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:50.761Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:24:52.742Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:05.859Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:09.176Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:25:15.119Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:26:55.346Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/stage
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:28:32.583Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T19:28:33.567Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:16:19.425Z
+Path: /production-jobs/684a4642-94cb-44f1-b336-27a1f5dd37c5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:27:00.742Z
+Path: /orders/1155043f-09ec-44c6-8a43-4e6f661b0ffc/items/31c224ac-d9a5-4b53-a6c6-4b020656ff57/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T20:33:57.313Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 500
+Message: "invalid input value for enum order_items_status_enum: \"DESIGN\""
+Stack: QueryFailedError: invalid input value for enum order_items_status_enum: "DESIGN"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async UpdateQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\UpdateQueryBuilder.ts:145:33)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:595:13)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T21:37:15.361Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/plan-usage
+Status: 500
+Message: "timeout exceeded when trying to connect"
+Stack: Error: timeout exceeded when trying to connect
+    at Timeout._onTimeout (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:224:27)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:06:44.193Z
+Path: /production-jobs/80f1eda7-0b43-4b63-bd1a-360679e8ddf5/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:08:13.399Z
+Path: /orders/16ffd0aa-9b34-468f-aac1-59cb4c9d0c54/items/c45e01bb-b881-4ed6-b2ff-335329064890/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:13:38.161Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:581:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:565:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:16.887Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:32.746Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 404
+Message: {"message":"Cannot GET /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:14:32.854Z
+Path: /favicon.ico
+Status: 404
+Message: {"message":"Cannot GET /favicon.ico","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /favicon.ico
+    at callback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\routes-resolver.js:77:19)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:23
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+    at trimPrefix (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:342:13)
+    at C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:297:9
+    at processParams (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:582:12)
+    at next (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\index.js:291:5)
+    at read (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\read.js:53:5)
+    at urlencodedParser (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\body-parser\lib\types\urlencoded.js:57:5)
+    at Layer.handleRequest (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\router\lib\layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:23:39.345Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:23:45.577Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:28:27.317Z
+Path: /orders/8185451f-fed1-455d-a52d-87b5321c0867/items/0da83826-a802-4a6f-8e9c-d9254fd78556/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:591:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:575:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-04T22:35:17.656Z
+Path: /production-jobs/15b6abfe-f4f1-4f72-bd2a-2a8ebfca8cf7/status
+Status: 403
+Message: {"message":"Negocio o usuario no identificado para validación de roles.","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Negocio o usuario no identificado para validación de roles.
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:32:15)
+    at GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T01:37:26.851Z
+Path: /admin/plans?category=IMPRESION_3D
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T01:37:26.854Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/subscription
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\users\guards\supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T02:12:01.409Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-pool\index.js:276:17)
+    at Connection.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\client.js:193:18)
+    at Object.onceWrapper (node:events:622:28)
+    at Connection.emit (node:events:508:28)
+    at Socket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg\lib\connection.js:61:12)
+    at Socket.emit (node:events:508:28)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:46:59.482Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:46:59.485Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:47:09.952Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:47:15.073Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:47:15.075Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:50:49.325Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:50:49.326Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:53:16.259Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:53:16.262Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:54:27.064Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:54:27.644Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:54:30.362Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:54:36.935Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:54:36.937Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:55:10.621Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:55:10.623Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T12:56:15.107Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:07:20.993Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:07:20.995Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:21:10.538Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:26:32.959Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:26:32.961Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:27:00.078Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:27:29.883Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:27:29.887Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:31:52.801Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:31:52.803Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:36:55.388Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:36:55.390Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:42:40.287Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:42:40.289Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:52:44.416Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:56:58.433Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:56:59.628Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:57:53.230Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:57:58.285Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T13:57:58.766Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:00:39.501Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:00:39.503Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:01:40.721Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:01:56.503Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:01:56.875Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:05:33.785Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:05:35.006Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:19:46.963Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:19:46.964Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T14:20:18.182Z
+Path: /vehicles?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 500
+Message: "Cannot read properties of undefined (reading 'id')"
+Stack: TypeError: Cannot read properties of undefined (reading 'id')
+    at BusinessAccessGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-access.guard.ts:17:77)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T15:56:09.876Z
+Path: /orders
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:00:12.823Z
+Path: /orders
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:01:01.247Z
+Path: /orders
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 1)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:30:06.864Z
+Path: /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2
+Status: 404
+Message: {"message":"Cannot GET /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /api/orden/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&pageSize=2
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:30:21.749Z
+Path: /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 404
+Message: {"message":"Cannot GET /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cannot GET /api/businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78
+    at callback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/routes-resolver.js:77:19)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:23
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:53:5)
+    at urlencodedParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/urlencoded.js:57:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-05T16:39:13.005Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/dashboard-summary
+Status: 500
+Message: "Max client connections reached"
+Stack: error: Max client connections reached
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T11:48:59.738Z
+Path: /orders/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&page=1&pageSize=50&vehicleId=4e91f0c7-0190-4e5d-a7d2-a11c0954b6cb
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T11:49:04.380Z
+Path: /orders/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&page=1&pageSize=50&vehicleId=4e91f0c7-0190-4e5d-a7d2-a11c0954b6cb
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T11:50:05.566Z
+Path: /orders/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&page=1&pageSize=50&vehicleId=4e91f0c7-0190-4e5d-a7d2-a11c0954b6cb
+Status: 400
+Message: {"message":["property vehicleId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T13:48:50.711Z
+Path: /orders/listing?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&page=1&pageSize=50&customerId=6f94715a-0c25-46c9-aff5-f2b6f24c2e8f
+Status: 400
+Message: {"message":["property customerId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T15:19:51.542Z
+Path: /orders
+Status: 500
+Message: "insert or update on table \"orders\" violates foreign key constraint \"FK_188b11a58492e7272a68735bdc0\""
+Stack: QueryFailedError: insert or update on table "orders" violates foreign key constraint "FK_188b11a58492e7272a68735bdc0"
+    at PostgresQueryRunner.query (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/driver/src/driver/postgres/PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async InsertQueryBuilder.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/query-builder/src/query-builder/InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/persistence/src/persistence/EntityPersistExecutor.ts:182:21)
+    at async <anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:432:32)
+    at async EntityManager.transaction (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/typeorm/entity-manager/src/entity-manager/EntityManager.ts:156:28)
+    at async OrdersService.create (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/orders/orders.service.ts:418:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T15:40:50.947Z
+Path: /customers
+Status: 400
+Message: {"message":["property firstName should not exist","property lastName should not exist","property dni should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T15:47:33.298Z
+Path: /customers
+Status: 400
+Message: {"message":["property firstName should not exist","property lastName should not exist","property dni should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T15:50:06.434Z
+Path: /customers
+Status: 400
+Message: {"message":["property firstName should not exist","property lastName should not exist","property dni should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T15:51:39.028Z
+Path: /customers
+Status: 400
+Message: {"message":["property firstName should not exist","property lastName should not exist","property dni should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T16:13:23.104Z
+Path: /customers
+Status: 400
+Message: {"message":["property firstName should not exist","property lastName should not exist","property dni should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T16:39:49.036Z
+Path: /customers/215db17b-efd8-4093-87fd-1197d607e48f
+Status: 404
+Message: {"message":"Cliente no encontrado","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cliente no encontrado
+    at CustomersService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/customers/customers.service.ts:74:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async CustomersService.remove (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/customers/customers.service.ts:88:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-06T16:40:12.985Z
+Path: /customers/215db17b-efd8-4093-87fd-1197d607e48f
+Status: 404
+Message: {"message":"Cliente no encontrado","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Cliente no encontrado
+    at CustomersService.findOne (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/customers/customers.service.ts:74:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async CustomersService.remove (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/customers/customers.service.ts:88:26)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T13:04:05.886Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-pool/index.js:276:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:24:07.311Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:24:27.380Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:24:33.805Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:47:24.702Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:48:40.847Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T15:59:14.884Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T16:09:46.423Z
+Path: /products?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6&limit=10
+Status: 400
+Message: {"message":["limit must not be less than 1","limit must be an integer number"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T16:14:51.084Z
+Path: /products/categories/seed
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T16:16:51.522Z
+Path: /products/categories/seed
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T16:17:15.116Z
+Path: /products/categories/seed
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T19:48:01.191Z
+Path: /products
+Status: 400
+Message: {"message":["property id should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T19:51:19.232Z
+Path: /products
+Status: 400
+Message: {"message":["property id should not exist","property wholesalePrice should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T20:34:05.680Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T22:39:52.254Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-07T22:41:28.445Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property businessId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-08T15:59:29.980Z
+Path: /products/78ec609f-2ad8-4b34-83a9-e4c3ec320261
+Status: 400
+Message: {"message":["property externalUrl should not exist","basePrice must not be less than 0","basePrice must be a number conforming to the specified constraints","wholesalePrice must not be less than 0","wholesalePrice must be a number conforming to the specified constraints"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:29:27.241Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:29:30.159Z
+Path: /public/catalog/null
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:32:38.455Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:40:08.592Z
+Path: /public/catalog/pepe-3d
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-11T15:44:00.482Z
+Path: /public/catalog/null
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/catalog-requests/services/public-catalog.service.ts:32:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------

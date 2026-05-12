@@ -16,11 +16,13 @@ import { JobStatusHistory } from '../../history/entities/job-status-history.enti
 @Index(['status'])
 @Index(['machineId'])
 @Index(['operatorId'])
+@Index(['orderId'])
 @Unique(['orderItemId'])
 export class ProductionJob {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
+    @Index()
     @Column({ name: 'business_id' })
     businessId: string;
 

@@ -183,6 +183,10 @@ export class CreateOrderDto {
 
     @IsOptional()
     metadata?: any;
+
+    @IsString()
+    @IsOptional()
+    vehicleId?: string;
 }
 
 export class UpdateProgressDto {
@@ -244,12 +248,24 @@ export class UpdateOrderStatusDto {
 
     @IsOptional()
     metadata?: any;
+
+    @IsString()
+    @IsOptional()
+    vehicleId?: string;
 }
 
 export class FindOrdersDto {
     @IsString()
     @IsOptional()
     businessId?: string;
+
+    @IsString()
+    @IsOptional()
+    customerId?: string;
+
+    @IsString()
+    @IsOptional()
+    vehicleId?: string;
 
     @IsString()
     @IsOptional()

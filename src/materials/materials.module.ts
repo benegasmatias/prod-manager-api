@@ -7,10 +7,13 @@ import { MaterialMovement } from './entities/material-movement.entity';
 import { BusinessesModule } from '../businesses/businesses.module';
 
 
+import { MaterialStrategyFactory } from './strategies/material-strategy.factory';
+
+
 @Module({
     imports: [TypeOrmModule.forFeature([Material, MaterialMovement]), BusinessesModule],
     controllers: [MaterialsController],
-    providers: [MaterialsService],
+    providers: [MaterialsService, MaterialStrategyFactory],
     exports: [MaterialsService],
 })
 export class MaterialsModule { }
