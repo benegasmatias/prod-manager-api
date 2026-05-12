@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Customer } from '../customers/entities/customer.entity';
 import { Product } from '../products/entities/product.entity';
+import { ProductCategory } from '../products/entities/product-category.entity';
 import { Order } from '../orders/entities/order.entity';
 import { OrderItem } from '../orders/entities/order-item.entity';
 import { OrderFailure } from '../orders/entities/order-failure.entity';
@@ -25,6 +26,7 @@ import { WebhookEvent } from '../businesses/entities/webhook-event.entity';
 import { OrderSiteInfo } from '../orders/entities/order-site-info.entity';
 import { AuditLog } from '../audit/entities/audit-log.entity';
 import { ProductionJobMaterial } from '../jobs/entities/production-job-material.entity';
+import { Vehicle } from '../vehicles/entities/vehicle.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -37,6 +39,7 @@ export const AppDataSource = new DataSource({
     entities: [
         Customer,
         Product,
+        ProductCategory,
         Order,
         OrderItem,
         OrderFailure,
@@ -61,6 +64,7 @@ export const AppDataSource = new DataSource({
         OrderSiteInfo,
         AuditLog,
         ProductionJobMaterial,
+        Vehicle,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
