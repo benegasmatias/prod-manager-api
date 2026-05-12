@@ -18,6 +18,6 @@ import { ProductVariant } from './entities/product-variant.entity';
     ],
     controllers: [ProductsController, FilesController],
     providers: [ProductsService, CatalogSeedService],
-    exports: [ProductsService, CatalogSeedService],
+    exports: [ProductsService, CatalogSeedService, TypeOrmModule],
 })
 export class ProductsModule { }
