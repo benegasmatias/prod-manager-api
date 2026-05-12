@@ -313,7 +313,10 @@ export class BusinessesService {
             config = {
                 ...config,
                 ...template.config,
-                features: { ...config.features, ...(template.config.features || {}) }
+                labels: { ...config.labels, ...(template.config.labels || {}) },
+                icons: { ...config.icons, ...(template.config.icons || {}) },
+                features: { ...config.features, ...(template.config.features || {}) },
+                machineStatusLabels: { ...config.machineStatusLabels, ...(template.config.machineStatusLabels || {}) }
             };
         }
 
