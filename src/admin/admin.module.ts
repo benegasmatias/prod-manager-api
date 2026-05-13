@@ -14,6 +14,7 @@ import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation } from '../businesses/entities/business-invitation.entity';
 import { BusinessesModule } from '../businesses/businesses.module';
 import { BusinessMembership } from '../businesses/entities/business-membership.entity';
+import { PlatformConfig } from './entities/platform-config.entity';
 
 @Module({
 
@@ -26,7 +27,8 @@ import { BusinessMembership } from '../businesses/entities/business-membership.e
             SubscriptionPlan, 
             BusinessTemplate, 
             AdminAuditLog,
-            BusinessInvitation
+            BusinessInvitation,
+            PlatformConfig
         ]),
         forwardRef(() => UsersModule), // For guards/supabase dependencies
         forwardRef(() => BusinessesModule),

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException, OnModuleInit, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, OnModuleInit, ConflictException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, IsNull, EntityManager } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
@@ -13,6 +13,7 @@ import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation, InvitationStatus } from '../businesses/entities/business-invitation.entity';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
 import { SupabaseService } from '../common/supabase/supabase.service';
+import { PlatformConfig } from './entities/platform-config.entity';
 
 @Injectable()
 export class AdminService implements OnModuleInit {
@@ -28,6 +29,8 @@ export class AdminService implements OnModuleInit {
         private readonly planRepository: Repository<SubscriptionPlan>,
         @InjectRepository(AdminAuditLog)
         private readonly auditLogRepository: Repository<AdminAuditLog>,
+        @InjectRepository(PlatformConfig)
+        private readonly configRepository: Repository<PlatformConfig>,
         @InjectRepository(BusinessInvitation)
         private readonly invitationRepository: Repository<BusinessInvitation>,
         @InjectRepository(BusinessTemplate)
@@ -50,6 +53,39 @@ export class AdminService implements OnModuleInit {
             details,
         });
         await this.auditLogRepository.save(log);
+    }
+
+    // --- Platform Configuration ---
+
+    async getPlatformConfig(): Promise<PlatformConfig> {
+        let config = await this.configRepository.findOne({ where: { id: 1 } });
+        if (!config) {
+            config = this.configRepository.create({
+                id: 1,
+                allowTemporaryEmails: false,
+                blockedDomains: [
+                    'mailinator.com', 'yopmail.com', 'guerrillamail.com', 
+                    '10minutemail.com', 'temp-mail.org', 'dispostable.com',
+                    'getnada.com', 'boun.cr', 'sharklasers.com'
+                ]
+            });
+            await this.configRepository.save(config);
+        }
+        return config;
+    }
+
+    async updatePlatformConfig(data: Partial<PlatformConfig>, adminId: string): Promise<PlatformConfig> {
+        const config = await this.getPlatformConfig();
+        Object.assign(config, data);
+        const updated = await this.configRepository.save(config);
+        await this.logAction(adminId, 'PLATFORM_CONFIG_UPDATED', '1', data);
+        return updated;
+    }
+
+    private isEmailDisposable(email: string, blockedDomains: string[]): boolean {
+        const domain = email.split('@')[1]?.toLowerCase();
+        if (!domain) return false;
+        return (blockedDomains || []).includes(domain);
     }
 
     // Plans CRUD
@@ -170,7 +206,7 @@ export class AdminService implements OnModuleInit {
                 description: 'Perfecto para talleres individuales o pequeños.',
                 features: ['Hasta 20 servicios / mes', '1 rampa / mecánico', 'Gestión de Clientes', 'Ficha de Vehículos', 'Reportes Básicos'],
                 sidebarItems: [
-                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos',
                     '/personal', '/reportes', '/ajustes'
                 ],
                 maxUsers: 2,
@@ -194,7 +230,7 @@ export class AdminService implements OnModuleInit {
                 description: 'Para talleres en crecimiento con más movimiento.',
                 features: ['Hasta 100 servicios / mes', '3 rampas / mecánicos', 'Gestión de Repuestos', 'Ficha de Vehículos Full', 'Soporte prioritario'],
                 sidebarItems: [
-                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos',
                     '/personal', '/reportes', '/ajustes'
                 ],
                 maxUsers: 5,
@@ -218,7 +254,7 @@ export class AdminService implements OnModuleInit {
                 description: 'Gestión total para talleres de alto rendimiento.',
                 features: ['Servicios ilimitados', 'Rampas ilimitadas', 'Multi-usuario avanzado', 'Reportes Industriales', 'Personalización total'],
                 sidebarItems: [
-                    '/dashboard', '/pedidos', '/clientes', '/vehiculos', 
+                    '/dashboard', '/pedidos', '/clientes', '/vehiculos',
                     '/personal', '/reportes', '/ajustes'
                 ],
                 maxUsers: 20,
@@ -558,7 +594,13 @@ export class AdminService implements OnModuleInit {
     }
 
     async createUser(data: any, adminId: string): Promise<User> {
-        const { email, password, fullName, phone, plan } = data;
+        const { email, fullName, phone, plan } = data;
+
+        // 0. Verificar si se permiten emails temporales
+        const config = await this.getPlatformConfig();
+        if (!config.allowTemporaryEmails && this.isEmailDisposable(email, config.blockedDomains)) {
+            throw new BadRequestException('No se permiten correos electrónicos temporales o desechables en esta plataforma.');
+        }
 
         // 1. Verificar si ya existe en nuestra DB local
         const existingLocal = await this.userRepository.findOneBy({ email });
@@ -568,12 +610,10 @@ export class AdminService implements OnModuleInit {
 
         let authId: string = null;
 
-        // 2. Intentar crear en Supabase Auth
-        const { data: authData, error } = await this.supabaseService.getClient().auth.admin.createUser({
-            email,
-            password,
-            email_confirm: true,
-            user_metadata: {
+        // 2. Intentar invitar vía Supabase Auth
+        // El método inviteUserByEmail envía automáticamente el correo de "Invite User" configurado en el Dashboard
+        const { data: authData, error } = await this.supabaseService.getClient().auth.admin.inviteUserByEmail(email, {
+            data: {
                 full_name: fullName,
                 phone: phone,
                 plan: plan || 'free-3d'
@@ -582,42 +622,40 @@ export class AdminService implements OnModuleInit {
 
         if (error) {
             // Si ya existe en Supabase, intentamos recuperarlo para sincronizar
-            if (error.message.includes('already been registered')) {
-                const { data: listData, error: listError } = await this.supabaseService.getClient().auth.admin.listUsers();
-                const existingAuth = listData?.users?.find(u => u.email === email);
-                
+            if (error.message.includes('already been registered') || error.message.includes('already exists')) {
+                const { data: listData } = await this.supabaseService.getClient().auth.admin.listUsers();
+                const existingAuth = listData?.users?.find((u: any) => u.email === email);
+
                 if (!existingAuth) {
-                    throw new ConflictException('El email figura como registrado en Supabase pero no se pudo recuperar su ID.');
+                    throw new ConflictException('El email figura como registrado pero no se pudo recuperar su ID.');
                 }
                 authId = existingAuth.id;
             } else {
-                throw new Error(`Error creating user in Supabase: ${error.message}`);
+                throw new Error(`Error al invitar usuario en Supabase: ${error.message}`);
             }
         } else {
             authId = authData.user.id;
         }
 
-        await this.logAction(adminId, 'USER_CREATED_BY_ADMIN', authId, { email });
-        
-        // 3. Auto-Sincronización: Verificar si el trigger falló y el usuario no está en nuestra DB
+        await this.logAction(adminId, 'USER_INVITED_BY_ADMIN', authId, { email });
+
+        // 3. Auto-Sincronización
         let user = await this.userRepository.findOneBy({ id: authId });
-        
+
         if (!user) {
-            // Si el trigger falló o es lento, lo creamos manualmente para no bloquear al admin
             console.log(`[AdminService] User ${authId} missing locally. Creating manually...`);
             user = this.userRepository.create({
                 id: authId,
                 email,
                 fullName,
                 plan: plan || 'FREE',
-                status: 'ACTIVE', // Lo activamos ya que es creación administrativa
+                status: 'PENDING', // Queda pendiente hasta que acepte la invitación
                 globalRole: 'USER',
                 active: true
             });
             await this.userRepository.save(user);
         }
 
-        // 4. Doble check por si queremos cargar relaciones
         return this.findUserById(authId);
     }
 

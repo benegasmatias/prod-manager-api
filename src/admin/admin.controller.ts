@@ -281,6 +281,18 @@ export class AdminController {
     async getMetadata(@Request() req) {
         return this.adminService.getMetadata();
     }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('config')
+    async getPlatformConfig(@Request() req) {
+        return this.adminService.getPlatformConfig();
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('config')
+    async updatePlatformConfig(@Request() req, @Body() body: any) {
+        return this.adminService.updatePlatformConfig(body, req.user.id);
+    }
 }
 
 /**
