@@ -64,7 +64,7 @@ export class AdminService implements OnModuleInit {
                 id: 1,
                 allowTemporaryEmails: false,
                 blockedDomains: [
-                    'mailinator.com', 'yopmail.com', 'guerrillamail.com', 
+                    'mailinator.com', 'yopmail.com', 'guerrillamail.com',
                     '10minutemail.com', 'temp-mail.org', 'dispostable.com',
                     'getnada.com', 'boun.cr', 'sharklasers.com'
                 ]
