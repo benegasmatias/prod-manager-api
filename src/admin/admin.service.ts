@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ForbiddenException, OnModuleInit } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException, OnModuleInit, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, DataSource, IsNull, EntityManager } from 'typeorm';
 import { Business } from '../businesses/entities/business.entity';
@@ -12,6 +12,7 @@ import { Notification } from '../notifications/entities/notification.entity';
 import { AdminAuditLog } from './entities/admin-audit-log.entity';
 import { BusinessInvitation, InvitationStatus } from '../businesses/entities/business-invitation.entity';
 import { CreatePlanDto, UpdatePlanDto } from './dto/plan.dto';
+import { SupabaseService } from '../common/supabase/supabase.service';
 
 @Injectable()
 export class AdminService implements OnModuleInit {
@@ -32,6 +33,7 @@ export class AdminService implements OnModuleInit {
         @InjectRepository(BusinessTemplate)
         private readonly templateRepository: Repository<BusinessTemplate>,
         private readonly notificationsService: NotificationsService,
+        private readonly supabaseService: SupabaseService,
     ) { }
 
     async onModuleInit() {
@@ -555,6 +557,70 @@ export class AdminService implements OnModuleInit {
         return this.findUserById(id);
     }
 
+    async createUser(data: any, adminId: string): Promise<User> {
+        const { email, password, fullName, phone, plan } = data;
+
+        // 1. Verificar si ya existe en nuestra DB local
+        const existingLocal = await this.userRepository.findOneBy({ email });
+        if (existingLocal) {
+            throw new ConflictException('Este email ya está registrado en la base de datos local.');
+        }
+
+        let authId: string = null;
+
+        // 2. Intentar crear en Supabase Auth
+        const { data: authData, error } = await this.supabaseService.getClient().auth.admin.createUser({
+            email,
+            password,
+            email_confirm: true,
+            user_metadata: {
+                full_name: fullName,
+                phone: phone,
+                plan: plan || 'free-3d'
+            }
+        });
+
+        if (error) {
+            // Si ya existe en Supabase, intentamos recuperarlo para sincronizar
+            if (error.message.includes('already been registered')) {
+                const { data: listData, error: listError } = await this.supabaseService.getClient().auth.admin.listUsers();
+                const existingAuth = listData?.users?.find(u => u.email === email);
+                
+                if (!existingAuth) {
+                    throw new ConflictException('El email figura como registrado en Supabase pero no se pudo recuperar su ID.');
+                }
+                authId = existingAuth.id;
+            } else {
+                throw new Error(`Error creating user in Supabase: ${error.message}`);
+            }
+        } else {
+            authId = authData.user.id;
+        }
+
+        await this.logAction(adminId, 'USER_CREATED_BY_ADMIN', authId, { email });
+        
+        // 3. Auto-Sincronización: Verificar si el trigger falló y el usuario no está en nuestra DB
+        let user = await this.userRepository.findOneBy({ id: authId });
+        
+        if (!user) {
+            // Si el trigger falló o es lento, lo creamos manualmente para no bloquear al admin
+            console.log(`[AdminService] User ${authId} missing locally. Creating manually...`);
+            user = this.userRepository.create({
+                id: authId,
+                email,
+                fullName,
+                plan: plan || 'FREE',
+                status: 'ACTIVE', // Lo activamos ya que es creación administrativa
+                globalRole: 'USER',
+                active: true
+            });
+            await this.userRepository.save(user);
+        }
+
+        // 4. Doble check por si queremos cargar relaciones
+        return this.findUserById(authId);
+    }
+
     async resendInvitation(id: string, adminId: string): Promise<any> {
         await this.logAction(adminId, 'INVITATION_RESENT', id);
         return { success: true };
@@ -800,7 +866,7 @@ export class AdminService implements OnModuleInit {
             invitationStatuses: ['PENDING', 'ACCEPTED', 'REJECTED', 'EXPIRED', 'CANCELLED'],
             businessStatuses: ['DRAFT', 'ACTIVE', 'SUSPENDED', 'ARCHIVED'],
             globalRoles: roles.map(r => ({ id: r.role, label: r.role.replace('_', ' ') })),
-            plans: await this.planRepository.find({ select: ['id', 'name'] })
+            plans: await this.planRepository.find({ select: ['id', 'name', 'category'] })
         };
     }
     async seedDebugOrders(email: string) {

@@ -193,6 +193,12 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Post('users')
+    async createUser(@Request() req, @Body() body: any) {
+        return this.adminService.createUser(body, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Patch('users/:id')
     async updateUser(@Request() req, @Param('id') id: string, @Body() body: any) {
         return this.adminService.updateUser(id, body, req.user.id);

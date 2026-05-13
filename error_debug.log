@@ -16312,3 +16312,64 @@ Stack: UnauthorizedException: No se encontró el encabezado de autorización
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T00:15:41.745Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:394:9)
+    at Parser.handlePacket (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:212:19)
+    at Parser.parse (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:105:30)
+    at TLSSocket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\index.ts:7:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:563:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+    at Readable.push (node:internal/streams/readable:394:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T00:15:51.479Z
+Path: /admin/plans
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:394:9)
+    at Parser.handlePacket (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:212:19)
+    at Parser.parse (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:105:30)
+    at TLSSocket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\index.ts:7:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:563:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+    at Readable.push (node:internal/streams/readable:394:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T00:25:14.643Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:394:9)
+    at Parser.handlePacket (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:212:19)
+    at Parser.parse (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\parser.ts:105:30)
+    at TLSSocket.<anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\pg-protocol\src\index.ts:7:48)
+    at TLSSocket.emit (node:events:508:28)
+    at addChunk (node:internal/streams/readable:563:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:514:3)
+    at Readable.push (node:internal/streams/readable:394:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T00:32:46.494Z
+Path: /admin/users
+Status: 500
+Message: "Error creating user in Supabase: A user with this email address has already been registered"
+Stack: Error: Error creating user in Supabase: A user with this email address has already been registered
+    at AdminService.createUser (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\admin\admin.service.ts:575:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------

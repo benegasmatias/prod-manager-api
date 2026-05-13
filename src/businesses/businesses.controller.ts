@@ -1,4 +1,5 @@
 import { Controller, Get, Post, Body, UseGuards, Request, Param, Patch, Delete, Query, BadRequestException, UseInterceptors } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { FinancialPrivacyInterceptor } from '../common/interceptors/financial-privacy.interceptor';
 import { AuditService } from '../audit/audit.service';
 import { BusinessesService } from './businesses.service';
@@ -21,7 +22,8 @@ export class BusinessesController {
         private readonly businessesService: BusinessesService,
         private readonly invitationsService: BusinessInvitationsService,
         private readonly mailService: MailService,
-        private readonly auditService: AuditService
+        private readonly auditService: AuditService,
+        private readonly configService: ConfigService
     ) { }
 
     @Get()
@@ -169,10 +171,11 @@ export class BusinessesController {
         // ENVÍO REAL DE EMAIL USANDO BREVO
         try {
             const business = await this.businessesService.findOne(req.user.id, id);
+            const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:4200';
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
             const inviteUrl = userExists
-                ? `http://localhost:4200${acceptPath}`
-                : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+                ? `${frontendUrl}${acceptPath}`
+                : `${frontendUrl}/register?returnUrl=${encodeURIComponent(acceptPath)}`;
 
             await this.mailService.sendInvitationEmail(
                 body.email,
@@ -201,10 +204,11 @@ export class BusinessesController {
         // Send email with new token
         try {
             const business = await this.businessesService.findOne(req.user.id, id);
+            const frontendUrl = this.configService.get<string>('FRONTEND_URL') || 'http://localhost:4200';
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
             const inviteUrl = userExists
-                ? `http://localhost:4200${acceptPath}`
-                : `http://localhost:4200/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+                ? `${frontendUrl}${acceptPath}`
+                : `${frontendUrl}/register?returnUrl=${encodeURIComponent(acceptPath)}`;
 
             await this.mailService.sendInvitationEmail(
                 invitation.email,
