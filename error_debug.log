@@ -16563,3 +16563,255 @@ Status: 500
 Message: "At least one policy returned UNAUTHORIZED."
 Stack: undefined
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T13:19:14.566Z
+Path: /admin/config
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T13:19:14.874Z
+Path: /admin/users?page=1&limit=10
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T13:19:15.704Z
+Path: /admin/stats
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T13:30:12.021Z
+Path: /admin/users/82490301-42b6-426e-a17b-797c574a9202/approve
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:25.944Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:25.946Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:25.948Z
+Path: /customers?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:36.445Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:36.449Z
+Path: /customers?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:45.931Z
+Path: /customers?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:45.933Z
+Path: /customers?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:51:45.935Z
+Path: /customers?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T14:52:33.095Z
+Path: /businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78/dashboard-summary
+Status: 401
+Message: {"message":"Token inválido o expirado","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: Token inválido o expirado
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:28:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T16:16:55.920Z
+Path: /admin/businesses
+Status: 500
+Message: "Max client connections reached"
+Stack: error: Max client connections reached
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T16:17:04.732Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T16:17:10.235Z
+Path: /admin/businesses
+Status: 500
+Message: "MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size"
+Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max clients are limited to pool_size
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------

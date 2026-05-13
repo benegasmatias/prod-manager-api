@@ -48,8 +48,17 @@ export class Vehicle {
     @Column({ name: 'engine_number', nullable: true })
     engineNumber: string;
 
+    @Column({ name: 'has_plate', default: true })
+    hasPlate: boolean;
+
+    @Column({ name: 'tracking_mode', default: 'KM' })
+    trackingMode: string; // KM, HOURS, BOTH
+
     @Column({ type: 'int', default: 0 })
     kilometers: number;
+
+    @Column({ type: 'decimal', precision: 10, scale: 1, default: 0 })
+    hours: number;
 
     @Column({ type: 'text', nullable: true })
     notes: string;
