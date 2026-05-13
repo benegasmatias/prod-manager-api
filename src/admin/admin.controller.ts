@@ -193,6 +193,12 @@ export class AdminController {
     }
 
     @UseGuards(GlobalAdminGuard)
+    @Post('users')
+    async createUser(@Request() req, @Body() body: any) {
+        return this.adminService.createUser(body, req.user.id);
+    }
+
+    @UseGuards(GlobalAdminGuard)
     @Patch('users/:id')
     async updateUser(@Request() req, @Param('id') id: string, @Body() body: any) {
         return this.adminService.updateUser(id, body, req.user.id);
@@ -274,6 +280,18 @@ export class AdminController {
     @Get('config/metadata')
     async getMetadata(@Request() req) {
         return this.adminService.getMetadata();
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Get('config')
+    async getPlatformConfig(@Request() req) {
+        return this.adminService.getPlatformConfig();
+    }
+
+    @UseGuards(GlobalAdminGuard)
+    @Patch('config')
+    async updatePlatformConfig(@Request() req, @Body() body: any) {
+        return this.adminService.updatePlatformConfig(body, req.user.id);
     }
 }
 

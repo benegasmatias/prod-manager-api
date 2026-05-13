@@ -12,6 +12,8 @@ export class DashboardSummaryDto {
         orders: number | null;
         customers: number | null;
     } | null;
+    machines?: any[];
+    queue?: any[];
 
     // Operational fields for Rubros like Metalurgica
     operationalCounters?: {

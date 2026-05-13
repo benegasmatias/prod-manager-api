@@ -498,14 +498,19 @@ export class BusinessesService {
                 .getMany(),
 
             // Capability-Gated: Machines
-            hasMachines ? this.machineRepository.count({
-                where: { businessId, status: MachineStatus.PRINTING }
-            }) : Promise.resolve(0),
+            hasMachines ? this.machineRepository.find({
+                where: { businessId, active: true },
+                relations: ['productionJobs', 'productionJobs.orderItem', 'productionJobs.order'],
+                order: { createdAt: 'ASC' }
+            }) : Promise.resolve([]),
 
-            // Capability-Gated: Production
-            hasProduction ? this.orderRepository.count({
-                where: { businessId, status: In(PRODUCTION_STATUSES) }
-            }) : Promise.resolve(0),
+            // Capability-Gated: Production Queue
+            hasProduction ? this.orderRepository.find({
+                where: { businessId, status: In(PRODUCTION_STATUSES) },
+                relations: ['items'],
+                order: { dueDate: 'ASC' },
+                take: 10
+            }) : Promise.resolve([]),
 
             // Customers/Core
             this.customerRepository.count({
@@ -527,6 +532,39 @@ export class BusinessesService {
                 .andWhere('order.dueDate < :now', { now: new Date() })
                 .getMany()
         ]);
+
+        const machinesRaw = Array.isArray(activeMachinesCount) ? activeMachinesCount : [];
+        const machinesList = machinesRaw.map(m => {
+            // Buscamos el trabajo más reciente que no esté terminado ni cancelado
+            const activeJob = m.productionJobs?.find(j => 
+                ['IN_PROGRESS', 'QUEUED', 'PAUSED'].includes(j.status)
+            );
+            
+            return {
+                id: m.id,
+                name: m.name,
+                model: m.model,
+                status: m.blockedByQuota ? 'BLOCKED' : m.status,
+                jobTitle: activeJob?.orderItem?.name || 'Sin trabajo activo',
+                progress: activeJob?.metadata?.progress || 0,
+                timeRemaining: activeJob?.metadata?.estimatedTime || '--:--'
+            };
+        });
+
+        const activeMachinesTotal = machinesRaw.filter(m => m.status === MachineStatus.PRINTING || m.status === MachineStatus.WORKING).length;
+        
+        const productionQueueRaw = Array.isArray(productionOrdersCount) ? productionOrdersCount : [];
+        const productionQueue = productionQueueRaw.map(o => ({
+            id: o.id.split('-')[0].toUpperCase(),
+            fullId: o.id,
+            jobName: o.items?.[0]?.name || o.items?.[0]?.nombreProducto || 'Pedido sin nombre',
+            clientName: o.clientName,
+            priority: o.priority || 'MEDIUM',
+            eta: o.dueDate ? new Date(o.dueDate).toLocaleDateString('es-AR', { day: '2-digit', month: 'short' }) : 'Pendiente',
+            status: o.status
+        }));
+
+        const productionOrdersTotal = productionQueueRaw.length;
 
         const pendingBalance = activeOrdersWithItems.reduce((acc, order) => {
             // We ignore STOCK orders for pending balance as they are internal/pre-paid
@@ -624,7 +662,8 @@ export class BusinessesService {
                 title: 'Pedidos Vencidos',
                 message: `Hay ${readyOverdue.length} pedidos LISTOS con fecha cumplida sin entregar.`,
                 actionLabel: 'Llamar Cliente',
-                actionLink: '/pedidos?status=READY'
+                actionLink: '/pedidos',
+                queryParams: { status: 'READY' }
             });
         }
 
@@ -632,8 +671,10 @@ export class BusinessesService {
             totalSales: Number(salesResult?.total) || 0,
             pendingBalance,
             activeOrders: activeOrdersWithItems.length,
-            productionOrders: productionOrdersCount,
-            activeMachines: activeMachinesCount,
+            productionOrders: productionOrdersTotal,
+            activeMachines: activeMachinesTotal,
+            machines: machinesList,
+            queue: productionQueue,
             newCustomers: newCustomersCount,
             recentOrders: recentOrders.map(o => ({ 
                 id: o.id, 

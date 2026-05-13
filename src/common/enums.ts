@@ -47,6 +47,7 @@ export enum MachineStatus {
     WORKING = 'WORKING',
     MAINTENANCE = 'MAINTENANCE',
     DOWN = 'DOWN',
+    BUSY = 'BUSY',
 }
 
 export enum Priority {
@@ -167,7 +168,7 @@ export enum MaterialType {
     FILAMENT = 'FILAMENT',
     BLANK = 'BLANK',
     HARDWARE = 'HARDWARE',
-    
+
     // Legacy Types (Keeping for compatibility during migration)
     PLA = 'PLA',
     PETG = 'PETG',
