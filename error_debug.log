@@ -16555,3 +16555,11 @@ Stack: UnauthorizedException: No se encontró el encabezado de autorización
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-13T11:58:48.411Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/subscription/checkout
+Status: 500
+Message: "At least one policy returned UNAUTHORIZED."
+Stack: undefined
+-------------
