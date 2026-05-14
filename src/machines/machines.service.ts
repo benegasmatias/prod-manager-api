@@ -73,12 +73,12 @@ export class MachinesService {
 
         if (previousJobs && previousJobs.length > 0) {
             for (const job of previousJobs) {
-                if (job.machineId !== machineId) {
+                if (job.machineId && job.machineId !== machineId) {
                     // Liberar la otra impresora
                     await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
                     // Cancelar el trabajo anterior
                     await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignado a otra impresora');
-                } else {
+                } else if (job.machineId === machineId) {
                     // Si es la misma impresora, cancelamos el anterior para refrescar metadatos
                     await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
                 }

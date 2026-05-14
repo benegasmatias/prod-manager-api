@@ -16815,3 +16815,243 @@ Stack: error: MaxClientsInSessionMode: max clients reached - in Session mode max
     at Readable.push (node:internal/streams/readable:392:5)
     at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:28:38.678Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:28:41.049Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:28:49.215Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:30:20.119Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:05.620Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:12.297Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:15.499Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:20.497Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:51.399Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:52.503Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:31:53.260Z
+Path: /public/catalog/null?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 404
+Message: {"message":"Establecimiento no encontrado o no disponible","error":"Not Found","statusCode":404}
+Stack: NotFoundException: Establecimiento no encontrado o no disponible
+    at PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:34:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T21:32:18.144Z
+Path: /public/catalog/impresin-3d-de-benegasmatias21?page=1&limit=12&categoryId=undefined&search=undefined
+Status: 500
+Message: "invalid input syntax for type uuid: \"undefined\""
+Stack: QueryFailedError: invalid input syntax for type uuid: "undefined"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async SelectQueryBuilder.loadRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3868:25)
+    at async SelectQueryBuilder.getRawMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1627:29)
+    at async SelectQueryBuilder.executeEntitiesAndRawResults (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:3530:26)
+    at async SelectQueryBuilder.getRawAndEntities (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1671:29)
+    at async SelectQueryBuilder.getMany (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\SelectQueryBuilder.ts:1761:25)
+    at async PublicCatalogService.getCatalogData (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\public-catalog.service.ts:67:22)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:40:47.825Z
+Path: /machines/76d6dfae-32c6-45d6-b6ff-cb3301eebded/assign-order
+Status: 500
+Message: "Empty criteria(s) are not allowed for the update method."
+Stack: TypeORMError: Empty criteria(s) are not allowed for the update method.
+    at EntityManager.update (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:788:17)
+    at Repository.update (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\repository\src\repository\Repository.ts:363:29)
+    at MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:78:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:44:15.630Z
+Path: /machines/76d6dfae-32c6-45d6-b6ff-cb3301eebded/assign-order
+Status: 500
+Message: "Empty criteria(s) are not allowed for the update method."
+Stack: TypeORMError: Empty criteria(s) are not allowed for the update method.
+    at EntityManager.update (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:788:17)
+    at Repository.update (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\repository\src\repository\Repository.ts:363:29)
+    at MachinesService.assignOrder (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\machines\machines.service.ts:78:50)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:48:30.890Z
+Path: /orders/5a063ebf-7aa7-4aaf-99f3-f90097bbdb6a/items/880bb8a9-8057-4928-90cb-a55324a387e6/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:604:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:48:57.466Z
+Path: /orders/5a063ebf-7aa7-4aaf-99f3-f90097bbdb6a/items/880bb8a9-8057-4928-90cb-a55324a387e6/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:604:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:49:31.744Z
+Path: /orders/5a063ebf-7aa7-4aaf-99f3-f90097bbdb6a/items/880bb8a9-8057-4928-90cb-a55324a387e6/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:604:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:49:58.667Z
+Path: /orders/5a063ebf-7aa7-4aaf-99f3-f90097bbdb6a/items/880bb8a9-8057-4928-90cb-a55324a387e6/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:604:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-14T22:54:04.504Z
+Path: /orders/5a063ebf-7aa7-4aaf-99f3-f90097bbdb6a/items/880bb8a9-8057-4928-90cb-a55324a387e6/status
+Status: 400
+Message: {"message":"El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe liberarse primero para cambiar su estado manualmente.
+    at <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:604:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
+-------------
