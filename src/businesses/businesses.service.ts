@@ -42,7 +42,19 @@ const DEFAULT_BASE_CONFIG = {
     itemFields: [
         { key: 'nombreProducto', label: 'Nombre / Trabajo', tipo: 'text', required: true }
     ],
-    features: { hasMaterials: false, hasVisits: false },
+    features: { 
+        hasMaterials: false, 
+        hasVisits: false,
+        hasAppointments: false 
+    },
+    appointments: {
+        enabled: false,
+        label: 'Turnos',
+        types: [],
+        requireVehicle: false,
+        allowAnonymous: false,
+        conversionTarget: 'ORDER'
+    }
 };
 
 @Injectable()
@@ -316,8 +328,23 @@ export class BusinessesService {
                 labels: { ...config.labels, ...(template.config.labels || {}) },
                 icons: { ...config.icons, ...(template.config.icons || {}) },
                 features: { ...config.features, ...(template.config.features || {}) },
+                appointments: { ...config.appointments, ...(template.config.appointments || {}) },
                 machineStatusLabels: { ...config.machineStatusLabels, ...(template.config.machineStatusLabels || {}) }
             };
+
+            // Dynamic Sidebar logic for appointments
+            const hasAppointmentsCap = (business.capabilities || []).includes('appointments');
+            const isAppointmentsEnabled = config.appointments?.enabled === true;
+            
+            if (hasAppointmentsCap && isAppointmentsEnabled && !config.sidebarItems.includes('/agenda')) {
+                // Insert after dashboard if possible
+                const dashboardIndex = config.sidebarItems.indexOf('/dashboard');
+                if (dashboardIndex !== -1) {
+                    config.sidebarItems.splice(dashboardIndex + 1, 0, '/agenda');
+                } else {
+                    config.sidebarItems.push('/agenda');
+                }
+            }
         }
 
         // SaaS Gating (Subscription Source of Truth)

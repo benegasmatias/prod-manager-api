@@ -27,6 +27,7 @@ import { OrderSiteInfo } from '../orders/entities/order-site-info.entity';
 import { AuditLog } from '../audit/entities/audit-log.entity';
 import { ProductionJobMaterial } from '../jobs/entities/production-job-material.entity';
 import { Vehicle } from '../vehicles/entities/vehicle.entity';
+import { Appointment } from '../appointments/entities/appointment.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -65,6 +66,7 @@ export const AppDataSource = new DataSource({
         AuditLog,
         ProductionJobMaterial,
         Vehicle,
+        Appointment,
     ],
     migrations: [__dirname + '/migrations/*.ts'],
     ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,

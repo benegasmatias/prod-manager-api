@@ -23,6 +23,7 @@ import { UserStatusGuard } from './users/guards/user-status.guard';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { CatalogRequestsModule } from './catalog-requests/catalog-requests.module';
 import { AuthModule } from './auth/auth.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { AuthModule } from './auth/auth.module';
     VehiclesModule,
     CatalogRequestsModule,
     AuthModule,
+    AppointmentsModule,
   ],
   providers: [
     {

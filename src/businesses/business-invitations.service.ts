@@ -225,17 +225,18 @@ export class BusinessInvitationsService {
         const user = await this.userRepo.findOne({ where: { email: invitation.email.toLowerCase() } });
         // Progressive cooldown: 0s, 60s, 120s, 240s... (2^n * 60s)
         const resendCount = invitation.resendCount || 0;
-        if (resendCount > 0 && invitation.lastResentAt) {
-            const cooldownSeconds = Math.pow(2, resendCount - 1) * 60;
-            const cooldownMs = cooldownSeconds * 1000;
-            const timeSinceLastResend = Date.now() - new Date(invitation.lastResentAt).getTime();
+        const baseDate = invitation.lastResentAt || invitation.createdAt;
+        
+        // Cooldown: 60s for the first resend, then progressive (120s, 240s...)
+        const cooldownSeconds = resendCount > 0 ? Math.pow(2, resendCount - 1) * 60 : 60;
+        const cooldownMs = cooldownSeconds * 1000;
+        const timeSinceLastAction = Date.now() - new Date(baseDate).getTime();
 
-            if (timeSinceLastResend < cooldownMs) {
-                const waitSeconds = Math.ceil((cooldownMs - timeSinceLastResend) / 1000);
-                throw new BadRequestException(
-                    `Debes esperar ${waitSeconds} segundos antes de reenviar esta invitación`
-                );
-            }
+        if (timeSinceLastAction < cooldownMs) {
+            const waitSeconds = Math.ceil((cooldownMs - timeSinceLastAction) / 1000);
+            throw new BadRequestException(
+                `Debes esperar ${waitSeconds} segundos antes de reenviar esta invitación`
+            );
         }
 
         // Regenerate token and extend expiration
