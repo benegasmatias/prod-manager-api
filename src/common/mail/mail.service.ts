@@ -25,8 +25,10 @@ export class MailService {
                 tls: {
                     // Do not fail on invalid certs (common with some hosting providers)
                     rejectUnauthorized: false
-                }
-            });
+                },
+                // Forzamos IPv4 para evitar errores de red (ENETUNREACH) en entornos como Render
+                family: 4
+            } as any);
             this.logger.log(`SMTP Mailer configurado en ${host}:${port}`);
         } else {
             this.logger.warn('⚠️ Configuración SMTP incompleta. Los emails se loguearán en consola.');
@@ -109,8 +111,8 @@ export class MailService {
             this.logger.log(`📧 Email enviado con éxito a: ${toEmail}. MessageId: ${info.messageId}`);
             return info;
         } catch (error) {
-            this.logger.error(`❌ Error al enviar email a ${toEmail}:`, error);
-            throw new InternalServerErrorException('Error al enviar el email de invitación');
+            this.logger.error(`❌ Error al enviar email a ${toEmail}: ${error.message}`, error.stack);
+            throw new InternalServerErrorException(`Error SMTP: ${error.message}`);
         }
     }
 }
