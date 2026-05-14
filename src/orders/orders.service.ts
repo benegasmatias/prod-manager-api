@@ -4,8 +4,9 @@ import { Repository, In, ILike, Not } from 'typeorm';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { OrderSiteInfo } from './entities/order-site-info.entity';
-import { OrderStatus, ProductionJobStatus as JobStatus, OrderItemStatus } from '../common/enums';
+import { OrderStatus, ProductionJobStatus as JobStatus, OrderItemStatus, MachineStatus } from '../common/enums';
 import { ProductionJob } from '../jobs/entities/production-job.entity';
+import { Machine } from '../machines/entities/machine.entity';
 
 import { CreateOrderDto, UpdateProgressDto, UpdateOrderStatusDto, FindOrdersDto, ReportFailureDto, FindVisitsDto, FindQuotationsDto, OrderSummaryResponseDto, BudgetSummaryResponseDto } from './dto/order.dto';
 import { OrderStatusHistory } from '../history/entities/order-status-history.entity';
@@ -596,6 +597,10 @@ export class OrdersService {
             if (item.productionJob && [JobStatus.QUEUED, JobStatus.IN_PROGRESS, JobStatus.PAUSED].includes(item.productionJob.status as any)) {
                 if (force) {
                     // Forzamos la liberación: Cancelamos el trabajo en máquina
+                    if (item.productionJob.machineId) {
+                        await manager.update(Machine, item.productionJob.machineId, { status: MachineStatus.IDLE });
+                    }
+                    
                     await manager.update(ProductionJob, item.productionJob.id, {
                         status: JobStatus.CANCELLED,
                         metadata: { ...item.productionJob.metadata, forcedReleaseBy: userId, releaseDate: new Date() }
