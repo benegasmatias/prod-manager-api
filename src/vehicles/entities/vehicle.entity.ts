@@ -63,6 +63,9 @@ export class Vehicle {
     @Column({ type: 'text', nullable: true })
     notes: string;
 
+    @Column({ name: 'image_url', type: 'text', nullable: true })
+    imageUrl: string;
+
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
 
