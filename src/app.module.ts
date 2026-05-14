@@ -22,6 +22,7 @@ import { CalibrationsModule } from './calibrations/calibrations.module';
 import { UserStatusGuard } from './users/guards/user-status.guard';
 import { VehiclesModule } from './vehicles/vehicles.module';
 import { CatalogRequestsModule } from './catalog-requests/catalog-requests.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -64,6 +65,7 @@ import { CatalogRequestsModule } from './catalog-requests/catalog-requests.modul
     CalibrationsModule,
     VehiclesModule,
     CatalogRequestsModule,
+    AuthModule,
   ],
   providers: [
     {
