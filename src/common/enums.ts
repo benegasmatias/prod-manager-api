@@ -219,9 +219,17 @@ export enum CatalogRequestStatus {
     CONVERTED_TO_ORDER = 'CONVERTED_TO_ORDER'
 }
 
+
 export enum DeliveryMethod {
     PICKUP = 'PICKUP',
     DELIVERY = 'DELIVERY',
     TO_DEFINE = 'TO_DEFINE'
+}
+
+export enum AppointmentStatus {
+    PENDING = 'PENDING',
+    CONFIRMED = 'CONFIRMED',
+    CANCELLED = 'CANCELLED',
+    DONE = 'DONE',
 }
 
