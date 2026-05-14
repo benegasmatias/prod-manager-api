@@ -15,8 +15,8 @@ export class AppointmentsService {
         private readonly businessesService: BusinessesService,
     ) {}
 
-    async create(businessId: string, createDto: CreateAppointmentDto): Promise<Appointment> {
-        await this.validateAppointment(businessId, createDto);
+    async create(userId: string, businessId: string, createDto: CreateAppointmentDto): Promise<Appointment> {
+        await this.validateAppointment(userId, businessId, createDto);
 
         const appointment = this.appointmentRepository.create({
             ...createDto,
@@ -27,11 +27,11 @@ export class AppointmentsService {
         return await this.appointmentRepository.save(appointment);
     }
 
-    private async validateAppointment(businessId: string, dto: CreateAppointmentDto | UpdateAppointmentDto) {
-        const business = await this.businessesService.findOne(businessId);
-        const config = business.config?.appointments;
+    private async validateAppointment(userId: string, businessId: string, dto: CreateAppointmentDto | UpdateAppointmentDto) {
+        const { config } = await this.businessesService.resolveBusinessConfig(userId, businessId);
+        const appConfig = config?.appointments;
 
-        if (!config) return; // No config, no specific rules
+        if (!appConfig) return; // No config, no specific rules
 
         const start = dto.start ? new Date(dto.start) : null;
         const end = dto.end ? new Date(dto.end) : null;
@@ -40,22 +40,22 @@ export class AppointmentsService {
             throw new BadRequestException('La fecha de fin debe ser posterior a la de inicio.');
         }
 
-        if (config.requireVehicle && !dto.vehicleId) {
+        if (appConfig.requireVehicle && !dto.vehicleId) {
             throw new BadRequestException('El vehículo es obligatorio para este negocio.');
         }
 
-        if (!config.allowAnonymous && !dto.customerId) {
+        if (!appConfig.allowAnonymous && !dto.customerId) {
             throw new BadRequestException('El cliente es obligatorio para este negocio.');
         }
 
-        if (dto.type && config.types?.length > 0) {
-            if (!config.types.includes(dto.type)) {
+        if (dto.type && appConfig.types?.length > 0) {
+            if (!appConfig.types.includes(dto.type)) {
                 throw new BadRequestException(`El tipo "${dto.type}" no es válido para este negocio.`);
             }
         }
     }
 
-    async findAll(businessId: string, query: any): Promise<{ data: Appointment[], total: number }> {
+    async findAll(userId: string, businessId: string, query: any): Promise<{ data: Appointment[], total: number }> {
         const { 
             customerId, 
             employeeId, 
@@ -95,7 +95,7 @@ export class AppointmentsService {
         return { data, total };
     }
 
-    async findOne(businessId: string, id: string): Promise<Appointment> {
+    async findOne(userId: string, businessId: string, id: string): Promise<Appointment> {
         const appointment = await this.appointmentRepository.findOne({
             where: { id, businessId },
             relations: ['customer', 'vehicle', 'employee'],
@@ -107,12 +107,12 @@ export class AppointmentsService {
         return appointment;
     }
 
-    async update(businessId: string, id: string, updateDto: UpdateAppointmentDto): Promise<Appointment> {
-        const appointment = await this.findOne(businessId, id);
+    async update(userId: string, businessId: string, id: string, updateDto: UpdateAppointmentDto): Promise<Appointment> {
+        const appointment = await this.findOne(userId, businessId, id);
         
         // Merge current with update for validation
         const mergedDto = { ...appointment, ...updateDto };
-        await this.validateAppointment(businessId, mergedDto as any);
+        await this.validateAppointment(userId, businessId, mergedDto as any);
         
         const updated = {
             ...updateDto,
@@ -124,13 +124,13 @@ export class AppointmentsService {
         return await this.appointmentRepository.save(appointment);
     }
 
-    async remove(businessId: string, id: string): Promise<void> {
-        const appointment = await this.findOne(businessId, id);
+    async remove(userId: string, businessId: string, id: string): Promise<void> {
+        const appointment = await this.findOne(userId, businessId, id);
         await this.appointmentRepository.remove(appointment);
     }
 
-    async updateStatus(businessId: string, id: string, status: AppointmentStatus): Promise<Appointment> {
-        const appointment = await this.findOne(businessId, id);
+    async updateStatus(userId: string, businessId: string, id: string, status: AppointmentStatus): Promise<Appointment> {
+        const appointment = await this.findOne(userId, businessId, id);
         appointment.status = status;
         return await this.appointmentRepository.save(appointment);
     }
