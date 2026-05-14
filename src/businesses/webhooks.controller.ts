@@ -51,8 +51,22 @@ export class WebhooksController {
 
     @Post('mercadopago')
     @HttpCode(HttpStatus.OK)
-    async handleMP(@Body() payload: any) {
-        // MP envíe a veces el ID en la raíz o en data.id según el tipo de notificación
+    async handleMP(
+        @Body() payload: any,
+        @Headers('x-signature') signature: string,
+        @Headers('x-request-id') requestId: string
+    ) {
+        // 1. Verificación de Seguridad
+        const isValid = this.billingService.getMPService().verifyWebhookSignature(signature, requestId);
+        
+        if (!isValid) {
+            console.warn('[Webhooks MP] Invalid signature detected. Ignoring request.');
+            // Respondemos 200 para que MP deje de reintentar si la firma es inválida sistemáticamente (ej: mala config)
+            // pero no procesamos nada.
+            return { received: true, security: 'failed' };
+        }
+
+        // 2. Procesamiento
         const eventId = String(payload.id || payload.data?.id || '');
         const eventType = payload.type || payload.action || 'payment.updated';
 
@@ -66,7 +80,6 @@ export class WebhooksController {
         );
 
         try {
-            // Mercado Pago requiere que consultemos el recurso para confirmar el estado
             await this.billingService.processSubscriptionEvent(webhookRecord.id);
         } catch (error) {
             console.error('[Webhooks MP] Error processing event:', eventId, error.message);

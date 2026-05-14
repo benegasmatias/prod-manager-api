@@ -52,6 +52,9 @@ export class CustomersService {
         const mappedItems = items.map(customer => ({
             id: customer.id,
             name: customer.name,
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            dni: customer.dni,
             phone: customer.phone,
             email: customer.email,
             notes: customer.notes,

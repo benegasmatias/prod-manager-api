@@ -29,6 +29,7 @@ export class MercadoPagoService {
         description: string,
         email: string
     ) {
+        const frontendUrl = (this.configService.get<string>('FRONTEND_URL') || 'https://app.prodmanager.com.ar').replace(/\/$/, '');
         try {
             const preference = new Preference(this.client);
             const response = await preference.create({
@@ -50,7 +51,13 @@ export class MercadoPagoService {
                         planId,
                         subscriptionType: 'NEW'
                     },
-                    notification_url: (this.configService.get('BACKEND_URL') || 'http://localhost:3030').replace(/\/$/, '') + '/webhooks/mercadopago',
+                    back_urls: {
+                        success: `${frontendUrl}/billing/success`,
+                        failure: `${frontendUrl}/billing/failure`,
+                        pending: `${frontendUrl}/billing/pending`
+                    },
+                    auto_return: 'approved',
+                    notification_url: (this.configService.get('BACKEND_URL') || 'https://api.prodmanager.com.ar').replace(/\/$/, '') + '/webhooks/mercadopago',
                 }
             });
 
@@ -66,11 +73,43 @@ export class MercadoPagoService {
     }
 
     /**
-     * Verifica la firma del webhook si es necesario (opcional en MP según nivel de seguridad requerido)
+     * Verifica la firma del webhook de Mercado Pago.
+     * Basado en HMAC SHA256 usando el Webhook Secret.
      */
-    verifyWebhookSignature(signature: string, requestId: string): boolean {
-        // Mercado Pago v2 SDK provides internal utilities for this if needed
-        return true; 
+    verifyWebhookSignature(xSignature: string, xRequestId: string): boolean {
+        const secret = this.configService.get<string>('MP_WEBHOOK_SECRET');
+        if (!secret) {
+            this.logger.warn('MP_WEBHOOK_SECRET not configured. Skipping signature verification.');
+            return true; 
+        }
+
+        if (!xSignature) return false;
+
+        try {
+            // Mercado Pago v2 format: ts=...,v1=...
+            const parts = xSignature.split(',');
+            const tsPart = parts.find(p => p.startsWith('ts='));
+            const hashPart = parts.find(p => p.startsWith('v1='));
+
+            if (!tsPart || !hashPart) return false;
+
+            const ts = tsPart.split('=')[1];
+            const receivedHash = hashPart.split('=')[1];
+
+            // Manifest string for HMAC
+            const manifest = `id:${xRequestId};ts:${ts};`;
+            
+            const crypto = require('crypto');
+            const calculatedHash = crypto
+                .createHmac('sha256', secret)
+                .update(manifest)
+                .digest('hex');
+
+            return receivedHash === calculatedHash;
+        } catch (error) {
+            this.logger.error('Error verifying MP signature:', error.message);
+            return false;
+        }
     }
 
     /**

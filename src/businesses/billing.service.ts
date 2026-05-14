@@ -27,6 +27,10 @@ export class BillingService {
         private readonly auditService: AuditService,
         private readonly mpService: MercadoPagoService,
     ) { }
+    
+    getMPService() {
+        return this.mpService;
+    }
 
     async createDefaultSubscription(businessId: string, manager?: EntityManager): Promise<BusinessSubscription> {
         const businessRepo = manager ? manager.getRepository(Business) : this.businessRepository;
