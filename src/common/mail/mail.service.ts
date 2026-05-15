@@ -16,49 +16,66 @@ export class MailService {
 
     async sendInvitationEmail(toEmail: string, businessName: string, role: string, inviteUrl: string, userExists: boolean = false) {
         const fromEmail = this.configService.get<string>('SMTP_FROM') || 'soporte@prodmanager.com.ar';
-        const subject = `Invitación a unirse a ${businessName} en ProdManager`;
+        const subject = `🚀 Invitación a unirse a ${businessName} en ProdManager`;
         
         const htmlContent = `
         <!DOCTYPE html>
         <html>
         <head>
             <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
-        <body style="font-family: 'Inter', Helvetica, Arial, sans-serif; background-color: #0a0a0c; margin: 0; padding: 0;">
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0a0a0c; padding: 40px 20px;">
+        <body style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0a0a1a; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0a0a1a; padding: 40px 20px;">
                 <tr>
                     <td align="center">
-                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #111114; border-radius: 24px; overflow: hidden; border: 1px solid #1f1f23;">
-                            <!-- HEADER -->
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #11142b; border-radius: 32px; overflow: hidden; border: 1px solid rgba(139, 92, 246, 0.15); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+                            <!-- HEADER CON BRAND COLOR -->
                             <tr>
-                                <td align="center" style="padding: 40px; background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);">
-                                    <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;">ProdManager</h1>
+                                <td align="center" style="padding: 50px 40px; background: linear-gradient(135deg, #742fe5 0%, #8b5cf6 100%);">
+                                    <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: 900; letter-spacing: -0.02em; text-transform: none;">ProdManager</h1>
+                                    <p style="margin: 8px 0 0; color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;">Gestión de Producción Inteligente</p>
                                 </td>
                             </tr>
-                            <!-- CONTENT -->
+                            
+                            <!-- CONTENIDO EXPLICATIVO -->
                             <tr>
                                 <td style="padding: 48px 40px;">
-                                    <h2 style="margin: 0 0 24px; color: #ffffff; font-size: 24px; font-weight: 800; text-align: center; letter-spacing: -0.02em;">¡HOLA!</h2>
-                                    <p style="margin: 0 0 32px; color: #a1a1aa; font-size: 16px; line-height: 1.6; text-align: center;">
-                                        Has sido invitado a formar parte del equipo de <strong>${businessName}</strong> como <strong>${role}</strong>.
+                                    <h2 style="margin: 0 0 20px; color: #ffffff; font-size: 26px; font-weight: 800; text-align: left; letter-spacing: -0.02em;">¡Hola! 👋</h2>
+                                    
+                                    <p style="margin: 0 0 24px; color: #cbd5e1; font-size: 16px; line-height: 1.7; text-align: left;">
+                                        Has sido invitado por <strong>${businessName}</strong> para unirte a su equipo de trabajo con el rol de <span style="color: #a78bfa; font-weight: 700;">${role}</span>.
                                     </p>
+                                    
+                                    <div style="background-color: rgba(139, 92, 246, 0.05); border-left: 4px solid #8b5cf6; padding: 20px; margin-bottom: 32px; border-radius: 0 16px 16px 0;">
+                                        <p style="margin: 0; color: #94a3b8; font-size: 14px; line-height: 1.6;">
+                                            <strong>¿Qué es ProdManager?</strong><br>
+                                            Es la plataforma donde centralizamos el seguimiento de pedidos, gestión de stock y flujos de producción para que todo el equipo trabaje en sintonía y de forma eficiente.
+                                        </p>
+                                    </div>
                                     
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tr>
-                                            <td align="center">
-                                                <a href="${inviteUrl}" style="display: inline-block; padding: 18px 36px; background-color: #ffffff; color: #000000; text-decoration: none; border-radius: 14px; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-                                                    ${userExists ? 'ACEPTAR INVITACIÓN' : 'COMPLETAR REGISTRO'}
+                                            <td align="center" style="padding-top: 10px;">
+                                                <a href="${inviteUrl}" style="display: inline-block; padding: 20px 40px; background-color: #ffffff; color: #742fe5; text-decoration: none; border-radius: 18px; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: 0 15px 30px rgba(116, 47, 229, 0.3);">
+                                                    ${userExists ? 'Aceptar Invitación' : 'Completar mi Registro'}
                                                 </a>
                                             </td>
                                         </tr>
                                     </table>
+                                    
+                                    <p style="margin: 40px 0 0; color: #64748b; font-size: 13px; text-align: center; line-height: 1.5;">
+                                        Si el botón no funciona, copia y pega este enlace en tu navegador:<br>
+                                        <span style="color: #8b5cf6;">${inviteUrl}</span>
+                                    </p>
                                 </td>
                             </tr>
+                            
                             <!-- FOOTER -->
                             <tr>
-                                <td style="padding: 32px 40px; background-color: #0d0d10; border-top: 1px solid #1f1f23; text-align: center;">
-                                    <p style="margin: 0; color: #52525b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
-                                        © 2026 ProdManager • Sistema de Gestión de Producción
+                                <td style="padding: 32px 40px; background-color: #0d0d1a; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+                                    <p style="margin: 0; color: #475569; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;">
+                                        © 2026 ProdManager • Potenciando la Fabricación Local
                                     </p>
                                 </td>
                             </tr>
