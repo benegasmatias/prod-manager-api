@@ -1,48 +1,21 @@
-import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailService {
-    private transporter: nodemailer.Transporter;
     private readonly logger = new Logger(MailService.name);
+    private readonly apiKey: string;
+    private readonly apiUrl = 'https://api.brevo.com/v3/smtp/email';
 
     constructor(private configService: ConfigService) {
-        const host = this.configService.get<string>('SMTP_HOST');
-        const port = this.configService.get<number>('SMTP_PORT') || 465;
-        const user = this.configService.get<string>('SMTP_USER');
-        const pass = this.configService.get<string>('SMTP_PASS');
-
-        if (host && user && pass) {
-            this.transporter = nodemailer.createTransport({
-                host,
-                port,
-                secure: port === 465, 
-                auth: {
-                    user,
-                    pass,
-                },
-                tls: {
-                    rejectUnauthorized: false,
-                    minVersion: 'TLSv1.2'
-                },
-                family: 4,
-                // Configuraciones de estabilidad
-                connectionTimeout: 10000, // 10 segundos
-                greetingTimeout: 10000,
-                socketTimeout: 15000,
-                authMethod: 'LOGIN', // Algunos hostings lo requieren explícito
-                logger: true,
-                debug: true
-            } as any);
-            this.logger.log(`SMTP Mailer configurado en ${host}:${port}`);
-        } else {
-            this.logger.warn('⚠️ Configuración SMTP incompleta. Los emails se loguearán en consola.');
+        this.apiKey = this.configService.get<string>('BREVO_API_KEY');
+        if (!this.apiKey) {
+            this.logger.warn('⚠️ BREVO_API_KEY no configurada. Los emails no se enviarán.');
         }
     }
 
     async sendInvitationEmail(toEmail: string, businessName: string, role: string, inviteUrl: string, userExists: boolean = false) {
-        const from = this.configService.get<string>('SMTP_FROM') || 'noreply@prodmanager.com.ar';
+        const fromEmail = this.configService.get<string>('SMTP_FROM') || 'soporte@prodmanager.com.ar';
         const subject = `Invitación a unirse a ${businessName} en ProdManager`;
         
         const htmlContent = `
@@ -64,33 +37,29 @@ export class MailService {
                             </tr>
                             <!-- CONTENT -->
                             <tr>
-                                <td style="padding: 40px; color: #e2e2e7;">
-                                    <h2 style="color: #ffffff; font-size: 24px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.02em;">¡Invitación a Colaborar!</h2>
-                                    <p style="font-size: 16px; color: #94a3b8; margin-bottom: 24px; line-height: 1.6;">Hola,</p>
-                                    <p style="font-size: 16px; color: #94a3b8; margin-bottom: 24px; line-height: 1.6;">
-                                        Has sido invitado a unirte al equipo de <strong>${businessName}</strong> como <strong>${role}</strong>. 
-                                        ${userExists ? 'Solo tenés que aceptar la invitación para comenzar.' : 'Como aún no tenés cuenta, el primer paso es registrarte para aceptar el acceso.'}
+                                <td style="padding: 48px 40px;">
+                                    <h2 style="margin: 0 0 24px; color: #ffffff; font-size: 24px; font-weight: 800; text-align: center; letter-spacing: -0.02em;">¡HOLA!</h2>
+                                    <p style="margin: 0 0 32px; color: #a1a1aa; font-size: 16px; line-height: 1.6; text-align: center;">
+                                        Has sido invitado a formar parte del equipo de <strong>${businessName}</strong> como <strong>${role}</strong>.
                                     </p>
                                     
-                                    <div style="text-align: center; margin: 40px 0;">
-                                        <a href="${inviteUrl}" style="display: inline-block; padding: 18px 36px; background-color: #7c3aed; color: #ffffff; text-decoration: none; border-radius: 16px; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;">
-                                            ${userExists ? 'Aceptar Invitación' : 'Crear Cuenta y Unirme'}
-                                        </a>
-                                    </div>
-                                    
-                                    <p style="font-size: 13px; color: #475569; margin-top: 40px; line-height: 1.6; word-break: break-all;">
-                                        Si el botón no funciona, podés copiar este enlace: <br>
-                                        <span style="color: #7c3aed;">${inviteUrl}</span>
-                                    </p>
-                                    
-                                    <p style="font-size: 14px; color: #475569; margin-top: 24px; line-height: 1.6;">Si no esperabas este correo, podés ignorarlo con total seguridad.</p>
-                                    <p style="font-size: 16px; color: #e2e2e7; font-weight: 700; margin-top: 24px;">Saludos,<br>El equipo de ProdManager</p>
+                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td align="center">
+                                                <a href="${inviteUrl}" style="display: inline-block; padding: 18px 36px; background-color: #ffffff; color: #000000; text-decoration: none; border-radius: 14px; font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                                                    ${userExists ? 'ACEPTAR INVITACIÓN' : 'COMPLETAR REGISTRO'}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                             <!-- FOOTER -->
                             <tr>
-                                <td style="padding: 30px; text-align: center; font-size: 11px; color: #475569; border-top: 1px solid #1f1f23;">
-                                    © 2024 ProdManager Inc. • Arquitectura de Sistemas de Producción.
+                                <td style="padding: 32px 40px; background-color: #0d0d10; border-top: 1px solid #1f1f23; text-align: center;">
+                                    <p style="margin: 0; color: #52525b; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">
+                                        © 2026 ProdManager • Sistema de Gestión de Producción
+                                    </p>
                                 </td>
                             </tr>
                         </table>
@@ -101,24 +70,50 @@ export class MailService {
         </html>
         `;
 
-        if (!this.transporter) {
-            this.logger.warn(`[SIMULACIÓN] Email para ${toEmail}: ${subject}`);
-            this.logger.debug(`URL: ${inviteUrl}`);
+        return this.sendMail(toEmail, subject, htmlContent);
+    }
+
+    private async sendMail(toEmail: string, subject: string, htmlContent: string) {
+        if (!this.apiKey) {
+            this.logger.warn(`No se envió el email a ${toEmail} porque no hay BREVO_API_KEY.`);
             return;
         }
 
+        const fromEmail = this.configService.get<string>('SMTP_FROM') || 'soporte@prodmanager.com.ar';
+
         try {
-            const info = await this.transporter.sendMail({
-                from: `"ProdManager" <${from}>`,
-                to: toEmail,
-                subject: subject,
-                html: htmlContent,
+            const response = await fetch(this.apiUrl, {
+                method: 'POST',
+                headers: {
+                    'accept': 'application/json',
+                    'api-key': this.apiKey,
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sender: {
+                        name: 'ProdManager',
+                        email: fromEmail
+                    },
+                    to: [{
+                        email: toEmail
+                    }],
+                    subject: subject,
+                    htmlContent: htmlContent
+                })
             });
-            this.logger.log(`📧 Email enviado con éxito a: ${toEmail}. MessageId: ${info.messageId}`);
-            return info;
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                this.logger.error(`Error de Brevo: ${JSON.stringify(data)}`);
+                throw new Error(data.message || 'Error desconocido en Brevo');
+            }
+
+            this.logger.log(`📧 Email enviado con éxito vía Brevo a: ${toEmail}. MessageId: ${data.messageId}`);
+            return data;
         } catch (error) {
-            this.logger.error(`❌ Error al enviar email a ${toEmail}: ${error.message}`, error.stack);
-            throw new InternalServerErrorException(`Error SMTP: ${error.message}`);
+            this.logger.error(`❌ Error al enviar email vía Brevo a ${toEmail}: ${error.message}`);
+            throw new InternalServerErrorException(`Error de Email (Brevo): ${error.message}`);
         }
     }
 }
