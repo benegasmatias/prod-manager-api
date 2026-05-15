@@ -34,6 +34,18 @@ export class UsersService {
             await this.userRepository.save(user);
         } else {
             let needsSave = false;
+            
+            // Si el usuario está pendiente pero ya tiene una membresía (por invitación), activarlo
+            if (user.status === 'PENDING') {
+                const businesses = await this.businessesService.findUserBusinesses(id);
+                if (businesses.length > 0) {
+                    console.log(`[UsersService] Auto-activando usuario ${id} porque tiene ${businesses.length} membresías`);
+                    user.status = 'ACTIVE';
+                    user.approvedAt = now;
+                    needsSave = true;
+                }
+            }
+
             if (fullName && !user.fullName) {
                 user.fullName = fullName;
                 needsSave = true;

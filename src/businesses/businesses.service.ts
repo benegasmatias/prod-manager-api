@@ -377,6 +377,17 @@ export class BusinessesService {
         const userRole = membership?.role || BusinessRole.OPERATOR;
         const userPermissions = this.getPermissionsForRole(userRole);
 
+        // --- RBAC Sidebar Enforcement ---
+        if (config.sidebarItems) {
+            config.sidebarItems = config.sidebarItems.filter(item => {
+                if (item === '/personal' && !userPermissions.employees.canRead) return false;
+                if (item === '/reportes' && !userPermissions.orders.canReadFinancials) return false;
+                if (item === '/ajustes' && !userPermissions.config_admin.canRead) return false;
+                if (item === '/billing' && userRole !== BusinessRole.OWNER) return false;
+                return true;
+            });
+        }
+
         return { 
             businessId: business.id, 
             config,

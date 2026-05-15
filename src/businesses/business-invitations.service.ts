@@ -186,6 +186,13 @@ export class BusinessInvitationsService {
             invitation.acceptedByUserId = userId;
             await manager.save(BusinessInvitation, invitation);
 
+            // 4. ACTIVAR AL USUARIO AUTOMÁTICAMENTE (Ya que fue invitado por alguien confiable)
+            await manager.update(User, userId, { 
+                status: 'ACTIVE',
+                approvedAt: new Date(),
+                approvedBy: invitation.invitedByUserId // Opcional: El que lo invitó es el que lo "aprueba"
+            });
+
             return savedMembership;
         });
     }
