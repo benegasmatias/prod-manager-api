@@ -17055,3 +17055,35 @@ Stack: BadRequestException: El ítem tiene un trabajo activo en máquina. Debe l
     at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
     at async OrdersService.updateItemStatus (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:588:16)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T12:06:26.994Z
+Path: /admin/businesses
+Status: 500
+Message: "(EMAXCONNSESSION) max clients reached in session mode - max clients are limited to pool_size: 15"
+Stack: error: (EMAXCONNSESSION) max clients reached in session mode - max clients are limited to pool_size: 15
+    at parseErrorMessage (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:394:9)
+    at Parser.handlePacket (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:212:19)
+    at Parser.parse (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/parser.ts:105:30)
+    at TLSSocket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-protocol/src/index.ts:7:48)
+    at TLSSocket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T14:17:20.500Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-pool/index.js:276:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------

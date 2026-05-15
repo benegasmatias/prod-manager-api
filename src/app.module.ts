@@ -42,9 +42,10 @@ import { AppointmentsModule } from './appointments/appointments.module';
         synchronize: configService.get<string>('DB_SYNCHRONIZE') === 'true', // Only for dev, set DB_SYNCHRONIZE=false in Render
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
-          max: 30,
+          max: 15,
           idleTimeoutMillis: 30000,
           connectionTimeoutMillis: 10000,
+          keepAlive: true,
         }
       }),
     }),
