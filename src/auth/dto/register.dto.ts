@@ -20,4 +20,8 @@ export class RegisterDto {
     @IsString()
     @IsOptional()
     redirectTo?: string;
+
+    @IsString()
+    @IsOptional()
+    invitationToken?: string;
 }
