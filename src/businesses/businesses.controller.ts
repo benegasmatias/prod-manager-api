@@ -81,7 +81,7 @@ export class BusinessesController {
 
     @Get(':id/plan-usage')
     @UseGuards(BusinessAccessGuard, BusinessRoleGuard)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async getPlanUsage(@Param('id') id: string) {
         return this.businessesService.getBusinessUsage(id);
     }

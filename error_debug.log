@@ -17087,3 +17087,157 @@ Stack: Error: Connection terminated due to connection timeout
     at Socket.emit (node:events:531:35)
     at TCP.<anonymous> (node:net:346:12)
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T18:57:58.408Z
+Path: /businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78/plan-usage
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T18:58:16.626Z
+Path: /businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78/plan-usage
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:02:01.405Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:02:19.961Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:02:24.613Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:02:29.976Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:02:46.150Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:03:05.584Z
+Path: /businesses/a106f2ae-ff5d-4df4-a844-9ed775afaa78/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:03:05.585Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:05:19.328Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T19:06:01.903Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
