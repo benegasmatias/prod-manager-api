@@ -1,16 +1,35 @@
 import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailService {
     private readonly logger = new Logger(MailService.name);
     private readonly apiKey: string;
     private readonly apiUrl = 'https://api.brevo.com/v3/smtp/email';
+    private transporter: nodemailer.Transporter | null = null;
+    private readonly useSmtp: boolean = false;
 
     constructor(private configService: ConfigService) {
         this.apiKey = this.configService.get<string>('BREVO_API_KEY');
-        if (!this.apiKey) {
-            this.logger.warn('⚠️ BREVO_API_KEY no configurada. Los emails no se enviarán.');
+        const smtpHost = this.configService.get<string>('SMTP_HOST');
+        
+        if (smtpHost) {
+            this.useSmtp = true;
+            this.transporter = nodemailer.createTransport({
+                host: smtpHost,
+                port: this.configService.get<number>('SMTP_PORT') || 465,
+                secure: this.configService.get<string>('SMTP_SECURE') !== 'false',
+                auth: {
+                    user: this.configService.get<string>('SMTP_USER'),
+                    pass: this.configService.get<string>('SMTP_PASS'),
+                },
+            });
+            this.logger.log(`📧 MailService configurado vía SMTP (${smtpHost})`);
+        } else if (!this.apiKey) {
+            this.logger.warn('⚠️ BREVO_API_KEY ni SMTP_HOST configurados. Los emails no se enviarán.');
+        } else {
+            this.logger.log('📧 MailService configurado vía Brevo API');
         }
     }
 
@@ -97,12 +116,39 @@ export class MailService {
     }
 
     private async sendMail(toEmail: string, subject: string, htmlContent: string) {
-        if (!this.apiKey) {
-            this.logger.warn(`No se envió el email a ${toEmail} porque no hay BREVO_API_KEY.`);
-            return;
+        const fromEmail = this.configService.get<string>('SMTP_FROM') || 'soporte@prodmanager.com.ar';
+
+        // 1. MODO SMTP (Hostinger, Gmail, etc.)
+        if (this.useSmtp && this.transporter) {
+            try {
+                const info = await this.transporter.sendMail({
+                    from: `"ProdManager" <${fromEmail}>`,
+                    to: toEmail,
+                    subject: subject,
+                    html: htmlContent,
+                });
+                this.logger.log(`📧 Email enviado con éxito vía SMTP a: ${toEmail}. MessageId: ${info.messageId}`);
+                return info;
+            } catch (error) {
+                this.logger.error(`❌ Error al enviar email vía SMTP a ${toEmail}: ${error.message}`);
+                throw new InternalServerErrorException(`Error de Email (SMTP): ${error.message}`);
+            }
         }
 
-        const fromEmail = this.configService.get<string>('SMTP_FROM') || 'soporte@prodmanager.com.ar';
+        // 2. MODO BREVO API
+        if (!this.apiKey) {
+            this.logger.warn(`
+┌──────────────────────────────────────────────────────────┐
+│ 📧 MODO DESARROLLO: SIMULACIÓN DE EMAIL                  │
+├──────────────────────────────────────────────────────────┤
+│ PARA: ${toEmail.padEnd(51)} │
+│ ASUNTO: ${subject.padEnd(49)} │
+├──────────────────────────────────────────────────────────┤
+│ No se envió el email real porque no hay BREVO_API_KEY    │
+│ ni SMTP_HOST configurados.                               │
+└──────────────────────────────────────────────────────────┘`);
+            return { messageId: 'dev-mode-fake-id' };
+        }
 
         try {
             const response = await fetch(this.apiUrl, {

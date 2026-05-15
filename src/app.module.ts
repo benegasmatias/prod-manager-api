@@ -43,8 +43,9 @@ import { AppointmentsModule } from './appointments/appointments.module';
         ssl: configService.get<string>('DB_SSL') === 'true' ? { rejectUnauthorized: false } : false,
         extra: {
           max: 15,
-          idleTimeoutMillis: 10000,
-          connectionTimeoutMillis: 5000,
+          idleTimeoutMillis: 30000,
+          connectionTimeoutMillis: 10000,
+          keepAlive: true,
         }
       }),
     }),
