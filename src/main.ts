@@ -21,6 +21,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:4200',
       'https://app.prodmanager.com.ar',
+      'https://www.app.prodmanager.com.ar',
       'https://www.prodmanager.com.ar',
       'https://prodmanager.com.ar'
     ],

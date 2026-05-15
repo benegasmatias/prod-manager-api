@@ -61,6 +61,8 @@ export class AuthService {
     }
 
     async register(dto: RegisterDto, remoteIp?: string) {
+        console.log(`[AuthService] 🚀 Iniciando registro para: ${dto.email}`);
+        
         // 1. Verify Captcha
         const isValid = await this.verifyTurnstile(dto.captchaToken, remoteIp);
         if (!isValid) {
@@ -73,48 +75,83 @@ export class AuthService {
         // 2. Si hay token de invitación, validarlo
         if (dto.invitationToken) {
             try {
+                console.log(`[AuthService] 🔍 Validando token de invitación: ${dto.invitationToken}`);
                 invitation = await this.invitationsService.findByToken(dto.invitationToken);
+                
                 if (invitation.email.toLowerCase() !== dto.email.toLowerCase()) {
+                    console.warn(`[AuthService] ❌ El email de la invitación (${invitation.email}) no coincide con ${dto.email}`);
                     throw new BadRequestException('Este enlace de invitación no corresponde al email proporcionado.');
                 }
-                console.log(`[AuthService] 📩 Invitación válida detectada para: ${dto.email}`);
+                console.log(`[AuthService] ✅ Invitación válida detectada para: ${dto.email}`);
             } catch (error) {
-                console.warn('[AuthService] ⚠️ Intento de registro con token inválido:', dto.invitationToken);
+                console.warn('[AuthService] ⚠️ Intento de registro con token inválido o expirado:', dto.invitationToken);
                 // Si el token es inválido, seguimos como registro normal pero no auto-confirmamos
             }
         }
 
         // 3. Crear usuario
-        console.log(`[AuthService] 👤 Creando usuario en Supabase: ${dto.email} (Invitación: ${!!invitation})`);
+        console.log(`[AuthService] 👤 Creando usuario en Supabase: ${dto.email} (Modo Invitación: ${!!invitation})`);
         
         let result;
-        if (invitation) {
-            // REGISTRO POR INVITACIÓN: Usamos el API de Admin para auto-confirmar el email
-            const { data, error } = await supabase.auth.admin.createUser({
-                email: dto.email,
-                password: dto.password,
-                email_confirm: true,
-                user_metadata: dto.metadata || {}
-            });
-            if (error) throw new BadRequestException(error.message);
-            result = { data, error };
-        } else {
-            // REGISTRO NORMAL: Requiere confirmación de email estándar
-            const { data, error } = await supabase.auth.signUp({
-                email: dto.email,
-                password: dto.password,
-                options: {
-                    data: dto.metadata || {},
-                    emailRedirectTo: dto.redirectTo
+        try {
+            if (invitation) {
+                // REGISTRO POR INVITACIÓN: Usamos el API de Admin para auto-confirmar el email
+                const { data, error } = await supabase.auth.admin.createUser({
+                    email: dto.email,
+                    password: dto.password,
+                    email_confirm: true,
+                    user_metadata: dto.metadata || {}
+                });
+                
+                if (error) {
+                    console.error('[AuthService] ❌ Error en admin.createUser:', error.message);
+                    throw new BadRequestException(error.message);
                 }
-            });
-            if (error) throw new BadRequestException(error.message);
-            result = { data, error };
+                
+                result = { data, error };
+                
+                // 4. ACEPTAR INVITACIÓN AUTOMÁTICAMENTE
+                try {
+                    console.log(`[AuthService] 🤝 Aceptando invitación automáticamente para el usuario: ${data.user.id}`);
+                    await this.invitationsService.acceptInvitation(
+                        dto.invitationToken, 
+                        data.user.id, 
+                        dto.email
+                    );
+                    console.log(`[AuthService] 🎉 Invitación aceptada con éxito`);
+                } catch (acceptError) {
+                    console.error('[AuthService] ❌ Error al aceptar invitación:', acceptError.message);
+                    // No lanzamos excepción aquí para no romper el registro si ya se creó el usuario
+                }
+
+            } else {
+                // REGISTRO NORMAL: Requiere confirmación de email estándar
+                console.log(`[AuthService] 📧 Enviando email de confirmación para: ${dto.email}`);
+                const { data, error } = await supabase.auth.signUp({
+                    email: dto.email,
+                    password: dto.password,
+                    options: {
+                        data: dto.metadata || {},
+                        emailRedirectTo: dto.redirectTo
+                    }
+                });
+                
+                if (error) {
+                    console.error('[AuthService] ❌ Error en auth.signUp:', error.message);
+                    throw new BadRequestException(error.message);
+                }
+                
+                result = { data, error };
+            }
+        } catch (error) {
+            if (error instanceof BadRequestException) throw error;
+            console.error('[AuthService] 💥 Error inesperado durante el registro:', error);
+            throw new InternalServerErrorException('Error al procesar el registro. Por favor, intenta de nuevo.');
         }
 
         return {
             message: invitation 
-                ? 'Cuenta creada con éxito. Ya puedes iniciar sesión.' 
+                ? 'Cuenta creada y vinculada con éxito. Ya puedes iniciar sesión.' 
                 : 'Registro iniciado. Por favor, verifica tu correo.',
             isInvitation: !!invitation,
             data: result.data
