@@ -17,18 +17,21 @@ export class MailService {
             this.transporter = nodemailer.createTransport({
                 host,
                 port,
-                secure: port === 465, // true for 465, false for other ports
+                secure: port === 465, 
                 auth: {
                     user,
                     pass,
                 },
                 tls: {
-                    // Do not fail on invalid certs (common with some hosting providers)
-                    rejectUnauthorized: false
+                    rejectUnauthorized: false,
+                    minVersion: 'TLSv1.2'
                 },
-                // Forzamos IPv4 para evitar errores de red (ENETUNREACH) en entornos como Render
                 family: 4,
-                // Activamos logs detallados para diagnosticar el timeout en Render
+                // Configuraciones de estabilidad
+                connectionTimeout: 10000, // 10 segundos
+                greetingTimeout: 10000,
+                socketTimeout: 15000,
+                authMethod: 'LOGIN', // Algunos hostings lo requieren explícito
                 logger: true,
                 debug: true
             } as any);
