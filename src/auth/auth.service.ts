@@ -26,11 +26,16 @@ export class AuthService {
                 formData.append('remoteip', remoteIp);
             }
 
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+
             const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                signal: controller.signal
             });
 
+            clearTimeout(timeoutId);
             const outcome = await response.json() as any;
             
             if (!outcome.success) {
