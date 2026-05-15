@@ -27,7 +27,10 @@ export class MailService {
                     rejectUnauthorized: false
                 },
                 // Forzamos IPv4 para evitar errores de red (ENETUNREACH) en entornos como Render
-                family: 4
+                family: 4,
+                // Activamos logs detallados para diagnosticar el timeout en Render
+                logger: true,
+                debug: true
             } as any);
             this.logger.log(`SMTP Mailer configurado en ${host}:${port}`);
         } else {
