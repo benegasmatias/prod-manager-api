@@ -63,6 +63,12 @@ export class MailService {
                                             </td>
                                         </tr>
                                     </table>
+
+                                    <div style="margin-top: 32px; padding: 20px; background-color: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.1); border-radius: 16px;">
+                                        <p style="margin: 0; color: #ef4444; font-size: 12px; line-height: 1.6; font-weight: 600; text-align: left;">
+                                            ⚠️ POLÍTICA DE OPTIMIZACIÓN: Las cuentas inactivas por más de 15 días son dadas de baja automáticamente para optimizar recursos del sistema.
+                                        </p>
+                                    </div>
                                     
                                     <p style="margin: 40px 0 0; color: #64748b; font-size: 13px; text-align: center; line-height: 1.5;">
                                         Si el botón no funciona, copia y pega este enlace en tu navegador:<br>

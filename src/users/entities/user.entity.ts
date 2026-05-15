@@ -39,6 +39,9 @@ export class User {
     @Column({ name: 'terms_accepted', default: false })
     termsAccepted: boolean;
 
+    @Column({ type: 'timestamp', name: 'last_sign_in_at', nullable: true })
+    lastSignInAt: Date;
+
     @Column({ type: 'timestamp', name: 'terms_accepted_at', nullable: true })
     termsAcceptedAt: Date;
 
