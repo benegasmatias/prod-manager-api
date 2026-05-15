@@ -175,7 +175,7 @@ export class BusinessesController {
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
             const inviteUrl = userExists
                 ? `${frontendUrl}${acceptPath}`
-                : `${frontendUrl}/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+                : `${frontendUrl}/register?email=${encodeURIComponent(body?.email || invitation?.email)}&returnUrl=${encodeURIComponent(acceptPath)}`;
 
             await this.mailService.sendInvitationEmail(
                 body.email,
@@ -208,7 +208,7 @@ export class BusinessesController {
             const acceptPath = `/invitaciones/aceptar?token=${invitation.token}`;
             const inviteUrl = userExists
                 ? `${frontendUrl}${acceptPath}`
-                : `${frontendUrl}/register?returnUrl=${encodeURIComponent(acceptPath)}`;
+                : `${frontendUrl}/register?email=${encodeURIComponent(invitation.email)}&returnUrl=${encodeURIComponent(acceptPath)}`;
 
             await this.mailService.sendInvitationEmail(
                 invitation.email,
