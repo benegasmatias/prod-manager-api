@@ -13,6 +13,10 @@ export class CreateRetailProductDto {
   @IsString()
   sku?: string;
 
+  @IsOptional()
+  @IsString()
+  category?: string;
+
   @IsNumber()
   @Min(0)
   salePrice: number;
@@ -20,12 +24,17 @@ export class CreateRetailProductDto {
   @IsNumber()
   @Min(0)
   costPrice: number;
+
+  @IsOptional()
+  @IsNumber()
+  stock?: number;
 }
 
 export class UpdateRetailProductDto {
   @IsOptional() @IsString() name?: string;
   @IsOptional() @IsString() barcode?: string;
   @IsOptional() @IsString() sku?: string;
+  @IsOptional() @IsString() category?: string;
   @IsOptional() @IsNumber() @Min(0) salePrice?: number;
   @IsOptional() @IsNumber() @Min(0) costPrice?: number;
   @IsOptional() @IsBoolean() active?: boolean;
