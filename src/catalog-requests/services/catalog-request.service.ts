@@ -93,6 +93,7 @@ export class CatalogRequestService {
         type: OrderType.CLIENT,
         notes: `Solicitud de catálogo web: ${request.id}\nNotas del cliente: ${request.notes || 'Sin notas'}`,
         totalPrice: Number(request.totalSnapshot),
+        siteInfo: request.address ? { address: request.address } : null,
         items: request.items.map((item) => ({
           productId: item.productId,
           name: item.productNameSnapshot,
@@ -106,7 +107,10 @@ export class CatalogRequestService {
       // 3. Crear el pedido usando OrdersService
       // Nota: Necesitamos pasar el manager si OrdersService lo soporta, o llamar directamente.
       // Como OrdersService.create usa su propio manager interno, llamaremos a la lógica de creación.
-      const order = await this.ordersService.create(orderDto, { userAgent: 'CONVERSION_CATALOG' });
+      const order = await this.ordersService.create(orderDto, { 
+        userAgent: 'CONVERSION_CATALOG',
+        manager 
+      });
 
       // 4. Actualizar la solicitud
       request.status = CatalogRequestStatus.CONVERTED_TO_ORDER;

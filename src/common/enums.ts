@@ -61,6 +61,8 @@ export enum FileType {
     STL = 'STL',
     THREE_MF = '3MF',
     OBJ = 'OBJ',
+    RAR = 'RAR',
+    ZIP = 'ZIP',
     IMAGE = 'IMAGE',
     OTHER = 'OTHER',
 }
