@@ -8,6 +8,8 @@ import { CatalogOrderRequest } from '../entities/catalog-order-request.entity';
 import { CatalogOrderRequestItem } from '../entities/catalog-order-request-item.entity';
 import { CreateCatalogOrderRequestDto } from '../dto/create-catalog-order-request.dto';
 import { ProductVisibility, ProductStatus, CatalogRequestStatus } from '../../common/enums';
+import { NotificationsService } from '../../notifications/notifications.service';
+import { NotificationType, NotificationTargetType } from '../../notifications/entities/notification.entity';
 
 @Injectable()
 export class PublicCatalogService {
@@ -21,6 +23,7 @@ export class PublicCatalogService {
     @InjectRepository(CatalogOrderRequest)
     private readonly requestRepository: Repository<CatalogOrderRequest>,
     private readonly dataSource: DataSource,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async getCatalogData(slug: string, query?: { page?: number; limit?: number; categoryId?: string; search?: string }) {
@@ -128,7 +131,24 @@ export class PublicCatalogService {
         items: requestItems,
       });
 
-      return await manager.save(CatalogOrderRequest, request);
+      const savedRequest = await manager.save(CatalogOrderRequest, request);
+
+      // Notificar a los administradores del negocio
+      try {
+        await this.notificationsService.create({
+          businessId: business.id,
+          title: 'Nueva solicitud de catálogo',
+          message: `El cliente ${dto.customerName} ha generado una nueva solicitud por un total de $${total}.`,
+          type: NotificationType.INFO,
+          targetType: NotificationTargetType.BUSINESS,
+          actionUrl: '/catalogo/solicitudes',
+          actionLabel: 'Ver solicitudes'
+        });
+      } catch (error) {
+        console.error('[PublicCatalogService] Error sending notification:', error);
+      }
+
+      return savedRequest;
     });
   }
 }

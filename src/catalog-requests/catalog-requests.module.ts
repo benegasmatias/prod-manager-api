@@ -14,6 +14,7 @@ import { BusinessesModule } from '../businesses/businesses.module';
 import { ProductsModule } from '../products/products.module';
 import { OrdersModule } from '../orders/orders.module';
 import { CustomersModule } from '../customers/customers.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CustomersModule } from '../customers/customers.module';
     ProductsModule,
     OrdersModule,
     CustomersModule,
+    NotificationsModule,
   ],
   controllers: [PublicCatalogController, CatalogRequestAdminController],
   providers: [PublicCatalogService, CatalogRequestService],
