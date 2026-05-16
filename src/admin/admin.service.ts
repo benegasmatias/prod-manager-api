@@ -126,9 +126,9 @@ export class AdminService implements OnModuleInit {
                 promoLabel: 'OFERTA LANZAMIENTO',
                 currency: 'ARS',
                 description: 'Para pequeños talleres que empiezan a crecer.',
-                features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario', 'Calendario'],
+                features: ['60 pedidos / mes', '2 impresoras', '2 usuarios', 'Full Dashboard', 'Gestion de clientes', 'Control de materiales', 'Soporte prioritario', 'Calendario', 'Catálogo Online'],
                 sidebarItems: [
-                    '/dashboard', '/calculadora', '/pedidos', '/clientes',
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes', '/catalogo',
                     '/produccion', '/produccion/calendario', '/stock',
                     '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'
                 ],
@@ -154,7 +154,12 @@ export class AdminService implements OnModuleInit {
                 promoLabel: 'OFERTA LANZAMIENTO',
                 currency: 'ARS',
                 description: 'Para granjas con alto volumen de produccion.',
-                features: ['120 pedidos', '5 impresoras', '5 usuarios', 'Full Dashboard', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Calendario'],
+                features: ['120 pedidos', '5 impresoras', '5 usuarios', 'Full Dashboard', 'Reportes avanzados', 'Control de materiales', 'Soporte prioritario', 'Calendario', 'Catálogo Online'],
+                sidebarItems: [
+                    '/dashboard', '/calculadora', '/pedidos', '/clientes', '/catalogo',
+                    '/produccion', '/produccion/calendario', '/stock',
+                    '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'
+                ],
                 maxUsers: 5,
                 maxOrdersPerMonth: 120,
                 maxBusinesses: 1,
@@ -834,7 +839,7 @@ export class AdminService implements OnModuleInit {
                 imageKey: '3d-printing-template',
                 defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'PRODUCTION_MACHINES', 'INVENTORY_RAW', 'SALES_MANAGEMENT'],
                 config: {
-                    sidebarItems: ['/dashboard', '/calculadora', '/pedidos', '/clientes', '/produccion', '/stock', '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'],
+                    sidebarItems: ['/dashboard', '/calculadora', '/pedidos', '/clientes', '/catalogo', '/produccion', '/stock', '/maquinas', '/materiales', '/personal', '/reportes', '/ajustes'],
                     catalogCategories: [
                         'REPUESTOS Y MECÁNICA',
                         'FIGURAS Y COLECCIONABLES',
