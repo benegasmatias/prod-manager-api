@@ -402,7 +402,7 @@ export class OrdersService {
     /**
      * Crear pedido completo con sus ítems
      */
-    async create(createOrderDto: CreateOrderDto, context?: { ip?: string, userAgent?: string }): Promise<Order> {
+    async create(createOrderDto: CreateOrderDto, context?: { ip?: string, userAgent?: string, manager?: any }): Promise<Order> {
         const { items, ...orderData } = createOrderDto;
 
         // Validar límites del plan (Cuota de Pedidos Mensual)
@@ -416,9 +416,9 @@ export class OrdersService {
 
         const totalPrice = createOrderDto.totalPrice !== undefined ? createOrderDto.totalPrice : calculatedTotalPrice;
 
-        // Usar transacción para asegurar atomicidad
-        return await this.orderRepository.manager.transaction(async (manager) => {
-            const business = await manager.findOne('Business', { where: { id: orderData.businessId } }) as any;
+        // Lógica central de creación
+        const executionLogic = async (manager: any) => {
+            const business = await manager.findOne('Business', { where: { id: orderData.businessId } });
             const strategy = this.strategyProvider.getStrategy(business?.category);
 
             const initialStatus = createOrderDto.status || strategy.getInitialStatus(items);
@@ -458,7 +458,13 @@ export class OrdersService {
 
             if (!result) throw new NotFoundException('Error al recuperar el pedido recién creado');
             return result;
-        });
+        };
+
+        if (context?.manager) {
+            return executionLogic(context.manager);
+        } else {
+            return await this.orderRepository.manager.transaction(executionLogic);
+        }
     }
 
     /**

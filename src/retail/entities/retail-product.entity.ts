@@ -39,6 +39,9 @@ export class RetailProduct {
   @Column({ default: true })
   active: boolean;
 
+  @Column({ nullable: true, default: 'Otros' })
+  category: string;
+
   @OneToMany(() => RetailStockMovement, (movement) => movement.product)
   movements: RetailStockMovement[];
 }

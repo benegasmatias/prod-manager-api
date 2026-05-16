@@ -15,7 +15,7 @@ export class RetailProductsService {
     const product = this.productRepository.create({
       ...dto,
       businessId,
-      stock: 0, // El stock inicial debe venir via movimiento posterior
+      stock: dto.stock || 0,
     });
     return this.productRepository.save(product);
   }

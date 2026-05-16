@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, UseGuards, Request, Param } from '@nestjs/common';
+import { Controller, Post, Get, Patch, Body, UseGuards, Request, Param } from '@nestjs/common';
 import { SupabaseAuthGuard } from '../../users/guards/supabase-auth.guard';
 import { BusinessAccessGuard } from '../../businesses/guards/business-access.guard';
 import { CashService } from '../services/cash.service';
@@ -58,7 +58,7 @@ export class RetailController {
     return this.productsService.create(businessId, dto);
   }
 
-  @Post('products/:businessId/:id')
+  @Patch('products/:businessId/:id')
   async updateProduct(@Param('businessId') businessId: string, @Param('id') id: string, @Body() dto: UpdateRetailProductDto) {
     return this.productsService.update(businessId, id, dto);
   }

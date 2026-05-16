@@ -17241,3 +17241,83 @@ Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWN
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T20:00:56.613Z
+Path: /employees?businessId=a106f2ae-ff5d-4df4-a844-9ed775afaa78&active=true
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\businesses\guards\business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async GuardsConsumer.tryActivate (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\guards\guards-consumer.js:22:17)
+    at async canActivateFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:135:33)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T21:29:16.860Z
+Path: /catalog/requests/f85c7724-d8bd-4831-9aea-706a02eb27df/convert?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 500
+Message: "insert or update on table \"orders\" violates foreign key constraint \"FK_772d0ce0473ac2ccfa26060dbe9\""
+Stack: QueryFailedError: insert or update on table "orders" violates foreign key constraint "FK_772d0ce0473ac2ccfa26060dbe9"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:434:32)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:420:16)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\catalog-request.service.ts:109:21)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-15T21:29:25.227Z
+Path: /catalog/requests/f85c7724-d8bd-4831-9aea-706a02eb27df/convert?businessId=00a38fac-a26a-4e02-8269-4fb8bf89a6d6
+Status: 500
+Message: "insert or update on table \"orders\" violates foreign key constraint \"FK_772d0ce0473ac2ccfa26060dbe9\""
+Stack: QueryFailedError: insert or update on table "orders" violates foreign key constraint "FK_772d0ce0473ac2ccfa26060dbe9"
+    at PostgresQueryRunner.query (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\driver\src\driver\postgres\PostgresQueryRunner.ts:325:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async InsertQueryBuilder.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\query-builder\src\query-builder\InsertQueryBuilder.ts:164:33)
+    at async SubjectExecutor.executeInsertOperations (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:435:42)
+    at async SubjectExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\SubjectExecutor.ts:137:9)
+    at async EntityPersistExecutor.execute (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\persistence\src\persistence\EntityPersistExecutor.ts:182:21)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:434:32)
+    at async EntityManager.transaction (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\typeorm\entity-manager\src\entity-manager\EntityManager.ts:156:28)
+    at async OrdersService.create (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\orders\orders.service.ts:420:16)
+    at async <anonymous> (C:\Users\Benegas\Desktop\projects\prod-manager-api\src\catalog-requests\services\catalog-request.service.ts:109:21)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-16T02:37:03.338Z
+Path: /retail/products/ce75cee3-8a3e-4007-8086-4315fe96cd1e
+Status: 400
+Message: {"message":["property category should not exist","property active should not exist","property stock should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-16T02:41:26.768Z
+Path: /retail/products/ce75cee3-8a3e-4007-8086-4315fe96cd1e
+Status: 400
+Message: {"message":["property category should not exist","property active should not exist","property stock should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:112:20)
+    at ValidationPipe.transform (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\common\pipes\validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async resolveParamValue (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:151:13)
+    at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:37:30
+-------------

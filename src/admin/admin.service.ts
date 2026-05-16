@@ -42,7 +42,7 @@ export class AdminService implements OnModuleInit {
     async onModuleInit() {
         // Seed default plans and templates on startup
         await this.seedDefaultPlans();
-        // await this.seedAllTemplates();
+        await this.seedAllTemplates();
     }
 
     private async logAction(operatorId: string, action: string, targetId: string, details?: any) {
@@ -297,8 +297,17 @@ export class AdminService implements OnModuleInit {
                 price: 0,
                 currency: 'ARS',
                 description: 'Control básico para kioscos pequeños.',
-                features: ['5 ventas / mes', 'Caja básica', '1 usuario'],
-                sidebarItems: ['/dashboard', '/pedidos', '/stock', '/ajustes'],
+                features: ['5 ventas / mes', 'Terminal de Venta', 'Gestión de Caja', 'Control de Stock', 'Proveedores y Compras', '1 usuario'],
+                sidebarItems: [
+                    '/dashboard', 
+                    '/kiosco/venta', 
+                    '/kiosco/caja', 
+                    '/kiosco/productos', 
+                    '/kiosco/proveedores', 
+                    '/kiosco/compras', 
+                    '/kiosco/gastos',
+                    '/ajustes'
+                ],
                 maxUsers: 1,
                 maxOrdersPerMonth: 5,
                 maxBusinesses: 1,
@@ -340,8 +349,16 @@ export class AdminService implements OnModuleInit {
                 if (!existing) {
                     await this.planRepository.save(this.planRepository.create(planData));
                     console.log(`[SEED] Created new plan: ${planData.id}`);
+                } else {
+                    // Force update to sync sidebarItems and features
+                    await this.planRepository.update(planData.id, {
+                        sidebarItems: planData.sidebarItems,
+                        features: planData.features,
+                        category: planData.category,
+                        description: planData.description
+                    } as any);
+                    console.log(`[SEED] Updated existing plan: ${planData.id}`);
                 }
-                // No overwriting existing plans to preserve manual edits
             } catch (err) {
                 console.error(`[SEED] Error in plan ${planData.id}:`, err.message);
             }
@@ -877,6 +894,67 @@ export class AdminService implements OnModuleInit {
                         { key: 'duracion_estimada_minutos', label: 'Tiempo Estimado de Trabajo', tipo: 'number', placeholder: '0' }
                     ]
                 }
+            },
+            {
+                key: 'KIOSCO',
+                name: 'Kiosco / Minimarket',
+                description: 'Gestión ágil de ventas minoristas, control de stock por unidad y seguimiento de caja diaria.',
+                imageKey: 'kiosco-template',
+                defaultCapabilities: ['SALES_MANAGEMENT', 'INVENTORY_RETAIL', 'FINANCIAL_BASIC'],
+                config: {
+                    sidebarItems: [
+                        '/dashboard', 
+                        '/kiosco/venta', 
+                        '/kiosco/caja', 
+                        '/kiosco/productos', 
+                        '/kiosco/proveedores', 
+                        '/kiosco/compras', 
+                        '/kiosco/gastos',
+                        '/ajustes'
+                    ],
+                    labels: {
+                        pedidos: 'Ventas Históricas',
+                        nuevoPedido: 'NUEVA VENTA',
+                        items: 'Artículos',
+                        produccion: 'Caja',
+                        stock: 'Stock'
+                    },
+                    icons: { 
+                        pedidos: 'ReceiptText', 
+                        produccion: 'Calculator',
+                        stock: 'PackageSearch'
+                    }
+                }
+            },
+            {
+                key: 'METALURGICA',
+                name: 'Metalúrgica / Herrería',
+                description: 'Gestión de proyectos metalúrgicos, corte, soldadura y seguimiento de materiales.',
+                imageKey: 'metalurgica-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'SALES_MANAGEMENT', 'INVENTORY_RAW'],
+                config: {
+                    sidebarItems: ['/dashboard', '/pedidos', '/produccion', '/materiales', '/reportes', '/ajustes'],
+                    labels: {
+                        produccion: 'Taller / Corte',
+                        items: 'Piezas / Proyectos'
+                    },
+                    icons: { produccion: 'Hammer' }
+                }
+            },
+            {
+                key: 'CARPINTERIA',
+                name: 'Carpintería',
+                description: 'Gestión de carpintería, optimización de cortes, ensamble y acabados.',
+                imageKey: 'carpinteria-template',
+                defaultCapabilities: ['PRODUCTION_MANAGEMENT', 'SALES_MANAGEMENT', 'INVENTORY_RAW'],
+                config: {
+                    sidebarItems: ['/dashboard', '/pedidos', '/produccion', '/materiales', '/reportes', '/ajustes'],
+                    labels: {
+                        produccion: 'Banco de Trabajo',
+                        items: 'Muebles / Trabajos'
+                    },
+                    icons: { produccion: 'Axe' }
+                }
             }
         ];
 
@@ -885,8 +963,16 @@ export class AdminService implements OnModuleInit {
             if (!existing) {
                 await repo.save(repo.create({ ...t, key: t.key as any }));
                 console.log(`[SEED] Created new template: ${t.key}`);
+            } else {
+                // Force update config and capabilities
+                await repo.update(existing.id, {
+                    config: t.config,
+                    defaultCapabilities: t.defaultCapabilities,
+                    description: t.description,
+                    name: t.name
+                } as any);
+                console.log(`[SEED] Synchronized template: ${t.key}`);
             }
-            // No overwriting existing templates to preserve manual edits
         }
 
         return { message: 'Templates synchronized' };
