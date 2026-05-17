@@ -843,8 +843,13 @@ export class AdminService implements OnModuleInit {
                     catalogCategories: [
                         'REPUESTOS Y MECÁNICA',
                         'FIGURAS Y COLECCIONABLES',
-                        'PROTOTIPOS INDUSTRIALES',
+                        'LLAVEROS Y ACCESORIOS',
+                        'HUEFORGE Y LITOFANÍAS',
                         'ARTICULADOS Y FLEXIS',
+                        'JUGUETES Y JUEGOS',
+                        'HERRAMIENTAS Y GADGETS',
+                        'COSPLAY Y MÁSCARAS',
+                        'ORGANIZADORES Y OFICINA',
                         'HOGAR Y DECORACIÓN'
                     ]
                 }

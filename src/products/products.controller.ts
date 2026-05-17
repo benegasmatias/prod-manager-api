@@ -22,8 +22,8 @@ export class ProductsController {
     @Post('categories/seed')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    seedCategories(@Body() body: { businessId: string, industry?: string }) {
-        return this.seedService.seedForBusiness(body.businessId, body.industry);
+    seedCategories(@Body() body: { businessId: string, industry?: string, force?: boolean }) {
+        return this.seedService.seedForBusiness(body.businessId, body.industry, body.force);
     }
 
     // --- Products ---

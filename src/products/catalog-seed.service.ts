@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductCategory } from './entities/product-category.entity';
@@ -6,16 +6,21 @@ import { Business } from '../businesses/entities/business.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 
 @Injectable()
-export class CatalogSeedService {
+export class CatalogSeedService implements OnModuleInit {
     private readonly logger = new Logger(CatalogSeedService.name);
 
     private readonly presets = {
         'IMPRESION_3D': [
             { name: 'Repuestos y Mecánica', slug: 'repuestos-mecanica', icon: 'Settings', color: '#3b82f6', sortOrder: 1 },
             { name: 'Figuras y Coleccionables', slug: 'figuras-coleccionables', icon: 'Palette', color: '#8b5cf6', sortOrder: 2 },
-            { name: 'Prototipos Industriales', slug: 'prototipos-industriales', icon: 'Cpu', color: '#64748b', sortOrder: 3 },
-            { name: 'Articulados y Flexis', slug: 'articulados-flexis', icon: 'Zap', color: '#f59e0b', sortOrder: 4 },
-            { name: 'Hogar y Decoración', slug: 'hogar-decoracion', icon: 'Home', color: '#10b981', sortOrder: 5 }
+            { name: 'Llaveros y Accesorios', slug: 'llaveros-accesorios', icon: 'Key', color: '#ec4899', sortOrder: 3 },
+            { name: 'Hueforge y Litofanías', slug: 'hueforge-litofanias', icon: 'Image', color: '#10b981', sortOrder: 4 },
+            { name: 'Articulados y Flexis', slug: 'articulados-flexis', icon: 'Zap', color: '#f59e0b', sortOrder: 5 },
+            { name: 'Juguetes y Juegos', slug: 'juguetes-juegos', icon: 'Gamepad2', color: '#06b6d4', sortOrder: 6 },
+            { name: 'Herramientas y Gadgets', slug: 'herramientas-gadgets', icon: 'Wrench', color: '#64748b', sortOrder: 7 },
+            { name: 'Cosplay y Máscaras', slug: 'cosplay-mascaras', icon: 'Mask', color: '#ef4444', sortOrder: 8 },
+            { name: 'Organizadores y Oficina', slug: 'organizadores-oficina', icon: 'FolderHeart', color: '#f43f5e', sortOrder: 9 },
+            { name: 'Hogar y Decoración', slug: 'hogar-decoracion', icon: 'Home', color: '#a855f7', sortOrder: 10 }
         ],
         'CARPINTERIA': [
             { name: 'Muebles de Interior', slug: 'muebles-interior', icon: 'Armchair', color: '#92400e', sortOrder: 1 },
@@ -44,11 +49,29 @@ export class CatalogSeedService {
         private readonly templateRepository: Repository<BusinessTemplate>
     ) {}
 
-    async seedForBusiness(businessId: string, industry: string = 'GENERICO') {
-        const existingCount = await this.categoryRepository.count({ where: { businessId } });
-        if (existingCount > 0) {
-            this.logger.log(`Business ${businessId} already has categories. Skipping seed.`);
-            return [];
+    async onModuleInit() {
+        try {
+            const businesses = await this.businessRepository.find({ where: { category: 'IMPRESION_3D' } });
+            for (const b of businesses) {
+                this.logger.log(`[SEED] Auto-resetting and re-seeding categories for Impresion 3D business: ${b.name} (${b.id})`);
+                await this.seedForBusiness(b.id, 'IMPRESION_3D', true);
+            }
+        } catch (e) {
+            this.logger.error('Failed to auto-reset categories on startup:', e);
+        }
+    }
+
+    async seedForBusiness(businessId: string, industry: string = 'GENERICO', force: boolean = false) {
+        if (force) {
+            this.logger.log(`Forcing categories seed reset for business ${businessId}`);
+            // Soft or hard delete existing categories for this business to refresh them
+            await this.categoryRepository.delete({ businessId });
+        } else {
+            const existingCount = await this.categoryRepository.count({ where: { businessId } });
+            if (existingCount > 0) {
+                this.logger.log(`Business ${businessId} already has categories. Skipping seed.`);
+                return [];
+            }
         }
 
         let categories: any[] = [];
