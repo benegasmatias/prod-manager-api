@@ -103,7 +103,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .leftJoinAndSelect('order.vehicle', 'vehicle')
             .leftJoinAndSelect('items.product', 'product')
-            .leftJoinAndSelect('items.productionJob', 'job')
+            .leftJoinAndSelect('items.productionJobs', 'job')
             .leftJoinAndSelect('job.machine', 'machine');
 
         if (businessId) {
@@ -385,7 +385,7 @@ export class OrdersService {
         const order = await this.orderRepository.findOne({
             where: { id },
             relations: [
-                'items', 'items.product', 'items.productionJob', 'items.productionJob.machine',
+                'items', 'items.product', 'items.productionJobs', 'items.productionJobs.machine',
                 'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
@@ -465,6 +465,10 @@ export class OrdersService {
         } else {
             return await this.orderRepository.manager.transaction(executionLogic);
         }
+    }
+
+    async findOrderItem(id: string) {
+        return this.orderItemRepository.findOneBy({ id });
     }
 
     /**
@@ -594,7 +598,7 @@ export class OrdersService {
         return await this.orderRepository.manager.transaction(async manager => {
             const item = await manager.findOne(OrderItem, {
                 where: { id: itemId, orderId },
-                relations: ['productionJob']
+                relations: ['productionJobs']
             });
             if (!item) throw new NotFoundException('Ítem no encontrado');
 

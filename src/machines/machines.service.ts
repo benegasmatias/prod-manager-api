@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Machine } from './entities/machine.entity';
 import { MachineStatus, ProductionJobStatus as JobStatus, OrderStatus, OrderItemStatus } from '../common/enums';
+import { isFeatureEnabled } from '../common/feature-flags';
 import { CreateMachineDto } from './dto/create-machine.dto';
 import { UpdateMachineDto } from './dto/update-machine.dto';
 import { OrdersService } from '../orders/orders.service';
@@ -65,6 +66,8 @@ export class MachinesService {
             throw new BadRequestException('El ítem seleccionado ya está completado');
         }
 
+        const parallelEnabled = isFeatureEnabled('ENABLE_PARALLEL_PRODUCTION', order.business);
+
         // Si el ítem ya tenía un trabajo activo en otra impresora, liberarla
         const previousJobs = order.jobs?.filter(j => 
             j.orderItemId === targetItem.id &&
@@ -73,14 +76,19 @@ export class MachinesService {
 
         if (previousJobs && previousJobs.length > 0) {
             for (const job of previousJobs) {
-                if (job.machineId && job.machineId !== machineId) {
-                    // Liberar la otra impresora
-                    await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
-                    // Cancelar el trabajo anterior
-                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignado a otra impresora');
-                } else if (job.machineId === machineId) {
-                    // Si es la misma impresora, cancelamos el anterior para refrescar metadatos
-                    await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                if (parallelEnabled) {
+                    // Si la producción paralela está habilitada, sólo cancelamos/refrescamos si es la misma máquina
+                    if (job.machineId === machineId) {
+                        await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                    }
+                } else {
+                    // Comportamiento clásico: liberar y cancelar cualquier otro trabajo activo
+                    if (job.machineId && job.machineId !== machineId) {
+                        await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
+                        await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignado a otra impresora');
+                    } else if (job.machineId === machineId) {
+                        await this.jobsService.updateStatus(job.id, JobStatus.CANCELLED, 'Re-asignación en la misma máquina');
+                    }
                 }
             }
         }
@@ -89,21 +97,32 @@ export class MachinesService {
         await this.machineRepository.update(machineId, { status: MachineStatus.PRINTING });
 
         // 2. Crear o reutilizar trabajo de producción para el item seleccionado
-        const existingJob = order.jobs?.find(j => j.orderItemId === targetItem.id);
+        let shouldCreateNew = true;
+        let jobToUpdate: any = null;
+
+        if (parallelEnabled) {
+            // Si está habilitada la producción paralela, reusamos el trabajo existente sólo si está activo en la misma máquina
+            const activeJobOnSameMachine = order.jobs?.find(j => 
+                j.orderItemId === targetItem.id && 
+                j.machineId === machineId &&
+                ![JobStatus.DONE, JobStatus.FAILED, JobStatus.CANCELLED].includes(j.status as any)
+            );
+            if (activeJobOnSameMachine) {
+                shouldCreateNew = false;
+                jobToUpdate = activeJobOnSameMachine;
+            }
+        } else {
+            // Comportamiento clásico: reusar/actualizar cualquier trabajo del item si ya existe
+            const existingJob = order.jobs?.find(j => j.orderItemId === targetItem.id);
+            if (existingJob) {
+                shouldCreateNew = false;
+                jobToUpdate = existingJob;
+            }
+        }
 
         const estimatedWeight = metadata?.estimatedGrams || targetItem.weightGrams || 0;
 
-        if (existingJob) {
-            await this.jobsService.update(existingJob.id, {
-                machineId: machineId,
-                materialId: materialId,
-                metadata: metadata,
-                estimatedMinutes: targetItem.estimatedMinutes,
-                estimatedWeightGTotal: estimatedWeight,
-                status: JobStatus.QUEUED as any,
-                notes: 'Re-asignado desde gestión de piezas'
-            });
-        } else {
+        if (shouldCreateNew) {
             await this.jobsService.create({
                 orderId: order.id,
                 businessId: businessId || order.businessId,
@@ -114,6 +133,16 @@ export class MachinesService {
                 estimatedMinutes: targetItem.estimatedMinutes,
                 estimatedWeightGTotal: estimatedWeight,
                 totalUnits: targetItem.qty
+            });
+        } else if (jobToUpdate) {
+            await this.jobsService.update(jobToUpdate.id, {
+                machineId: machineId,
+                materialId: materialId,
+                metadata: metadata,
+                estimatedMinutes: targetItem.estimatedMinutes,
+                estimatedWeightGTotal: estimatedWeight,
+                status: JobStatus.QUEUED as any,
+                notes: 'Re-asignado desde gestión de piezas'
             });
         }
 

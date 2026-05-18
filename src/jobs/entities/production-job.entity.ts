@@ -17,7 +17,6 @@ import { JobStatusHistory } from '../../history/entities/job-status-history.enti
 @Index(['machineId'])
 @Index(['operatorId'])
 @Index(['orderId'])
-@Unique(['orderItemId'])
 export class ProductionJob {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -37,10 +36,10 @@ export class ProductionJob {
     @JoinColumn({ name: 'order_id' })
     order: Order;
 
-    @Column({ name: 'order_item_id', unique: true })
+    @Column({ name: 'order_item_id' })
     orderItemId: string;
 
-    @OneToOne(() => OrderItem, (item) => item.productionJob, { onDelete: 'CASCADE' })
+    @ManyToOne(() => OrderItem, (item) => item.productionJobs, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'order_item_id' })
     orderItem: OrderItem;
 
@@ -101,6 +100,12 @@ export class ProductionJob {
 
     @Column({ name: 'total_units', type: 'int', default: 1 })
     totalUnits: number;
+
+    @Column({ name: 'done_qty', type: 'int', default: 0 })
+    doneQty: number;
+
+    @Column({ name: 'failed_qty', type: 'int', default: 0 })
+    failedQty: number;
 
     @Column({ name: 'material_id', nullable: true })
     materialId: string;

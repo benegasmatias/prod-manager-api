@@ -27,6 +27,23 @@ export class JobsService {
     ) { }
 
     async create(createJobDto: CreateJobDto, userId?: string) {
+        // Concurrency Guard & Race Condition Protection
+        if (createJobDto.orderItemId) {
+            const existingJobs = await this.jobRepository.find({
+                where: { orderItemId: createJobDto.orderItemId }
+            });
+            const totalAssigned = existingJobs.reduce((sum, j) => sum + j.totalUnits, 0);
+
+            const orderItem = await this.ordersService.findOrderItem(createJobDto.orderItemId);
+            if (orderItem) {
+                const limit = orderItem.qty;
+                if (totalAssigned + createJobDto.totalUnits > limit) {
+                    console.warn(`[CONCURRENCY GUARD] [RACE CONDITION PREVENTED] Intento de asignación excedida: ${totalAssigned} + ${createJobDto.totalUnits} > ${limit}`);
+                    throw new BadRequestException(`No se puede crear la tanda. La cantidad acumulada asignada (${totalAssigned + createJobDto.totalUnits}) excedería la cantidad requerida en el pedido (${limit}).`);
+                }
+            }
+        }
+
         const job = this.jobRepository.create({
             orderId: createJobDto.orderId,
             businessId: createJobDto.businessId,
@@ -41,6 +58,8 @@ export class JobsService {
             estimatedWeightGTotal: createJobDto.estimatedWeightGTotal,
             status: JobStatus.QUEUED as any,
         });
+
+        console.log(`[JOBS_SERVICE] [CREATE] Creando tanda de producción paralela. Item ID: ${createJobDto.orderItemId}, Máquina: ${createJobDto.machineId}, Unidades: ${createJobDto.totalUnits}`);
 
         const saved = await this.jobRepository.save(job);
         const savedJob = Array.isArray(saved) ? saved[0] : saved;
@@ -102,6 +121,8 @@ export class JobsService {
         const job = await this.findOne(id);
         const oldStatus = job.status;
 
+        console.log(`[JOBS_SERVICE] [STATUS_UPDATE] Tanda ${id} cambió de ${oldStatus} a ${status}. Motivo/Nota: ${note || 'Sin detalles'}`);
+
         await this.jobRepository.update(id, { status: status as any });
 
         const history = this.statusHistoryRepository.create({
@@ -128,8 +149,8 @@ export class JobsService {
                 await this.deductMaterialWeight(job, unitsPending);
             }
 
-            // Ya no llamamos directamente a checkAndSetReadyStatus, syncOrderItemProgress se encarga de todo
-            // await this.ordersService.checkAndSetReadyStatus(job.orderId);
+            // Actualizar doneQty en la base de datos
+            await this.jobRepository.update(id, { doneQty: job.totalUnits });
         }
 
         // Sincronizar estado del item y agregar estado del pedido
@@ -164,9 +185,12 @@ export class JobsService {
             throw new BadRequestException('El total de unidades completadas no puede exceder los requerimientos del trabajo');
         }
 
+        console.log(`[JOBS_SERVICE] [PROGRESS] Reportando avance en Tanda ${id}: +${createProgressDto.unitsDone} unidades de ${job.totalUnits}. Unidades descartadas/scrap: ${createProgressDto.unitsFailed || 0}`);
+
         const progress = this.progressRepository.create({
             productionJobId: id,
-            ...createProgressDto,
+            unitsDone: createProgressDto.unitsDone,
+            note: createProgressDto.note,
             performedById: userId
         });
         await this.progressRepository.save(progress);
@@ -175,6 +199,13 @@ export class JobsService {
         await this.deductMaterialWeight(job, createProgressDto.unitsDone);
 
         const updatedUnitsDone = currentUnitsDone + createProgressDto.unitsDone;
+
+        // Actualizar doneQty y failedQty en el trabajo
+        job.doneQty = updatedUnitsDone;
+        if (createProgressDto.unitsFailed) {
+            job.failedQty = (job.failedQty || 0) + createProgressDto.unitsFailed;
+        }
+        await this.jobRepository.save(job);
 
         if (job.orderItemId) {
             await this.ordersService.syncOrderItemProgress(job.orderItemId);

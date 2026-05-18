@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { MaterialsService } from './materials.service';
 import { Material } from './entities/material.entity';
 import { MaterialMovement } from './entities/material-movement.entity';
+import { MaterialStrategyFactory } from './strategies/material-strategy.factory';
 import { MaterialType } from '../common/enums';
 
 describe('MaterialsService Validation (Phase 2)', () => {
@@ -37,6 +38,17 @@ describe('MaterialsService Validation (Phase 2)', () => {
                 MaterialsService,
                 { provide: getRepositoryToken(Material), useValue: materialRepo },
                 { provide: getRepositoryToken(MaterialMovement), useValue: movementRepo },
+                {
+                    provide: MaterialStrategyFactory,
+                    useValue: {
+                        getStrategy: jest.fn(() => ({
+                            validate: jest.fn(),
+                            validateAttributes: jest.fn(),
+                            mapLegacyToAttributes: jest.fn(m => m.attributes || {}),
+                            calculateCost: jest.fn(() => 0),
+                        })),
+                    }
+                }
             ],
         }).compile();
 

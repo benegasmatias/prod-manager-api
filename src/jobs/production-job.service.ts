@@ -41,7 +41,7 @@ export class ProductionJobService {
 
         const items = await this.itemRepository.find({
             where: whereClause,
-            relations: ['productionJob', 'order']
+            relations: ['productionJobs', 'order']
         });
 
         // Validar consistencia global de la orden
