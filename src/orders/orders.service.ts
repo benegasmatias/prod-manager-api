@@ -531,11 +531,10 @@ export class OrdersService {
         const orderRepo = manager ? manager.getRepository(Order) : this.orderRepository;
         const historyRepo = manager ? manager.getRepository(OrderStatusHistory) : this.statusHistoryRepository;
 
-        // Optimization: select only necessary fields and fetch in parallel
-        const [items, order] = await Promise.all([
-            itemRepo.find({ where: { orderId }, select: ['id', 'status', 'orderId'] }),
-            orderRepo.findOne({ where: { id: orderId }, select: ['id', 'status'] })
-        ]);
+        // Optimization: select only necessary fields and fetch sequentially
+        // to avoid concurrent query exceptions on a single transaction client
+        const items = await itemRepo.find({ where: { orderId }, select: ['id', 'status', 'orderId'] });
+        const order = await orderRepo.findOne({ where: { id: orderId }, select: ['id', 'status'] });
 
         if (!order || items.length === 0) return;
 

@@ -6,6 +6,8 @@ import { CatalogOrderRequestItem } from '../entities/catalog-order-request-item.
 import { CatalogRequestStatus, OrderType } from '../../common/enums';
 import { OrdersService } from '../../orders/orders.service';
 import { Customer } from '../../customers/entities/customer.entity';
+import { User } from '../../users/entities/user.entity';
+import { Employee } from '../../employees/entities/employee.entity';
 
 @Injectable()
 export class CatalogRequestService {
@@ -86,11 +88,23 @@ export class CatalogRequestService {
       }
 
       // 2. Preparar datos del pedido
+      const user = await manager.findOne(User, { where: { id: userId } });
+      let employeeId: string | null = null;
+      if (user) {
+        const employee = await manager.findOne(Employee, {
+          where: { email: user.email, businessId }
+        });
+        if (employee) {
+          employeeId = employee.id;
+        }
+      }
+
       const orderDto: any = {
         businessId,
         customerId: customer.id,
         clientName: customer.name,
         type: OrderType.CLIENT,
+        responsableGeneralId: employeeId || undefined,
         notes: `Solicitud de catálogo web: ${request.id}\nNotas del cliente: ${request.notes || 'Sin notas'}`,
         totalPrice: Number(request.totalSnapshot),
         siteInfo: request.address ? { address: request.address } : null,

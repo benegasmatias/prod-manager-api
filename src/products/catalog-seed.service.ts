@@ -53,8 +53,8 @@ export class CatalogSeedService implements OnModuleInit {
         try {
             const businesses = await this.businessRepository.find({ where: { category: 'IMPRESION_3D' } });
             for (const b of businesses) {
-                this.logger.log(`[SEED] Auto-resetting and re-seeding categories for Impresion 3D business: ${b.name} (${b.id})`);
-                await this.seedForBusiness(b.id, 'IMPRESION_3D', true);
+                this.logger.log(`[SEED] Seeding categories for Impresion 3D business if not present: ${b.name} (${b.id})`);
+                await this.seedForBusiness(b.id, 'IMPRESION_3D', false);
             }
         } catch (e) {
             this.logger.error('Failed to auto-reset categories on startup:', e);
