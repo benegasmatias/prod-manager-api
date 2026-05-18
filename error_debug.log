@@ -17365,3 +17365,247 @@ Stack: UnauthorizedException: Token inválido o expirado
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-execution-context.js:42:31
     at async C:\Users\Benegas\Desktop\projects\prod-manager-api\node_modules\@nestjs\core\router\router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T12:42:31.599Z
+Path: /businesses
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-pool/index.js:276:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:519:28)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T12:46:30.955Z
+Path: /me
+Status: 500
+Message: "Connection terminated due to connection timeout"
+Stack: Error: Connection terminated due to connection timeout
+    at Client._connectionCallback (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg-pool/index.js:276:17)
+    at Connection.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/client.js:193:18)
+    at Object.onceWrapper (node:events:633:28)
+    at Connection.emit (node:events:519:28)
+    at Socket.<anonymous> (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/pg/lib/connection.js:61:12)
+    at Socket.emit (node:events:531:35)
+    at TCP.<anonymous> (node:net:346:12)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T12:58:17.565Z
+Path: /businesses/test-reload
+Status: 401
+Message: {"message":"No se encontró el encabezado de autorización","error":"Unauthorized","statusCode":401}
+Stack: UnauthorizedException: No se encontró el encabezado de autorización
+    at SupabaseAuthGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/users/guards/supabase-auth.guard.ts:17:19)
+    at GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:15:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T13:21:28.921Z
+Path: /products
+Status: 400
+Message: {"message":["property materialId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T13:22:22.668Z
+Path: /products
+Status: 400
+Message: {"message":["property materialId should not exist"],"error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Bad Request Exception
+    at ValidationPipe.exceptionFactory (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:112:20)
+    at ValidationPipe.transform (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/common/pipes/validation.pipe.js:79:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async resolveParamValue (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:148:23)
+    at async Promise.all (index 0)
+    at async pipesFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:151:13)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:37:30
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T14:31:41.095Z
+Path: /files/delete
+Status: 400
+Message: {"message":"Path is required","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Path is required
+    at FilesController.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/files/files.controller.ts:23:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T14:47:58.827Z
+Path: /files/delete
+Status: 400
+Message: {"message":"Path is required","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Path is required
+    at FilesController.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/files/files.controller.ts:23:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:09:02.102Z
+Path: /files/delete
+Status: 400
+Message: {"message":"Path is required","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Path is required
+    at FilesController.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/files/files.controller.ts:23:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:13:08.495Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:14:02.734Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:17:26.809Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:56:12.680Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:56:27.942Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T15:56:53.954Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T16:02:33.103Z
+Path: /files/delete
+Status: 400
+Message: {"message":"Path is required","error":"Bad Request","statusCode":400}
+Stack: BadRequestException: Path is required
+    at FilesController.delete (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/files/files.controller.ts:23:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:38:29
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-18T16:05:55.264Z
+Path: /orders
+Status: 500
+Message: "request entity too large"
+Stack: PayloadTooLargeError: request entity too large
+    at readStream (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:163:17)
+    at getRawBody (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/raw-body/index.js:116:12)
+    at read (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/read.js:113:3)
+    at jsonParser (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/body-parser/lib/types/json.js:88:5)
+    at Layer.handleRequest (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/lib/layer.js:152:17)
+    at trimPrefix (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:342:13)
+    at /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:297:9
+    at processParams (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:582:12)
+    at next (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/router/index.js:291:5)
+    at cors (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/cors/lib/index.js:188:7)
+-------------

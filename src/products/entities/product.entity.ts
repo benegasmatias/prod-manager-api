@@ -28,6 +28,7 @@ export class Product {
     @Column({ type: 'text', nullable: true })
     description: string;
 
+    @Index()
     @Column({ name: 'category_id', nullable: true })
     categoryId: string;
 

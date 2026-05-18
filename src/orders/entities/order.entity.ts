@@ -60,6 +60,7 @@ export class Order {
     @OneToMany(() => OrderItem, (item) => item.order, { cascade: true })
     items: OrderItem[];
 
+    @Index()
     @Column({ name: 'customer_id', nullable: true })
     customerId: string;
 
@@ -94,6 +95,7 @@ export class Order {
     @Column({ nullable: true })
     code: string;
 
+    @Index()
     @Column({ name: 'responsable_general_id', nullable: true })
     responsableGeneralId: string;
 
@@ -104,6 +106,7 @@ export class Order {
     @Column({ type: 'jsonb', nullable: true })
     metadata: any;
 
+    @Index()
     @Column({ name: 'vehicle_id', nullable: true })
     vehicleId: string;
 

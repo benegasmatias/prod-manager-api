@@ -57,6 +57,7 @@ export class OrderItem {
 
     // --- Technical relationships / compatibility ---
 
+    @Index()
     @Column({ name: 'product_id', nullable: true })
     productId: string;
 

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToOne, JoinColumn, Unique } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany, ManyToOne, JoinColumn, Unique, Index } from 'typeorm';
 import { Order } from '../../orders/entities/order.entity';
 import { Business } from '../../businesses/entities/business.entity';
 
@@ -20,6 +20,7 @@ export class Customer {
     @Column({ nullable: true })
     dni: string;
 
+    @Index()
     @Column({ name: 'business_id', type: 'uuid', nullable: false })
     businessId: string;
 
