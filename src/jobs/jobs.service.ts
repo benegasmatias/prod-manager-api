@@ -32,14 +32,33 @@ export class JobsService {
             const existingJobs = await this.jobRepository.find({
                 where: { orderItemId: createJobDto.orderItemId }
             });
-            const totalAssigned = existingJobs.reduce((sum, j) => sum + j.totalUnits, 0);
 
             const orderItem = await this.ordersService.findOrderItem(createJobDto.orderItemId);
             if (orderItem) {
-                const limit = orderItem.qty;
-                if (totalAssigned + createJobDto.totalUnits > limit) {
-                    console.warn(`[CONCURRENCY GUARD] [RACE CONDITION PREVENTED] Intento de asignación excedida: ${totalAssigned} + ${createJobDto.totalUnits} > ${limit}`);
-                    throw new BadRequestException(`No se puede crear la tanda. La cantidad acumulada asignada (${totalAssigned + createJobDto.totalUnits}) excedería la cantidad requerida en el pedido (${limit}).`);
+                const isMultiPart = orderItem.metadata?.parts && Array.isArray(orderItem.metadata.parts);
+                const partId = createJobDto.metadata?.partId;
+
+                if (isMultiPart && partId) {
+                    const part = orderItem.metadata.parts.find((p: any) => p.id === partId);
+                    if (part) {
+                        const qtyPerUnit = part.qtyPerUnit || 1;
+                        const partLimit = orderItem.qty * qtyPerUnit;
+                        const totalAssignedForPart = existingJobs
+                            .filter(j => j.metadata?.partId === partId)
+                            .reduce((sum, j) => sum + j.totalUnits, 0);
+
+                        if (totalAssignedForPart + createJobDto.totalUnits > partLimit) {
+                            console.warn(`[CONCURRENCY GUARD] Intento de asignación excedida para la parte ${partId}: ${totalAssignedForPart} + ${createJobDto.totalUnits} > ${partLimit}`);
+                            throw new BadRequestException(`No se puede crear la tanda. La cantidad acumulada asignada para la parte '${part.name}' (${totalAssignedForPart + createJobDto.totalUnits}) excedería la cantidad requerida (${partLimit}).`);
+                        }
+                    }
+                } else {
+                    const totalAssigned = existingJobs.reduce((sum, j) => sum + j.totalUnits, 0);
+                    const limit = orderItem.qty;
+                    if (totalAssigned + createJobDto.totalUnits > limit) {
+                        console.warn(`[CONCURRENCY GUARD] [RACE CONDITION PREVENTED] Intento de asignación excedida: ${totalAssigned} + ${createJobDto.totalUnits} > ${limit}`);
+                        throw new BadRequestException(`No se puede crear la tanda. La cantidad acumulada asignada (${totalAssigned + createJobDto.totalUnits}) excedería la cantidad requerida en el pedido (${limit}).`);
+                    }
                 }
             }
         }
