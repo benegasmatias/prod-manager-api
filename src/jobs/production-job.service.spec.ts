@@ -37,6 +37,19 @@ describe('ProductionJobService Machine Constraint Tests', () => {
             aggregateOrderStatus: jest.fn(),
         };
 
+        const mockManager = {
+            update: jest.fn((entityClass, id, data) => {
+                if (entityClass === Machine) {
+                    return machineRepo.update(id, data);
+                }
+                return Promise.resolve();
+            }),
+            save: jest.fn(d => Promise.resolve(d)),
+            find: jest.fn(() => Promise.resolve([])),
+            findOne: jest.fn(() => Promise.resolve(null)),
+            create: jest.fn(c => c),
+        };
+
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 ProductionJobService,
@@ -51,8 +64,8 @@ describe('ProductionJobService Machine Constraint Tests', () => {
                 {
                     provide: DataSource,
                     useValue: {
-                        manager: {},
-                        transaction: jest.fn(),
+                        manager: mockManager,
+                        transaction: jest.fn((cb) => cb(mockManager)),
                     },
                 },
             ],
@@ -75,7 +88,10 @@ describe('ProductionJobService Machine Constraint Tests', () => {
             status: MachineStatus.IDLE,
         };
 
-        jobRepo.findOne.mockResolvedValue(mockJob);
+        jobRepo.findOne
+            .mockResolvedValueOnce(mockJob)
+            .mockResolvedValueOnce(null)
+            .mockResolvedValueOnce({ ...mockJob, status: ProductionJobStatus.IN_PROGRESS });
         machineRepo.findOne.mockResolvedValue(mockMachine);
 
         const result = await service.updateStatus('bus-1', 'job-1', ProductionJobStatus.IN_PROGRESS);

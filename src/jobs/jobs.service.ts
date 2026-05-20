@@ -9,6 +9,11 @@ import { CreateJobDto, CreateProgressDto, UpdateJobDto } from './dto/job.dto';
 import { ProductionJobStatus as JobStatus, OrderStatus, MachineStatus } from '../common/enums';
 import { Machine } from '../machines/entities/machine.entity';
 import { Material } from '../materials/entities/material.entity';
+import { MaterialMovement } from '../materials/entities/material-movement.entity';
+import { ProductionJobMaterial } from './entities/production-job-material.entity';
+import { Business } from '../businesses/entities/business.entity';
+import { OrderItem } from '../orders/entities/order-item.entity';
+import { EntityManager } from 'typeorm';
 
 @Injectable()
 export class JobsService {
@@ -140,37 +145,42 @@ export class JobsService {
         const job = await this.findOne(id);
         const oldStatus = job.status;
 
+        if (job.status === status) {
+            return this.findOne(id);
+        }
+
         console.log(`[JOBS_SERVICE] [STATUS_UPDATE] Tanda ${id} cambió de ${oldStatus} a ${status}. Motivo/Nota: ${note || 'Sin detalles'}`);
 
-        await this.jobRepository.update(id, { status: status as any });
+        await this.jobRepository.manager.transaction(async (manager) => {
+            await manager.update(ProductionJob, id, { status: status as any });
 
-        const history = this.statusHistoryRepository.create({
-            productionJobId: id,
-            fromStatus: oldStatus as any,
-            toStatus: status as any,
-            note,
-            performedById: userId
+            const history = manager.create(JobStatusHistory, {
+                productionJobId: id,
+                fromStatus: oldStatus as any,
+                toStatus: status as any,
+                note,
+                performedById: userId
+            });
+            await manager.save(history);
+
+            if (status === JobStatus.DONE) {
+                if (job.machineId) {
+                    await manager.update(Machine, job.machineId, { status: MachineStatus.IDLE });
+                }
+
+                // --- Control de Filamento / Material ---
+                // Solo descontamos lo que falte por reportar como avance
+                const progress = await manager.find(JobProgress, { where: { productionJobId: id } });
+                const unitsReported = progress?.reduce((sum, p) => sum + p.unitsDone, 0) || 0;
+                const unitsPending = Math.max(0, job.totalUnits - unitsReported);
+
+                if (unitsPending > 0) {
+                    await this.deductMaterialWeightTx(manager, job, unitsPending, userId);
+                }
+
+                await manager.update(ProductionJob, id, { doneQty: job.totalUnits });
+            }
         });
-        await this.statusHistoryRepository.save(history);
-
-        if (status === JobStatus.DONE) {
-            // Si el trabajo tenía una impresora asignada, la liberamos
-            if (job.machineId) {
-                await this.machineRepository.update(job.machineId, { status: MachineStatus.IDLE });
-            }
-
-            // --- Control de Filamento / Material ---
-            // Solo descontamos lo que falte por reportar como avance
-            const unitsReported = job.progress?.reduce((sum, p) => sum + p.unitsDone, 0) || 0;
-            const unitsPending = Math.max(0, job.totalUnits - unitsReported);
-
-            if (unitsPending > 0) {
-                await this.deductMaterialWeight(job, unitsPending);
-            }
-
-            // Actualizar doneQty en la base de datos
-            await this.jobRepository.update(id, { doneQty: job.totalUnits });
-        }
 
         // Sincronizar estado del item y agregar estado del pedido
         if (job.orderItemId) {
@@ -206,79 +216,177 @@ export class JobsService {
 
         console.log(`[JOBS_SERVICE] [PROGRESS] Reportando avance en Tanda ${id}: +${createProgressDto.unitsDone} unidades de ${job.totalUnits}. Unidades descartadas/scrap: ${createProgressDto.unitsFailed || 0}`);
 
-        const progress = this.progressRepository.create({
-            productionJobId: id,
-            unitsDone: createProgressDto.unitsDone,
-            note: createProgressDto.note,
-            performedById: userId
-        });
-        await this.progressRepository.save(progress);
+        await this.jobRepository.manager.transaction(async (manager) => {
+            const progress = manager.create(JobProgress, {
+                productionJobId: id,
+                unitsDone: createProgressDto.unitsDone,
+                note: createProgressDto.note,
+                performedById: userId
+            });
+            await manager.save(progress);
 
-        // Descontar material por el avance reportado
-        await this.deductMaterialWeight(job, createProgressDto.unitsDone);
+            // Descontar material por el avance reportado
+            await this.deductMaterialWeightTx(manager, job, createProgressDto.unitsDone, userId);
+
+            const updatedUnitsDone = currentUnitsDone + createProgressDto.unitsDone;
+
+            job.doneQty = updatedUnitsDone;
+            if (createProgressDto.unitsFailed) {
+                job.failedQty = (job.failedQty || 0) + createProgressDto.unitsFailed;
+            }
+            await manager.save(job);
+        });
 
         const updatedUnitsDone = currentUnitsDone + createProgressDto.unitsDone;
 
-        // Actualizar doneQty y failedQty en el trabajo
-        job.doneQty = updatedUnitsDone;
-        if (createProgressDto.unitsFailed) {
-            job.failedQty = (job.failedQty || 0) + createProgressDto.unitsFailed;
-        }
-        await this.jobRepository.save(job);
-
-        if (job.orderItemId) {
-            await this.ordersService.syncOrderItemProgress(job.orderItemId);
-        }
-
         if (updatedUnitsDone === job.totalUnits) {
-            await this.updateStatus(id, JobStatus.DONE, 'Completion reported via progress update.');
+            await this.updateStatus(id, JobStatus.DONE, 'Completion reported via progress update.', userId);
+        } else {
+            if (job.orderItemId) {
+                await this.ordersService.syncOrderItemProgress(job.orderItemId);
+            }
         }
 
         return this.findOne(id);
     }
-    /**
-     * Helper para descontar material del stock basado en las unidades producidas.
-     */
-    private async deductMaterialWeight(job: ProductionJob, units: number) {
+    private async deductMaterialWeightTx(manager: EntityManager, job: ProductionJob, units: number, userId?: string) {
+        // 1. Validation check for IMPRESION_3D
+        let jobMaterials = job.jobMaterials;
+        if (!jobMaterials || jobMaterials.length === 0) {
+            jobMaterials = await manager.find(ProductionJobMaterial, {
+                where: { jobId: job.id },
+                relations: ['material']
+            });
+        }
+
+        const business = await manager.findOne(Business, { where: { id: job.businessId } });
+        if (business && business.category === 'IMPRESION_3D') {
+            const hasMaterial = job.materialId || 
+                                (job.metadata?.materials && Array.isArray(job.metadata.materials) && job.metadata.materials.length > 0) ||
+                                (jobMaterials && jobMaterials.length > 0);
+            if (!hasMaterial) {
+                throw new BadRequestException('No se puede finalizar el trabajo de Impresión 3D sin un material/filamento asignado.');
+            }
+        }
+
         if (units <= 0) return;
 
-        // Soporte para múltiples materiales (ej: Bambu A1 Combo)
+        const createdBy = userId || 'SYSTEM';
+
+        // Support for jobMaterials
+        if (jobMaterials && jobMaterials.length > 0) {
+            for (const jm of jobMaterials) {
+                const quantityPerUnit = jm.quantity / (job.totalUnits || 1);
+                let toConsume = quantityPerUnit * units;
+
+                const remainingToConsume = Math.max(0, jm.quantity - jm.consumedQuantity);
+                toConsume = Math.min(toConsume, remainingToConsume);
+
+                if (toConsume > 0) {
+                    const material = jm.material || await manager.findOne(Material, { where: { id: jm.materialId } });
+                    if (material) {
+                        const oldStock = material.remainingWeightGrams || 0;
+                        const newStock = Math.max(0, oldStock - toConsume);
+
+                        material.remainingWeightGrams = newStock;
+                        await manager.save(material);
+
+                        jm.consumedQuantity = (jm.consumedQuantity || 0) + toConsume;
+                        await manager.save(jm);
+
+                        const movement = manager.create(MaterialMovement, {
+                            businessId: job.businessId || material.businessId,
+                            materialId: material.id,
+                            type: 'OUT',
+                            quantity: toConsume,
+                            oldValue: oldStock,
+                            newValue: newStock,
+                            unit: material.unit || 'grams',
+                            referenceType: 'PRODUCTION_CONSUMPTION',
+                            referenceId: job.id,
+                            notes: `Consumo producción - Trabajo: ${job.id}, Item: ${job.orderItemId}, Orden: ${job.orderId}`,
+                            createdBy
+                        });
+                        await manager.save(movement);
+                        console.log(`[Filamento Tx - JobMat] Descontados ${toConsume.toFixed(2)}g de ${material.name}. Restante: ${newStock.toFixed(2)}g`);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Support for metadata.materials
         if (job.metadata?.materials && Array.isArray(job.metadata.materials)) {
             for (const matSpec of job.metadata.materials) {
                 const { materialId, gramsPerUnit } = matSpec;
                 if (!materialId || !gramsPerUnit) continue;
 
-                const weightToDeduct = gramsPerUnit * units;
-                if (weightToDeduct > 0) {
-                    const material = await this.materialRepository.findOneBy({ id: materialId });
+                const toConsume = gramsPerUnit * units;
+                if (toConsume > 0) {
+                    const material = await manager.findOne(Material, { where: { id: materialId } });
                     if (material) {
-                        const newRemaining = Math.max(0, material.remainingWeightGrams - weightToDeduct);
-                        await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                        console.log(`[Filamento Multi] Descontados ${weightToDeduct.toFixed(2)}g de ${material.name}. Restante: ${newRemaining.toFixed(2)}g`);
+                        const oldStock = material.remainingWeightGrams || 0;
+                        const newStock = Math.max(0, oldStock - toConsume);
+
+                        material.remainingWeightGrams = newStock;
+                        await manager.save(material);
+
+                        const movement = manager.create(MaterialMovement, {
+                            businessId: job.businessId || material.businessId,
+                            materialId: material.id,
+                            type: 'OUT',
+                            quantity: toConsume,
+                            oldValue: oldStock,
+                            newValue: newStock,
+                            unit: material.unit || 'grams',
+                            referenceType: 'PRODUCTION_CONSUMPTION',
+                            referenceId: job.id,
+                            notes: `Consumo producción - Trabajo: ${job.id}, Item: ${job.orderItemId}, Orden: ${job.orderId}`,
+                            createdBy
+                        });
+                        await manager.save(movement);
+                        console.log(`[Filamento Tx - Metadata] Descontados ${toConsume.toFixed(2)}g de ${material.name}. Restante: ${newStock.toFixed(2)}g`);
                     }
                 }
             }
-            return; // Evitar doble descuento si hay un material primario seteado
+            return;
         }
 
-        if (!job.materialId) return;
+        // Support for job.materialId
+        if (job.materialId) {
+            let weightPerUnit = 0;
+            if (job.estimatedWeightGTotal) {
+                weightPerUnit = job.estimatedWeightGTotal / (job.totalUnits || 1);
+            } else if (job.orderItem?.weightGrams) {
+                weightPerUnit = job.orderItem.weightGrams;
+            }
 
-        // Peso estimado por unidad
-        let weightPerUnit = 0;
-        if (job.estimatedWeightGTotal) {
-            weightPerUnit = job.estimatedWeightGTotal / job.totalUnits;
-        } else if (job.orderItem?.weightGrams) {
-            weightPerUnit = job.orderItem.weightGrams;
-        }
+            const toConsume = weightPerUnit * units;
+            if (toConsume > 0) {
+                const material = await manager.findOne(Material, { where: { id: job.materialId } });
+                if (material) {
+                    const oldStock = material.remainingWeightGrams || 0;
+                    const newStock = Math.max(0, oldStock - toConsume);
 
-        const weightToDeduct = weightPerUnit * units;
+                    material.remainingWeightGrams = newStock;
+                    await manager.save(material);
 
-        if (weightToDeduct > 0) {
-            const material = await this.materialRepository.findOneBy({ id: job.materialId });
-            if (material) {
-                const newRemaining = Math.max(0, material.remainingWeightGrams - weightToDeduct);
-                await this.materialRepository.update(material.id, { remainingWeightGrams: newRemaining });
-                console.log(`[Filamento] Descontados ${weightToDeduct.toFixed(2)}g del material ${material.name}. Restante: ${newRemaining.toFixed(2)}g`);
+                    const movement = manager.create(MaterialMovement, {
+                        businessId: job.businessId || material.businessId,
+                        materialId: material.id,
+                        type: 'OUT',
+                        quantity: toConsume,
+                        oldValue: oldStock,
+                        newValue: newStock,
+                        unit: material.unit || 'grams',
+                        referenceType: 'PRODUCTION_CONSUMPTION',
+                        referenceId: job.id,
+                        notes: `Consumo producción - Trabajo: ${job.id}, Item: ${job.orderItemId}, Orden: ${job.orderId}`,
+                        createdBy
+                    });
+                    await manager.save(movement);
+                    console.log(`[Filamento Tx - Single] Descontados ${toConsume.toFixed(2)}g de ${material.name}. Restante: ${newStock.toFixed(2)}g`);
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import { OrderItem } from '../orders/entities/order-item.entity';
 import { Business } from '../businesses/entities/business.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
 import { ProductionJobMaterial } from './entities/production-job-material.entity';
+import { MaterialMovement } from '../materials/entities/material-movement.entity';
 import { BusinessesModule } from '../businesses/businesses.module';
 
 
@@ -28,7 +29,8 @@ import { BusinessesModule } from '../businesses/businesses.module';
             OrderItem, 
             Business, 
             BusinessTemplate,
-            ProductionJobMaterial
+            ProductionJobMaterial,
+            MaterialMovement
         ]),
         OrdersModule,
         BusinessesModule,

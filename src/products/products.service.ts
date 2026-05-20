@@ -43,7 +43,7 @@ export class ProductsService {
             where,
             skip,
             take: limit,
-            relations: ['category', 'productFiles', 'productFiles.fileAsset'],
+            relations: ['category'],
             order: { name: 'ASC' },
         });
 
