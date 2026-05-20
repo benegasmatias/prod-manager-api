@@ -1,0 +1,9 @@
+# AI Agent Ignore File - Prevent global indexing of human documentation
+docs/human/
+docs/human_only/
+*.png
+*.jpg
+*.webp
+*.mp4
+dist/
+node_modules/
