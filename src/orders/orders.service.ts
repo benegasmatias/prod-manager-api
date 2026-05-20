@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In, ILike, Not } from 'typeorm';
 import { Order } from './entities/order.entity';
@@ -21,6 +21,8 @@ import { PlanUsageService } from '../businesses/plan-usage.service';
 
 @Injectable()
 export class OrdersService {
+    private readonly logger = new Logger('OrdersService');
+
     constructor(
         @InjectRepository(Order)
         private readonly orderRepository: Repository<Order>,
@@ -103,7 +105,7 @@ export class OrdersService {
             .leftJoinAndSelect('order.siteInfo', 'siteInfo')
             .leftJoinAndSelect('order.vehicle', 'vehicle')
             .leftJoinAndSelect('items.product', 'product')
-            .leftJoinAndSelect('items.productionJob', 'job')
+            .leftJoinAndSelect('items.productionJobs', 'job')
             .leftJoinAndSelect('job.machine', 'machine');
 
         if (businessId) {
@@ -385,7 +387,7 @@ export class OrdersService {
         const order = await this.orderRepository.findOne({
             where: { id },
             relations: [
-                'items', 'items.product', 'items.productionJob', 'items.productionJob.machine',
+                'items', 'items.product', 'items.productionJobs', 'items.productionJobs.machine',
                 'customer', 'responsableGeneral',
                 'jobs', 'jobs.operator', 'business',
                 'statusHistory', 'statusHistory.performedBy',
@@ -400,10 +402,87 @@ export class OrdersService {
     }
 
     /**
+     * Valida defensivamente que las estructuras de Combo-Set en la orden sean válidas,
+     * evitando payloads corruptos, inconsistencias financieras o loops.
+     */
+    private validateComboSetPayload(items: any[]) {
+        if (!items || items.length === 0) return;
+
+        const headerKeys = new Set<string>();
+        const childGroups = new Set<string>();
+
+        // Agrupar y clasificar ítems
+        for (const item of items) {
+            const meta = item.metadata || {};
+            const isHeader = !!meta['isComboHeader'];
+            const isChild = !!meta['isComboChild'];
+            const groupId = meta['parentComboGroup'];
+
+            if (isHeader && isChild) {
+                const msg = 'Un componente no puede ser cabecera e hijo de combo simultáneamente.';
+                this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                throw new BadRequestException(msg);
+            }
+
+            if (groupId) {
+                if (isHeader) {
+                    if (headerKeys.has(groupId)) {
+                        const msg = `Se detectaron múltiples cabeceras para el combo group: ${groupId}`;
+                        this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                        throw new BadRequestException(msg);
+                    }
+                    headerKeys.add(groupId);
+                }
+                if (isChild) {
+                    childGroups.add(groupId);
+
+                    // Regla 1: Hijos del combo deben facturar a precio $0
+                    const precio = Number(item.price || item.unitPrice || item.precioUnitario) || 0;
+                    if (precio !== 0) {
+                        const msg = `El componente hijo del combo debe facturar a precio $0. Ítem: ${item.name || item.nombreProducto}`;
+                        this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                        throw new BadRequestException(msg);
+                    }
+
+                    // Regla 2: qtyPerCombo debe ser mayor a 0
+                    const qtyFactor = meta['qtyPerCombo'];
+                    if (qtyFactor !== undefined && (Number(qtyFactor) <= 0 || isNaN(Number(qtyFactor)))) {
+                        const msg = `El metadato qtyPerCombo debe ser mayor a 0 para el componente: ${item.name || item.nombreProducto}`;
+                        this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                        throw new BadRequestException(msg);
+                    }
+                }
+            }
+        }
+
+        // Regla 3: No permitir grupos huérfanos
+        for (const groupId of childGroups) {
+            if (!headerKeys.has(groupId)) {
+                const msg = `Se detectó un componente de combo huérfano sin cabecera para el grupo: ${groupId}`;
+                this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                throw new BadRequestException(msg);
+            }
+        }
+        for (const groupId of headerKeys) {
+            const hasChildren = items.some(it => it.metadata && it.metadata['parentComboGroup'] === groupId && it.metadata['isComboChild']);
+            if (!hasChildren) {
+                const msg = `La cabecera del combo posee un grupo vacío sin subcomponentes: ${groupId}`;
+                this.logger.warn(`[COMBO_SET] Inconsistencia detectada: ${msg}`);
+                throw new BadRequestException(msg);
+            }
+        }
+    }
+
+    /**
      * Crear pedido completo con sus ítems
      */
     async create(createOrderDto: CreateOrderDto, context?: { ip?: string, userAgent?: string, manager?: any }): Promise<Order> {
         const { items, ...orderData } = createOrderDto;
+
+        // Validar Combo-Set del payload antes de procesar
+        if (items) {
+            this.validateComboSetPayload(items);
+        }
 
         // Validar límites del plan (Cuota de Pedidos Mensual)
         await this.planUsageService.ensureOrderCreationAllowed(orderData.businessId, context);
@@ -432,6 +511,19 @@ export class OrdersService {
             });
 
             const savedOrder = await manager.save(Order, order);
+
+            // Log del combo creado si aplica
+            if (items && items.length > 0) {
+                const comboGroups = new Set<string>();
+                items.forEach(it => {
+                    if (it.metadata && it.metadata['parentComboGroup']) {
+                        comboGroups.add(it.metadata['parentComboGroup']);
+                    }
+                });
+                if (comboGroups.size > 0) {
+                    this.logger.log(`[COMBO_SET] Combo creado exitosamente en orden: ${savedOrder.code} - ${comboGroups.size} grupo(s) de combo desglosado(s)`);
+                }
+            }
 
             if (items && items.length > 0) {
                 for (const itemData of items) {
@@ -465,6 +557,10 @@ export class OrdersService {
         } else {
             return await this.orderRepository.manager.transaction(executionLogic);
         }
+    }
+
+    async findOrderItem(id: string) {
+        return this.orderItemRepository.findOneBy({ id });
     }
 
     /**
@@ -594,7 +690,7 @@ export class OrdersService {
         return await this.orderRepository.manager.transaction(async manager => {
             const item = await manager.findOne(OrderItem, {
                 where: { id: itemId, orderId },
-                relations: ['productionJob']
+                relations: ['productionJobs']
             });
             if (!item) throw new NotFoundException('Ítem no encontrado');
 
@@ -808,6 +904,11 @@ export class OrdersService {
 
     async updateStatus(id: string, updateStatusDto: UpdateOrderStatusDto, userId?: string): Promise<Order> {
         const { status, type, clientName, totalPrice, totalSenias, dueDate, notes, responsableGeneralId, items, vehicleId } = updateStatusDto;
+
+        // Validar Combo-Set del payload antes de procesar la actualización
+        if (items) {
+            this.validateComboSetPayload(items);
+        }
 
         const order = await this.findOne(id);
         const oldStatus = order.status;

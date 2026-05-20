@@ -101,6 +101,11 @@ export class CreateProgressDto {
     @Min(1)
     unitsDone: number;
 
+    @IsInt()
+    @Min(0)
+    @IsOptional()
+    unitsFailed?: number;
+
     @IsString()
     @IsOptional()
     note?: string;

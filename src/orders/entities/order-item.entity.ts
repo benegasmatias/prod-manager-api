@@ -65,8 +65,18 @@ export class OrderItem {
     @JoinColumn({ name: 'product_id' })
     product: Product;
 
-    @OneToOne(() => ProductionJob, (job) => job.orderItem)
-    productionJob: ProductionJob;
+    @OneToMany(() => ProductionJob, (job) => job.orderItem)
+    productionJobs: ProductionJob[];
+
+    get productionJob(): ProductionJob | null {
+        if (!this.productionJobs || this.productionJobs.length === 0) {
+            return null;
+        }
+        const activeJob = this.productionJobs.find(job => 
+            !['DONE', 'FAILED', 'CANCELLED'].includes(job.status)
+        );
+        return activeJob || this.productionJobs[0];
+    }
 
     @Column({ name: 'unit_price', type: 'decimal', precision: 12, scale: 2, nullable: true })
     unitPrice: number;

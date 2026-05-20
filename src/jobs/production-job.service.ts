@@ -41,7 +41,7 @@ export class ProductionJobService {
 
         const items = await this.itemRepository.find({
             where: whereClause,
-            relations: ['productionJob', 'order']
+            relations: ['productionJobs', 'order']
         });
 
         // Validar consistencia global de la orden
@@ -104,6 +104,32 @@ export class ProductionJobService {
         return job;
     }
 
+    private async validateMachineAvailability(machineId: string, jobId: string, jobStatus: ProductionJobStatus) {
+        const machine = await this.machineRepository.findOne({ where: { id: machineId } });
+        if (!machine) {
+            throw new NotFoundException('La máquina especificada no existe.');
+        }
+        if (!machine.active) {
+            throw new BadRequestException(`La máquina "${machine.name}" no está activa.`);
+        }
+        if (machine.status === MachineStatus.MAINTENANCE || machine.status === MachineStatus.DOWN) {
+            throw new BadRequestException(`La máquina "${machine.name}" está en mantenimiento o fuera de servicio.`);
+        }
+
+        if (jobStatus === ProductionJobStatus.IN_PROGRESS) {
+            const activeJobOnMachine = await this.jobRepository.findOne({
+                where: {
+                    machineId,
+                    status: ProductionJobStatus.IN_PROGRESS
+                }
+            });
+
+            if (activeJobOnMachine && activeJobOnMachine.id !== jobId) {
+                throw new BadRequestException(`La máquina ${machine.name} ya está ocupada por otro trabajo en proceso.`);
+            }
+        }
+    }
+
     async assignResources(businessId: string, id: string, data: { operatorId?: string, machineId?: string }): Promise<ProductionJob> {
         const job = await this.jobRepository.findOne({
             where: { id, businessId },
@@ -114,7 +140,13 @@ export class ProductionJobService {
         const oldMachineId = job.machineId;
         
         if (data.operatorId !== undefined) job.operatorId = data.operatorId;
-        if (data.machineId !== undefined) job.machineId = data.machineId;
+        
+        if (data.machineId !== undefined) {
+            if (data.machineId) {
+                await this.validateMachineAvailability(data.machineId, job.id, job.status);
+            }
+            job.machineId = data.machineId;
+        }
 
         const saved = await this.jobRepository.save(job);
 
@@ -149,6 +181,13 @@ export class ProductionJobService {
 
         if (!this.canTransitionStatus(job.status, status)) {
             throw new BadRequestException(`Transición de estado inválida: de ${job.status} a ${status}`);
+        }
+
+        if (status === ProductionJobStatus.IN_PROGRESS) {
+            if (!job.machineId) {
+                throw new BadRequestException('No se puede iniciar el trabajo sin una máquina asignada.');
+            }
+            await this.validateMachineAvailability(job.machineId, job.id, status);
         }
 
         const oldStatus = job.status;
