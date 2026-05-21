@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like } from 'typeorm';
+import { Repository, Like, ILike, Raw } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { FileAsset } from './entities/file-asset.entity';
 import { ProductFile } from './entities/product-file.entity';
@@ -37,10 +37,21 @@ export class ProductsService {
         if (categoryId) where.categoryId = categoryId;
         if (status) where.status = status;
         if (fulfillmentMode) where.fulfillmentMode = fulfillmentMode;
-        if (search) where.name = Like(`%${search}%`);
+
+        let whereCondition: any;
+        if (search) {
+            whereCondition = [
+                { ...where, name: ILike(`%${search}%`) },
+                { ...where, description: ILike(`%${search}%`) },
+                { ...where, category: { name: ILike(`%${search}%`) } },
+                { ...where, attributes: Raw((alias) => `${alias}->>'sku' ILIKE :searchVal`, { searchVal: `%${search}%` }) }
+            ];
+        } else {
+            whereCondition = where;
+        }
 
         const [items, total] = await this.productRepository.findAndCount({
-            where,
+            where: whereCondition,
             skip,
             take: limit,
             relations: ['category'],

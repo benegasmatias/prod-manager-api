@@ -17700,3 +17700,101 @@ Stack: UnauthorizedException: No se encontró el encabezado de autorización
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
     at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
 -------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:29:42.078Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:30:29.015Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:30:44.004Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:31:15.646Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:31:24.372Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:31:36.074Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
+
+--- ERROR ---
+Timestamp: 2026-05-21T15:34:23.420Z
+Path: /businesses/00a38fac-a26a-4e02-8269-4fb8bf89a6d6/invitations
+Status: 403
+Message: {"message":"Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR","error":"Forbidden","statusCode":403}
+Stack: ForbiddenException: Nivel insuficiente. Se requiere uno de los roles: OWNER, BUSINESS_ADMIN. Tu rol actual es: OPERATOR
+    at BusinessRoleGuard.canActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/src/businesses/guards/business-role.guard.ts:54:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GuardsConsumer.tryActivate (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/guards/guards-consumer.js:22:17)
+    at async canActivateFn (/home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:135:33)
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-execution-context.js:42:31
+    at async /home/matias.benegas@jussanjuan.gov.ar/projects/ProdManager/prod-manager-api/node_modules/@nestjs/core/router/router-proxy.js:9:17
+-------------
