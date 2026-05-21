@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Query, UseGuards, Delete, Request, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Query, UseGuards, Delete, Request, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto, UpdateCustomerDto } from './dto/customer.dto';
 import { SupabaseAuthGuard } from '../users/guards/supabase-auth.guard';
@@ -38,18 +38,54 @@ export class CustomersController {
     }
 
     @Get(':id')
-    async findOne(@Param('id') id: string) {
-        return this.customersService.findOne(id);
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    async findOne(
+        @Param('id') id: string,
+        @Query('businessId') businessId: string
+    ) {
+        if (!businessId) {
+            throw new BadRequestException('El ID del negocio es obligatorio');
+        }
+        const customer = await this.customersService.findOne(id);
+        if (customer.businessId !== businessId) {
+            throw new ForbiddenException('El cliente no pertenece al negocio indicado');
+        }
+        return customer;
     }
 
     @Patch(':id')
-    async update(@Request() req, @Param('id') id: string, @Body() updateCustomerDto: UpdateCustomerDto) {
-        // En un futuro estos también deberían usar los guards si el DTO no trae businessId
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    async update(
+        @Param('id') id: string,
+        @Body() updateCustomerDto: UpdateCustomerDto,
+        @Query('businessId') businessId: string
+    ) {
+        if (!businessId) {
+            throw new BadRequestException('El ID del negocio es obligatorio');
+        }
+        const customer = await this.customersService.findOne(id);
+        if (customer.businessId !== businessId) {
+            throw new ForbiddenException('El cliente no pertenece al negocio indicado');
+        }
         return this.customersService.update(id, updateCustomerDto);
     }
 
     @Delete(':id')
-    async remove(@Request() req, @Param('id') id: string) {
+    @UseGuards(BusinessAccessGuard, BusinessStatusGuard)
+    @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    async remove(
+        @Param('id') id: string,
+        @Query('businessId') businessId: string
+    ) {
+        if (!businessId) {
+            throw new BadRequestException('El ID del negocio es obligatorio');
+        }
+        const customer = await this.customersService.findOne(id);
+        if (customer.businessId !== businessId) {
+            throw new ForbiddenException('El cliente no pertenece al negocio indicado');
+        }
         return this.customersService.remove(id);
     }
 }

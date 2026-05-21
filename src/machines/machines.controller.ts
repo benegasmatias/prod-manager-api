@@ -34,26 +34,55 @@ export class MachinesController {
     @Get()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async findAll(
         @Query('businessId') businessId?: string,
         @Query('onlyActive') onlyActive?: string,
         @Query('page') page: string = '1',
         @Query('pageSize') pageSize: string = '50',
+        @Request() req?: any
     ) {
         const active = onlyActive === 'false' ? false : true;
-        return this.printersService.findAll(businessId, active, Number(page), Number(pageSize));
+        const result = await this.printersService.findAll(businessId, active, Number(page), Number(pageSize));
+        
+        const role = req?.businessRole;
+        if (role === BusinessRole.OPERATOR) {
+            const items = result.data.map(m => ({
+                id: m.id,
+                name: m.name,
+                status: m.status,
+                active: m.active,
+                blockedByQuota: m.blockedByQuota
+            }));
+            return {
+                data: items,
+                total: result.total
+            };
+        }
+        return result;
     }
 
     @Get(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.OPERATOR)
     async findOne(
         @Param('id', ParseUUIDPipe) id: string,
         @Query('businessId') businessId?: string,
+        @Request() req?: any
     ) {
-        return this.printersService.findOne(id, businessId);
+        const machine = await this.printersService.findOne(id, businessId);
+        const role = req?.businessRole;
+        if (role === BusinessRole.OPERATOR) {
+            return {
+                id: machine.id,
+                name: machine.name,
+                status: machine.status,
+                active: machine.active,
+                blockedByQuota: machine.blockedByQuota
+            };
+        }
+        return machine;
     }
 
     @Patch(':id')
