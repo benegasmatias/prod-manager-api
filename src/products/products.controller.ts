@@ -9,7 +9,8 @@ import { BusinessAccessGuard } from '../businesses/guards/business-access.guard'
 import { BusinessStatusGuard } from '../businesses/guards/business-status.guard';
 import { BusinessRoleGuard } from '../businesses/guards/business-role.guard';
 import { AllowBusinessStatuses } from '../businesses/decorators/allow-business-statuses.decorator';
-import { BusinessStatus } from '../common/enums';
+import { RequireBusinessRole } from '../businesses/decorators/require-business-role.decorator';
+import { BusinessStatus, BusinessRole } from '../common/enums';
 
 @Controller('products')
 @UseGuards(SupabaseAuthGuard, BusinessAccessGuard, BusinessRoleGuard)
@@ -22,6 +23,7 @@ export class ProductsController {
     @Post('categories/seed')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     seedCategories(@Body() body: { businessId: string, industry?: string, force?: boolean }) {
         return this.seedService.seedForBusiness(body.businessId, body.industry, body.force);
     }
@@ -31,6 +33,7 @@ export class ProductsController {
     @Post()
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     create(@Body() createProductDto: CreateProductDto) {
         return this.productsService.create(createProductDto);
     }
@@ -48,6 +51,7 @@ export class ProductsController {
     @Patch(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     update(@Param('id', ParseUUIDPipe) id: string, @Body() updateProductDto: UpdateProductDto) {
         return this.productsService.update(id, updateProductDto);
     }
@@ -55,6 +59,7 @@ export class ProductsController {
     @Delete(':id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     remove(@Param('id', ParseUUIDPipe) id: string) {
         return this.productsService.remove(id);
     }
@@ -64,6 +69,7 @@ export class ProductsController {
     @Post('categories')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     createCategory(@Body() dto: CreateProductCategoryDto) {
         return this.productsService.createCategory(dto);
     }
@@ -76,6 +82,7 @@ export class ProductsController {
     @Patch('categories/:id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     updateCategory(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateProductCategoryDto) {
         return this.productsService.updateCategory(id, dto);
     }
@@ -83,6 +90,7 @@ export class ProductsController {
     @Delete('categories/:id')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     removeCategory(@Param('id', ParseUUIDPipe) id: string) {
         return this.productsService.removeCategory(id);
     }
@@ -92,6 +100,7 @@ export class ProductsController {
     @Post(':id/files')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     addFile(@Param('id', ParseUUIDPipe) id: string, @Body() productFileDto: ProductFileDto) {
         return this.productsService.addFileToProduct(id, productFileDto);
     }
@@ -99,6 +108,7 @@ export class ProductsController {
     @Post('assets/files')
     @UseGuards(BusinessStatusGuard)
     @AllowBusinessStatuses(BusinessStatus.ACTIVE)
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
     createFileAsset(@Body() createFileAssetDto: CreateFileAssetDto) {
         return this.productsService.createFileAsset(createFileAssetDto);
     }

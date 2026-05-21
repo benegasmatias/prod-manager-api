@@ -24,19 +24,49 @@ export class EmployeesController {
     }
 
     @Get()
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
-    findAll(
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
+    async findAll(
         @Query('businessId') businessId: string,
-        @Query('active') active?: string
+        @Query('active') active?: string,
+        @Request() req?: any
     ) {
         const isActive = active !== undefined ? active === 'true' : undefined;
-        return this.employeesService.findAll(businessId, isActive);
+        const employees = await this.employeesService.findAll(businessId, isActive);
+        
+        const role = req?.businessRole;
+        if (role === BusinessRole.SALES || role === BusinessRole.OPERATOR) {
+            return employees.map(emp => ({
+                id: emp.id,
+                firstName: emp.firstName,
+                lastName: emp.lastName,
+                email: emp.email,
+                role: emp.role,
+                active: emp.active,
+            }));
+        }
+        return employees;
     }
 
     @Get(':id')
-    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN)
-    findOne(@Param('id', ParseUUIDPipe) id: string, @Query('businessId') businessId: string) {
-        return this.employeesService.findOne(id, businessId);
+    @RequireBusinessRole(BusinessRole.OWNER, BusinessRole.BUSINESS_ADMIN, BusinessRole.SALES, BusinessRole.OPERATOR)
+    async findOne(
+        @Param('id', ParseUUIDPipe) id: string,
+        @Query('businessId') businessId: string,
+        @Request() req?: any
+    ) {
+        const employee = await this.employeesService.findOne(id, businessId);
+        const role = req?.businessRole;
+        if (role === BusinessRole.SALES || role === BusinessRole.OPERATOR) {
+            return {
+                id: employee.id,
+                firstName: employee.firstName,
+                lastName: employee.lastName,
+                email: employee.email,
+                role: employee.role,
+                active: employee.active,
+            };
+        }
+        return employee;
     }
 
     @Patch(':id')
