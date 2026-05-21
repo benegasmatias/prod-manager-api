@@ -27,6 +27,10 @@ export class UpdateBusinessDto {
 
     @IsString()
     @IsOptional()
+    logoUrl?: string;
+
+    @IsString()
+    @IsOptional()
     category?: string;
 
     @IsBoolean()

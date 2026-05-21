@@ -25,6 +25,9 @@ export class Business {
     @Column({ nullable: true })
     email: string;
 
+    @Column({ name: 'logo_url', nullable: true })
+    logoUrl: string;
+
     @Column({ default: 'GENERICO' })
     category: string; // Rubro (IMPRESION_3D, METALURGICA, etc)
 
