@@ -312,3 +312,30 @@ export class PlansPublicController {
         return this.adminService.seedDebugOrders(email || req.user.email);
     }
 }
+
+@Controller('public/plans')
+export class PublicPlansController {
+    constructor(private readonly adminService: AdminService) { }
+
+    @Get()
+    async getPublicPlans(@Query('category') category?: string) {
+        const plans = await this.adminService.findActivePlans(category);
+        return plans.map(p => ({
+            id: p.id,
+            name: p.name,
+            price: Number(p.price),
+            promoPrice: p.promoPrice ? Number(p.promoPrice) : null,
+            interval: 'mes',
+            description: p.description,
+            features: p.features,
+            recommended: p.isRecommended,
+            limits: {
+                maxUsers: p.maxUsers,
+                maxOrdersPerMonth: p.maxOrdersPerMonth,
+                maxMachines: p.maxMachines,
+                maxBusinesses: p.maxBusinesses
+            },
+            ctaText: p.ctaText
+        }));
+    }
+}

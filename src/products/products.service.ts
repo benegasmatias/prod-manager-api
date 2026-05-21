@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Like, ILike, Raw } from 'typeorm';
+import { Repository, Like, ILike, Raw, Brackets } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { FileAsset } from './entities/file-asset.entity';
 import { ProductFile } from './entities/product-file.entity';
@@ -33,30 +33,37 @@ export class ProductsService {
         const { businessId, categoryId, status, fulfillmentMode, search, page = 1, limit = 50 } = query;
         const skip = (page - 1) * limit;
 
-        const where: any = { businessId };
-        if (categoryId) where.categoryId = categoryId;
-        if (status) where.status = status;
-        if (fulfillmentMode) where.fulfillmentMode = fulfillmentMode;
+        const queryBuilder = this.productRepository.createQueryBuilder('product')
+            .leftJoinAndSelect('product.category', 'category')
+            .where('product.businessId = :businessId', { businessId });
 
-        let whereCondition: any;
-        if (search) {
-            whereCondition = [
-                { ...where, name: ILike(`%${search}%`) },
-                { ...where, description: ILike(`%${search}%`) },
-                { ...where, category: { name: ILike(`%${search}%`) } },
-                { ...where, attributes: Raw((alias) => `${alias}->>'sku' ILIKE :searchVal`, { searchVal: `%${search}%` }) }
-            ];
-        } else {
-            whereCondition = where;
+        if (categoryId) {
+            queryBuilder.andWhere('product.categoryId = :categoryId', { categoryId });
+        }
+        if (status) {
+            queryBuilder.andWhere('product.status = :status', { status });
+        }
+        if (fulfillmentMode) {
+            queryBuilder.andWhere('product.fulfillmentMode = :fulfillmentMode', { fulfillmentMode });
         }
 
-        const [items, total] = await this.productRepository.findAndCount({
-            where: whereCondition,
-            skip,
-            take: limit,
-            relations: ['category'],
-            order: { name: 'ASC' },
-        });
+        if (search) {
+            const searchTerm = `%${search.trim()}%`;
+            queryBuilder.andWhere(
+                new Brackets((qb) => {
+                    qb.where('product.name ILIKE :searchTerm', { searchTerm })
+                      .orWhere('product.description ILIKE :searchTerm', { searchTerm })
+                      .orWhere('category.name ILIKE :searchTerm', { searchTerm })
+                      .orWhere("product.attributes->>'sku' ILIKE :searchTerm", { searchTerm });
+                })
+            );
+        }
+
+        const [items, total] = await queryBuilder
+            .orderBy('product.name', 'ASC')
+            .skip(skip)
+            .take(limit)
+            .getManyAndCount();
 
         return { items, total, page, limit };
     }

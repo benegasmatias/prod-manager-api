@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminService } from './admin.service';
-import { AdminController, PlansPublicController } from './admin.controller';
+import { AdminController, PlansPublicController, PublicPlansController } from './admin.controller';
 import { Business } from '../businesses/entities/business.entity';
 import { User } from '../users/entities/user.entity';
 import { BusinessTemplate } from '../businesses/entities/business-template.entity';
@@ -37,7 +37,7 @@ import { PlatformConfig } from './entities/platform-config.entity';
 
     providers: [AdminService, SubscriptionReminderService],
 
-    controllers: [AdminController, PlansPublicController],
+    controllers: [AdminController, PlansPublicController, PublicPlansController],
     exports: [AdminService],
 })
 export class AdminModule { }
